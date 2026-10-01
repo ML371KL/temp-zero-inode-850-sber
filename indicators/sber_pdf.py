@@ -343,7 +343,7 @@ def parse_ras_table(lines: list[dict]) -> dict[str, float]:
     """Таблица P&L релиза РСБУ (строки распознавания страницы) → {`nii_ytd`, `nii_m`, …} млрд ₽."""
     cols = _columns(lines)
     if not {"ytd", "month"} <= set(cols):
-        return {}
+        return _expenses_negative(_pnl_rows(lines))
     out: dict[str, float] = {}
     for key, rx in ROWS_PNL:
         labels = [ln for ln in lines if re.search(rx, ln["text"].lower().replace("ё", "е"))
@@ -357,6 +357,84 @@ def parse_ras_table(lines: list[dict]) -> dict[str, float]:
                 if month is not None:
                     out[f"{key}_m"] = month
                 break
+    for k, v in _pnl_rows(lines).items():
+        out.setdefault(k, v)
+    return _expenses_negative(out)
+
+
+# Строки-расходы: в релизе они со знаком минус, а распознавание минус теряет (особый глиф).
+EXPENSE_ROWS = frozenset({"prov", "opex"})
+
+
+def _expenses_negative(out: dict[str, float]) -> dict[str, float]:
+    """Резервы и расходы — со знаком минус, как в релизе, даже если распознавание минус потеряло.
+
+    Редкий месяц с роспуском резервов (плюс в релизе) выйдет с неверным знаком — его ловит сверка
+    со вторым источником и с формой ЦБ.
+    """
+    return {k: (-abs(v) if k.rsplit("_", 1)[0] in EXPENSE_ROWS else v) for k, v in out.items()}
+
+
+# Числовые токены строки таблицы: «2441,3», «1 798,4», «-806, 7», «6 247», и изменения «24,8%», «-0,3 пп».
+_TOKEN_RX = re.compile(r"(-?\d{1,4}(?: \d{3})*(?:,\s?\d{1,2})?)\s?(%|пп(?![а-яa-z])|п\.п\.)?")
+
+
+def _row_tokens(text: str) -> list[tuple[str, bool]]:
+    """Числа строки по порядку: (запись, изменение ли это — «%» или «пп»)."""
+    return [(m.group(1), bool(m.group(2))) for m in _TOKEN_RX.finditer(text.replace(" ", " "))]
+
+
+def _pnl_rows(lines: list[dict]) -> dict[str, float]:
+    """Строка таблицы, распознанная целиком: подпись, два числа с десятичной частью, два изменения.
+
+    Так строки отдаёт распознавание, когда подпись и ячейки попали в одну строку (шапка колонок при
+    этом рассыпается). Числа ищутся в самой строке подписи, а у подписи в две строки — в следующей.
+    """
+    out: dict[str, float] = {}
+    for key, rx in ROWS_PNL:
+        rx = rx.removesuffix(r"\s*$")
+        for i, ln in enumerate(lines):
+            if not re.search(rx, ln["text"].lower().replace("ё", "е")):
+                continue
+            for cand in lines[i:i + 2]:
+                toks = _row_tokens(cand["text"])
+                if len(toks) < 4 or [c for _, c in toks[-4:]] != [False, False, True, True]:
+                    continue
+                if not all("," in t for t, _ in toks[-4:-2]):
+                    continue
+                ytd, month = to_amount(toks[-4][0]), to_amount(toks[-3][0])
+                if ytd is not None and month is not None:
+                    out[f"{key}_ytd"], out[f"{key}_m"] = ytd, month
+                break
+            if f"{key}_ytd" in out:
+                break
+    return out
+
+
+def _capital_rows(lines: list[dict]) -> dict[str, float]:
+    """Таблица капитала, распознанная строками: капитал — первое число, норматив — процент после минимума."""
+    out: dict[str, float] = {}
+    for key, rx in ROWS_CAP:
+        for ln in lines:
+            text = ln["text"].lower().replace("ё", "е")
+            if not re.search(rx, text):
+                continue
+            if key in PERCENT_KEYS:
+                tail = re.sub(r"мин\.?\s*\d{1,2}(?:,\s?\d)?\s?%", " ", text)
+                tail = re.sub(r"н\s?1\S*", " ", tail)
+                toks = [t for t, c in _row_tokens(tail) if c]
+                if len(toks) != 3 or "пп" not in tail:
+                    continue
+                v = to_percent(toks[0] + "%")
+            else:
+                toks2 = _row_tokens(text)
+                if len(toks2) != 3 or [c for _, c in toks2] != [False, True, True]:
+                    continue
+                cell = toks2[0][0]
+                v = float(cell.replace(" ", "")) if re.fullmatch(r"\d{1,3}(?: \d{3})+", cell) else to_amount(cell)
+            if v is not None:
+                out[key] = v
+                break
     return out
 
 
@@ -365,7 +443,7 @@ def parse_ras_capital(lines: list[dict]) -> dict[str, float]:
     cols = _columns(lines)
     col = cols.get("date")
     if col is None:
-        return {}
+        return _capital_rows(lines)
     out: dict[str, float] = {}
     for key, rx in ROWS_CAP:
         labels = [ln for ln in lines if re.search(rx, ln["text"].lower()) and ln["x"] < col["x"]]
@@ -382,6 +460,8 @@ def parse_ras_capital(lines: list[dict]) -> dict[str, float]:
             if v is not None:
                 out[key] = v
                 break
+    for k, v in _capital_rows(lines).items():
+        out.setdefault(k, v)
     return out
 
 
