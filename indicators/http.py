@@ -14,8 +14,9 @@
 * **Сырой ответ ложится на диск ДО разбора** (`sink`): разбор чинится задним числом,
   потерянные байты — нет.
 * **Чужой корень — только своему хосту.** Корень Минцифры (`tls/`) добавляется к
-  обычному хранилищу ТОЛЬКО для хостов T-Invest (`EXTRA_CA`); проверка TLS не
-  отключается никогда.
+  обычному хранилищу ТОЛЬКО для хостов T-Invest (`EXTRA_CA`) и для хостов эмитента,
+  названных в настройках источников (`pin_trusted_root`: сайт эмитента отдаёт
+  сертификат того же издателя); проверка TLS не отключается никогда.
 * **Документ эмитента — только с его хостов** (`hosts`): редирект на другой хост или
   не на https не исполняется (запрос туда не уходит), а конечный адрес ответа
   (`Response.final_url`) вызывающий сверяет ещё раз.
@@ -54,6 +55,14 @@ EXTRA_CA: dict[str, Path] = {
     "invest-public-api.tinkoff.ru": TRUSTED_CA,
     "invest-public-api.tbank.ru": TRUSTED_CA,
 }
+# Хосты, которым тот же корень добавлен настройкой источников (хосты эмитента из
+# `sources.yaml`): имён банка в коде нет, список приходит от вызывающего.
+_PINNED_BY_CONFIG: set[str] = set()
+
+
+def pin_trusted_root(hosts: Collection[str]) -> None:
+    """Добавить корень Минцифры хостам из настроек источников — только им; проверка TLS остаётся."""
+    _PINNED_BY_CONFIG.update(str(h).strip().lower() for h in hosts if str(h).strip())
 
 DEFAULT_TIMEOUT = 45.0
 DEFAULT_ATTEMPTS = 3
@@ -149,8 +158,9 @@ def user_agent(url: str) -> str:
 
 
 def tls_context(url: str) -> ssl.SSLContext | None:
-    """Контекст с дополнительным корнем для хостов `EXTRA_CA`; прочим — None (обычная проверка)."""
-    extra = EXTRA_CA.get(host_of(url))
+    """Контекст с дополнительным корнем для хостов `EXTRA_CA` и хостов из настроек; прочим — None (обычная проверка)."""
+    host = host_of(url)
+    extra = EXTRA_CA.get(host) or (TRUSTED_CA if host in _PINNED_BY_CONFIG else None)
     if extra is None:
         return None
     context = ssl.create_default_context()

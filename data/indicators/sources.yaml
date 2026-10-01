@@ -47,6 +47,9 @@ news:
 sber_pdf:
   # Хосты эмитента: адрес документа и каждый редирект — https на одном из них, иначе не качаем.
   hosts: [www.sberbank.com, sberbank.com, www.sberbank.ru, sberbank.ru]
+  # Сертификат сайта эмитента выдан издателем, чьего корня (Минцифры) нет в хранилище сервера:
+  # корень из indicators/tls добавляется только этим хостам, проверка TLS не отключается.
+  trusted_root_hosts: [www.sberbank.com, sberbank.com, www.sberbank.ru, sberbank.ru]
   kinds:                              # вид документа по адресу
     ras_release: '_rsbu/'
     ifrs_statements: '/(?:reporting_[^/]*|[^/]*_reporting)\.pdf$'

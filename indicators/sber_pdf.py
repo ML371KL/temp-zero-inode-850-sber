@@ -431,6 +431,8 @@ def download(ctx: Context, url: str, *, getter=None) -> tuple[http.Response, boo
     hosts = list((ctx.cfg.get("sber_pdf") or {}).get("hosts") or [])
     if not http.on_hosts(url, hosts):
         raise http.FetchError(url, None, "адрес не на хосте эмитента по https", final=True)
+    # Сайт эмитента отдаёт сертификат издателя, чьего корня нет в хранилище сервера.
+    http.pin_trusted_root((ctx.cfg.get("sber_pdf") or {}).get("trusted_root_hosts") or [])
     index = ctx.store.read_state(INDEX_FILE) or {}
     resp = (getter or ctx.getter or http.fetch)(url, sink=http.Sink(ctx.store, SOURCE),
                                                 name=url.rsplit("/", 1)[-1] or "document.pdf", hosts=hosts)

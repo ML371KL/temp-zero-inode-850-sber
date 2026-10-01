@@ -89,8 +89,24 @@ def test_environment_proxy_is_switched_off(monkeypatch):
 def test_mintsifry_root_is_pinned_only_for_tinvest_hosts():
     assert set(http.EXTRA_CA) == {"invest-public-api.tinkoff.ru", "invest-public-api.tbank.ru"}
     assert isinstance(http.tls_context("https://invest-public-api.tinkoff.ru/rest/x"), ssl.SSLContext)
-    for url in ("https://iss.moex.com/iss", "https://www.cbr.ru/x", "https://www.sberbank.com/a.pdf"):
+    for url in ("https://iss.moex.com/iss", "https://www.cbr.ru/x", "https://issuer.example/a.pdf"):
         assert http.tls_context(url) is None
+
+
+@pytest.mark.tact
+def test_issuer_hosts_get_the_root_only_by_the_sources_setting(monkeypatch):
+    monkeypatch.setattr(http, "_PINNED_BY_CONFIG", set())
+    assert http.tls_context("https://issuer.example/a.pdf") is None
+    http.pin_trusted_root(["Issuer.Example", " "])
+    assert isinstance(http.tls_context("https://issuer.example/a.pdf"), ssl.SSLContext)
+    assert http.tls_context("https://other.example/a.pdf") is None
+
+
+@pytest.mark.tact
+def test_the_sources_name_the_issuer_hosts_that_need_the_root():
+    from indicators import config
+    cfg = config.sources()["sber_pdf"]
+    assert cfg["trusted_root_hosts"] and set(cfg["trusted_root_hosts"]) <= set(cfg["hosts"])
 
 
 @pytest.mark.tact

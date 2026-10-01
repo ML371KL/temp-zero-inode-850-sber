@@ -9,7 +9,7 @@
 Первый шаг выкладки на новую машину (DESIGN §6.2: проверено с ноутбука, с
 сервера — пробой) и первый шаг разбора «источник молчит». Ходит через
 `indicators.http` — ту же таблицу User-Agent по хостам, без прокси окружения,
-с закреплённым корнем только для хостов T-Invest, — поэтому проба проверяет
+с закреплённым корнем только для хостов T-Invest и эмитента, — поэтому проба проверяет
 именно боевую дорогу, а не соседнюю. Одна попытка на пробу, без повторов и
 без записи в сырой архив; эмитент (тикеры, регномер) — из `meta.company` книги.
 
@@ -376,6 +376,8 @@ def run(only: list[str] | None = None, *, pdf: str | None = None, getter=None, t
     today = today or date.today()
     company = config.company()
     cfg = config.sources()
+    # Та же настройка, что у сборщика документов эмитента: корень издателя — его хостам.
+    http.pin_trusted_root((cfg.get("sber_pdf") or {}).get("trusted_root_hosts") or [])
     board = (cfg.get("iss") or {}).get("board", "TQBR")
     class_code = (cfg.get("tinvest") or {}).get("class_code", board)
     chosen = only or list(PROBES)
