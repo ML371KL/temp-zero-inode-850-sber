@@ -1,0 +1,18 @@
+[Unit]
+Description=Сбер 850 · таймер дозора релизов (будни, каждые 10 минут 09:45–13:00 МСК)
+
+[Timer]
+# 06:45–09:55 UTC = 09:45–12:55 МСК: релиз РСБУ выходит около 09:50 МСК, цифры в
+# новостях — через минуты (data/indicators/sources.yaml, schedule.watch_window_msk).
+# Дни релиза выбирает сам такт (тихая проверка окна по календарю индикаторов):
+# вне окна — выход без строки.
+OnCalendar=Mon..Fri *-*-* 06:45/10:00 UTC
+OnCalendar=Mon..Fri *-*-* 07..09:05/10:00 UTC
+RandomizedDelaySec=30
+AccuracySec=30s
+# Persistent не нужен: пропущенная проверка ничего не теряет — следующая через
+# 10 минут, а суточный такт вечером соберёт всё принятое.
+Unit=sber850-release-watch.service
+
+[Install]
+WantedBy=timers.target

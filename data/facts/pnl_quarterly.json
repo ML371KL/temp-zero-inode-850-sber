@@ -1,0 +1,1492 @@
+{
+ "basis": "IFRS",
+ "as_of": "2026-06-30",
+ "unit": "млрд ₽ за квартал; key_avg — доля единицы",
+ "sign": "как в отчётности: расходы, резервы, налог, взносы АСВ — со знаком минус; тождество PBT = nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex + misc_net",
+ "quarters": {
+  "2023Q1": {
+   "nii": {
+    "v": 562.8,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   "fees_net": {
+    "v": 171.1,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f",
+    "calc": "fee_income + fee_expense"
+   },
+   "fee_income": {
+    "v": 227.1,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   "fee_expense": {
+    "v": -56.0,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   "llp_debt_fa": {
+    "v": -64.4,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": null,
+    "calc": "не раскрыто: страхование (выручка + расходы на услуги): в обобщённой форме 2023Q1 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "insurance_finance": {
+    "v": null,
+    "calc": "не раскрыто: строка «ins_finance» за 2023Q1 не раскрыта"
+   },
+   "noncore_net": {
+    "v": null,
+    "calc": "не раскрыто: непрофильная деятельность: в обобщённой форме 2023Q1 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "opex": {
+    "v": -181.9,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   "pbt": {
+    "v": 481.4,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   "tax": {
+    "v": -124.2,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   "ni": {
+    "v": 357.2,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   "ni_shareholders": {
+    "v": 358.9,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   "ni_nci": {
+    "v": -1.7,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   "dia": {
+    "v": -24.0,
+    "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   "misc_net": {
+    "v": null,
+    "calc": "не раскрыто: в обобщённой форме 2023Q1 страхование и непрофильная деятельность свёрнуты в прочие — остаток не определяется"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": null,
+    "calc": "не раскрыто: OCI по FVOCI (переоценка + перенос в ОПУ): в обобщённой форме 2023Q1 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "oci_total": {
+    "v": -26.3,
+    "src": "ifrs_3M2024_statements.pdf, с. 7, sha256 c8d802e70395f39f"
+   },
+   "ci_shareholders": {
+    "v": 332.7,
+    "src": "ifrs_3M2024_statements.pdf, с. 7, sha256 c8d802e70395f39f"
+   },
+   "other_equity_movements": {
+    "v": null,
+    "calc": "не раскрыто: прочие движения капитала (прочие + LTIP + операции с собственными акциями): в обобщённой форме 2023Q1 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "at1_coupon": {
+    "v": 0.0,
+    "calc": "купон AT1 выплачивается в декабре (К4); в квартале — 0 (MODEL §4.9)"
+   },
+   "key_avg": {
+    "v": 0.075,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2023Q1 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2023Q2": {
+   "nii": {
+    "v": 597.6,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   "fees_net": {
+    "v": 186.9,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c",
+    "calc": "fee_income + fee_expense"
+   },
+   "fee_income": {
+    "v": 256.7,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   "fee_expense": {
+    "v": -69.8,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   "llp_debt_fa": {
+    "v": -88.9,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": null,
+    "calc": "не раскрыто: страхование (выручка + расходы на услуги): в обобщённой форме 2023Q2 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "insurance_finance": {
+    "v": null,
+    "calc": "не раскрыто: строка «ins_finance» за 2023Q2 не раскрыта"
+   },
+   "noncore_net": {
+    "v": null,
+    "calc": "не раскрыто: непрофильная деятельность: в обобщённой форме 2023Q2 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "opex": {
+    "v": -216.3,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   "pbt": {
+    "v": 502.6,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   "tax": {
+    "v": -122.3,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   "ni": {
+    "v": 380.3,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   "ni_shareholders": {
+    "v": 381.4,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   "ni_nci": {
+    "v": -1.1,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   "dia": {
+    "v": -25.3,
+    "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   "misc_net": {
+    "v": null,
+    "calc": "не раскрыто: в обобщённой форме 2023Q2 страхование и непрофильная деятельность свёрнуты в прочие — остаток не определяется"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": null,
+    "calc": "не раскрыто: OCI по FVOCI (переоценка + перенос в ОПУ): в обобщённой форме 2023Q2 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "oci_total": {
+    "v": -18.6,
+    "src": "ifrs_6M2024_statements.pdf, с. 7, sha256 44e423398dfb4e3c"
+   },
+   "ci_shareholders": {
+    "v": 362.7,
+    "src": "ifrs_6M2024_statements.pdf, с. 7, sha256 44e423398dfb4e3c"
+   },
+   "other_equity_movements": {
+    "v": null,
+    "calc": "не раскрыто: прочие движения капитала (прочие + LTIP + операции с собственными акциями): в обобщённой форме 2023Q2 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "at1_coupon": {
+    "v": 0.0,
+    "calc": "купон AT1 выплачивается в декабре (К4); в квартале — 0 (MODEL §4.9)"
+   },
+   "key_avg": {
+    "v": 0.075,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2023Q2 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2023Q3": {
+   "nii": {
+    "v": 667.9,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   "fees_net": {
+    "v": 195.5,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "fee_income + fee_expense"
+   },
+   "fee_income": {
+    "v": 279.8,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   "fee_expense": {
+    "v": -84.3,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   "llp_debt_fa": {
+    "v": -32.2,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": null,
+    "calc": "не раскрыто: страхование (выручка + расходы на услуги): в обобщённой форме 2023Q3 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "insurance_finance": {
+    "v": null,
+    "calc": "не раскрыто: строка «ins_finance» за 2023Q3 не раскрыта"
+   },
+   "noncore_net": {
+    "v": null,
+    "calc": "не раскрыто: непрофильная деятельность: в обобщённой форме 2023Q3 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "opex": {
+    "v": -234.2,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   "pbt": {
+    "v": 521.7,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   "tax": {
+    "v": -110.3,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   "ni": {
+    "v": 411.4,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   "ni_shareholders": {
+    "v": 411.7,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   "ni_nci": {
+    "v": -0.3,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   "dia": {
+    "v": -27.2,
+    "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   "misc_net": {
+    "v": null,
+    "calc": "не раскрыто: в обобщённой форме 2023Q3 страхование и непрофильная деятельность свёрнуты в прочие — остаток не определяется"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": null,
+    "calc": "не раскрыто: OCI по FVOCI (переоценка + перенос в ОПУ): в обобщённой форме 2023Q3 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "oci_total": {
+    "v": -124.1,
+    "src": "ifrs_9M2024_statements.pdf, с. 7, sha256 75c4a0d7f4932954"
+   },
+   "ci_shareholders": {
+    "v": 287.5,
+    "src": "ifrs_9M2024_statements.pdf, с. 7, sha256 75c4a0d7f4932954"
+   },
+   "other_equity_movements": {
+    "v": null,
+    "calc": "не раскрыто: прочие движения капитала (прочие + LTIP + операции с собственными акциями): в обобщённой форме 2023Q3 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "at1_coupon": {
+    "v": 0.0,
+    "calc": "купон AT1 выплачивается в декабре (К4); в квартале — 0 (MODEL §4.9)"
+   },
+   "key_avg": {
+    "v": 0.101793,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2023Q3 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2023Q4": {
+   "nii": {
+    "v": 736.3,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "fees_net": {
+    "v": 210.4,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "fee_income + fee_expense; кварталы — FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "fee_income": {
+    "v": 311.1,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "fee_expense": {
+    "v": -100.7,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "llp_debt_fa": {
+    "v": -49.9,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": null,
+    "calc": "не раскрыто: страхование (выручка + расходы на услуги): в обобщённой форме 2023Q4 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "insurance_finance": {
+    "v": null,
+    "calc": "не раскрыто: строка «ins_finance» за 2023Q4 не раскрыта"
+   },
+   "noncore_net": {
+    "v": null,
+    "calc": "не раскрыто: непрофильная деятельность: в обобщённой форме 2023Q4 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "opex": {
+    "v": -292.0,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "pbt": {
+    "v": 479.0,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "tax": {
+    "v": -119.3,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "ni": {
+    "v": 359.7,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "ni_shareholders": {
+    "v": 359.8,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "ni_nci": {
+    "v": -0.1,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "dia": {
+    "v": -28.6,
+    "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "misc_net": {
+    "v": null,
+    "calc": "не раскрыто: в обобщённой форме 2023Q4 страхование и непрофильная деятельность свёрнуты в прочие — остаток не определяется"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": null,
+    "calc": "не раскрыто: OCI по FVOCI (переоценка + перенос в ОПУ): в обобщённой форме 2023Q4 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "oci_total": {
+    "v": 37.6,
+    "src": "ifrs_FY2024_statements.pdf, с. 8, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 7, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "ci_shareholders": {
+    "v": 397.5,
+    "src": "ifrs_FY2024_statements.pdf, с. 8, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 7, sha256 75c4a0d7f4932954",
+    "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+   },
+   "other_equity_movements": {
+    "v": null,
+    "calc": "не раскрыто: прочие движения капитала (прочие + LTIP + операции с собственными акциями): в обобщённой форме 2023Q4 строки свёрнуты в «прочие операционные» (other_op_net)"
+   },
+   "at1_coupon": {
+    "v": 9.7,
+    "src": "ifrs_FY2024_statements.pdf, с. 9, sha256 fbd4d739ce58c597",
+    "calc": "FY2023 − 9M2023: процентные платежи по бессрочному субординированному займу за год (−9,7); в отчёте о капитале за 9 месяцев строки нет (0); величиной"
+   },
+   "key_avg": {
+    "v": 0.145217,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2023Q4 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2024Q1": {
+   "nii": {
+    "v": 699.9,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "fees_net": {
+    "v": 184.1,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90",
+    "calc": "fee_income + fee_expense"
+   },
+   "fee_income": {
+    "v": 256.6,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "fee_expense": {
+    "v": -72.5,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "llp_debt_fa": {
+    "v": -47.7,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": 32.0,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90",
+    "calc": "ins_revenue + ins_service_expense"
+   },
+   "insurance_finance": {
+    "v": -25.4,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "noncore_net": {
+    "v": -86.8,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90",
+    "calc": "noncore_revenue + noncore_cost"
+   },
+   "opex": {
+    "v": -227.6,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "pbt": {
+    "v": 508.7,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "tax": {
+    "v": -111.3,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "ni": {
+    "v": 397.4,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "ni_shareholders": {
+    "v": 397.6,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "ni_nci": {
+    "v": -0.2,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "dia": {
+    "v": -31.0,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   "misc_net": {
+    "v": -45.2,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex): финансовые расходы страхования, торговые и по СС, валютные, прочие резервы, обесценение, переоценка офисной недвижимости, ассоциированные (MODEL §4.7)"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": -93.8,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 7, sha256 1f25a2344d65ea90",
+    "calc": "oci_fvoci_fv_change_net + oci_fvoci_recycled_net"
+   },
+   "oci_total": {
+    "v": -81.4,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 7, sha256 1f25a2344d65ea90"
+   },
+   "ci_shareholders": {
+    "v": 316.2,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 7, sha256 1f25a2344d65ea90"
+   },
+   "other_equity_movements": {
+    "v": 3.8,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 8, sha256 1f25a2344d65ea90",
+    "calc": "eqf_other_movements__shareholders + eqf_ltip__shareholders + eqf_treasury_ops__shareholders"
+   },
+   "at1_coupon": {
+    "v": 0.0,
+    "calc": "купон AT1 выплачивается в декабре (К4); в квартале — 0 (MODEL §4.9)"
+   },
+   "key_avg": {
+    "v": 0.16,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2024Q1 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2024Q2": {
+   "nii": {
+    "v": 713.2,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "fees_net": {
+    "v": 209.5,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3",
+    "calc": "fee_income + fee_expense"
+   },
+   "fee_income": {
+    "v": 289.8,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "fee_expense": {
+    "v": -80.3,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "llp_debt_fa": {
+    "v": -122.3,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": 30.9,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3",
+    "calc": "ins_revenue + ins_service_expense"
+   },
+   "insurance_finance": {
+    "v": 7.2,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "noncore_net": {
+    "v": -63.8,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3",
+    "calc": "noncore_revenue + noncore_cost"
+   },
+   "opex": {
+    "v": -252.7,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "pbt": {
+    "v": 521.1,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "tax": {
+    "v": -102.4,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "ni": {
+    "v": 418.7,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "ni_shareholders": {
+    "v": 418.7,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "ni_nci": {
+    "v": 0.0,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "dia": {
+    "v": -34.5,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   "misc_net": {
+    "v": 6.3,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex): финансовые расходы страхования, торговые и по СС, валютные, прочие резервы, обесценение, переоценка офисной недвижимости, ассоциированные (MODEL §4.7)"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": -185.0,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 7, sha256 090e4b47f88773b3",
+    "calc": "oci_fvoci_fv_change_net + oci_fvoci_recycled_net"
+   },
+   "oci_total": {
+    "v": -167.2,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 7, sha256 090e4b47f88773b3"
+   },
+   "ci_shareholders": {
+    "v": 251.5,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 7, sha256 090e4b47f88773b3"
+   },
+   "other_equity_movements": {
+    "v": 3.2,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 8, sha256 090e4b47f88773b3; 2025Q1_ifrs_interim_statements.pdf, с. 8, sha256 1f25a2344d65ea90",
+    "calc": "eqf_other_movements__shareholders + eqf_ltip__shareholders + eqf_treasury_ops__shareholders; кварталы — 6M2024 − 3M2024 (разность нарастающих итогов)"
+   },
+   "at1_coupon": {
+    "v": 0.0,
+    "calc": "купон AT1 выплачивается в декабре (К4); в квартале — 0 (MODEL §4.9)"
+   },
+   "key_avg": {
+    "v": 0.16,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2024Q2 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2024Q3": {
+   "nii": {
+    "v": 762.1,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "fees_net": {
+    "v": 218.2,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "fee_income + fee_expense"
+   },
+   "fee_income": {
+    "v": 306.4,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "fee_expense": {
+    "v": -88.2,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "llp_debt_fa": {
+    "v": -113.3,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": 40.4,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "ins_revenue + ins_service_expense"
+   },
+   "insurance_finance": {
+    "v": -18.9,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "noncore_net": {
+    "v": -42.4,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "noncore_revenue + noncore_cost"
+   },
+   "opex": {
+    "v": -274.3,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "pbt": {
+    "v": 561.5,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "tax": {
+    "v": -150.4,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "ni": {
+    "v": 411.1,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "ni_shareholders": {
+    "v": 411.7,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "ni_nci": {
+    "v": -0.6,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "dia": {
+    "v": -34.7,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "misc_net": {
+    "v": -29.2,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex): финансовые расходы страхования, торговые и по СС, валютные, прочие резервы, обесценение, переоценка офисной недвижимости, ассоциированные (MODEL §4.7)"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": -97.1,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1",
+    "calc": "oci_fvoci_fv_change_net + oci_fvoci_recycled_net"
+   },
+   "oci_total": {
+    "v": -74.0,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1"
+   },
+   "ci_shareholders": {
+    "v": 337.7,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1"
+   },
+   "other_equity_movements": {
+    "v": -1.8,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 8, sha256 cf3ac9548d5ca9a1; ifrs_6M2025_statements_sber.pdf, с. 8, sha256 090e4b47f88773b3",
+    "calc": "eqf_other_movements__shareholders + eqf_ltip__shareholders + eqf_treasury_ops__shareholders; кварталы — 9M2024 − 6M2024 (разность нарастающих итогов)"
+   },
+   "at1_coupon": {
+    "v": 0.0,
+    "calc": "купон AT1 выплачивается в декабре (К4); в квартале — 0 (MODEL §4.9)"
+   },
+   "key_avg": {
+    "v": 0.175543,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2024Q3 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2024Q4": {
+   "nii": {
+    "v": 824.4,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "fees_net": {
+    "v": 231.1,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "fee_income + fee_expense; кварталы — FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "fee_income": {
+    "v": 319.3,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "fee_expense": {
+    "v": -88.2,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "llp_debt_fa": {
+    "v": -159.5,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": 39.7,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "ins_revenue + ins_service_expense; кварталы — FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "insurance_finance": {
+    "v": -92.2,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "noncore_net": {
+    "v": -91.1,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "noncore_revenue + noncore_cost; кварталы — FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "opex": {
+    "v": -308.0,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "pbt": {
+    "v": 443.3,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "tax": {
+    "v": -90.2,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "ni": {
+    "v": 353.1,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "ni_shareholders": {
+    "v": 353.6,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "ni_nci": {
+    "v": -0.5,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "dia": {
+    "v": -36.2,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "misc_net": {
+    "v": -93.3,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex): финансовые расходы страхования, торговые и по СС, валютные, прочие резервы, обесценение, переоценка офисной недвижимости, ассоциированные (MODEL §4.7)"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": 74.8,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 7, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1",
+    "calc": "oci_fvoci_fv_change_net + oci_fvoci_recycled_net; кварталы — FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "oci_total": {
+    "v": 69.1,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 7, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "ci_shareholders": {
+    "v": 422.7,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 7, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "other_equity_movements": {
+    "v": 10.9,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 8, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 8, sha256 cf3ac9548d5ca9a1",
+    "calc": "eqf_other_movements__shareholders + eqf_ltip__shareholders + eqf_treasury_ops__shareholders; кварталы — FY2024 − 9M2024 (разность нарастающих итогов)"
+   },
+   "at1_coupon": {
+    "v": 9.7,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 8, sha256 06ac4bd4164d576e",
+    "calc": "FY2024 − 9M2024: процентные платежи по бессрочному субординированному займу за год (−9,7); в отчёте о капитале за 9 месяцев строки нет (0); величиной"
+   },
+   "key_avg": {
+    "v": 0.20413,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2024Q4 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2025Q1": {
+   "nii": {
+    "v": 832.4,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "fees_net": {
+    "v": 203.2,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826",
+    "calc": "fee_income + fee_expense"
+   },
+   "fee_income": {
+    "v": 272.9,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "fee_expense": {
+    "v": -69.7,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "llp_debt_fa": {
+    "v": -153.3,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": 36.9,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826",
+    "calc": "ins_revenue + ins_service_expense"
+   },
+   "insurance_finance": {
+    "v": -86.6,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "noncore_net": {
+    "v": -45.0,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826",
+    "calc": "noncore_revenue + noncore_cost"
+   },
+   "opex": {
+    "v": -262.1,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "pbt": {
+    "v": 575.2,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "tax": {
+    "v": -139.1,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "ni": {
+    "v": 436.1,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "ni_shareholders": {
+    "v": 436.0,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "ni_nci": {
+    "v": 0.1,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "dia": {
+    "v": -37.7,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "misc_net": {
+    "v": -36.9,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex): финансовые расходы страхования, торговые и по СС, валютные, прочие резервы, обесценение, переоценка офисной недвижимости, ассоциированные (MODEL §4.7)"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": 40.6,
+    "src": "ifrs_3M2026_statements.pdf, с. 7, sha256 4b1449f839cf0826",
+    "calc": "oci_fvoci_fv_change_net + oci_fvoci_recycled_net"
+   },
+   "oci_total": {
+    "v": 24.9,
+    "src": "ifrs_3M2026_statements.pdf, с. 7, sha256 4b1449f839cf0826"
+   },
+   "ci_shareholders": {
+    "v": 460.9,
+    "src": "ifrs_3M2026_statements.pdf, с. 7, sha256 4b1449f839cf0826"
+   },
+   "other_equity_movements": {
+    "v": -7.5,
+    "src": "ifrs_3M2026_statements.pdf, с. 8, sha256 4b1449f839cf0826",
+    "calc": "eqf_other_movements__shareholders + eqf_ltip__shareholders + eqf_treasury_ops__shareholders"
+   },
+   "at1_coupon": {
+    "v": 0.0,
+    "calc": "купон AT1 выплачивается в декабре (К4); в квартале — 0 (MODEL §4.9)"
+   },
+   "key_avg": {
+    "v": 0.21,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2025Q1 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2025Q2": {
+   "nii": {
+    "v": 841.8,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "fees_net": {
+    "v": 195.0,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b",
+    "calc": "fee_income + fee_expense"
+   },
+   "fee_income": {
+    "v": 297.2,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "fee_expense": {
+    "v": -102.2,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "llp_debt_fa": {
+    "v": -211.5,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": 38.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b",
+    "calc": "ins_revenue + ins_service_expense"
+   },
+   "insurance_finance": {
+    "v": -94.3,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "noncore_net": {
+    "v": -31.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b",
+    "calc": "noncore_revenue + noncore_cost"
+   },
+   "opex": {
+    "v": -292.9,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "pbt": {
+    "v": 541.3,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "tax": {
+    "v": -118.4,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "ni": {
+    "v": 422.9,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "ni_shareholders": {
+    "v": 422.6,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "ni_nci": {
+    "v": 0.3,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "dia": {
+    "v": -38.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "misc_net": {
+    "v": 1.9,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex): финансовые расходы страхования, торговые и по СС, валютные, прочие резервы, обесценение, переоценка офисной недвижимости, ассоциированные (MODEL §4.7)"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": 150.8,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 7, sha256 5b3a3de88ae6c96b",
+    "calc": "oci_fvoci_fv_change_net + oci_fvoci_recycled_net"
+   },
+   "oci_total": {
+    "v": 135.0,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 7, sha256 5b3a3de88ae6c96b"
+   },
+   "ci_shareholders": {
+    "v": 557.6,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 7, sha256 5b3a3de88ae6c96b"
+   },
+   "other_equity_movements": {
+    "v": 9.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b; ifrs_3M2026_statements.pdf, с. 8, sha256 4b1449f839cf0826",
+    "calc": "eqf_other_movements__shareholders + eqf_ltip__shareholders + eqf_treasury_ops__shareholders; кварталы — 6M2025 − 3M2025 (разность нарастающих итогов)"
+   },
+   "at1_coupon": {
+    "v": 0.0,
+    "calc": "купон AT1 выплачивается в декабре (К4); в квартале — 0 (MODEL §4.9)"
+   },
+   "key_avg": {
+    "v": 0.207582,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2025Q2 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2025Q3": {
+   "nii": {
+    "v": 893.6,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "fees_net": {
+    "v": 216.5,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "fee_income + fee_expense"
+   },
+   "fee_income": {
+    "v": 315.6,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "fee_expense": {
+    "v": -99.1,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "llp_debt_fa": {
+    "v": -170.5,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": 34.8,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "ins_revenue + ins_service_expense"
+   },
+   "insurance_finance": {
+    "v": -65.8,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "noncore_net": {
+    "v": -36.3,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "noncore_revenue + noncore_cost"
+   },
+   "opex": {
+    "v": -308.6,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "pbt": {
+    "v": 595.9,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "tax": {
+    "v": -147.6,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "ni": {
+    "v": 448.3,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "ni_shareholders": {
+    "v": 449.8,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "ni_nci": {
+    "v": -1.5,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "dia": {
+    "v": -39.2,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   "misc_net": {
+    "v": -33.6,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex): финансовые расходы страхования, торговые и по СС, валютные, прочие резервы, обесценение, переоценка офисной недвижимости, ассоциированные (MODEL §4.7)"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": 3.3,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1",
+    "calc": "oci_fvoci_fv_change_net + oci_fvoci_recycled_net"
+   },
+   "oci_total": {
+    "v": -0.6,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1"
+   },
+   "ci_shareholders": {
+    "v": 449.2,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1"
+   },
+   "other_equity_movements": {
+    "v": 4.7,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 8, sha256 cf3ac9548d5ca9a1; 2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b",
+    "calc": "eqf_other_movements__shareholders + eqf_ltip__shareholders + eqf_treasury_ops__shareholders; кварталы — 9M2025 − 6M2025 (разность нарастающих итогов)"
+   },
+   "at1_coupon": {
+    "v": 0.0,
+    "calc": "купон AT1 выплачивается в декабре (К4); в квартале — 0 (MODEL §4.9)"
+   },
+   "key_avg": {
+    "v": 0.18413,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2025Q3 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2025Q4": {
+   "nii": {
+    "v": 988.2,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "fees_net": {
+    "v": 219.0,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "fee_income + fee_expense; кварталы — FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "fee_income": {
+    "v": 331.4,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "fee_expense": {
+    "v": -112.4,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "llp_debt_fa": {
+    "v": -111.3,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": 37.3,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "ins_revenue + ins_service_expense; кварталы — FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "insurance_finance": {
+    "v": -100.6,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "noncore_net": {
+    "v": -43.9,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "noncore_revenue + noncore_cost; кварталы — FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "opex": {
+    "v": -373.8,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "pbt": {
+    "v": 537.6,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "tax": {
+    "v": -139.0,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "ni": {
+    "v": 398.6,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "ni_shareholders": {
+    "v": 399.0,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "ni_nci": {
+    "v": -0.4,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "dia": {
+    "v": -40.7,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "misc_net": {
+    "v": -177.9,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex): финансовые расходы страхования, торговые и по СС, валютные, прочие резервы, обесценение, переоценка офисной недвижимости, ассоциированные (MODEL §4.7)"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": 47.8,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 7, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1",
+    "calc": "oci_fvoci_fv_change_net + oci_fvoci_recycled_net; кварталы — FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "oci_total": {
+    "v": 94.2,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 7, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "ci_shareholders": {
+    "v": 493.2,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 7, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 7, sha256 cf3ac9548d5ca9a1",
+    "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "other_equity_movements": {
+    "v": -4.3,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 8, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 8, sha256 cf3ac9548d5ca9a1",
+    "calc": "eqf_other_movements__shareholders + eqf_ltip__shareholders + eqf_treasury_ops__shareholders; кварталы — FY2025 − 9M2025 (разность нарастающих итогов)"
+   },
+   "at1_coupon": {
+    "v": 9.7,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 8, sha256 06ac4bd4164d576e",
+    "calc": "FY2025 − 9M2025: процентные платежи по бессрочному субординированному займу за год (−9,7); в отчёте о капитале за 9 месяцев строки нет (0); величиной"
+   },
+   "key_avg": {
+    "v": 0.16587,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2025Q4 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2026Q1": {
+   "nii": {
+    "v": 984.3,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "fees_net": {
+    "v": 204.5,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826",
+    "calc": "fee_income + fee_expense"
+   },
+   "fee_income": {
+    "v": 284.4,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "fee_expense": {
+    "v": -79.9,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "llp_debt_fa": {
+    "v": -161.2,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": 39.7,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826",
+    "calc": "ins_revenue + ins_service_expense"
+   },
+   "insurance_finance": {
+    "v": -78.9,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "noncore_net": {
+    "v": -41.3,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826",
+    "calc": "noncore_revenue + noncore_cost"
+   },
+   "opex": {
+    "v": -303.5,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "pbt": {
+    "v": 669.4,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "tax": {
+    "v": -161.5,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "ni": {
+    "v": 507.9,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "ni_shareholders": {
+    "v": 508.5,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "ni_nci": {
+    "v": -0.6,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "dia": {
+    "v": -43.2,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   "misc_net": {
+    "v": -53.1,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex): финансовые расходы страхования, торговые и по СС, валютные, прочие резервы, обесценение, переоценка офисной недвижимости, ассоциированные (MODEL §4.7)"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": 21.6,
+    "src": "ifrs_3M2026_statements.pdf, с. 7, sha256 4b1449f839cf0826",
+    "calc": "oci_fvoci_fv_change_net + oci_fvoci_recycled_net"
+   },
+   "oci_total": {
+    "v": 16.8,
+    "src": "ifrs_3M2026_statements.pdf, с. 7, sha256 4b1449f839cf0826"
+   },
+   "ci_shareholders": {
+    "v": 525.3,
+    "src": "ifrs_3M2026_statements.pdf, с. 7, sha256 4b1449f839cf0826"
+   },
+   "other_equity_movements": {
+    "v": -5.5,
+    "src": "ifrs_3M2026_statements.pdf, с. 8, sha256 4b1449f839cf0826",
+    "calc": "eqf_other_movements__shareholders + eqf_ltip__shareholders + eqf_treasury_ops__shareholders"
+   },
+   "at1_coupon": {
+    "v": 0.0,
+    "calc": "купон AT1 выплачивается в декабре (К4); в квартале — 0 (MODEL §4.9)"
+   },
+   "key_avg": {
+    "v": 0.157056,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2026Q1 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  },
+  "2026Q2": {
+   "nii": {
+    "v": 1066.8,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "fees_net": {
+    "v": 215.3,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b",
+    "calc": "fee_income + fee_expense"
+   },
+   "fee_income": {
+    "v": 310.4,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "fee_expense": {
+    "v": -95.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "llp_debt_fa": {
+    "v": -171.5,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "fv_loans_credit": {
+    "v": null,
+    "calc": "не раскрыто: кредитная переоценка кредитов по СС отдельной строкой ОПУ не раскрывается (внутри результата по СС)"
+   },
+   "insurance_net": {
+    "v": 39.8,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b",
+    "calc": "ins_revenue + ins_service_expense"
+   },
+   "insurance_finance": {
+    "v": 2.0,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "noncore_net": {
+    "v": -46.4,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b",
+    "calc": "noncore_revenue + noncore_cost"
+   },
+   "opex": {
+    "v": -336.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "pbt": {
+    "v": 679.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "tax": {
+    "v": -167.9,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "ni": {
+    "v": 511.2,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "ni_shareholders": {
+    "v": 511.6,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "ni_nci": {
+    "v": -0.4,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "dia": {
+    "v": -44.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   "misc_net": {
+    "v": -88.8,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex): финансовые расходы страхования, торговые и по СС, валютные, прочие резервы, обесценение, переоценка офисной недвижимости, ассоциированные (MODEL §4.7)"
+   },
+   "fvtpl_bond_reval": {
+    "v": null,
+    "calc": "не раскрыто: переоценка облигаций по СС отдельно не раскрыта: внутри доходов по СС (gl_fvtpl_nonderiv), входит в misc_net"
+   },
+   "oci_fvoci": {
+    "v": -74.4,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 7, sha256 5b3a3de88ae6c96b",
+    "calc": "oci_fvoci_fv_change_net + oci_fvoci_recycled_net"
+   },
+   "oci_total": {
+    "v": -72.9,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 7, sha256 5b3a3de88ae6c96b"
+   },
+   "ci_shareholders": {
+    "v": 438.7,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 7, sha256 5b3a3de88ae6c96b"
+   },
+   "other_equity_movements": {
+    "v": 68.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b; ifrs_3M2026_statements.pdf, с. 8, sha256 4b1449f839cf0826",
+    "calc": "eqf_other_movements__shareholders + eqf_ltip__shareholders + eqf_treasury_ops__shareholders; кварталы — 6M2026 − 3M2026 (разность нарастающих итогов)"
+   },
+   "at1_coupon": {
+    "v": 0.0,
+    "calc": "купон AT1 выплачивается в декабре (К4); в квартале — 0 (MODEL §4.9)"
+   },
+   "key_avg": {
+    "v": 0.146181,
+    "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "средняя ключевая ставка 2026Q2 по календарным дням (доля; флаг ni_jump, MODEL §14.3)"
+   }
+  }
+ }
+}

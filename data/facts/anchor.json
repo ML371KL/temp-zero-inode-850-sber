@@ -1,0 +1,708 @@
+{
+ "basis": "IFRS",
+ "as_of": "2026-06-30",
+ "period": "2026Q2",
+ "note": "якорь — последний отчётный квартал МСФО группы (промежуточная отчётность 6М26); documents — реестр всех документов, на которые ссылаются узлы фактов (sha256 полностью; в src — первые 16 знаков); file — путь в папке передачи (BANK_HANDOFF_DIR)",
+ "documents": [
+  {
+   "key": "2019Q4_ifrs_presentation",
+   "file": "primary/2019Q4_ifrs_presentation.pdf",
+   "sha256": "e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf",
+   "url": "https://web.archive.org/web/20200514090541id_/https://www.sberbank.com/common/img/uploaded/files/info/ifrs2019/ru_ifrs_presentation_4q19.pdf",
+   "title": "Презентация МСФО 12М2019 (копия Internet Archive 14.05.2020; оригинал https://www.sberbank.com/common/img/uploaded/files/info/ifrs2019/ru_ifrs_presentation_4q19.pdf — 404)"
+  },
+  {
+   "key": "2020Q2_ifrs_presentation",
+   "file": "primary/2020Q2_ifrs_presentation.pdf",
+   "sha256": "0f36d709e90858aaa1eabbbe1d113a6d4646997df0c8943ff5c23c9c1f3e4ab7",
+   "url": "https://web.archive.org/web/20200927123450id_/https://www.sberbank.com/common/img/uploaded/files/info/ifrs2020/ru_ifrs_presentation_2q_2020_3007_public.pdf",
+   "title": "Презентация МСФО 6М2020 (копия IA 27.09.2020; оригинал — 404)"
+  },
+  {
+   "key": "2020Q3_ifrs_presentation",
+   "file": "primary/2020Q3_ifrs_presentation.pdf",
+   "sha256": "c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c",
+   "url": "https://web.archive.org/web/20220427224658id_/https://www.sberbank.com/common/img/uploaded/files/info/ifrs2020/ru_ifrs_presentation_3q_2020_public.pdf",
+   "title": "Презентация МСФО 9М2020 (копия IA 27.04.2022; оригинал — 404)"
+  },
+  {
+   "key": "2020Q3_ifrs_press_release_en_webdisclosure",
+   "file": "primary/2020Q3_ifrs_press_release_en_webdisclosure.html",
+   "sha256": "380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec",
+   "url": "https://webdisclosure.com/finance/stocks/sberbank/news/948669.html",
+   "title": "Пресс-релиз МСФО 3К2020 (EN), регуляторная публикация Сбера через EQS, копия WebDisclosure (HTML, вторичный хост)"
+  },
+  {
+   "key": "2021Q3_ifrs_presentation",
+   "file": "primary/2021Q3_ifrs_presentation.pdf",
+   "sha256": "b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711",
+   "url": "https://web.archive.org/web/20211112153504id_/https://www.sberbank.com/common/img/uploaded/files/info/ifrs2021/3q_oct/pres/present_3q_ifrs281020213q_public_ru.pdf",
+   "title": "Презентация МСФО 9М2021 (копия IA 12.11.2021; оригинал — 404)"
+  },
+  {
+   "key": "2021Q3_ifrs_press_release_en_eqs",
+   "file": "primary/2021Q3_ifrs_press_release_en_eqs.html",
+   "sha256": "6bd883ab2317f391b945727d3aafbb4c12ae67422a27012963d15a9aaa2d4c13",
+   "url": "https://www.eqs-news.com/news/uk-regulatory/sberbank-sber-reports-3q-2021-net-profit-of-rub348-3-bn-under-international-financial-reporting-standards-ifrs/e800007a-e2d2-405a-bc5d-b6acb663beab_en",
+   "title": "Пресс-релиз МСФО 3К2021 (EN), регуляторная публикация Сбера через EQS (HTML-страница, вторичный хост)"
+  },
+  {
+   "key": "2023Q1_ifrs_presentation",
+   "file": "primary/2023Q1_ifrs_presentation.pdf",
+   "sha256": "ac7606bfa9b320c999210c84b09c929ea673ea188dc9e5975dafd614c75b9cd2",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023_q1_ifrs_presentation.pdf",
+   "title": "Презентация МСФО 1К2023"
+  },
+  {
+   "key": "2023Q1_ifrs_press_release",
+   "file": "primary/2023Q1_ifrs_press_release.pdf",
+   "sha256": "d0edbd118f1578b60b396133d2255957694efc355d7b8e69255f25ea6bd85287",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023_q1_ifrs_.pdf",
+   "title": "Пресс-релиз МСФО 1К2023"
+  },
+  {
+   "key": "2023Q2_ifrs_presentation",
+   "file": "primary/2023Q2_ifrs_presentation.pdf",
+   "sha256": "e35e9e6c9a4ae798836b4b573c289d1d2ec9883e99850449bd819b3306ae2d02",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023__q2_ifrs__presentation.pdf",
+   "title": "Презентация МСФО 6М2023 (RU)"
+  },
+  {
+   "key": "2023Q2_ifrs_press_release",
+   "file": "primary/2023Q2_ifrs_press_release.pdf",
+   "sha256": "5d8c034d6f03f8aeba7fb6566643d172ad37e44619ee8191f1986a48c094a965",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023_q2_ifrs__.pdf",
+   "title": "Пресс-релиз МСФО 6М2023 (оригинал Сбера)"
+  },
+  {
+   "key": "2023Q3_ifrs_presentation",
+   "file": "primary/2023Q3_ifrs_presentation.pdf",
+   "sha256": "81a3eb68d68ec9f39436c81ad9ff9df60898a8321c5ad165c7c6dcebb314deb8",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023__q3__ifrs_presentation.pdf",
+   "title": "Презентация МСФО 9М2023"
+  },
+  {
+   "key": "2023Q4_ifrs_presentation",
+   "file": "primary/2023Q4_ifrs_presentation.pdf",
+   "sha256": "b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023__ifrs__presentation.pdf",
+   "title": "Презентация МСФО 12М2023"
+  },
+  {
+   "key": "2023Q4_ifrs_press_release",
+   "file": "research/primary/2023Q4_ifrs_press_release.pdf",
+   "sha256": "e9453a68d881b7a00c37007a1e9ce13f001ca044cff710a54ca5a687b611bf76",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023_ifrs_.pdf",
+   "title": "Пресс-релиз МСФО 12М23 (с 2022)"
+  },
+  {
+   "key": "2024Q4_ifrs_presentation",
+   "file": "primary/2024Q4_ifrs_presentation.pdf",
+   "sha256": "717cfd764ad9967161887e516ad63d5538cf89d7d6ee15e6836bb8aacc001cf9",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/presentation_q4_mljq7xb3_2024.pdf",
+   "title": "Презентация МСФО 12М2024"
+  },
+  {
+   "key": "2024Q4_ifrs_press_release",
+   "file": "research/primary/2024Q4_ifrs_press_release.pdf",
+   "sha256": "22a137f32087d146785846df7b91bb33c620133d76a32659f8357c9bca1ace4b",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/results_q4_qx5ln89k_2024.pdf",
+   "title": "Пресс-релиз МСФО 12М24"
+  },
+  {
+   "key": "2025Q1_ifrs_interim_statements",
+   "file": "research/primary/2025Q1_ifrs_interim_statements.pdf",
+   "sha256": "1f25a2344d65ea905e8ae83b87201046d566b4412815ecc72d13ef586d9eb753",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/reporting_1q_5hzlpkgq_2025.pdf",
+   "title": "Промежуточная отчётность МСФО 3М25"
+  },
+  {
+   "key": "2025Q1_ifrs_presentation",
+   "file": "research/primary/2025Q1_ifrs_presentation.pdf",
+   "sha256": "22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/presentation_q1_3alame8r_2025.pdf",
+   "title": "Презентация МСФО 1К25"
+  },
+  {
+   "key": "2025Q2_ifrs_presentation",
+   "file": "primary/2025Q2_ifrs_presentation.pdf",
+   "sha256": "160364ed4904d8efb7dea4f911a01c5a6bafbbb26286b7b634646803c4a8f093",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/presentation_q2_j5kq6lml_2025.pdf",
+   "title": "Презентация МСФО 2К2025"
+  },
+  {
+   "key": "2025Q3_ifrs_presentation",
+   "file": "primary/2025Q3_ifrs_presentation.pdf",
+   "sha256": "00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/presentation_q3_z2lvsxdf_2025.pdf",
+   "title": "Презентация МСФО 3К2025"
+  },
+  {
+   "key": "2025Q4_ifrs_presentation",
+   "file": "primary/2025Q4_ifrs_presentation.pdf",
+   "sha256": "cc61c42c0890c448912ce7061add0c112b28176d8e28e26817389cef6a99d479",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/presentation_q4_64ghk9no_2025.pdf",
+   "title": "Презентация МСФО 2025 (26.02.2026)"
+  },
+  {
+   "key": "2025Q4_ifrs_press_release",
+   "file": "research/primary/2025Q4_ifrs_press_release.pdf",
+   "sha256": "9fcc844f65e099c25b733fc8c491f21d2a23190c89b2c5ad29afbb0749a78b61",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/ifrs_results_q4_1pbxnuiy_2025.pdf",
+   "title": "Пресс-релиз МСФО 12М25 (26.02.2026)"
+  },
+  {
+   "key": "2026H1_ifrs_interim_statements",
+   "file": "research/primary/2026H1_ifrs_interim_statements.pdf",
+   "sha256": "5b3a3de88ae6c96b6441054cd8e65dd5e45c170666d6d493534c400cdcd01a08",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/reporting_2q_0gxwlvnq_2026.pdf",
+   "title": "Промежуточная сокращённая консолидированная отчётность МСФО 6М26 (с примечаниями)"
+  },
+  {
+   "key": "2026M03_ras_press_release",
+   "file": "research/primary/2026M03_ras_press_release.pdf",
+   "sha256": "216a30a59107e3b508e9d4798ed5e866c17fd6bb0342e94a1c37d4044ee5ed00",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2026_rsbu/year/ras_for_3months2026_pnzxy7rl_ru.pdf",
+   "title": "Пресс-релиз РПБУ 3М2026"
+  },
+  {
+   "key": "2026Q1_ifrs_presentation",
+   "file": "research/primary/2026Q1_ifrs_presentation.pdf",
+   "sha256": "6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/presentation_q1_7xru6cuw_2026.pdf",
+   "title": "Презентация МСФО 1К26"
+  },
+  {
+   "key": "2026Q2_ifrs_presentation",
+   "file": "research/primary/2026Q2_ifrs_presentation.pdf",
+   "sha256": "d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/presentation_q2_9lwfjy1s_2026.pdf",
+   "title": "Презентация МСФО 2К26/6М26 (29.07.2026)"
+  },
+  {
+   "key": "FY2022_ifrs_presentation",
+   "file": "primary/FY2022_ifrs_presentation.pdf",
+   "sha256": "03bcb49309a55139e63b5d67fec663e2cc19d0888024e8f7878ed394673a25f6",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2022_IFRS_presentation.pdf",
+   "title": "Презентация МСФО 2022"
+  },
+  {
+   "key": "FY2022_ifrs_press_release",
+   "file": "primary/FY2022_ifrs_press_release.pdf",
+   "sha256": "68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2022_ifrs_.pdf",
+   "title": "Пресс-релиз МСФО 2022"
+  },
+  {
+   "key": "FY2022_ifrs_summary_statements",
+   "file": "research/primary/FY2022_ifrs_summary_statements.pdf",
+   "sha256": "0f736f6e44142c7f98eae63e9ad467f449865578f1f5df4c9db826c27b1c5aaa",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2022_ifrs_reporting.pdf",
+   "title": "Обобщённая консолидированная отчётность МСФО 2022 (с данными 2021)"
+  },
+  {
+   "key": "FY2023_ifrs_summary_statements",
+   "file": "research/primary/FY2023_ifrs_summary_statements.pdf",
+   "sha256": "724849f5047bb32bb1e13cb1d736b609a16d25974c9baf6ed805db4ed6a05b87",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023_ifrs_reporting.pdf",
+   "title": "Обобщённая консолидированная отчётность МСФО 2023 (с данными 2022)"
+  },
+  {
+   "key": "IR_presentation_2021-04",
+   "file": "primary/IR_presentation_2021-04.pdf",
+   "sha256": "3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/ir_presentation_1apr2021.pdf",
+   "title": "Презентация для инвесторов на 01.04.2021 (после МСФО 2020)"
+  },
+  {
+   "key": "calib_nii_anchor_proposal",
+   "file": "stage1/calib/nii/data/nii_books_anchor_proposal.json",
+   "sha256": "1351a13f2c5bf83c80e432e38487a0794c3c6ce9d966bc942e5bac156431ab84",
+   "url": null,
+   "title": "calib-nii: книги ЧПД на якоре (предложение этапа 1)"
+  },
+  {
+   "key": "cbr_f101_2023-07-01",
+   "file": "stage1/ras/raw/101/2023-07-01.xml",
+   "sha256": "a4ad41cde5d98bf62de03befc31dfa113a5e8fbfe336a152e44063bb556c6bac",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2023-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2023-10-01",
+   "file": "stage1/ras/raw/101/2023-10-01.xml",
+   "sha256": "3afac4c81cfe5dae6bfcffa0ccf2ed9a5188565a98523804bb19a650c1f9c8e5",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2023-10-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2024-01-01",
+   "file": "stage1/ras/raw/101/2024-01-01.xml",
+   "sha256": "5082fa10a2e9c1614eba70aaed32527626b46c97ac8734a4849771f3ed994bab",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2024-01-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2024-04-01",
+   "file": "stage1/ras/raw/101/2024-04-01.xml",
+   "sha256": "0f63db2e811b8eaab1a683df791272f12cbc416703b2436d68b7cd8c2e939495",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2024-04-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2024-07-01",
+   "file": "stage1/ras/raw/101/2024-07-01.xml",
+   "sha256": "8e349a06ffdd4aaa0e11767c0d6223a04f46bf858674ff19ebe0242a0d47bc0a",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2024-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2024-10-01",
+   "file": "stage1/ras/raw/101/2024-10-01.xml",
+   "sha256": "597519d6641e1f1c089eb6c5bc27cac1958cfbf486616e0db47d9f5d1558da91",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2024-10-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2025-01-01",
+   "file": "stage1/ras/raw/101/2025-01-01.xml",
+   "sha256": "62eee7ee1e1719ea9200a6a7ad4466308dba27b8c81db82910076d46e45a02e5",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2025-01-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2025-04-01",
+   "file": "stage1/ras/raw/101/2025-04-01.xml",
+   "sha256": "451b26b80f11c202db7280ea1cb8913b0e49f10813df19d9e68210c813de3577",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2025-04-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2025-07-01",
+   "file": "stage1/ras/raw/101/2025-07-01.xml",
+   "sha256": "205664dca92af54b75c5012043d49e201cd045da0e7fa938d862f8581ca344f1",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2025-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2025-10-01",
+   "file": "stage1/ras/raw/101/2025-10-01.xml",
+   "sha256": "54f507168272936a918e26ba6294a15cc2b36df1156be6b33140b8420505ace3",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2025-10-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2026-01-01",
+   "file": "stage1/ras/raw/101/2026-01-01.xml",
+   "sha256": "1bb4581f5ee3f989dddb09d3766b3e4d0a34880e8504e7fac47b49342d308e2c",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2026-01-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2026-04-01",
+   "file": "stage1/ras/raw/101/2026-04-01.xml",
+   "sha256": "2e3e0fcd99123a2fc4bc04a68aaf38c3d78ef08dd7a2108e6ae95089b7df3349",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2026-04-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f101_2026-07-01",
+   "file": "stage1/ras/raw/101/2026-07-01.xml",
+   "sha256": "be56704db086abad200402ac0c90366f78305550f5791c2e73bfa6c2b2e895ad",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2026-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2023-07-01",
+   "file": "stage1/ras/raw/102/2023-07-01.xml",
+   "sha256": "df118a18be9e15b1fc844829c1d6aa5d56032e88d376d88d25e4efbc023cbddf",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2023-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2023-10-01",
+   "file": "stage1/ras/raw/102/2023-10-01.xml",
+   "sha256": "01fc3ad2c2397a8bb3ad75261c44e98158d00062f00e1322829c98f48033a00c",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2023-10-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2024-01-01",
+   "file": "stage1/ras/raw/102/2024-01-01.xml",
+   "sha256": "ecc2f217cee93b69144e3659ed16bfbbd812372ac5f1922df5815688de0427ed",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2024-01-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2024-04-01",
+   "file": "stage1/ras/raw/102/2024-04-01.xml",
+   "sha256": "b8fb359b706c5a5df8effbd30ca279a31ab50fc887b1bbdd8f9727c0cc02e8c5",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2024-04-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2024-07-01",
+   "file": "stage1/ras/raw/102/2024-07-01.xml",
+   "sha256": "50429c032d5a75e5e927663cf81e3dc158a245d67686f78f34f6b80eb0e8104e",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2024-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2024-10-01",
+   "file": "stage1/ras/raw/102/2024-10-01.xml",
+   "sha256": "8753dde7d85b5c9f0e23d145d63d06e96ecdc4a1ec2f01fbfb9e3a4823e5e455",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2024-10-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2025-01-01",
+   "file": "stage1/ras/raw/102/2025-01-01.xml",
+   "sha256": "7e1ce288e9b309b57816e532ec6a19560f8f236ca019f4b98e05fbac922407af",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2025-01-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2025-04-01",
+   "file": "stage1/ras/raw/102/2025-04-01.xml",
+   "sha256": "3f06a578c402d6793b5052d901995c7f04b82699f9a889dfbcb5594bff775cee",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2025-04-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2025-07-01",
+   "file": "stage1/ras/raw/102/2025-07-01.xml",
+   "sha256": "13e2b24f59fd010009928b075a0d9d8c5b6d3abce2fc61ef602442db09548328",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2025-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2025-10-01",
+   "file": "stage1/ras/raw/102/2025-10-01.xml",
+   "sha256": "36c194c07655efac4d2bdf2b14ceb251b83211a3a46c5dea1a325031130e329d",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2025-10-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2026-01-01",
+   "file": "stage1/ras/raw/102/2026-01-01.xml",
+   "sha256": "b5f9ec2a9b111ec944d4b1d5775be33f20cfe62bc572faa5e15c763e53f9e97d",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2026-01-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2026-04-01",
+   "file": "stage1/ras/raw/102/2026-04-01.xml",
+   "sha256": "a73b8acd5b43d68b9d9616d31fe8e94fc496c65335a2b5aec0564f7a0773a8b4",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2026-04-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f102_2026-07-01",
+   "file": "stage1/ras/raw/102/2026-07-01.xml",
+   "sha256": "f2b31dd5b2e54b3477750053307f5958c4754577092f0ae4d48b67036d0316e3",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2026-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f123_2026-07-01",
+   "file": "stage1/ras/raw/123/2026-07-01.xml",
+   "sha256": "245c5ea95f6de88065bf724279e1a54a0aeefd5f0e3c0cc4fb39cf003b4109a5",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data123FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409123 банка на 2026-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2023-07-01",
+   "file": "stage1/ras/raw/135/2023-07-01.xml",
+   "sha256": "3ccd62dd296aa88702fd3af67463b0a3dff7652a0cb16e9e93789cd46fc32c27",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2023-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2023-10-01",
+   "file": "stage1/ras/raw/135/2023-10-01.xml",
+   "sha256": "8b10255e5b6f72e10109377f444a3f97cb3614f779edae92b23384675a0c131a",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2023-10-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2024-01-01",
+   "file": "stage1/ras/raw/135/2024-01-01.xml",
+   "sha256": "a32d4c0f90aae8e8ec58f40ab2b7a082ce4a8955f36449cc84ec529affed6a2a",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2024-01-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2024-04-01",
+   "file": "stage1/ras/raw/135/2024-04-01.xml",
+   "sha256": "4ba3f74753acca82e01384fc9cb70d38d294da3d3402933c304fb06ba3b27500",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2024-04-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2024-07-01",
+   "file": "stage1/ras/raw/135/2024-07-01.xml",
+   "sha256": "bc6448d370d87c3029d746c56deaeaaa5d496237b2e891ccdebd6f2312369840",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2024-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2024-10-01",
+   "file": "stage1/ras/raw/135/2024-10-01.xml",
+   "sha256": "b4e5fe8df5c918368fbc60f1c3a67b12e0cb1db77b42206458eab67c01f61e36",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2024-10-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2025-01-01",
+   "file": "stage1/ras/raw/135/2025-01-01.xml",
+   "sha256": "b1c03b3042d972d51a5b4bb520022a78f36a992bb8f27861991420d88085bfc8",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2025-01-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2025-04-01",
+   "file": "stage1/ras/raw/135/2025-04-01.xml",
+   "sha256": "4cd223408724b2453b7043ab20f85068778c0c7c884dee60b5596634fd0c4a3e",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2025-04-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2025-07-01",
+   "file": "stage1/ras/raw/135/2025-07-01.xml",
+   "sha256": "f8fab5e9a296f700f6ee0d048470458647d758e2d3fd7548358c4ff88dfc7dcb",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2025-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2025-10-01",
+   "file": "stage1/ras/raw/135/2025-10-01.xml",
+   "sha256": "bc019a5d5f7198dfd7cfc5dc46f501686a402ca194759f73664d42dc6dd08f92",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2025-10-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2026-01-01",
+   "file": "stage1/ras/raw/135/2026-01-01.xml",
+   "sha256": "937ee3fa7aa6b15161afcde55129de4eaa5938a90b88e7a0ee4c3deffcb1b6cc",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2026-01-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2026-04-01",
+   "file": "stage1/ras/raw/135/2026-04-01.xml",
+   "sha256": "b7d028fba3ee8949847fc186fb4daca5d6c4db138dc5241fe2286b93068906ac",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2026-04-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2026-07-01",
+   "file": "stage1/ras/raw/135/2026-07-01.xml",
+   "sha256": "5f7eccf6222b6cd73fc14a74e64aab0d34493b20124e619ac44e1c7c663166f5",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2026-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_key_rate_changes",
+   "file": "research/facts/cbr_key_rate_changes.csv",
+   "sha256": "97ef7898b8e6addab892f299ffe4de0b69b731fcb1f992cae491caadedee8c64",
+   "url": "https://www.cbr.ru/hd_base/KeyRate/",
+   "title": "Банк России: ключевая ставка по датам изменений (выгрузка 30.09.2026)"
+  },
+  {
+   "key": "dividend_policy_2023",
+   "file": "research/primary/dividend_policy_2023.pdf",
+   "sha256": "f486aa17b9ab2a18e764f3fd15914baed838999d4e77d39d9857402845d029ce",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/pdf/normative_docs/dividend-policy-2023-new.pdf",
+   "title": "Дивидендная политика ПАО Сбербанк (ред. 2023)"
+  },
+  {
+   "key": "dividends_public",
+   "file": "stage1/market/shares_dividends/dividends_public.csv",
+   "sha256": "fda92ec5df2d3ac42197dee34bed5270969ac858a1a5700c45dd686f916e5292",
+   "url": "https://www.sberbank.com/ru/investor-relations/dividends",
+   "title": "Решения годовых собраний акционеров Сбербанка о дивидендах за 2013–2025 гг.: страница «Дивиденды» на сайте банка и новости о решениях (сверено с брокерским календарём дивидендов)"
+  },
+  {
+   "key": "ifrs_3M2023_statements",
+   "file": "primary/ifrs_3M2023_statements.pdf",
+   "sha256": "446ba8fb954cfb46d1ef265602b7415a1f44de285bfe4aa6b3d6b03ecba79f0a",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023_q1_ifrs_reporting.pdf",
+   "title": "Промежуточная сокращённая консолидированная отчётность МСФО специального назначения за 3М2023 (утв. 16.05.2023)"
+  },
+  {
+   "key": "ifrs_3M2024_statements",
+   "file": "primary/ifrs_3M2024_statements.pdf",
+   "sha256": "c8d802e70395f39fd77ffd2b8c6a11ddf872b6d9873f20aa8f0533d2b6649a22",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2024_iXVaF3P8_reporting.pdf",
+   "title": "Промежуточная обобщённая консолидированная отчётность МСФО за 3М2024 (RU)"
+  },
+  {
+   "key": "ifrs_3M2026_statements",
+   "file": "primary/ifrs_3M2026_statements.pdf",
+   "sha256": "4b1449f839cf082693be57f6ecbfad634bebab9ec6c4f4b83aa49c803ea0e071",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/reporting_1q_jawhqw3d_2026.pdf",
+   "title": "Промежуточная сокращённая консолидированная отчётность МСФО за 3М2026 (утв. 28.04.2026, 61 с.)"
+  },
+  {
+   "key": "ifrs_6M2023_statements",
+   "file": "primary/ifrs_6M2023_statements.pdf",
+   "sha256": "dfea2257ba209c67f12e13a2202eb2d58e75a906660461ea3f953c30ea5ab684",
+   "url": "https://cdn.financemarker.ru/reports/2023/MOEX/S/SBER_2023_6_6M_%D0%9C%D0%A1%D0%A4%D0%9E.pdf",
+   "title": "Промежуточная сокращённая консолидированная отчётность МСФО специального назначения за 6М2023 (RU)"
+  },
+  {
+   "key": "ifrs_6M2024_press_release",
+   "file": "primary/ifrs_6M2024_press_release.pdf",
+   "sha256": "03648c61237172890a5772c11db097aa6d01f97ad3ec89e98c7923a874dbde9b",
+   "url": "https://cdn.financemarker.ru/reports/2024/MOEX/S/SBER_2024_6_6M_%D0%9C%D0%A1%D0%A4%D0%9E_press.pdf",
+   "title": "Пресс-релиз «Сокращённые результаты МСФО 6М2024» (распечатка страницы)"
+  },
+  {
+   "key": "ifrs_6M2024_statements",
+   "file": "primary/ifrs_6M2024_statements.pdf",
+   "sha256": "44e423398dfb4e3c98058627c5da7178f5f5628cf0346c66bb1dae56133d74bc",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2024_j8tfslv1_reporting.pdf",
+   "title": "Промежуточная обобщённая консолидированная отчётность МСФО за 6М2024 (RU)"
+  },
+  {
+   "key": "ifrs_6M2025_statements_sber",
+   "file": "primary/ifrs_6M2025_statements_sber.pdf",
+   "sha256": "090e4b47f88773b3a79043586b64e56670c175329c50bb7830c93cb3d949fad3",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/reporting_q2_3lgps1xr_2025.pdf",
+   "title": "Промежуточная сокращённая консолидированная отчётность МСФО за 6М2025 (оригинал, 73 с.)"
+  },
+  {
+   "key": "ifrs_9M2023_press_release",
+   "file": "primary/ifrs_9M2023_press_release.pdf",
+   "sha256": "3ddac6de85a8b37cb8cf48e787a2beceb3f8deac7729db305ab924665dc80e37",
+   "url": "https://cdn.financemarker.ru/reports/2023/MOEX/S/SBER_2023_9_9M_%D0%9C%D0%A1%D0%A4%D0%9E_press.pdf",
+   "title": "Пресс-релиз «Сокращённые результаты МСФО 9М2023» (распечатка страницы сайта, текстовый слой есть)"
+  },
+  {
+   "key": "ifrs_9M2023_statements",
+   "file": "primary/ifrs_9M2023_statements.pdf",
+   "sha256": "3e613362365372c299afc5b9ca83eda28b5fe508242d070dd3313f40a32ddb88",
+   "url": "https://cdn.financemarker.ru/reports/2023/MOEX/S/SBER_2023_9_9M_%D0%9C%D0%A1%D0%A4%D0%9E.pdf",
+   "title": "Промежуточная сокращённая консолидированная отчётность МСФО специального назначения за 9М2023 (RU)"
+  },
+  {
+   "key": "ifrs_9M2024_press_release",
+   "file": "primary/ifrs_9M2024_press_release.pdf",
+   "sha256": "c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d",
+   "url": "https://cdn.financemarker.ru/reports/2024/MOEX/S/SBER_2024_9_9M_%D0%9C%D0%A1%D0%A4%D0%9E_press.pdf",
+   "title": "Пресс-релиз «Сокращённые результаты МСФО 9М2024» (распечатка страницы)"
+  },
+  {
+   "key": "ifrs_9M2024_statements",
+   "file": "primary/ifrs_9M2024_statements.pdf",
+   "sha256": "75c4a0d7f49329547ff0864d23047c8546e1dd4a2a1a8bd897ef7ecfa38ece8a",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/reporting_2024_n8z63n9h.pdf",
+   "title": "Обобщённая промежуточная консолидированная отчётность МСФО за 9М2024 (RU)"
+  },
+  {
+   "key": "ifrs_9M2025_statements_sber",
+   "file": "primary/ifrs_9M2025_statements_sber.pdf",
+   "sha256": "cf3ac9548d5ca9a17f555808ce9b85620fd79194b3f7d2f38783d0ed3159da30",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/reporting_q3_wgx48poj_2025.pdf",
+   "title": "Промежуточная сокращённая консолидированная отчётность МСФО за 9М2025 (оригинал, 74 с.)"
+  },
+  {
+   "key": "ifrs_FY2024_statements",
+   "file": "primary/ifrs_FY2024_statements.pdf",
+   "sha256": "fbd4d739ce58c597b40fe1ea1c240fd6dcdaeb93ae455310c72f3600b6123ba1",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/reporting_4q_pmz4bfhv_2024.pdf",
+   "title": "Обобщённая консолидированная финансовая отчётность МСФО за 2024 г. с аудиторским заключением (RU)"
+  },
+  {
+   "key": "ifrs_FY2025_statements_sber",
+   "file": "primary/ifrs_FY2025_statements_sber.pdf",
+   "sha256": "06ac4bd4164d576e8256c1458730b04e505a5a784868fb93a81041e92e00f91f",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/reporting_q4_aolql6na_2025.pdf",
+   "title": "Обобщённая консолидированная финансовая отчётность МСФО за 2025 г., RU (оригинал, 170 с., утв. 25.02.2026)"
+  },
+  {
+   "key": "ifx_agm_2026",
+   "file": "stage2/reports/facts-sources/interfax_1099207_20260630.html",
+   "sha256": "68efd89078a3b4446d087dde79546e02f6f1659b11bea9d63d2bfae6fcc06ceb",
+   "url": "https://www.interfax.ru/business/1099207",
+   "title": "Интерфакс 30.06.2026: «Акционеры Сбербанка утвердили дивиденды за 2025 г. в размере 37,64 руб. на акцию»"
+  },
+  {
+   "key": "iss_description_SBER",
+   "file": "stage1/market/shares_dividends/iss_description_SBER.json",
+   "sha256": "7005c0ab2fe1d9730ff7cbb29067bd9b5bad3b4a00700e52c90f8f7bf8c01329",
+   "url": "https://iss.moex.com/iss/securities/SBER.json",
+   "title": "MOEX ISS: описание бумаги SBER (снимок 30.09.2026)"
+  },
+  {
+   "key": "iss_description_SBERP",
+   "file": "stage1/market/shares_dividends/iss_description_SBERP.json",
+   "sha256": "3c31bb74a1ebad23c67c04c77310ecc1d7ec7b7850c58406c61e2378fdfe5ff2",
+   "url": "https://iss.moex.com/iss/securities/SBERP.json",
+   "title": "MOEX ISS: описание бумаги SBERP (снимок 30.09.2026)"
+  },
+  {
+   "key": "moex_zcyc_2026-06-30",
+   "file": null,
+   "sha256": "90b297f62e10f888ba8d91f85b56ae7d21365e660a1794331315a5b47a12113a",
+   "url": "https://iss.moex.com/iss/engines/stock/zcyc.json?iss.meta=off&iss.only=params,yearyields&date=2026-06-30",
+   "title": "MOEX ISS zcyc: бескупонная кривая ОФЗ на 2026-06-30 18:49:58 (ответ JSON не сохранён; значения — лист stage1/calib/capital/data/zcyc_quarter_ends.csv)"
+  },
+  {
+   "key": "ras_2023M03_press_release",
+   "file": "primary/ras_2023M03_press_release.pdf",
+   "sha256": "c45e3c13d98283afba3a498a9d76a1d54b6e4cdf456546fe0f8b05aa5278edf4",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023_rsbu/year/march_2023.pdf",
+   "title": "Релиз РПБУ 3М2023 (имя подобрано по образцу)"
+  },
+  {
+   "key": "ras_2023M06_press_release",
+   "file": "primary/ras_2023M06_press_release.pdf",
+   "sha256": "bfd8e8d728c781e50fb2aea19e4bb9c15688c68111e9bae6752a3d147d621626",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023_rsbu/year/june2023.pdf",
+   "title": "Релиз РПБУ 6М2023 (имя подобрано по образцу)"
+  },
+  {
+   "key": "ras_2023M09_press_release",
+   "file": "primary/ras_2023M09_press_release.pdf",
+   "sha256": "7d23a0feab2b78f56271fb9f989819093fee7eb929c898e692c4e79e0865c4cb",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023_rsbu/year/_september_2023_.pdf",
+   "title": "Релиз РПБУ 9М2023 (ссылка: smart-lab 948776)"
+  },
+  {
+   "key": "ras_2023M12_press_release",
+   "file": "primary/ras_2023M12_press_release.pdf",
+   "sha256": "99e47a414a8bb8d7a891a6766cb017675704c2293ccf79e9977d471caeca872d",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2023_rsbu/year/__2023__.pdf",
+   "title": "Релиз РПБУ 12М2023 (ссылка: smart-lab 978686)"
+  },
+  {
+   "key": "ras_2025M06_press_release",
+   "file": "primary/ras_2025M06_press_release.pdf",
+   "sha256": "f9fcc061265bd746038f538230e103718a592d1049130bb33f4e83a44e2b83d4",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2025_rsbu/year/jc0ycrin_ras_for_june_6months2025_ru.pdf",
+   "title": "Релиз РПБУ 6М2025 (ссылка: smart-lab 1177645)"
+  },
+  {
+   "key": "ras_2025M12_press_release",
+   "file": "primary/ras_2025M12_press_release.pdf",
+   "sha256": "f4db795314b45209ca62a77f9af5ed7bbfbc0718ee39a15ddb1f743b6a5ab1c6",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2025_rsbu/year/ras_for_12months2025_ijoxgu2a_ru.pdf",
+   "title": "Релиз РПБУ 12М2025 (ссылка: WebSearch 30.09.2026)"
+  },
+  {
+   "key": "ras_2026M06_press_release",
+   "file": "primary/ras_2026M06_press_release.pdf",
+   "sha256": "cfff8ed466a03af4e2ec81b6b05e53b6332bf1de0f6f76f1bd909e512f524543",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2026_rsbu/year/ras_for_6months2026_spny8twx_ru.pdf",
+   "title": "Релиз РПБУ 6М2026 (09.07.2026); ссылка из статьи Ведомостей 09.07.2026 (1212362-sber-narastil-pribil)"
+  },
+  {
+   "key": "ras_release_monthly",
+   "file": "stage1/ras/ras_release_monthly.csv",
+   "sha256": "cc7e47203d02983dbef9b729a3729e9a38fc3f0e4c8b20297e51d7c539f80961",
+   "url": null,
+   "title": "Этап 1: месячные релизы РСБУ банка 2023–2026 (лист с источником каждой ячейки)"
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- синтетика: лента в формате RSS 2.0 агентства; ссылки и тексты сочинены -->
+<rss version="2.0"><channel><title>Лента</title>
+<item><title>Акционеры Сбербанка приняли решение выплатить дивиденды по итогам 2025 года: 37,64 рубля на одну акцию</title>
+<link><![CDATA[https://tass.ru/ekonomika/9000301]]></link>
+<guid><![CDATA[https://tass.ru/ekonomika/9000301]]></guid>
+<pubDate>Tue, 30 Jun 2026 12:15:00 +0300</pubDate>
+<description>Список лиц, которым причитаются выплаты, составят по состоянию на 20 июля 2026 года.</description>
+<category>Экономика</category>
+</item>
+<item><title>В регионе открыли новый мост</title>
+<link><![CDATA[https://tass.ru/obschestvo/9000302]]></link>
+<guid><![CDATA[https://tass.ru/obschestvo/9000302]]></guid>
+<pubDate>Tue, 30 Jun 2026 12:16:00 +0300</pubDate>
+<description>Мост соединил два района.</description>
+<category>Общество</category>
+</item>
+</channel></rss>

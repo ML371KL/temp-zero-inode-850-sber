@@ -1,0 +1,148 @@
+{
+ "basis": "ifrs",
+ "unit": "RUB bn",
+ "target": "ni_q",
+ "source": "stage1/ifrs/ifrs_quarterly.csv (np_shareholders); даты — research/facts/np_inputs.json",
+ "quarters": {
+  "2023Q1": {
+   "ni_sh": {
+    "v": 358.9,
+    "src": "primary/ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395"
+   },
+   "report_date": {
+    "v": "2023-05-18",
+    "src": "https://smart-lab.ru/blog/904297.php"
+   }
+  },
+  "2023Q2": {
+   "ni_sh": {
+    "v": 381.4,
+    "src": "primary/ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb"
+   },
+   "report_date": {
+    "v": "2023-08-03",
+    "src": "https://smart-lab.ru/blog/927953.php"
+   }
+  },
+  "2023Q3": {
+   "ni_sh": {
+    "v": 411.7,
+    "src": "primary/ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f493"
+   },
+   "report_date": {
+    "v": "2023-11-02",
+    "src": "https://smart-lab.ru/blog/956157.php"
+   }
+  },
+  "2023Q4": {
+   "ni_sh": {
+    "v": 359.8,
+    "src": "primary/ifrs_FY2024_statements.pdf | primary/ifrs_9M2024_statements.pdf, с. 7 | 6, sha256 fbd4d739ce58"
+   },
+   "report_date": {
+    "v": "2024-02-28",
+    "src": "https://smart-lab.ru/blog/992040.php (FY 1508.6)"
+   }
+  },
+  "2024Q1": {
+   "ni_sh": {
+    "v": 397.6,
+    "src": "research/primary/2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65"
+   },
+   "report_date": {
+    "v": "2024-04-26",
+    "src": "https://smart-lab.ru/blog/1012283.php"
+   }
+  },
+  "2024Q2": {
+   "ni_sh": {
+    "v": 418.7,
+    "src": "primary/ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f887"
+   },
+   "report_date": {
+    "v": "2024-08-08",
+    "src": "https://smart-lab.ru/blog/1046733.php (1H 816.1)"
+   }
+  },
+  "2024Q3": {
+   "ni_sh": {
+    "v": 411.7,
+    "src": "primary/ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5c"
+   },
+   "report_date": {
+    "v": "2024-10-31",
+    "src": "https://smart-lab.ru/blog/1077417.php"
+   }
+  },
+  "2024Q4": {
+   "ni_sh": {
+    "v": 353.6,
+    "src": "primary/ifrs_FY2025_statements_sber.pdf | primary/ifrs_9M2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4164d"
+   },
+   "report_date": {
+    "v": "2025-02-27",
+    "src": "FY 1580.3 (https://smart-lab.ru/blog/1121769.php) - 9M 1227.2 [calc]"
+   }
+  },
+  "2025Q1": {
+   "ni_sh": {
+    "v": 436.0,
+    "src": "primary/ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf"
+   },
+   "report_date": {
+    "v": "2025-04-28",
+    "src": "https://smart-lab.ru/blog/1147079.php"
+   }
+  },
+  "2025Q2": {
+   "ni_sh": {
+    "v": 422.6,
+    "src": "research/primary/2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6"
+   },
+   "report_date": {
+    "v": "2025-07-29",
+    "src": "https://smart-lab.ru/blog/1185579.php; primary/2026H1 statements p.6"
+   }
+  },
+  "2025Q3": {
+   "ni_sh": {
+    "v": 449.8,
+    "src": "primary/ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5c"
+   },
+   "report_date": {
+    "v": "2025-10-28",
+    "src": "https://smart-lab.ru/blog/1223028.php (9M 1307.3)"
+   }
+  },
+  "2025Q4": {
+   "ni_sh": {
+    "v": 399.0,
+    "src": "primary/ifrs_FY2025_statements_sber.pdf | primary/ifrs_9M2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4164d"
+   },
+   "report_date": {
+    "v": "2026-02-26",
+    "src": "https://smart-lab.ru/blog/1270160.php (FY 1705.9)"
+   }
+  },
+  "2026Q1": {
+   "ni_sh": {
+    "v": 508.5,
+    "src": "primary/ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf"
+   },
+   "report_date": {
+    "v": "2026-04-29",
+    "src": "primary/2026H1 statements p.6: 1H 1019.1 - 2Q 511.2 [calc]; attributable 508.5"
+   }
+  },
+  "2026Q2": {
+   "ni_sh": {
+    "v": 511.6,
+    "src": "research/primary/2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6"
+   },
+   "report_date": {
+    "v": "2026-07-29",
+    "src": "primary/2026H1 statements p.6 (attributable 511.6)"
+   }
+  }
+ }
+}

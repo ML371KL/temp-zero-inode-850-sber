@@ -1,0 +1,54 @@
+{
+ "area": "beta",
+ "root": "$BANK_HANDOFF_DIR",
+ "files": [
+  {
+   "path": "stage1/market/beta/inputs/prices_SBER.csv",
+   "sha256_full": "71a0d7692a6192a4d2f762bbd22b80a05995bdd3126ec005e8af7215fb0461dd",
+   "sha256_input": "71a0d7692a6192a4d2f762bbd22b80a05995bdd3126ec005e8af7215fb0461dd",
+   "filter": "весь лист",
+   "rows_kept": 2720,
+   "rows_total": 2720
+  },
+  {
+   "path": "stage1/market/beta/inputs/prices_SBERP.csv",
+   "sha256_full": "d086cc357bca1b3c9574a58a1323c4646eb37bccb3f1cd624f5f1950a035de21",
+   "sha256_input": "d086cc357bca1b3c9574a58a1323c4646eb37bccb3f1cd624f5f1950a035de21",
+   "filter": "весь лист",
+   "rows_kept": 2720,
+   "rows_total": 2720
+  },
+  {
+   "path": "stage1/market/beta/inputs/prices_MCFTR.csv",
+   "sha256_full": "9a9ae67c006da873543baa8b966783743a3b33eaa1ac458de09565e011546af9",
+   "sha256_input": "9a9ae67c006da873543baa8b966783743a3b33eaa1ac458de09565e011546af9",
+   "filter": "весь лист",
+   "rows_kept": 2701,
+   "rows_total": 2701
+  },
+  {
+   "path": "stage1/market/beta/inputs/prices_IMOEX.csv",
+   "sha256_full": "e66b0640ea8c2f2633dd096267f44b419bcee01c60472d24f986348f18dc4a11",
+   "sha256_input": "e66b0640ea8c2f2633dd096267f44b419bcee01c60472d24f986348f18dc4a11",
+   "filter": "весь лист",
+   "rows_kept": 2703,
+   "rows_total": 2703
+  },
+  {
+   "path": "stage1/market/beta/inputs/prices_MOEXFN.csv",
+   "sha256_full": "4637a429708be14b25b5cc46b27380c6c5c185f0f1f1d959a1a339623b4c3ca7",
+   "sha256_input": "4637a429708be14b25b5cc46b27380c6c5c185f0f1f1d959a1a339623b4c3ca7",
+   "filter": "весь лист",
+   "rows_kept": 2700,
+   "rows_total": 2700
+  },
+  {
+   "path": "stage1/market/shares_dividends/dividends_public.csv",
+   "sha256_full": "fda92ec5df2d3ac42197dee34bed5270969ac858a1a5700c45dd686f916e5292",
+   "sha256_input": "fda92ec5df2d3ac42197dee34bed5270969ac858a1a5700c45dd686f916e5292",
+   "filter": "весь лист",
+   "rows_kept": 14,
+   "rows_total": 14
+  }
+ ]
+}

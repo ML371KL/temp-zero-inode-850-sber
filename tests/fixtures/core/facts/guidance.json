@@ -1,0 +1,119 @@
+{
+ "basis": "mgmt",
+ "year": 2026,
+ "as_of": "2026-07-29",
+ "items": {
+  "roe": {
+   "v": 0.22,
+   "src": "2026Q2_ifrs_presentation.pdf, с. 23–24",
+   "kind": "point",
+   "text": "22%",
+   "tol": 0.005,
+   "scope": "group"
+  },
+  "nim": {
+   "v": 0.062,
+   "src": "там же",
+   "kind": "point",
+   "text": "~6.2%",
+   "tol": 0.0005,
+   "scope": "group"
+  },
+  "cor_max": {
+   "v": 0.014,
+   "src": "там же",
+   "kind": "max",
+   "text": "<1.4%",
+   "scope": "group"
+  },
+  "cir": {
+   "v": [
+    0.3,
+    0.32
+   ],
+   "src": "там же",
+   "kind": "range",
+   "text": "~30-32%",
+   "scope": "group"
+  },
+  "fee_growth": {
+   "v": 0.0,
+   "src": "там же",
+   "kind": "point",
+   "text": "~0%",
+   "tol": 0.005,
+   "scope": "group"
+  },
+  "n20_0": {
+   "v": 0.133,
+   "src": "там же",
+   "kind": "min",
+   "text": "13.3%",
+   "scope": "group"
+  },
+  "loan_growth": {
+   "corporate": {
+    "v": [
+     0.08,
+     0.1
+    ],
+    "src": "там же (сектор)",
+    "kind": "range",
+    "text": "+8-10%",
+    "scope": "sector",
+    "relation": "in_line",
+    "scope_note": "прогноз сектора; банк — в соответствии с сектором"
+   },
+   "retail": {
+    "v": [
+     0.05,
+     0.08
+    ],
+    "src": "там же (сектор)",
+    "kind": "range",
+    "text": "+5-8%",
+    "scope": "sector",
+    "relation": "above",
+    "scope_note": "прогноз сектора; банк — лучше сектора"
+   }
+  }
+ },
+ "history": [
+  {
+   "date": "2025-12-10",
+   "key": "fee_growth",
+   "value": {
+    "v": [
+     0.05,
+     0.07
+    ],
+    "src": "2025Q4_ifrs_presentation.pdf, с. 13"
+   },
+   "event": "День инвестора 10.12.2025"
+  },
+  {
+   "date": "2025-12-10",
+   "key": "loan_growth.corporate",
+   "value": {
+    "v": [
+     0.09,
+     0.11
+    ],
+    "src": "2025Q4_ifrs_presentation.pdf, с. 21"
+   },
+   "event": "День инвестора 10.12.2025"
+  },
+  {
+   "date": "2026-07-29",
+   "key": "loan_growth.retail",
+   "value": {
+    "v": [
+     0.05,
+     0.08
+    ],
+    "src": "2026Q2_ifrs_presentation.pdf, с. 23–24"
+   },
+   "event": "МСФО 2К26"
+  }
+ ]
+}

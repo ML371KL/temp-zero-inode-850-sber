@@ -1,0 +1,720 @@
+{
+ "basis": "IFRS",
+ "as_of": "2026-06-30",
+ "unit": "млрд ₽",
+ "sign": "остатки — величины (резерв — положительной величиной, в активах вычитается); капитал и фонды — со знаком отчёта",
+ "loans_ac_gross": {
+  "commercial": {
+   "v": 16266.3,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+  },
+  "project": {
+   "v": 11931.7,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+  },
+  "mortgage_market": {
+   "v": 6147.0,
+   "calc": "loans_ac_gross.mortgage − mortgage_subsidized = 13284,9 − 7137,9; разбиение ипотеки в отчётности не раскрыто"
+  },
+  "mortgage_subsidized": {
+   "v": 7137.9,
+   "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c",
+   "calc": "оценка calib-nii на 30.06.2026 (накопление поколений: выдачи ≈ прирост портфеля + погашения; доля льготной в выдачах — ЦБ, «Обзор финансовой стабильности», за квартал якоря — раскрытие банка; параметры — REPORT-nii этапа 1): 53,7 % ипотеки; при других темпах погашения — 51,8–61,1 %; расчётная оценка — в отчётности не раскрыто"
+  },
+  "consumer": {
+   "v": 3593.3,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+  },
+  "cards": {
+   "v": 2567.7,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+  },
+  "auto": {
+   "v": 829.2,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+  },
+  "mortgage": {
+   "v": 13284.9,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+  },
+  "total": {
+   "v": 48473.1,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+  }
+ },
+ "loans_fvtpl": {
+  "v": 4107.0,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+ },
+ "allowance_ac": {
+  "v": 2605.1,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+  "calc": "величина резерва под ОКУ по кредитам АС: −(−2605,1); в отчёте — со знаком минус"
+ },
+ "securities": {
+  "fvoci_debt": {
+   "v": 5311.2,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b"
+  },
+  "fvoci_repo": {
+   "v": 1022.1,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 39, sha256 5b3a3de88ae6c96b"
+  },
+  "ac": {
+   "v": 2417.4,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b"
+  },
+  "ac_repo": {
+   "v": 664.7,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 39, sha256 5b3a3de88ae6c96b"
+  },
+  "fvtpl_bonds": {
+   "v": 1830.7,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b; 2026H1_ifrs_interim_statements.pdf, с. 39, sha256 5b3a3de88ae6c96b",
+   "calc": "отнесённые к СС 890,9 + обязательно по СС 1167,9 − акции 227,6 − фонды 15,0 + заложенные по репо 14,5"
+  },
+  "fvtpl_equity": {
+   "v": 242.6,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 37, sha256 5b3a3de88ae6c96b",
+   "calc": "акции + паи фондов по СС (в книгу securities не входят — в other_assets)"
+  },
+  "fvoci_equity": {
+   "v": 0.2,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b"
+  },
+  "debt_total": {
+   "v": 11246.1,
+   "calc": "fvoci_debt + fvoci_repo + ac + ac_repo + fvtpl_bonds"
+  }
+ },
+ "liquidity": {
+  "cash": {
+   "v": 1698.6,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+  },
+  "cbr": {
+   "v": 193.7,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b",
+   "calc": "обязательные резервы на счетах в ЦБ (строка баланса)"
+  },
+  "due_from_banks": {
+   "v": 1665.9,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+  },
+  "reverse_repo": {
+   "v": null,
+   "calc": "не раскрыто: обратное репо отдельно не раскрыто — внутри средств в банках (due_from_banks)"
+  },
+  "total": {
+   "v": 3558.2,
+   "calc": "cash + cbr + due_from_banks"
+  }
+ },
+ "other_assets": {
+  "v": 4362.2,
+  "calc": "total_assets − (кредиты АС валовые − резерв + кредиты по СС) − долговые бумаги − ликвидность = 69141,5 − 49975,0 − 11246,1 − 3558,2; = ОС 1395,6 + НМА 716,5 + прочие 1609,6 + ПФИ 191,4 + ОНА 114,4 + ассоциированные 91,9 + акции и фонды 242,8"
+ },
+ "total_assets": {
+  "v": 69141.5,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+ },
+ "funds": {
+  "retail_current": {
+   "v": 14309.0,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b"
+  },
+  "retail_term": {
+   "v": 20169.5,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b",
+   "calc": "срочные ФЛ 20160,6 + репо ФЛ 8,9"
+  },
+  "corp_current": {
+   "v": 3139.8,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b",
+   "calc": "расчётные счета прочих ЮЛ 2855,1 + госорганизаций 284,7"
+  },
+  "corp_term": {
+   "v": 11514.5,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b",
+   "calc": "срочные прочих ЮЛ 8501,9 + госорганизаций 2796,3 + репо 154,8 + 61,5"
+  }
+ },
+ "wholesale": {
+  "banks": {
+   "v": 4803.6,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+  },
+  "issued_debt": {
+   "v": 836.3,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+  },
+  "subordinated": {
+   "v": 518.0,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+  },
+  "repo_cbr": {
+   "v": null,
+   "calc": "не раскрыто: репо с ЦБ отдельно не раскрыто — внутри средств банков (banks)"
+  }
+ },
+ "other_liabilities": {
+  "v": 4478.0,
+  "calc": "total_liabilities − средства клиентов − опт − дивиденды к выплате = 60609,7 − 49132,8 − 6157,9 − 841,0; = ПФИ 275,5 + страховые 2511,1 + ОНО 48,1 + прочие 2484,3 − дивиденды 841,0"
+ },
+ "dividends_payable": {
+  "v": 841.0,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 43, sha256 5b3a3de88ae6c96b",
+  "calc": "дивиденды за 2025 г., объявленные ГОСА 30.06.2026, 850,2 − на собственные акции 9,2 (обыкн. 7,9 + прив. 1,3); в составе прочих обязательств суммой не раскрыты; = списание из капитала 6М26 (−841,0); срок выплаты — 03.08.2026"
+ },
+ "dividends_payable_year": 2025,
+ "total_liabilities": {
+  "v": 60609.7,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+ },
+ "equity": {
+  "total": {
+   "v": 8531.8,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+  },
+  "shareholders": {
+   "v": 8537.2,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+  },
+  "at1": {
+   "v": 150.0,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+  },
+  "nci": {
+   "v": -5.4,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+  },
+  "bv_common": {
+   "v": 8387.2,
+   "calc": "equity.total − at1 − nci = 8531,8 − 150,0 − (−5,4)"
+  },
+  "share_capital": {
+   "v": 87.7,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+  },
+  "share_premium": {
+   "v": 232.6,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+  },
+  "treasury_cost": {
+   "v": -47.8,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+  },
+  "fvoci_reserve": {
+   "v": -374.9,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 44, sha256 5b3a3de88ae6c96b",
+   "calc": "фонд переоценки FVOCI после налога (компонент прочих резервов)"
+  },
+  "other_reserves": {
+   "v": -228.5,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+  },
+  "retained_earnings": {
+   "v": 8343.2,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+  }
+ },
+ "prev_year_end": {
+  "as_of": "2025-12-31",
+  "loans_corporate": {
+   "v": 31167.0,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+   "calc": "коммерческие 16518,4 + проектные 10987,5 + кредиты по СС 3661,1 — тот же состав, что книга corp_loans"
+  },
+  "loans_retail": {
+   "v": 19204.1,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+   "calc": "ипотека + потребительские + карты + авто (валовые, АС) — книги mortgage + mortgage_sub + retail_loans"
+  }
+ },
+ "history": {
+  "2022Q4": {
+   "date": "2022-12-31",
+   "loans_ac_gross": {
+    "v": 29968.6,
+    "src": "FY2023_ifrs_summary_statements.pdf, с. 8, sha256 724849f5047bb32b"
+   },
+   "allowance_ac": {
+    "v": 1664.1,
+    "src": "FY2023_ifrs_summary_statements.pdf, с. 8, sha256 724849f5047bb32b",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 1068.9,
+    "src": "FY2022_ifrs_summary_statements.pdf, с. 8, sha256 0f736f6e44142c7f"
+   },
+   "equity_shareholders": {
+    "v": 5776.9,
+    "src": "ifrs_FY2024_statements.pdf, с. 9, sha256 fbd4d739ce58c597"
+   },
+   "bv_common": {
+    "v": 5626.9,
+    "calc": "капитал акционеров 5776,9 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 41862.4,
+    "src": "FY2023_ifrs_summary_statements.pdf, с. 5, sha256 724849f5047bb32b"
+   },
+   "iea": {
+    "v": 40715.8,
+    "calc": "кредиты АС валовые + по СС 31037,5 + долговые бумаги 6971,4 + ликвидность 2706,9; бумаги: обобщённая форма: «бумаги и ПФИ» 7466,1 − ПФИ 235,6 − акции и фонды 259,1 (ПФИ и акции — линейная интерполяция между соседними датами раскрытия; оценка); оценка"
+   }
+  },
+  "2023Q1": {
+   "date": "2023-03-31",
+   "loans_ac_gross": {
+    "v": 31323.8,
+    "src": "ifrs_3M2023_statements.pdf, с. 8, sha256 446ba8fb954cfb46"
+   },
+   "allowance_ac": {
+    "v": 1733.4,
+    "src": "ifrs_3M2023_statements.pdf, с. 8, sha256 446ba8fb954cfb46",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 1116.8,
+    "src": "ifrs_3M2023_statements.pdf, с. 8, sha256 446ba8fb954cfb46"
+   },
+   "equity_shareholders": {
+    "v": 6115.3,
+    "src": "ifrs_3M2023_statements.pdf, с. 5, sha256 446ba8fb954cfb46"
+   },
+   "bv_common": {
+    "v": 5965.3,
+    "calc": "капитал акционеров 6115,3 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 43827.1,
+    "src": "ifrs_3M2023_statements.pdf, с. 5, sha256 446ba8fb954cfb46"
+   },
+   "iea": {
+    "v": 42800.6,
+    "calc": "кредиты АС валовые + по СС 32440,6 + долговые бумаги 7284,3 + ликвидность 3075,7; бумаги: обобщённая форма: «бумаги и ПФИ» 7749,5 − ПФИ 210,7 − акции и фонды 254,5 (ПФИ и акции — линейная интерполяция между соседними датами раскрытия; оценка); оценка"
+   }
+  },
+  "2023Q2": {
+   "date": "2023-06-30",
+   "loans_ac_gross": {
+    "v": 33450.5,
+    "src": "ifrs_6M2023_statements.pdf, с. 8, sha256 dfea2257ba209c67"
+   },
+   "allowance_ac": {
+    "v": 1818.9,
+    "src": "ifrs_6M2023_statements.pdf, с. 8, sha256 dfea2257ba209c67",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 1236.1,
+    "src": "ifrs_6M2023_statements.pdf, с. 8, sha256 dfea2257ba209c67"
+   },
+   "equity_shareholders": {
+    "v": 5919.6,
+    "src": "ifrs_6M2023_statements.pdf, с. 5, sha256 dfea2257ba209c67"
+   },
+   "bv_common": {
+    "v": 5769.6,
+    "calc": "капитал акционеров 5919,6 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 46143.7,
+    "src": "ifrs_6M2023_statements.pdf, с. 5, sha256 dfea2257ba209c67"
+   },
+   "iea": {
+    "v": 45034.9,
+    "calc": "кредиты АС валовые + по СС 34686,6 + долговые бумаги 7427,3 + ликвидность 2921,0; бумаги: обобщённая форма: «бумаги и ПФИ» 7862,8 − ПФИ 185,6 − акции и фонды 249,9 (ПФИ и акции — линейная интерполяция между соседними датами раскрытия; оценка); оценка"
+   }
+  },
+  "2023Q3": {
+   "date": "2023-09-30",
+   "loans_ac_gross": {
+    "v": 36435.3,
+    "src": "ifrs_9M2023_statements.pdf, с. 8, sha256 3e613362365372c2"
+   },
+   "allowance_ac": {
+    "v": 1863.9,
+    "src": "ifrs_9M2023_statements.pdf, с. 8, sha256 3e613362365372c2",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 1419.9,
+    "src": "ifrs_9M2023_statements.pdf, с. 8, sha256 3e613362365372c2"
+   },
+   "equity_shareholders": {
+    "v": 6198.8,
+    "src": "ifrs_9M2023_statements.pdf, с. 5, sha256 3e613362365372c2"
+   },
+   "bv_common": {
+    "v": 6048.8,
+    "calc": "капитал акционеров 6198,8 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 49267.1,
+    "src": "ifrs_9M2023_statements.pdf, с. 5, sha256 3e613362365372c2"
+   },
+   "iea": {
+    "v": 48073.7,
+    "calc": "кредиты АС валовые + по СС 37855,2 + долговые бумаги 7639,3 + ликвидность 2579,2; бумаги: обобщённая форма: «бумаги и ПФИ» 8044,7 − ПФИ 160,2 − акции и фонды 245,2 (ПФИ и акции — линейная интерполяция между соседними датами раскрытия; оценка); оценка"
+   }
+  },
+  "2023Q4": {
+   "date": "2023-12-31",
+   "loans_ac_gross": {
+    "v": 37738.6,
+    "src": "ifrs_FY2024_statements.pdf, с. 25, sha256 fbd4d739ce58c597"
+   },
+   "allowance_ac": {
+    "v": 1823.0,
+    "src": "ifrs_FY2024_statements.pdf, с. 25, sha256 fbd4d739ce58c597",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 1642.7,
+    "src": "ifrs_FY2024_statements.pdf, с. 25, sha256 fbd4d739ce58c597"
+   },
+   "equity_shareholders": {
+    "v": 6584.0,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 8, sha256 06ac4bd4164d576e"
+   },
+   "bv_common": {
+    "v": 6434.0,
+    "calc": "капитал акционеров 6584,0 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 52307.2,
+    "src": "ifrs_FY2024_statements.pdf, с. 6, sha256 fbd4d739ce58c597"
+   },
+   "iea": {
+    "v": 50845.0,
+    "calc": "кредиты АС валовые + по СС 39381,3 + долговые бумаги 7846,8 + ликвидность 3616,9; бумаги: бумаги 3958,8 + заложенные по репо 4128,5 − акции и фонды 240,5 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
+   }
+  },
+  "2024Q1": {
+   "date": "2024-03-31",
+   "loans_ac_gross": {
+    "v": 37936.4,
+    "src": "ifrs_3M2024_statements.pdf, с. 8, sha256 c8d802e70395f39f"
+   },
+   "allowance_ac": {
+    "v": 1718.1,
+    "src": "ifrs_3M2024_statements.pdf, с. 8, sha256 c8d802e70395f39f",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 1887.4,
+    "src": "ifrs_3M2024_statements.pdf, с. 8, sha256 c8d802e70395f39f"
+   },
+   "equity_shareholders": {
+    "v": 6904.0,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 8, sha256 1f25a2344d65ea90"
+   },
+   "bv_common": {
+    "v": 6754.0,
+    "calc": "капитал акционеров 6904,0 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 53105.0,
+    "src": "ifrs_3M2024_statements.pdf, с. 5, sha256 c8d802e70395f39f"
+   },
+   "iea": {
+    "v": 51224.5,
+    "calc": "кредиты АС валовые + по СС 39823,8 + долговые бумаги 7882,6 + ликвидность 3518,1; бумаги: обобщённая форма: «бумаги и ПФИ» 8272,8 − ПФИ 144,8 − акции и фонды 245,4 (ПФИ и акции — линейная интерполяция между соседними датами раскрытия; оценка); оценка"
+   }
+  },
+  "2024Q2": {
+   "date": "2024-06-30",
+   "loans_ac_gross": {
+    "v": 39768.5,
+    "src": "ifrs_6M2024_statements.pdf, с. 8, sha256 44e423398dfb4e3c"
+   },
+   "allowance_ac": {
+    "v": 1795.4,
+    "src": "ifrs_6M2024_statements.pdf, с. 8, sha256 44e423398dfb4e3c",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 2112.3,
+    "src": "ifrs_6M2024_statements.pdf, с. 8, sha256 44e423398dfb4e3c"
+   },
+   "equity_shareholders": {
+    "v": 6417.0,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 8, sha256 090e4b47f88773b3"
+   },
+   "bv_common": {
+    "v": 6267.0,
+    "calc": "капитал акционеров 6417,0 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 55427.6,
+    "src": "ifrs_6M2024_statements.pdf, с. 5, sha256 44e423398dfb4e3c"
+   },
+   "iea": {
+    "v": 53356.4,
+    "calc": "кредиты АС валовые + по СС 41880,8 + долговые бумаги 7644,4 + ликвидность 3831,2; бумаги: обобщённая форма: «бумаги и ПФИ» 8049,5 − ПФИ 154,7 − акции и фонды 250,3 (ПФИ и акции — линейная интерполяция между соседними датами раскрытия; оценка); оценка"
+   }
+  },
+  "2024Q3": {
+   "date": "2024-09-30",
+   "loans_ac_gross": {
+    "v": 42200.4,
+    "src": "ifrs_9M2024_statements.pdf, с. 8, sha256 75c4a0d7f4932954"
+   },
+   "allowance_ac": {
+    "v": 1897.5,
+    "src": "ifrs_9M2024_statements.pdf, с. 8, sha256 75c4a0d7f4932954",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 2422.0,
+    "src": "ifrs_9M2024_statements.pdf, с. 8, sha256 75c4a0d7f4932954"
+   },
+   "equity_shareholders": {
+    "v": 6752.0,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 8, sha256 cf3ac9548d5ca9a1"
+   },
+   "bv_common": {
+    "v": 6602.0,
+    "calc": "капитал акционеров 6752,0 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 59002.0,
+    "src": "ifrs_9M2024_statements.pdf, с. 5, sha256 75c4a0d7f4932954"
+   },
+   "iea": {
+    "v": 56915.1,
+    "calc": "кредиты АС валовые + по СС 44622,4 + долговые бумаги 7680,5 + ликвидность 4612,2; бумаги: обобщённая форма: «бумаги и ПФИ» 8100,6 − ПФИ 164,8 − акции и фонды 255,3 (ПФИ и акции — линейная интерполяция между соседними датами раскрытия; оценка); оценка"
+   }
+  },
+  "2024Q4": {
+   "date": "2024-12-31",
+   "loans_ac_gross": {
+    "v": 42931.4,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 27, sha256 06ac4bd4164d576e"
+   },
+   "allowance_ac": {
+    "v": 2010.1,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 27, sha256 06ac4bd4164d576e",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 2920.6,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 27, sha256 06ac4bd4164d576e"
+   },
+   "equity_shareholders": {
+    "v": 7175.7,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   },
+   "bv_common": {
+    "v": 7025.7,
+    "calc": "капитал акционеров 7175,7 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 60855.1,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 5, sha256 06ac4bd4164d576e"
+   },
+   "iea": {
+    "v": 59148.5,
+    "calc": "кредиты АС валовые + по СС 45852,0 + долговые бумаги 8191,7 + ликвидность 5104,8; бумаги: бумаги 7017,7 + заложенные по репо 1434,3 − акции и фонды 260,3 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
+   }
+  },
+  "2025Q1": {
+   "date": "2025-03-31",
+   "loans_ac_gross": {
+    "v": 42414.9,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 14, sha256 1f25a2344d65ea90"
+   },
+   "allowance_ac": {
+    "v": 2102.0,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 14, sha256 1f25a2344d65ea90",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 2994.3,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 14, sha256 1f25a2344d65ea90"
+   },
+   "equity_shareholders": {
+    "v": 7629.1,
+    "src": "ifrs_3M2026_statements.pdf, с. 8, sha256 4b1449f839cf0826"
+   },
+   "bv_common": {
+    "v": 7479.1,
+    "calc": "капитал акционеров 7629,1 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 60107.4,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 5, sha256 1f25a2344d65ea90"
+   },
+   "iea": {
+    "v": 58492.5,
+    "calc": "кредиты АС валовые + по СС 45409,2 + долговые бумаги 8248,3 + ликвидность 4835,0; бумаги: бумаги 7946,6 + заложенные по репо 595,9 − акции и фонды 294,2 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
+   }
+  },
+  "2025Q2": {
+   "date": "2025-06-30",
+   "loans_ac_gross": {
+    "v": 42752.4,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 14, sha256 090e4b47f88773b3"
+   },
+   "allowance_ac": {
+    "v": 2241.0,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 14, sha256 090e4b47f88773b3",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 3312.9,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 14, sha256 090e4b47f88773b3"
+   },
+   "equity_shareholders": {
+    "v": 7417.3,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   },
+   "bv_common": {
+    "v": 7267.3,
+    "calc": "капитал акционеров 7417,3 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 61468.6,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 5, sha256 090e4b47f88773b3"
+   },
+   "iea": {
+    "v": 59828.2,
+    "calc": "кредиты АС валовые + по СС 46065,3 + долговые бумаги 9089,1 + ликвидность 4673,8; бумаги: бумаги 8663,6 + заложенные по репо 724,3 − акции и фонды 298,8 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
+   }
+  },
+  "2025Q3": {
+   "date": "2025-09-30",
+   "loans_ac_gross": {
+    "v": 44845.1,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 15, sha256 cf3ac9548d5ca9a1"
+   },
+   "allowance_ac": {
+    "v": 2343.7,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 15, sha256 cf3ac9548d5ca9a1",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 3586.8,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 15, sha256 cf3ac9548d5ca9a1"
+   },
+   "equity_shareholders": {
+    "v": 7872.4,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 8, sha256 cf3ac9548d5ca9a1"
+   },
+   "bv_common": {
+    "v": 7722.4,
+    "calc": "капитал акционеров 7872,4 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 64473.8,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 5, sha256 cf3ac9548d5ca9a1"
+   },
+   "iea": {
+    "v": 62902.8,
+    "calc": "кредиты АС валовые + по СС 48431,9 + долговые бумаги 9513,5 + ликвидность 4957,4; бумаги: бумаги 8641,3 + заложенные по репо 1173,5 − акции и фонды 301,3 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
+   }
+  },
+  "2025Q4": {
+   "date": "2025-12-31",
+   "loans_ac_gross": {
+    "v": 46710.0,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+   },
+   "allowance_ac": {
+    "v": 2398.4,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 3661.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+   },
+   "equity_shareholders": {
+    "v": 8351.6,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   },
+   "bv_common": {
+    "v": 8201.6,
+    "calc": "капитал акционеров 8351,6 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 68814.5,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+   },
+   "iea": {
+    "v": 66907.7,
+    "calc": "кредиты АС валовые + по СС 50371,1 + долговые бумаги 10553,6 + ликвидность 5983,0; бумаги: бумаги 6864,5 + заложенные по репо 4079,4 − акции и фонды 390,3 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
+   }
+  },
+  "2026Q1": {
+   "date": "2026-03-31",
+   "loans_ac_gross": {
+    "v": 47754.2,
+    "src": "ifrs_3M2026_statements.pdf, с. 15, sha256 4b1449f839cf0826"
+   },
+   "allowance_ac": {
+    "v": 2472.0,
+    "src": "ifrs_3M2026_statements.pdf, с. 15, sha256 4b1449f839cf0826",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 3811.8,
+    "src": "ifrs_3M2026_statements.pdf, с. 15, sha256 4b1449f839cf0826"
+   },
+   "equity_shareholders": {
+    "v": 8871.4,
+    "src": "ifrs_3M2026_statements.pdf, с. 8, sha256 4b1449f839cf0826"
+   },
+   "bv_common": {
+    "v": 8721.4,
+    "calc": "капитал акционеров 8871,4 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 69034.7,
+    "src": "ifrs_3M2026_statements.pdf, с. 5, sha256 4b1449f839cf0826"
+   },
+   "iea": {
+    "v": 67283.7,
+    "calc": "кредиты АС валовые + по СС 51566,0 + долговые бумаги 10981,8 + ликвидность 4735,9; бумаги: бумаги 9699,8 + заложенные по репо 1614,3 − акции и фонды 332,3 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
+   }
+  },
+  "2026Q2": {
+   "date": "2026-06-30",
+   "loans_ac_gross": {
+    "v": 48473.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+   },
+   "allowance_ac": {
+    "v": 2605.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 4107.0,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+   },
+   "equity_shareholders": {
+    "v": 8537.2,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   },
+   "bv_common": {
+    "v": 8387.2,
+    "calc": "капитал акционеров 8537,2 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 69141.5,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+   },
+   "iea": {
+    "v": 67384.4,
+    "calc": "кредиты АС валовые + по СС 52580,1 + долговые бумаги 11246,1 + ликвидность 3558,2; бумаги: бумаги 9787,6 + заложенные по репо 1701,3 − акции и фонды 242,8 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
+   }
+  }
+ },
+ "iea": {
+  "v": 67384.4,
+  "calc": "loans_ac_gross.total + loans_fvtpl + securities.debt_total + liquidity.total (процентные активы движка)"
+ }
+}

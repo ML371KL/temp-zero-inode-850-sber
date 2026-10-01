@@ -1,0 +1,189 @@
+{
+ "basis": "IFRS",
+ "as_of": "2026-06-30",
+ "period": "2026Q2",
+ "books": {
+  "corp_loans": {
+   "balance_open": {
+    "v": 31882.3,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "balance_close": {
+    "v": 32305.0,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "rate_anchor": {
+    "v": 0.14214,
+    "calc": "упр. доходность ЮЛ 2К26 14,2 % × 1.0010 (масштаб к доходности кредитов МСФО 2К26)"
+   },
+   "interest_q": {
+    "v": 1137.324428,
+    "calc": "rate_anchor × средний остаток × 91/365; сумма трёх книг ≈ процентный доход по кредитам МСФО 2К26 (1 970,0)"
+   }
+  },
+  "securities": {
+   "balance_open": {
+    "v": 11314.1,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "balance_close": {
+    "v": 11488.9,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "interest_q": {
+    "v": 364.8,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv; процентные строки по инструментам (nii_lib._flows_from)"
+   },
+   "rate_anchor": {
+    "v": 0.128335,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "liquidity": {
+   "balance_open": {
+    "v": 4735.9,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "balance_close": {
+    "v": 3558.2,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "interest_q": {
+    "v": 76.5,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv; процентные строки по инструментам (nii_lib._flows_from)"
+   },
+   "rate_anchor": {
+    "v": 0.07399,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "retail_current": {
+   "balance_open": {
+    "v": 13583.9,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "balance_close": {
+    "v": 14309.0,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "interest_q": {
+    "v": 119.3,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv; процентные строки по инструментам (nii_lib._flows_from)"
+   },
+   "rate_anchor": {
+    "v": 0.034311,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "retail_term": {
+   "balance_open": {
+    "v": 20357.4,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "balance_close": {
+    "v": 20169.5,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "interest_q": {
+    "v": 591.4,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv; процентные строки по инструментам (nii_lib._flows_from)"
+   },
+   "rate_anchor": {
+    "v": 0.117063,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "corp_funds": {
+   "balance_open": {
+    "v": 15905.0,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "balance_close": {
+    "v": 14654.3,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "interest_q": {
+    "v": 334.7,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv; процентные строки по инструментам (nii_lib._flows_from)"
+   },
+   "rate_anchor": {
+    "v": 0.087861,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "wholesale": {
+   "balance_open": {
+    "v": 5929.7,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "balance_close": {
+    "v": 6157.9,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+   },
+   "interest_q": {
+    "v": 235.4,
+    "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv; процентные строки по инструментам (nii_lib._flows_from)"
+   },
+   "rate_anchor": {
+    "v": 0.156224,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "retail_loans": {
+   "balance_open": {
+    "v": 12867.23077,
+    "calc": "розница АС × (1 − доля льготной); доля — накопление поколений (REPORT-nii §2.3)"
+   },
+   "balance_close": {
+    "v": 13137.175162,
+    "calc": "то же на 30.06.2026"
+   },
+   "rate_anchor": {
+    "v": 0.16501,
+    "calc": "упр. доходность ФЛ 2К26 16,7 % × масштаб, за вычетом льготной (ключевая 2К26 + 2,5 п.п.) по средней доле"
+   },
+   "interest_q": {
+    "v": 534.903492,
+    "calc": "rate_anchor × средний остаток × 91/365; сумма трёх книг ≈ процентный доход по кредитам МСФО 2К26 (1 970,0)"
+   }
+  },
+  "mortgage_sub": {
+   "balance_open": {
+    "v": 6816.46923,
+    "calc": "розница АС × доля льготной"
+   },
+   "balance_close": {
+    "v": 7137.924838,
+    "calc": "то же на 30.06.2026"
+   },
+   "rate_anchor": {
+    "v": 0.171181,
+    "calc": "средняя ключевая 2К26 + компенсация 2,5 п.п."
+   },
+   "interest_q": {
+    "v": 297.773388,
+    "calc": "rate_anchor × средний остаток × 91/365; сумма трёх книг ≈ процентный доход по кредитам МСФО 2К26 (1 970,0)"
+   }
+  }
+ },
+ "dia_q": {
+  "v": 44.1,
+  "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv"
+ },
+ "other_interest_net_q": {
+  "v": -19.6,
+  "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv; аренда, ПФИ, короткие позиции, срочные по СС — вне книг"
+ },
+ "nim_eng_q": {
+  "v": 0.063277,
+  "calc": "ЧПД 2К26 × 365/91 / средние процентные активы"
+ },
+ "current_share_anchor": {
+  "v": 0.415012,
+  "src": "МСФО 6М26 (research/primary/2026H1_ifrs_interim_statements.pdf) и 3М26 (primary/ifrs_3M2026_statements.pdf); stage1/ifrs/ifrs_history.csv, ifrs_quarterly.csv; текущие ФЛ / средства ФЛ"
+ },
+ "key_avg_anchor_q": {
+  "v": 0.146181,
+  "calc": "средняя ключевая 2К26 по календарным дням (research/facts/cbr_key_rate_changes.csv)"
+ }
+}

@@ -1,0 +1,506 @@
+{
+ "basis": "IFRS",
+ "as_of": "2026-06-30",
+ "quarters": {
+  "2024Q1": {
+   "nii": {
+    "v": 699.9,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a234…"
+   },
+   "fees_net": {
+    "v": 184.1,
+    "calc": "fee_income + fee_expense; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "llp_debt_fa": {
+    "v": -47.7,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a234…"
+   },
+   "insurance_net": {
+    "v": 32.0,
+    "calc": "ins_revenue + ins_service_expense (выручка по страхованию + расходы на страховые услуги); ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "noncore_net": {
+    "v": -86.8,
+    "calc": "noncore_revenue + noncore_cost; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "misc_net": {
+    "v": -45.2,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex)"
+   },
+   "opex": {
+    "v": -227.6,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a234…"
+   },
+   "pbt": {
+    "v": 508.7,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a234…"
+   },
+   "tax": {
+    "v": -111.3,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a234…"
+   },
+   "ni": {
+    "v": 397.4,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a234…"
+   },
+   "ni_shareholders": {
+    "v": 397.6,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a234…"
+   },
+   "key_avg": {
+    "v": 0.16,
+    "calc": "фикстура core (W1): средняя ключевая квартала по календарным дням"
+   }
+  },
+  "2024Q2": {
+   "nii": {
+    "v": 713.2,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47…"
+   },
+   "fees_net": {
+    "v": 209.5,
+    "calc": "fee_income + fee_expense; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "llp_debt_fa": {
+    "v": -122.3,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47…"
+   },
+   "insurance_net": {
+    "v": 30.9,
+    "calc": "ins_revenue + ins_service_expense (выручка по страхованию + расходы на страховые услуги); ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "noncore_net": {
+    "v": -63.8,
+    "calc": "noncore_revenue + noncore_cost; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "misc_net": {
+    "v": 6.3,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex)"
+   },
+   "opex": {
+    "v": -252.7,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47…"
+   },
+   "pbt": {
+    "v": 521.1,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47…"
+   },
+   "tax": {
+    "v": -102.4,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47…"
+   },
+   "ni": {
+    "v": 418.7,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47…"
+   },
+   "ni_shareholders": {
+    "v": 418.7,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47…"
+   },
+   "key_avg": {
+    "v": 0.16,
+    "calc": "фикстура core (W1): средняя ключевая квартала по календарным дням"
+   }
+  },
+  "2024Q3": {
+   "nii": {
+    "v": 762.1,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "fees_net": {
+    "v": 218.2,
+    "calc": "fee_income + fee_expense; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "llp_debt_fa": {
+    "v": -113.3,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "insurance_net": {
+    "v": 40.4,
+    "calc": "ins_revenue + ins_service_expense (выручка по страхованию + расходы на страховые услуги); ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "noncore_net": {
+    "v": -42.4,
+    "calc": "noncore_revenue + noncore_cost; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "misc_net": {
+    "v": -29.2,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex)"
+   },
+   "opex": {
+    "v": -274.3,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "pbt": {
+    "v": 561.5,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "tax": {
+    "v": -150.4,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "ni": {
+    "v": 411.1,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "ni_shareholders": {
+    "v": 411.7,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "key_avg": {
+    "v": 0.1765,
+    "calc": "фикстура core (W1): средняя ключевая квартала по календарным дням"
+   }
+  },
+  "2024Q4": {
+   "nii": {
+    "v": 824.4,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "fees_net": {
+    "v": 231.1,
+    "calc": "fee_income + fee_expense; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "llp_debt_fa": {
+    "v": -159.5,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "insurance_net": {
+    "v": 39.7,
+    "calc": "ins_revenue + ins_service_expense (выручка по страхованию + расходы на страховые услуги); ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "noncore_net": {
+    "v": -91.1,
+    "calc": "noncore_revenue + noncore_cost; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "misc_net": {
+    "v": -93.3,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex)"
+   },
+   "opex": {
+    "v": -308.0,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "pbt": {
+    "v": 443.3,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "tax": {
+    "v": -90.2,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "ni": {
+    "v": 353.1,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "ni_shareholders": {
+    "v": 353.6,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "key_avg": {
+    "v": 0.2041,
+    "calc": "фикстура core (W1): средняя ключевая квартала по календарным дням"
+   }
+  },
+  "2025Q1": {
+   "nii": {
+    "v": 832.4,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "fees_net": {
+    "v": 203.2,
+    "calc": "fee_income + fee_expense; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "llp_debt_fa": {
+    "v": -153.3,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "insurance_net": {
+    "v": 36.9,
+    "calc": "ins_revenue + ins_service_expense (выручка по страхованию + расходы на страховые услуги); ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "noncore_net": {
+    "v": -45.0,
+    "calc": "noncore_revenue + noncore_cost; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "misc_net": {
+    "v": -36.9,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex)"
+   },
+   "opex": {
+    "v": -262.1,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "pbt": {
+    "v": 575.2,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "tax": {
+    "v": -139.1,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "ni": {
+    "v": 436.1,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "ni_shareholders": {
+    "v": 436.0,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "key_avg": {
+    "v": 0.21,
+    "calc": "фикстура core (W1): средняя ключевая квартала по календарным дням"
+   }
+  },
+  "2025Q2": {
+   "nii": {
+    "v": 841.8,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "fees_net": {
+    "v": 195.0,
+    "calc": "fee_income + fee_expense; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "llp_debt_fa": {
+    "v": -211.5,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "insurance_net": {
+    "v": 38.1,
+    "calc": "ins_revenue + ins_service_expense (выручка по страхованию + расходы на страховые услуги); ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "noncore_net": {
+    "v": -31.1,
+    "calc": "noncore_revenue + noncore_cost; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "misc_net": {
+    "v": 1.9,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex)"
+   },
+   "opex": {
+    "v": -292.9,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "pbt": {
+    "v": 541.3,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "tax": {
+    "v": -118.4,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "ni": {
+    "v": 422.9,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "ni_shareholders": {
+    "v": 422.6,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "key_avg": {
+    "v": 0.2073,
+    "calc": "фикстура core (W1): средняя ключевая квартала по календарным дням"
+   }
+  },
+  "2025Q3": {
+   "nii": {
+    "v": 893.6,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "fees_net": {
+    "v": 216.5,
+    "calc": "fee_income + fee_expense; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "llp_debt_fa": {
+    "v": -170.5,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "insurance_net": {
+    "v": 34.8,
+    "calc": "ins_revenue + ins_service_expense (выручка по страхованию + расходы на страховые услуги); ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "noncore_net": {
+    "v": -36.3,
+    "calc": "noncore_revenue + noncore_cost; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "misc_net": {
+    "v": -33.6,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex)"
+   },
+   "opex": {
+    "v": -308.6,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "pbt": {
+    "v": 595.9,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "tax": {
+    "v": -147.6,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "ni": {
+    "v": 448.3,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "ni_shareholders": {
+    "v": 449.8,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac954…"
+   },
+   "key_avg": {
+    "v": 0.1832,
+    "calc": "фикстура core (W1): средняя ключевая квартала по календарным дням"
+   }
+  },
+  "2025Q4": {
+   "nii": {
+    "v": 988.2,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "fees_net": {
+    "v": 219.0,
+    "calc": "fee_income + fee_expense; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "llp_debt_fa": {
+    "v": -111.3,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "insurance_net": {
+    "v": 37.3,
+    "calc": "ins_revenue + ins_service_expense (выручка по страхованию + расходы на страховые услуги); ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "noncore_net": {
+    "v": -43.9,
+    "calc": "noncore_revenue + noncore_cost; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "misc_net": {
+    "v": -177.9,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex)"
+   },
+   "opex": {
+    "v": -373.8,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "pbt": {
+    "v": 537.6,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "tax": {
+    "v": -139.0,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "ni": {
+    "v": 398.6,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "ni_shareholders": {
+    "v": 399.0,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 6 | 6, sha256 06ac4bd4…"
+   },
+   "key_avg": {
+    "v": 0.1655,
+    "calc": "фикстура core (W1): средняя ключевая квартала по календарным дням"
+   }
+  },
+  "2026Q1": {
+   "nii": {
+    "v": 984.3,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "fees_net": {
+    "v": 204.5,
+    "calc": "fee_income + fee_expense; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "llp_debt_fa": {
+    "v": -161.2,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "insurance_net": {
+    "v": 39.7,
+    "calc": "ins_revenue + ins_service_expense (выручка по страхованию + расходы на страховые услуги); ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "noncore_net": {
+    "v": -41.3,
+    "calc": "noncore_revenue + noncore_cost; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "misc_net": {
+    "v": -53.1,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex)"
+   },
+   "opex": {
+    "v": -303.5,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "pbt": {
+    "v": 669.4,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "tax": {
+    "v": -161.5,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "ni": {
+    "v": 507.9,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "ni_shareholders": {
+    "v": 508.5,
+    "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f8…"
+   },
+   "key_avg": {
+    "v": 0.155,
+    "calc": "фикстура core (W1): средняя ключевая квартала по календарным дням"
+   }
+  },
+  "2026Q2": {
+   "nii": {
+    "v": 1066.8,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "fees_net": {
+    "v": 215.3,
+    "calc": "fee_income + fee_expense; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "llp_debt_fa": {
+    "v": -171.5,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "insurance_net": {
+    "v": 39.8,
+    "calc": "ins_revenue + ins_service_expense (выручка по страхованию + расходы на страховые услуги); ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "noncore_net": {
+    "v": -46.4,
+    "calc": "noncore_revenue + noncore_cost; ifrs_quarterly.csv (этап 1; 4К — год минус 9М)"
+   },
+   "misc_net": {
+    "v": -88.8,
+    "calc": "pbt − (nii + llp_debt_fa + fees_net + insurance_net + noncore_net + opex)"
+   },
+   "opex": {
+    "v": -336.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "pbt": {
+    "v": 679.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "tax": {
+    "v": -167.9,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "ni": {
+    "v": 511.2,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "ni_shareholders": {
+    "v": 511.6,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de8…"
+   },
+   "key_avg": {
+    "v": 0.14618,
+    "calc": "фикстура core (W1): средняя ключевая квартала по календарным дням"
+   }
+  }
+ }
+}

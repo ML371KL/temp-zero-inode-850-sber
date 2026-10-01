@@ -1,0 +1,62 @@
+[Unit]
+Description=Сбер 850 · суточный прогон: сбор, нау-каст, выпуск, публикация в репозиторий данных
+Documentation=https://github.com/ML371KL/temp-zero-inode-850-sber/blob/main/ops/README.md
+# Именно network-online: первый шаг идёт на T-Invest, MOEX ISS и ЦБ.
+Wants=network-online.target
+After=network-online.target
+# Окно перезапуска вмещает три самых долгих прогона с паузами (systemd
+# отсчитывает его от первого старта): не больше 3 стартов за окно, дальше юнит
+# стоит до следующего таймера. Расчёт — ops/budgets.json (restart), равенство
+# сверяет tests/test_ops_units.py.
+StartLimitIntervalSec=26220
+StartLimitBurst=3
+
+[Service]
+# Type=exec, а не oneshot: systemd отказывается загружать oneshot с Restart!=no.
+Type=exec
+User=dash
+Group=dash
+WorkingDirectory=/srv/dash/repo-850-sber
+# Env-файл читает сам run.sh (см. sber850-collect.service): строки
+# EnvironmentFile нет намеренно.
+Environment=ENV_FILE=/usr/local/etc/sber-850/env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/bin/bash /srv/dash/repo-850-sber/ops/run.sh daily
+# Упавший шаг (код 1) повторяется через 3 минуты: моргнувший push в
+# репозиторий данных или временный отказ критического источника лечатся
+# повтором. Тревога (код 8: все шаги выполнены, выпуск на витрине, но прогон
+# требует внимания) НЕ повторяется — повтор её не снимет, а стоил бы ещё двух
+# полных прогонов. 64/78 — ошибки настройки. Повтор по коду 1 ограничен окном
+# StartLimit: стойкий отказ (гейт, защита заголовка, отозванный ключ) даёт три
+# прогона, а не повтор до утра.
+Restart=on-failure
+RestartSec=180
+RestartPreventExitStatus=8 64 78
+# Потолок = прогон с запасом (сбор, нау-каст, тесты такта, сборка, публикация,
+# до 600 с сверки) + ожидание замка (LOCK_WAIT_SECONDS). Расчёт —
+# ops/budgets.json, равенство сверяет tests/test_ops_units.py.
+# ДО ЗАМЕРА НА СЕРВЕРЕ ЭТО ОЦЕНКА.
+RuntimeMaxSec=8460
+SyslogIdentifier=sber850
+
+StateDirectory=sber-850
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+# Репозиторий пишется: git reset при обновлении кода, pip в .venv, var/ тестов.
+# Клон ветки release живёт в StateDirectory. /srv/dash/.ssh (ssh-алиас и ключ
+# записи в репозиторий данных) нужен ДЛЯ ЧТЕНИЯ — его не закрывать.
+ReadWritePaths=/srv/dash/repo-850-sber
+
+# Сборка считает полосу пулом из BANK_WORKERS процессов (env-файл): до замера
+# auto — до 7 процессов. Потолок памяти и число процессов задаются ОДНИМ замером
+# первых тактов (ops/README.md §9); ПРЕДВАРИТЕЛЬНО, по Ленте.
+MemoryHigh=384M
+MemoryMax=512M
+Nice=10
+
+# Мост тревог (см. sber850-collect.service).
+ExecStopPost=-+/usr/local/sbin/dash-alert %n
+
+# Секции [Install] намеренно НЕТ: юнит запускается таймером.

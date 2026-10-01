@@ -1,0 +1,748 @@
+{
+ "basis": "mixed",
+ "as_of": "2026-06-30",
+ "note": "у каждого блока свой basis: МСФО группы, Базель группы (примечание МСФО), регуляторный норматив группы, РСБУ банка (формы ЦБ), рынок",
+ "at1": {
+  "basis": "IFRS",
+  "amount": {
+   "v": 150.0,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+  },
+  "coupon_annual": {
+   "v": 9.7,
+   "src": "ifrs_FY2025_statements_sber.pdf, с. 81, sha256 06ac4bd4164d576e",
+   "calc": "годовой купон AT1 (150 млрд, Минфин) величиной; в отчёте — выплата со знаком минус"
+  },
+  "coupon_quarter": {
+   "v": 4,
+   "src": "ifrs_FY2025_statements_sber.pdf, с. 81, sha256 06ac4bd4164d576e",
+   "calc": "купон выплачивается в декабре — квартал 4"
+  }
+ },
+ "t2_recognized": {
+  "v": 500.3,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b",
+  "calc": "прокси: капитал 2-го уровня группы по Базелю; регуляторный T2 для Н20.0 не раскрыт",
+  "basis": "Basel (группа)"
+ },
+ "basel": {
+  "basis": "Basel (группа; примечание о капитале МСФО)",
+  "as_of": "2026-06-30",
+  "cet1_ratio": {
+   "v": 0.126,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b"
+  },
+  "cet1": {
+   "v": 7450.5,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b"
+  },
+  "t1_ratio": {
+   "v": 0.128,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b"
+  },
+  "t1": {
+   "v": 7600.5,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b"
+  },
+  "t2": {
+   "v": 500.3,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b"
+  },
+  "total_ratio": {
+   "v": 0.137,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b"
+  },
+  "total_capital": {
+   "v": 8100.8,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b"
+  },
+  "rwa": {
+   "v": 59318.1,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b"
+  }
+ },
+ "n20_0": {
+  "basis": "регуляторный норматив группы (Н20.0; оперативные данные презентации — источник mgmt)",
+  "value": {
+   "v": 0.151,
+   "src": "2026Q2_ifrs_presentation.pdf, с. 21, sha256 d17d36167137507e"
+  },
+  "as_of": "2026-06-30",
+  "pre_dividend": true,
+  "pre_dividend_note": "Н20.0 на 30.06.2026 — до вычета дивиденда за 2025 г. (вычет в месяце отсечки, июль 2026)",
+  "min_with_buffers": {
+   "v": 0.12,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 67, sha256 5b3a3de88ae6c96b"
+  }
+ },
+ "n1_1_bank": {
+  "basis": "RAS",
+  "value": {
+   "v": 0.11961,
+   "src": "stage1/ras/raw/135/2026-07-01.xml, форма 0409135 на 2026-07-01, sha256 5f7eccf6222b6cd7",
+   "calc": "Н1.1 банка, % / 100; прокси Н20.1 группы (MODEL §3.3)"
+  },
+  "as_of": "2026-07-01",
+  "ifrs_note_value": {
+   "v": 0.12,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 67, sha256 5b3a3de88ae6c96b"
+  }
+ },
+ "n1_0_bank": {
+  "v": 0.14633,
+  "src": "stage1/ras/raw/135/2026-07-01.xml, форма 0409135 на 2026-07-01, sha256 5f7eccf6222b6cd7",
+  "calc": "Н1.0 банка, % / 100",
+  "basis": "RAS",
+  "as_of": "2026-07-01"
+ },
+ "n1_2_bank": {
+  "v": 0.12213,
+  "src": "stage1/ras/raw/135/2026-07-01.xml, форма 0409135 на 2026-07-01, sha256 5f7eccf6222b6cd7",
+  "calc": "Н1.2 банка, % / 100",
+  "basis": "RAS",
+  "as_of": "2026-07-01"
+ },
+ "bank_base_capital": {
+  "v": 7120.477269,
+  "src": "stage1/ras/raw/123/2026-07-01.xml, форма 0409123 на 2026-07-01, sha256 245c5ea95f6de880",
+  "calc": "форма 0409123, код 102 «Базовый капитал, итого», тыс. ₽ / 10⁶ (для сверки Ded11_0)",
+  "basis": "RAS",
+  "as_of": "2026-07-01"
+ },
+ "bank_own_funds": {
+  "v": 8724.873076,
+  "src": "stage1/ras/raw/123/2026-07-01.xml, форма 0409123 на 2026-07-01, sha256 245c5ea95f6de880",
+  "calc": "форма 0409123, код 000 «Собственные средства (капитал), итого», тыс. ₽ / 10⁶",
+  "basis": "RAS",
+  "as_of": "2026-07-01"
+ },
+ "fvoci_reserve": {
+  "v": -374.9,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 44, sha256 5b3a3de88ae6c96b",
+  "calc": "после налога; = balance.equity.fvoci_reserve",
+  "basis": "IFRS"
+ },
+ "ofz_curve_anchor": {
+  "basis": "market",
+  "as_of": "2026-06-30",
+  "convention": "бескупонная доходность ОФЗ (КБД MOEX), годовое начисление, доли",
+  "1": {
+   "v": 0.134125,
+   "src": "MOEX ISS zcyc 2026-06-30 18:49:58, yearyields, sha256 90b297f62e10f888"
+  },
+  "3": {
+   "v": 0.144687,
+   "src": "MOEX ISS zcyc 2026-06-30 18:49:58, yearyields, sha256 90b297f62e10f888"
+  },
+  "5": {
+   "v": 0.154188,
+   "src": "MOEX ISS zcyc 2026-06-30 18:49:58, yearyields, sha256 90b297f62e10f888"
+  },
+  "10": {
+   "v": 0.16377,
+   "src": "MOEX ISS zcyc 2026-06-30 18:49:58, yearyields, sha256 90b297f62e10f888"
+  }
+ },
+ "history": [
+  {
+   "period": "2022Q4",
+   "date": "2022-12-31",
+   "n20_0": {
+    "v": 0.142,
+    "src": "2023Q4_ifrs_presentation.pdf, с. 24, sha256 b2d507a33171a819",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.147,
+    "src": "FY2023_ifrs_summary_statements.pdf, с. 21, sha256 724849f5047bb32b",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.151,
+    "src": "FY2023_ifrs_summary_statements.pdf, с. 21, sha256 724849f5047bb32b",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.156,
+    "src": "FY2023_ifrs_summary_statements.pdf, с. 21, sha256 724849f5047bb32b",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": null,
+    "calc": "не раскрыто: basel_cet1 на 2022-12-31 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": null,
+    "calc": "не раскрыто: basel_rwa на 2022-12-31 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": null,
+    "calc": "не раскрыто: форма 0409135 на 2023-01-01 не опубликована (провал раскрытия 2022–2023)",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2023Q1",
+   "date": "2023-03-31",
+   "n20_0": {
+    "v": 0.145,
+    "src": "2023Q4_ifrs_presentation.pdf, с. 24, sha256 b2d507a33171a819",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.151,
+    "src": "ifrs_3M2023_statements.pdf, с. 17, sha256 446ba8fb954cfb46",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.155,
+    "src": "ifrs_3M2023_statements.pdf, с. 17, sha256 446ba8fb954cfb46",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.16,
+    "src": "ifrs_3M2023_statements.pdf, с. 17, sha256 446ba8fb954cfb46",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": null,
+    "calc": "не раскрыто: basel_cet1 на 2023-03-31 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": null,
+    "calc": "не раскрыто: basel_rwa на 2023-03-31 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": null,
+    "calc": "не раскрыто: форма 0409135 на 2023-04-01 не опубликована (провал раскрытия 2022–2023)",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2023Q2",
+   "date": "2023-06-30",
+   "n20_0": {
+    "v": 0.136,
+    "src": "2023Q4_ifrs_presentation.pdf, с. 24, sha256 b2d507a33171a819",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.138,
+    "src": "ifrs_6M2023_statements.pdf, с. 18, sha256 dfea2257ba209c67",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.142,
+    "src": "ifrs_6M2023_statements.pdf, с. 18, sha256 dfea2257ba209c67",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.147,
+    "src": "ifrs_6M2023_statements.pdf, с. 18, sha256 dfea2257ba209c67",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": null,
+    "calc": "не раскрыто: basel_cet1 на 2023-06-30 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": null,
+    "calc": "не раскрыто: basel_rwa на 2023-06-30 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.1098,
+    "src": "stage1/ras/raw/135/2023-07-01.xml, форма 0409135 на 2023-07-01, sha256 3ccd62dd296aa887",
+    "calc": "форма 0409135 на 2023-07-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2023Q3",
+   "date": "2023-09-30",
+   "n20_0": {
+    "v": 0.133,
+    "src": "2023Q4_ifrs_presentation.pdf, с. 24, sha256 b2d507a33171a819",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.132,
+    "src": "ifrs_9M2023_statements.pdf, с. 18, sha256 3e613362365372c2",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.136,
+    "src": "ifrs_9M2023_statements.pdf, с. 18, sha256 3e613362365372c2",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.141,
+    "src": "ifrs_9M2023_statements.pdf, с. 18, sha256 3e613362365372c2",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": null,
+    "calc": "не раскрыто: basel_cet1 на 2023-09-30 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": null,
+    "calc": "не раскрыто: basel_rwa на 2023-09-30 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.10227,
+    "src": "stage1/ras/raw/135/2023-10-01.xml, форма 0409135 на 2023-10-01, sha256 8b10255e5b6f72e1",
+    "calc": "форма 0409135 на 2023-10-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2023Q4",
+   "date": "2023-12-31",
+   "n20_0": {
+    "v": 0.138,
+    "src": "2024Q4_ifrs_presentation.pdf, с. 21, sha256 717cfd764ad99671",
+    "calc": "выведено: 13,3 + 0,5 = 13,8 — на странице напечатаны значение сравнимого периода и изменение к нему, самого числа нет",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.132,
+    "src": "ifrs_FY2024_statements.pdf, с. 154, sha256 fbd4d739ce58c597",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.135,
+    "src": "ifrs_FY2024_statements.pdf, с. 154, sha256 fbd4d739ce58c597",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.14,
+    "src": "ifrs_FY2024_statements.pdf, с. 154, sha256 fbd4d739ce58c597",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": 6097.8,
+    "src": "ifrs_FY2024_statements.pdf, с. 154, sha256 fbd4d739ce58c597",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": 46295.6,
+    "src": "ifrs_FY2024_statements.pdf, с. 154, sha256 fbd4d739ce58c597",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.11104,
+    "src": "stage1/ras/raw/135/2024-01-01.xml, форма 0409135 на 2024-01-01, sha256 a32d4c0f90aae8e8",
+    "calc": "форма 0409135 на 2024-01-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2024Q1",
+   "date": "2024-03-31",
+   "n20_0": {
+    "v": 0.139,
+    "src": "ifrs_9M2024_press_release.pdf, с. 22, sha256 c5543662504fe674",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.135,
+    "src": "ifrs_3M2024_statements.pdf, с. 21, sha256 c8d802e70395f39f",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.138,
+    "src": "ifrs_3M2024_statements.pdf, с. 21, sha256 c8d802e70395f39f",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.14,
+    "src": "ifrs_3M2024_statements.pdf, с. 21, sha256 c8d802e70395f39f",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": null,
+    "calc": "не раскрыто: basel_cet1 на 2024-03-31 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": null,
+    "calc": "не раскрыто: basel_rwa на 2024-03-31 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.11898,
+    "src": "stage1/ras/raw/135/2024-04-01.xml, форма 0409135 на 2024-04-01, sha256 4ba3f74753acca82",
+    "calc": "форма 0409135 на 2024-04-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2024Q2",
+   "date": "2024-06-30",
+   "n20_0": {
+    "v": 0.141,
+    "src": "ifrs_9M2024_press_release.pdf, с. 22, sha256 c5543662504fe674",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.115,
+    "src": "ifrs_6M2024_statements.pdf, с. 22, sha256 44e423398dfb4e3c",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.118,
+    "src": "ifrs_6M2024_statements.pdf, с. 22, sha256 44e423398dfb4e3c",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.122,
+    "src": "ifrs_6M2024_statements.pdf, с. 22, sha256 44e423398dfb4e3c",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": null,
+    "calc": "не раскрыто: basel_cet1 на 2024-06-30 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": null,
+    "calc": "не раскрыто: basel_rwa на 2024-06-30 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.11409,
+    "src": "stage1/ras/raw/135/2024-07-01.xml, форма 0409135 на 2024-07-01, sha256 bc6448d370d87c30",
+    "calc": "форма 0409135 на 2024-07-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2024Q3",
+   "date": "2024-09-30",
+   "n20_0": {
+    "v": 0.129,
+    "src": "ifrs_9M2024_press_release.pdf, с. 22, sha256 c5543662504fe674",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.114,
+    "src": "ifrs_9M2024_statements.pdf, с. 23, sha256 75c4a0d7f4932954",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.117,
+    "src": "ifrs_9M2024_statements.pdf, с. 23, sha256 75c4a0d7f4932954",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.121,
+    "src": "ifrs_9M2024_statements.pdf, с. 23, sha256 75c4a0d7f4932954",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": null,
+    "calc": "не раскрыто: basel_cet1 на 2024-09-30 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": null,
+    "calc": "не раскрыто: basel_rwa на 2024-09-30 раскрыт только коэффициентом",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.10421,
+    "src": "stage1/ras/raw/135/2024-10-01.xml, форма 0409135 на 2024-10-01, sha256 b4e5fe8df5c91836",
+    "calc": "форма 0409135 на 2024-10-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2024Q4",
+   "date": "2024-12-31",
+   "n20_0": {
+    "v": 0.133,
+    "src": "2025Q4_ifrs_presentation.pdf, с. 19, sha256 cc61c42c0890c448",
+    "calc": "выведено: 13,7 − 0,4 = 13,3 — на странице напечатаны значение сравнимого периода и изменение к нему, самого числа нет",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.121,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 157, sha256 06ac4bd4164d576e",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.124,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 157, sha256 06ac4bd4164d576e",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.128,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 157, sha256 06ac4bd4164d576e",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": 6428.5,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 157, sha256 06ac4bd4164d576e",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": 52977.2,
+    "src": "ifrs_FY2025_statements_sber.pdf, с. 157, sha256 06ac4bd4164d576e",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.11047,
+    "src": "stage1/ras/raw/135/2025-01-01.xml, форма 0409135 на 2025-01-01, sha256 b1c03b3042d972d5",
+    "calc": "форма 0409135 на 2025-01-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2025Q1",
+   "date": "2025-03-31",
+   "n20_0": {
+    "v": 0.14,
+    "src": "2025Q1_ifrs_presentation.pdf, с. 19, sha256 22f8cca1c7e27538",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.131,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 66, sha256 1f25a2344d65ea90",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.134,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 66, sha256 1f25a2344d65ea90",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.139,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 66, sha256 1f25a2344d65ea90",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": 6853.4,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 66, sha256 1f25a2344d65ea90",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": 52193.3,
+    "src": "2025Q1_ifrs_interim_statements.pdf, с. 66, sha256 1f25a2344d65ea90",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.12104,
+    "src": "stage1/ras/raw/135/2025-04-01.xml, форма 0409135 на 2025-04-01, sha256 4cd223408724b245",
+    "calc": "форма 0409135 на 2025-04-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2025Q2",
+   "date": "2025-06-30",
+   "n20_0": {
+    "v": 0.146,
+    "src": "2025Q2_ifrs_presentation.pdf, с. 19, sha256 160364ed4904d8ef",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.124,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 73, sha256 090e4b47f88773b3",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.127,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 73, sha256 090e4b47f88773b3",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.133,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 73, sha256 090e4b47f88773b3",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": 6592.6,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 73, sha256 090e4b47f88773b3",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": 53227.2,
+    "src": "ifrs_6M2025_statements_sber.pdf, с. 73, sha256 090e4b47f88773b3",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.11687,
+    "src": "stage1/ras/raw/135/2025-07-01.xml, форма 0409135 на 2025-07-01, sha256 f8fab5e9a296f700",
+    "calc": "форма 0409135 на 2025-07-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2025Q3",
+   "date": "2025-09-30",
+   "n20_0": {
+    "v": 0.134,
+    "src": "2025Q3_ifrs_presentation.pdf, с. 22, sha256 00d0fc066a3a630c",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.126,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 74, sha256 cf3ac9548d5ca9a1",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.128,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 74, sha256 cf3ac9548d5ca9a1",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.136,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 74, sha256 cf3ac9548d5ca9a1",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": 6943.2,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 74, sha256 cf3ac9548d5ca9a1",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": 55307.9,
+    "src": "ifrs_9M2025_statements_sber.pdf, с. 74, sha256 cf3ac9548d5ca9a1",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.09832,
+    "src": "stage1/ras/raw/135/2025-10-01.xml, форма 0409135 на 2025-10-01, sha256 bc019a5d5f7198df",
+    "calc": "форма 0409135 на 2025-10-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2025Q4",
+   "date": "2025-12-31",
+   "n20_0": {
+    "v": 0.137,
+    "src": "2025Q4_ifrs_presentation.pdf, с. 19, sha256 cc61c42c0890c448",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.13,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.132,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.141,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": 7268.5,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": 56043.4,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.11701,
+    "src": "stage1/ras/raw/135/2026-01-01.xml, форма 0409135 на 2026-01-01, sha256 937ee3fa7aa6b151",
+    "calc": "форма 0409135 на 2026-01-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2026Q1",
+   "date": "2026-03-31",
+   "n20_0": {
+    "v": 0.144,
+    "src": "2026Q1_ifrs_presentation.pdf, с. 6, sha256 6002b43d7cbea77f",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.135,
+    "src": "ifrs_3M2026_statements.pdf, с. 61, sha256 4b1449f839cf0826",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.138,
+    "src": "ifrs_3M2026_statements.pdf, с. 61, sha256 4b1449f839cf0826",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.146,
+    "src": "ifrs_3M2026_statements.pdf, с. 61, sha256 4b1449f839cf0826",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": 7766.0,
+    "src": "ifrs_3M2026_statements.pdf, с. 61, sha256 4b1449f839cf0826",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": 57448.0,
+    "src": "ifrs_3M2026_statements.pdf, с. 61, sha256 4b1449f839cf0826",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.12316,
+    "src": "stage1/ras/raw/135/2026-04-01.xml, форма 0409135 на 2026-04-01, sha256 b7d028fba3ee8949",
+    "calc": "форма 0409135 на 2026-04-01, % / 100",
+    "basis": "RAS"
+   }
+  },
+  {
+   "period": "2026Q2",
+   "date": "2026-06-30",
+   "n20_0": {
+    "v": 0.151,
+    "src": "2026Q2_ifrs_presentation.pdf, с. 21, sha256 d17d36167137507e",
+    "basis": "регуляторный норматив группы (презентация)"
+   },
+   "cet1_ratio": {
+    "v": 0.126,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b",
+    "basis": "Basel (группа)"
+   },
+   "t1_ratio": {
+    "v": 0.128,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b",
+    "basis": "Basel (группа)"
+   },
+   "total_ratio": {
+    "v": 0.137,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b",
+    "basis": "Basel (группа)"
+   },
+   "cet1": {
+    "v": 7450.5,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b",
+    "basis": "Basel (группа)"
+   },
+   "rwa": {
+    "v": 59318.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b",
+    "basis": "Basel (группа)"
+   },
+   "n1_1_bank": {
+    "v": 0.11961,
+    "src": "stage1/ras/raw/135/2026-07-01.xml, форма 0409135 на 2026-07-01, sha256 5f7eccf6222b6cd7",
+    "calc": "форма 0409135 на 2026-07-01, % / 100",
+    "basis": "RAS"
+   }
+  }
+ ]
+}

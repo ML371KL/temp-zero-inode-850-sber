@@ -1,0 +1,28 @@
+{
+ "basis": "IFRS",
+ "as_of": "2026-06-30",
+ "issued_ordinary": {
+  "v": 21586.948,
+  "src": "ISS; МСФО 2025 прим. 22"
+ },
+ "issued_preferred": {
+  "v": 1000.0,
+  "src": "ISS; МСФО 2025 прим. 22"
+ },
+ "issued_total": {
+  "v": 22586.948,
+  "calc": "issued_ordinary + issued_preferred"
+ },
+ "outstanding_ordinary": {
+  "v": 21377.048,
+  "calc": "21 586,948 − собственные 209,9 (7,9 млрд / 37,64 ₽, прим. 11)"
+ },
+ "outstanding_preferred": {
+  "v": 965.452,
+  "calc": "1 000 − собственные 34,5 (1,3 млрд / 37,64 ₽)"
+ },
+ "outstanding_total": {
+  "v": 22342.5,
+  "calc": "outstanding_ordinary + outstanding_preferred"
+ }
+}

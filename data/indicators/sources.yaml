@@ -1,0 +1,107 @@
+# Строки эмитента для сборщиков индикаторов (INTERFACES §3.3, docs/INDICATORS.md).
+# Всё, что называет эмитента (слова поиска новостей, каналы, шаблоны адресов его
+# документов), живёт здесь, а не в коде `indicators/`. Имя, тикеры и регномер —
+# `meta.company` книги. Подстановки: {ticker} — тикер из книги.
+# Ленты проверены живым запросом с ноутбука 01.10.2026 (прямое соединение, UA проекта;
+# таблица «источник → работает / формат / задержка» — docs/INDICATORS.md §1.1).
+
+iss:
+  board: TQBR
+  indices: [IMOEX, MOEXFN]            # индекс рынка и индекс финансов (плитки «Рынок», «Сектор»)
+
+tinvest:
+  class_code: TQBR
+  dividends_days: 800                 # окно календаря дивидендов назад (две выплаты)
+
+dividends:
+  profit_year_lag: 1                  # год прибыли = год отсечки − 1 (годовая выплата)
+  # Второй источник реестра (М§15): новость о решении ГОСА или рекомендации совета директоров.
+  # Вид новости (kind в news/items.json) → слово источника в реестре; засчитывается одна новость.
+  news_kinds: {interfax: "Интерфакс", tass: "ТАСС"}
+  dps_tolerance: 0.005                # ₽: DPS источников совпадает (копейка)
+
+news:
+  issuer_keywords: ["Сбербанк", "СберБанк", "Сбер ", "Сбер,", "«Сбер»", "Сбера", "#SBER"]
+  ras_require: ["РСБУ"]               # новость о релизе РСБУ
+  dividend_require: ["дивиденд"]      # новость о решении ГОСА / рекомендации совета (реестр, М§15)
+  lookback_days: 1                    # архив дня Интерфакса: сегодня и вчера — каждый такт
+  catchup_days: 7                     # дни до недели назад — если не пройдены после своего окончания
+  interfax_day: "https://www.interfax.ru/business/news/{yyyy}/{mm}/{dd}/"
+  smartlab_news: "https://smart-lab.ru/forum/news/{ticker}/"
+  telegram_channels:                  # публичные превью t.me/s/<канал>; каждый канал — свой вид источника
+    - {name: markettwits, require: ["РСБУ"]}                               # лента-агрегатор: заголовок в минуту релиза
+    - {name: cbrstocks, require: ["РСБУ"], kind: "telegram:markettwits"}    # запасной агрегатор тех же заголовков — тот же вид
+    - {name: SberForInvestors, keywords: any, require: ["чистая прибыль"]}  # канал эмитента: любой пост с итогами
+  # Издания: лента RSS → статья эмитента (релиз РСБУ или дивиденды). «Коммерсантъ» и «Ведомости»
+  # ставят ссылку на PDF релиза (этап 1: 4 из 6 релизов); ТАСС — только лента (статьи отдают 403),
+  # нужна для дивидендов. РБК (статьи 401, релизы РСБУ не пишет) и RSS Интерфакса (≈2,5 ч) не берутся.
+  outlets:
+    - {name: kommersant, format: rss, listing: "https://www.kommersant.ru/RSS/news.xml", article: '/doc/\d+'}
+    - {name: vedomosti, format: rss, listing: "https://www.vedomosti.ru/rss/news", article: '/(?:investments|finance|business)/news/'}
+    - {name: tass, format: rss, listing: "https://tass.ru/rss/v2.xml", article: 'tass\.ru/', fetch_article: false}
+  # Статические PDF эмитента (отдаются напрямую; HTML-страницы за антиботом не трогаем).
+  # Только https: ссылка из чужой статьи — недоверенный ввод, документ берётся по TLS с хоста эмитента.
+  pdf_patterns:
+    - 'https://(?:www\.)?sberbank\.(?:com|ru)/common/img/uploaded/files/info/[^\s"''<>]+?\.pdf'
+
+sber_pdf:
+  # Хосты эмитента: адрес документа и каждый редирект — https на одном из них, иначе не качаем.
+  hosts: [www.sberbank.com, sberbank.com, www.sberbank.ru, sberbank.ru]
+  kinds:                              # вид документа по адресу
+    ras_release: '_rsbu/'
+    ifrs_statements: '/(?:reporting_[^/]*|[^/]*_reporting)\.pdf$'
+    ifrs_press: '/(?:ifrs_)?results_[^/]*\.pdf$'
+  ras_month_patterns:                 # месяц релиза РСБУ из имени файла
+    - '(?P<months>\d{1,2})months(?P<year>\d{4})'
+    - '(?P<month_name>january|february|march|april|may|june|july|august|september|october|november|december)_?(?P<year>\d{4})'
+
+schedule:                             # окна по умолчанию, если дат нет в facts/calendar.json и T-Invest
+  ras_release_day: [8, 15]            # релиз РСБУ: дни месяца после отчётного (REPORT-ras §2.5)
+  ras_december_day: [17, 20]          # декабрь — январь, 17–20
+  late_days: 3                        # дозор ждёт после окна ещё столько дней
+  form102_day: [24, 26]               # форма 0409102 — 24–26 число (до накопления истории first_seen)
+  ifrs_quarter_day: [20, 31]          # МСФО 1–3 кварталов — месяц после квартала
+  ifrs_q4: {month_offset: 2, day: [20, 28]}   # МСФО года — февраль
+  watch_window_msk: ["09:45", "13:00"]        # такт release-watch (ops/systemd)
+
+release_watch:
+  tolerance:
+    money: 0.15                       # млрд ₽: два источника согласны (форма 102 = релиз до 0,1)
+    share: 0.0005                     # 0,05 п.п.
+    identity: 0.35                    # НМ = НМ прошлого месяца + месяц
+  form102_tolerance: 0.15             # флаг ras_mismatch: ЧП релиза против формы 0409102
+
+# Плитки индикаторов (П§2 `indicators.tiles`). `unit` — код единицы П§0.2: share — доля, bn — млрд ₽,
+# price — ₽ (цена), level — уровень индекса. `basis` — код базиса П§0.2: ras — релиз и формы банка,
+# regulatory — нормативы Н1.x банка (хотя сама форма — РСБУ), market — рынок, ставки рынка и ЦБ.
+# Другой код — ошибка реестра, плитки не выпускаются (`indicators/outputs.py`: TILE_UNITS, TILE_BASES).
+tiles:
+  groups:
+    - {id: ras, title: "РСБУ банка за месяц"}
+    - {id: forms, title: "Формы ЦБ"}
+    - {id: rates, title: "Ставки и кривая"}
+    - {id: market, title: "Рынок"}
+    - {id: sector, title: "Сектор — справочно"}
+  items:
+    - {id: ras_ni_m, group: ras, title: "Чистая прибыль банка за месяц", unit: bn, basis: ras, series: [ras.release.np_m], cadence: month, stale_days: 75, change: previous}
+    - {id: ras_nii_m, group: ras, title: "Чистый процентный доход за месяц", unit: bn, basis: ras, series: [ras.release.nii_m], cadence: month, stale_days: 75, change: previous}
+    - {id: ras_fee_m, group: ras, title: "Чистый комиссионный доход за месяц", unit: bn, basis: ras, series: [ras.release.fee_m], cadence: month, stale_days: 75, change: previous}
+    - {id: ras_prov_m, group: ras, title: "Резервы и переоценка кредитов за месяц", unit: bn, basis: ras, series: [ras.release.prov_m], cadence: month, stale_days: 75, change: previous, note: "расход со знаком минус, как в релизе"}
+    - {id: ras_cor_ytd, group: ras, title: "Стоимость риска с начала года", unit: share, basis: ras, series: [ras.release.cor_ytd], cadence: month, stale_days: 75, change: previous}
+    - {id: ras_roe_ytd, group: ras, title: "ROE с начала года", unit: share, basis: ras, series: [ras.release.roe_ytd], cadence: month, stale_days: 75, change: previous}
+    - {id: f102_ni_ytd, group: forms, title: "ЧП с начала года, форма 0409102", unit: bn, basis: ras, series: [cbr.f102.ni_ytd], cadence: month, stale_days: 75, change: previous}
+    - {id: f135_n1_0, group: forms, title: "Н1.0 банка", unit: share, basis: regulatory, series: [cbr.f135.n1_0], cadence: month, stale_days: 75, change: previous}
+    - {id: f135_n1_1, group: forms, title: "Н1.1 банка", unit: share, basis: regulatory, series: [cbr.f135.n1_1], cadence: month, stale_days: 75, change: previous}
+    - {id: f123_capital, group: forms, title: "Собственные средства банка, форма 0409123", unit: bn, basis: ras, series: [cbr.f123.capital_total], cadence: month, stale_days: 75, change: previous}
+    - {id: f101_loans_fl, group: forms, title: "Кредиты физлицам, форма 0409101", unit: bn, basis: ras, series: [cbr.f101.loans_fl_gross], cadence: month, stale_days: 75, change: previous}
+    - {id: f101_deposits_fl, group: forms, title: "Депозиты физлиц, форма 0409101", unit: bn, basis: ras, series: [cbr.f101.deposits_fl], cadence: month, stale_days: 75, change: previous}
+    - {id: key_rate, group: rates, title: "Ключевая ставка", unit: share, basis: market, series: [cbr.key_rate], cadence: day, stale_days: 7, change: previous_distinct, since: true}
+    - {id: ruonia, group: rates, title: "RUONIA", unit: share, basis: market, series: [cbr.ruonia], cadence: day, stale_days: 7, change: previous}
+    - {id: ofz_1y, group: rates, title: "КБД ОФЗ, 1 год", unit: share, basis: market, series: [iss.zcyc.1], cadence: day, stale_days: 7, change: previous}
+    - {id: ofz_10y, group: rates, title: "КБД ОФЗ, 10 лет", unit: share, basis: market, series: [iss.zcyc.10], cadence: day, stale_days: 7, change: previous}
+    - {id: deposit_top10, group: rates, title: "Максимальная ставка по вкладам топ-10", unit: share, basis: market, series: [cbr.deposit_top10], cadence: decade, stale_days: 25, change: previous}
+    - {id: liquidity, group: rates, title: "Структурный дефицит ликвидности", unit: bn, basis: market, series: [cbr.bliquidity], cadence: day, stale_days: 7, change: previous, note: "плюс — дефицит"}
+    - {id: "price_{ticker}", per_ticker: true, group: market, title: "Цена {ticker}", unit: price, basis: market, series: ["tinvest.price.{ticker}", "iss.price.{ticker}"], history: ["iss.close.{ticker}"], cadence: day, stale_days: 7, change: previous}
+    - {id: brokers_median, group: market, title: "Медиана целей брокеров", unit: price, basis: market, series: ["tinvest.brokers.median.{main_ticker}"], cadence: day, stale_days: 14, change: previous}
+    - {id: imoex, group: market, title: "Индекс Мосбиржи", unit: level, basis: market, series: [iss.index.IMOEX], cadence: day, stale_days: 7, change: previous}
+    - {id: moexfn, group: sector, title: "Индекс финансов Мосбиржи", unit: level, basis: market, series: [iss.index.MOEXFN], cadence: day, stale_days: 7, change: previous}

@@ -1,0 +1,207 @@
+metric,period,value,unit,basis,doc,page,sha256,note
+basel_cet1_capital,2020Q2,4721.2,RUB bn,mgmt,2020Q3_ifrs_press_release_en_webdisclosure.html,,380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec,"[EQS/WebDisclosure, EN] "
+basel_cet1_capital,2020Q3,4554.8,RUB bn,mgmt,2020Q3_ifrs_press_release_en_webdisclosure.html,,380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec,"[EQS/WebDisclosure, EN] "
+basel_cet1_capital,2020Q4,4719.9,RUB bn,mgmt,2021Q3_ifrs_press_release_en_eqs.html,,6bd883ab2317f391b945727d3aafbb4c12ae67422a27012963d15a9aaa2d4c13,"[EQS, EN] "
+basel_cet1_capital,2021Q2,4798.7,RUB bn,mgmt,2021Q3_ifrs_press_release_en_eqs.html,,6bd883ab2317f391b945727d3aafbb4c12ae67422a27012963d15a9aaa2d4c13,"[EQS, EN] "
+basel_cet1_capital,2021Q3,5105.7,RUB bn,mgmt,2021Q3_ifrs_press_release_en_eqs.html,,6bd883ab2317f391b945727d3aafbb4c12ae67422a27012963d15a9aaa2d4c13,"[EQS, EN] "
+basel_cet1_capital,2021Q4,5262.1,RUB bn,mgmt,FY2022_ifrs_press_release.pdf,6,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане. 
+basel_cet1_capital,2022Q4,5339.7,RUB bn,mgmt,2023Q4_ifrs_press_release.pdf,6,e9453a68d881b7a00c37007a1e9ce13f001ca044cff710a54ca5a687b611bf76,ранее: 5380.9 (FY2022_ifrs_press_release.pdf с.6); 5338 (2023Q1_ifrs_presentation.pdf с.14); 5338.1 (2023Q1_ifrs_press_release.pdf с.6); 5340 (2023Q2_ifrs_presentation.pdf с.15); 5340 (2023Q4_ifrs_presentation.pdf с.24)
+basel_cet1_capital,2023Q1,5676.2,RUB bn,mgmt,2023Q1_ifrs_press_release.pdf,6,d0edbd118f1578b60b396133d2255957694efc355d7b8e69255f25ea6bd85287,после МСФО 17 (впервые в 2023).  | ранее: 5676 (2023Q1_ifrs_presentation.pdf с.14); 5676 (2023Q2_ifrs_presentation.pdf с.15)
+basel_cet1_capital,2023Q2,5471.1,RUB bn,mgmt,ifrs_9M2023_press_release.pdf,18,3ddac6de85a8b37cb8cf48e787a2beceb3f8deac7729db305ab924665dc80e37,"[зеркало financemarker, распечатка страницы IR] базовый капитал 1-го уровня | ранее: 5471 (2023Q2_ifrs_presentation.pdf с.15)"
+basel_cet1_capital,2023Q3,5741.7,RUB bn,mgmt,2023Q4_ifrs_press_release.pdf,6,e9453a68d881b7a00c37007a1e9ce13f001ca044cff710a54ca5a687b611bf76,ранее: 5742 (2023Q4_ifrs_presentation.pdf с.24)
+basel_cet1_capital,2023Q4,6097.8,RUB bn,mgmt,2023Q4_ifrs_press_release.pdf,6,e9453a68d881b7a00c37007a1e9ce13f001ca044cff710a54ca5a687b611bf76,ранее: 6098 (2023Q4_ifrs_presentation.pdf с.24); 6098 (2024Q4_ifrs_presentation.pdf с.20)
+basel_cet1_capital,2024Q1,6407,RUB bn,mgmt,2025Q1_ifrs_presentation.pdf,18,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,базовый капитал
+basel_cet1_capital,2024Q2,5780,RUB bn,mgmt,2025Q2_ifrs_presentation.pdf,18,160364ed4904d8efb7dea4f911a01c5a6bafbbb26286b7b634646803c4a8f093,базовый капитал
+basel_cet1_capital,2024Q3,6064,RUB bn,mgmt,2025Q3_ifrs_presentation.pdf,21,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,базовый капитал
+basel_cet1_capital,2024Q4,6429,RUB bn,mgmt,2025Q3_ifrs_presentation.pdf,21,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,базовый капитал
+basel_cet1_capital,2025Q1,6853,RUB bn,mgmt,2026Q1_ifrs_presentation.pdf,19,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,базовый капитал
+basel_cet1_capital,2025Q2,6593,RUB bn,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"базовый капитал (CET1), на конец квартала"
+basel_cet1_capital,2025Q3,6943,RUB bn,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"базовый капитал (CET1), на конец квартала"
+basel_cet1_capital,2025Q4,7269,RUB bn,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"базовый капитал (CET1), на конец квартала"
+basel_cet1_capital,2026Q1,7766,RUB bn,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"базовый капитал (CET1), на конец квартала"
+basel_cet1_capital,2026Q2,7451,RUB bn,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"базовый капитал (CET1), на конец квартала"
+basel_cet1_ratio,2019Q4,14.49,%,mgmt,2020Q3_ifrs_presentation.pdf,21,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] CET1 (Базель 3.5); выплата дивидендов за 2019 — около −130 бп в 3К20
+basel_cet1_ratio,2020Q2,14.78,%,mgmt,2020Q3_ifrs_presentation.pdf,21,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] CET1 (Базель 3.5); выплата дивидендов за 2019 — около −130 бп в 3К20
+basel_cet1_ratio,2020Q3,13.39,%,mgmt,IR_presentation_2021-04.pdf,39,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] Basel 3.5"
+basel_cet1_ratio,2020Q4,13.83,%,mgmt,2021Q3_ifrs_presentation.pdf,31,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] 
+basel_cet1_ratio,2021Q1,14.3,%,mgmt,IR_presentation_2021-06_ru.pdf,40,8a8c6b941b0291e6f594dd9a1e3567e0828cf43248546519e2c51d31dca9dd56,"[IR-презентация июнь 2021, раздел 1К21] "
+basel_cet1_ratio,2021Q2,14.05,%,mgmt,2021Q3_ifrs_presentation.pdf,31,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] 
+basel_cet1_ratio,2021Q3,13.95,%,mgmt,2021Q3_ifrs_presentation.pdf,31,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] 
+basel_cet1_ratio,2021Q4,13.9,%,mgmt,FY2022_ifrs_press_release.pdf,6,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,"до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане. в пресс-релизе 9М23 31.12.2022 = 14,7 (пересчёт)"
+basel_cet1_ratio,2022Q4,14.7,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,CET1 по Базелю 3.5 | ранее: 14.8 (FY2022_ifrs_press_release.pdf с.6)
+basel_cet1_ratio,2023Q1,15.1,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,CET1 по Базелю 3.5
+basel_cet1_ratio,2023Q2,13.8,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,CET1 по Базелю 3.5
+basel_cet1_ratio,2023Q3,13.2,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,CET1 по Базелю 3.5
+basel_cet1_ratio,2023Q4,13.2,%,mgmt,2024Q4_ifrs_presentation.pdf,21,717cfd764ad9967161887e516ad63d5538cf89d7d6ee15e6836bb8aacc001cf9,CET1
+basel_cet1_ratio,2024Q1,13.5,%,mgmt,2025Q1_ifrs_presentation.pdf,19,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,CET1
+basel_cet1_ratio,2024Q2,11.5,%,mgmt,2025Q3_ifrs_presentation.pdf,22,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,CET1
+basel_cet1_ratio,2024Q3,11.4,%,mgmt,2025Q3_ifrs_presentation.pdf,22,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,CET1
+basel_cet1_ratio,2024Q4,12.1,%,mgmt,2025Q4_ifrs_presentation.pdf,19,cc61c42c0890c448912ce7061add0c112b28176d8e28e26817389cef6a99d479,
+basel_cet1_ratio,2025Q1,13.1,%,mgmt,2026Q1_ifrs_presentation.pdf,20,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,CET1
+basel_cet1_ratio,2025Q2,12.4,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"CET1, на конец квартала"
+basel_cet1_ratio,2025Q3,12.6,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"CET1, на конец квартала"
+basel_cet1_ratio,2025Q4,13.0,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"CET1, на конец квартала"
+basel_cet1_ratio,2026Q1,13.5,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"CET1, на конец квартала"
+basel_cet1_ratio,2026Q2,12.6,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"CET1, на конец квартала"
+basel_rwa,2019Q4,30199.8,RUB bn,mgmt,2020Q3_ifrs_presentation.pdf,19,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,"[копия Internet Archive] RWA по Базелю 3.5 (31.12.2019 пересчитан: в презентации 4К19 по Базелю III — 32 634,1; 30.06.2020 — по Базелю 3 для стандартизированного подхода)"
+basel_rwa,2020Q2,31936.4,RUB bn,mgmt,2020Q3_ifrs_presentation.pdf,19,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,"[копия Internet Archive] RWA по Базелю 3.5 (31.12.2019 пересчитан: в презентации 4К19 по Базелю III — 32 634,1; 30.06.2020 — по Базелю 3 для стандартизированного подхода)"
+basel_rwa,2020Q3,34004.7,RUB bn,mgmt,2020Q3_ifrs_presentation.pdf,19,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,"[копия Internet Archive] RWA по Базелю 3.5 (31.12.2019 пересчитан: в презентации 4К19 по Базелю III — 32 634,1; 30.06.2020 — по Базелю 3 для стандартизированного подхода)"
+basel_rwa,2020Q4,34124.2,RUB bn,mgmt,2021Q3_ifrs_press_release_en_eqs.html,,6bd883ab2317f391b945727d3aafbb4c12ae67422a27012963d15a9aaa2d4c13,"[EQS, EN]  | ранее: 34124 (2021Q3_ifrs_presentation.pdf с.30)"
+basel_rwa,2021Q2,34164,RUB bn,mgmt,2021Q3_ifrs_presentation.pdf,30,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] RWA (Базель 3.5)
+basel_rwa,2021Q3,36604.3,RUB bn,mgmt,2021Q3_ifrs_press_release_en_eqs.html,,6bd883ab2317f391b945727d3aafbb4c12ae67422a27012963d15a9aaa2d4c13,"[EQS, EN]  | ранее: 36604 (2021Q3_ifrs_presentation.pdf с.30)"
+basel_rwa,2021Q4,37723.5,RUB bn,mgmt,FY2022_ifrs_press_release.pdf,6,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане.  | ранее: 37724 (FY2022_ifrs_presentation.pdf с.25)
+basel_rwa,2022Q4,36438.6,RUB bn,mgmt,2023Q4_ifrs_press_release.pdf,6,e9453a68d881b7a00c37007a1e9ce13f001ca044cff710a54ca5a687b611bf76,ранее: 36418 (FY2022_ifrs_presentation.pdf с.25); 36417.5 (FY2022_ifrs_press_release.pdf с.6); 36437 (2023Q1_ifrs_presentation.pdf с.13); 36436.8 (2023Q1_ifrs_press_release.pdf с.6); 36439 (2023Q2_ifrs_presentation.pdf с.14); 36439 (2023Q4_ifrs_presentation.pdf с.23)
+basel_rwa,2023Q1,37675.5,RUB bn,mgmt,2023Q1_ifrs_press_release.pdf,6,d0edbd118f1578b60b396133d2255957694efc355d7b8e69255f25ea6bd85287,после МСФО 17 (впервые в 2023).  | ранее: 37676 (2023Q1_ifrs_presentation.pdf с.13); 37676 (2023Q2_ifrs_presentation.pdf с.14)
+basel_rwa,2023Q2,39591.5,RUB bn,mgmt,ifrs_9M2023_press_release.pdf,18,3ddac6de85a8b37cb8cf48e787a2beceb3f8deac7729db305ab924665dc80e37,"[зеркало financemarker, распечатка страницы IR] RWA | ранее: 39592 (2023Q2_ifrs_presentation.pdf с.14)"
+basel_rwa,2023Q3,43399,RUB bn,mgmt,2023Q4_ifrs_presentation.pdf,23,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,RWA
+basel_rwa,2023Q4,46295.6,RUB bn,mgmt,ifrs_9M2024_press_release.pdf,22,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru]  | ранее: 46296 (2023Q4_ifrs_presentation.pdf с.23); 46296 (2024Q4_ifrs_presentation.pdf с.20)"
+basel_rwa,2024Q1,47547,RUB bn,mgmt,2025Q1_ifrs_presentation.pdf,18,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,RWA (Базель)
+basel_rwa,2024Q2,50291.7,RUB bn,mgmt,ifrs_9M2024_press_release.pdf,22,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru]  | ранее: 50292 (2024Q4_ifrs_presentation.pdf с.20); 50292 (2025Q1_ifrs_presentation.pdf с.18); 50292 (2025Q2_ifrs_presentation.pdf с.18)"
+basel_rwa,2024Q3,53318.6,RUB bn,mgmt,ifrs_9M2024_press_release.pdf,22,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru]  | ранее: 53319 (2024Q4_ifrs_presentation.pdf с.20); 53319 (2025Q1_ifrs_presentation.pdf с.18); 53319 (2025Q2_ifrs_presentation.pdf с.18); 53319 (2025Q3_ifrs_presentation.pdf с.21)"
+basel_rwa,2024Q4,52977,RUB bn,mgmt,2025Q3_ifrs_presentation.pdf,21,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,RWA (Базель)
+basel_rwa,2025Q1,52193,RUB bn,mgmt,2026Q1_ifrs_presentation.pdf,19,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,RWA (Базель)
+basel_rwa,2025Q2,53227,RUB bn,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"RWA по Базелю (капитал группы по МСФО), на конец квартала"
+basel_rwa,2025Q3,55308,RUB bn,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"RWA по Базелю (капитал группы по МСФО), на конец квартала"
+basel_rwa,2025Q4,56043,RUB bn,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"RWA по Базелю (капитал группы по МСФО), на конец квартала"
+basel_rwa,2026Q1,57448,RUB bn,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"RWA по Базелю (капитал группы по МСФО), на конец квартала"
+basel_rwa,2026Q2,59318,RUB bn,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"RWA по Базелю (капитал группы по МСФО), на конец квартала"
+basel_tier1_ratio,2019Q4,14.49,%,mgmt,2020Q3_ifrs_presentation.pdf,21,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] Tier 1 (Базель 3.5); 3К20 — с бессрочным субординированным кредитом 150 млрд
+basel_tier1_ratio,2020Q2,14.78,%,mgmt,2020Q3_ifrs_presentation.pdf,21,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] Tier 1 (Базель 3.5); 3К20 — с бессрочным субординированным кредитом 150 млрд
+basel_tier1_ratio,2020Q3,13.84,%,mgmt,IR_presentation_2021-04.pdf,39,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] Basel 3.5"
+basel_tier1_ratio,2020Q4,14.27,%,mgmt,2021Q3_ifrs_presentation.pdf,31,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] 
+basel_tier1_ratio,2021Q1,14.74,%,mgmt,IR_presentation_2021-06_ru.pdf,40,8a8c6b941b0291e6f594dd9a1e3567e0828cf43248546519e2c51d31dca9dd56,"[IR-презентация июнь 2021, раздел 1К21] "
+basel_tier1_ratio,2021Q2,14.49,%,mgmt,2021Q3_ifrs_presentation.pdf,31,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] 
+basel_tier1_ratio,2021Q3,14.36,%,mgmt,2021Q3_ifrs_presentation.pdf,31,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] 
+basel_tier1_ratio,2021Q4,14.3,%,mgmt,FY2022_ifrs_press_release.pdf,6,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане. 
+basel_tier1_ratio,2022Q4,15.1,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,Tier 1 по Базелю 3.5 | ранее: 15.2 (FY2022_ifrs_press_release.pdf с.6)
+basel_tier1_ratio,2023Q1,15.5,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,Tier 1 по Базелю 3.5
+basel_tier1_ratio,2023Q2,14.2,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,Tier 1 по Базелю 3.5
+basel_tier1_ratio,2023Q3,13.6,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,Tier 1 по Базелю 3.5
+basel_tier1_ratio,2023Q4,13.5,%,mgmt,2024Q4_ifrs_presentation.pdf,21,717cfd764ad9967161887e516ad63d5538cf89d7d6ee15e6836bb8aacc001cf9,Tier 1
+basel_tier1_ratio,2024Q1,13.8,%,mgmt,2025Q1_ifrs_presentation.pdf,19,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,Tier 1
+basel_tier1_ratio,2024Q2,11.8,%,mgmt,2025Q3_ifrs_presentation.pdf,22,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,Tier 1
+basel_tier1_ratio,2024Q3,11.7,%,mgmt,2025Q3_ifrs_presentation.pdf,22,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,Tier 1
+basel_tier1_ratio,2024Q4,12.4,%,mgmt,2025Q4_ifrs_presentation.pdf,19,cc61c42c0890c448912ce7061add0c112b28176d8e28e26817389cef6a99d479,
+basel_tier1_ratio,2025Q1,13.4,%,mgmt,2026Q1_ifrs_presentation.pdf,20,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,Tier 1
+basel_tier1_ratio,2025Q2,12.7,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"Tier 1, на конец квартала"
+basel_tier1_ratio,2025Q3,12.8,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"Tier 1, на конец квартала"
+basel_tier1_ratio,2025Q4,13.2,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"Tier 1, на конец квартала"
+basel_tier1_ratio,2026Q1,13.8,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"Tier 1, на конец квартала"
+basel_tier1_ratio,2026Q2,12.8,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"Tier 1, на конец квартала"
+basel_total_capital,2020Q2,4863.2,RUB bn,mgmt,2020Q3_ifrs_press_release_en_webdisclosure.html,,380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec,"[EQS/WebDisclosure, EN] регуляторный total capital; 31.12.2019 = 4 433,5 по Базелю III"
+basel_total_capital,2020Q3,4836.4,RUB bn,mgmt,2020Q3_ifrs_press_release_en_webdisclosure.html,,380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec,"[EQS/WebDisclosure, EN] регуляторный total capital; 31.12.2019 = 4 433,5 по Базелю III"
+basel_total_capital,2020Q4,5008.9,RUB bn,mgmt,2021Q3_ifrs_press_release_en_eqs.html,,6bd883ab2317f391b945727d3aafbb4c12ae67422a27012963d15a9aaa2d4c13,"[EQS, EN] total capital (регуляторный, Базель 3.5)"
+basel_total_capital,2021Q2,5139.0,RUB bn,mgmt,2021Q3_ifrs_press_release_en_eqs.html,,6bd883ab2317f391b945727d3aafbb4c12ae67422a27012963d15a9aaa2d4c13,"[EQS, EN] total capital (регуляторный, Базель 3.5)"
+basel_total_capital,2021Q3,5429.8,RUB bn,mgmt,2021Q3_ifrs_press_release_en_eqs.html,,6bd883ab2317f391b945727d3aafbb4c12ae67422a27012963d15a9aaa2d4c13,"[EQS, EN] total capital (регуляторный, Базель 3.5)"
+basel_total_capital,2021Q4,5600.7,RUB bn,mgmt,FY2022_ifrs_press_release.pdf,6,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане. 
+basel_total_capital,2022Q4,5684.6,RUB bn,mgmt,2023Q1_ifrs_press_release.pdf,6,d0edbd118f1578b60b396133d2255957694efc355d7b8e69255f25ea6bd85287,после МСФО 17 (впервые в 2023).  | ранее: 5727.4 (FY2022_ifrs_press_release.pdf с.6)
+basel_total_capital,2023Q1,6030.5,RUB bn,mgmt,2023Q1_ifrs_press_release.pdf,6,d0edbd118f1578b60b396133d2255957694efc355d7b8e69255f25ea6bd85287,после МСФО 17 (впервые в 2023). 
+basel_total_ratio,2019Q4,14.83,%,mgmt,2020Q3_ifrs_presentation.pdf,21,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,"[копия Internet Archive] Базель 3.5; 31.12.2019 пересчитан (по Базелю III было 13,59)"
+basel_total_ratio,2020Q2,15.23,%,mgmt,2020Q3_ifrs_presentation.pdf,21,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,"[копия Internet Archive] Базель 3.5; 31.12.2019 пересчитан (по Базелю III было 13,59)"
+basel_total_ratio,2020Q3,14.22,%,mgmt,IR_presentation_2021-04.pdf,39,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] Basel 3.5"
+basel_total_ratio,2020Q4,14.68,%,mgmt,2021Q3_ifrs_presentation.pdf,31,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] 
+basel_total_ratio,2021Q1,15.29,%,mgmt,IR_presentation_2021-06_ru.pdf,40,8a8c6b941b0291e6f594dd9a1e3567e0828cf43248546519e2c51d31dca9dd56,"[IR-презентация июнь 2021, раздел 1К21] Базель 3.5"
+basel_total_ratio,2021Q2,15.04,%,mgmt,2021Q3_ifrs_presentation.pdf,31,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] 
+basel_total_ratio,2021Q3,14.83,%,mgmt,2021Q3_ifrs_presentation.pdf,31,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] 
+basel_total_ratio,2021Q4,14.8,%,mgmt,FY2022_ifrs_press_release.pdf,6,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане. 
+basel_total_ratio,2022Q4,15.6,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,CAR по Базелю 3.5 | ранее: 15.7 (FY2022_ifrs_press_release.pdf с.6)
+basel_total_ratio,2023Q1,16.0,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,CAR по Базелю 3.5
+basel_total_ratio,2023Q2,14.7,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,CAR по Базелю 3.5
+basel_total_ratio,2023Q3,14.1,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,CAR по Базелю 3.5
+basel_total_ratio,2023Q4,14.0,%,mgmt,2024Q4_ifrs_presentation.pdf,21,717cfd764ad9967161887e516ad63d5538cf89d7d6ee15e6836bb8aacc001cf9,общий капитал (Базель)
+basel_total_ratio,2024Q1,14.0,%,mgmt,2025Q1_ifrs_presentation.pdf,19,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,общий капитал (Базель)
+basel_total_ratio,2024Q2,12.2,%,mgmt,2025Q3_ifrs_presentation.pdf,22,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,общий капитал (Базель)
+basel_total_ratio,2024Q3,12.1,%,mgmt,2025Q3_ifrs_presentation.pdf,22,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,общий капитал (Базель)
+basel_total_ratio,2024Q4,12.8,%,mgmt,2025Q4_ifrs_presentation.pdf,19,cc61c42c0890c448912ce7061add0c112b28176d8e28e26817389cef6a99d479,
+basel_total_ratio,2025Q1,13.9,%,mgmt,2026Q1_ifrs_presentation.pdf,20,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,общий капитал (Базель)
+basel_total_ratio,2025Q2,13.3,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"достаточность общего капитала группы по МСФО (Базель), на конец квартала"
+basel_total_ratio,2025Q3,13.6,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"достаточность общего капитала группы по МСФО (Базель), на конец квартала"
+basel_total_ratio,2025Q4,14.1,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"достаточность общего капитала группы по МСФО (Базель), на конец квартала"
+basel_total_ratio,2026Q1,14.6,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"достаточность общего капитала группы по МСФО (Базель), на конец квартала"
+basel_total_ratio,2026Q2,13.7,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"достаточность общего капитала группы по МСФО (Базель), на конец квартала"
+n20_0,2021Q4,13.6,%,mgmt,FY2022_ifrs_press_release.pdf,6,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,"до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане. Н20.0; в материалах 2023 г. 31.12.2022 = 14,2 (уточнение)"
+n20_0,2022Q4,14.2,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,Н20.0 по требованиям Банка России | ранее: 14.4 (FY2022_ifrs_press_release.pdf с.6)
+n20_0,2023Q1,14.5,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,Н20.0 по требованиям Банка России
+n20_0,2023Q2,13.6,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,Н20.0 по требованиям Банка России | ранее: 13.4 (2023Q2_ifrs_presentation.pdf с.15)
+n20_0,2023Q3,13.3,%,mgmt,2023Q4_ifrs_presentation.pdf,24,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,Н20.0 по требованиям Банка России
+n20_0,2023Q4,13.8,%,mgmt,2024Q4_ifrs_presentation.pdf,21,717cfd764ad9967161887e516ad63d5538cf89d7d6ee15e6836bb8aacc001cf9,"выведено: 13,3 + 0,5 | ранее: 13.7 (ifrs_9M2024_press_release.pdf с.22)"
+n20_0,2024Q1,13.9,%,mgmt,ifrs_9M2024_press_release.pdf,22,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru] Н20.0; 3К24 −1,4 пп — выплата дивидендов за 2023 (752,1 млрд). 1К24 13,9 и 4К23 13,7 — иначе, чем в релизе 6М24 (14,0; 13,8) | ранее: 14.0 (ifrs_6M2024_press_release.pdf с.13)"
+n20_0,2024Q2,14.1,%,mgmt,ifrs_9M2024_press_release.pdf,22,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru] Н20.0; 3К24 −1,4 пп — выплата дивидендов за 2023 (752,1 млрд). 1К24 13,9 и 4К23 13,7 — иначе, чем в релизе 6М24 (14,0; 13,8)"
+n20_0,2024Q3,12.9,%,mgmt,ifrs_9M2024_press_release.pdf,22,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru] Н20.0; 3К24 −1,4 пп — выплата дивидендов за 2023 (752,1 млрд). 1К24 13,9 и 4К23 13,7 — иначе, чем в релизе 6М24 (14,0; 13,8)"
+n20_0,2024Q4,13.3,%,mgmt,2025Q4_ifrs_presentation.pdf,19,cc61c42c0890c448912ce7061add0c112b28176d8e28e26817389cef6a99d479,"выведено: 13,7 − 0,4"
+n20_0,2025Q1,14.0,%,mgmt,2025Q1_ifrs_presentation.pdf,19,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,"Н20.0 на 31.03.25, «+0,7 пп с начала года»"
+n20_0,2025Q2,14.6,%,mgmt,2025Q2_ifrs_presentation.pdf,19,160364ed4904d8efb7dea4f911a01c5a6bafbbb26286b7b634646803c4a8f093,"Н20.0 на 30.06.25, «+1,3 пп с начала года»"
+n20_0,2025Q3,13.4,%,mgmt,2025Q3_ifrs_presentation.pdf,22,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,"Н20.0 на 30.09.25; «+0,06 пп с начала года»"
+n20_0,2025Q4,13.7,%,mgmt,2025Q4_ifrs_presentation.pdf,19,cc61c42c0890c448912ce7061add0c112b28176d8e28e26817389cef6a99d479,"«+0,4 пп с начала года» (прогнозные данные)"
+n20_0,2026Q1,14.4,%,mgmt,2026Q1_ifrs_presentation.pdf,6,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,Н20.0 на 01.04.2026 (прогнозные данные; итог — по консолидированной РПБУ группы)
+n20_0,2026Q2,15.1,%,mgmt,2026Q2_ifrs_presentation.pdf,21,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"Н20.0 группы на 30.06.2026 (оперативные данные), +0,7 пп за квартал; до вычета дивиденда за 2025 (выплата в 3К26)"
+roe,2013FY,20.8,%,mgmt,2014Q4_ifrs_presentation.pdf,4,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,
+roe,2014FY,14.8,%,mgmt,2014Q4_ifrs_presentation.pdf,4,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,
+roe,2015FY,10.2,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2016FY,20.8,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2017FY,24.2,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2018Q4,18.8,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2018FY,23.1,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2019Q1,22.9,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2019Q2,24.9,%,mgmt,2020Q2_ifrs_presentation.pdf,3,0f36d709e90858aaa1eabbbe1d113a6d4646997df0c8943ff5c23c9c1f3e4ab7,"[копия Internet Archive] ROE; 3К19 — по всей прибыли (по продолжающейся деятельности 22,4%)"
+roe,2019Q3,15.2,%,mgmt,2020Q3_ifrs_presentation.pdf,2,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] ROE по чистой прибыли (3К19 — с убытком от продажи Денизбанка)
+roe,2019M9,20.9,%,mgmt,2020Q3_ifrs_press_release_en_webdisclosure.html,,380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec,"[EQS/WebDisclosure, EN] "
+roe,2019Q4,19.4,%,mgmt,2020Q3_ifrs_presentation.pdf,2,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] ROE по чистой прибыли (3К19 — с убытком от продажи Денизбанка)
+roe,2019FY,20.5,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2020Q1,10.6,%,mgmt,2020Q3_ifrs_presentation.pdf,2,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] ROE по чистой прибыли (3К19 — с убытком от продажи Денизбанка)
+roe,2020Q2,14.2,%,mgmt,2020Q3_ifrs_presentation.pdf,2,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] ROE по чистой прибыли (3К19 — с убытком от продажи Денизбанка)
+roe,2020Q3,22.7,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7 | ранее: 22.8 (2020Q3_ifrs_presentation.pdf с.2); 22.8 (2020Q3_ifrs_press_release_en_webdisclosure.html с.None)"
+roe,2020M9,15.9,%,mgmt,2020Q3_ifrs_press_release_en_webdisclosure.html,,380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec,"[EQS/WebDisclosure, EN]  | ранее: 16.0 (2021Q3_ifrs_press_release_en_eqs.html с.None)"
+roe,2020Q4,16.7,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7"
+roe,2020FY,16.1,%,mgmt,IR_presentation_2021-04.pdf,26,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] заголовок «ROE came at 16.1%»"
+roe,2021Q1,24.7,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7"
+roe,2021Q2,25.8,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7"
+roe,2021Q3,26.8,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7"
+roe,2021M9,25.8,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7"
+roe,2021FY,24.2,%,mgmt,FY2022_ifrs_press_release.pdf,3,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане. 
+roe,2022FY,5.2,%,mgmt,2023Q4_ifrs_press_release.pdf,3,e9453a68d881b7a00c37007a1e9ce13f001ca044cff710a54ca5a687b611bf76,
+roe,2023Q1,25.0,%,mgmt,2023Q1_ifrs_presentation.pdf,4,ac7606bfa9b320c999210c84b09c929ea673ea188dc9e5975dafd614c75b9cd2,после МСФО 17 (впервые в 2023). 
+roe,2023Q2,26.0,%,mgmt,ifrs_6M2024_press_release.pdf,5,03648c61237172890a5772c11db097aa6d01f97ad3ec89e98c7923a874dbde9b,"[зеркало financemarker, распечатка страницы sberbank.ru] выведено: 25,9 + 0,1 и 25,0 + 0,5 (изменение г/г)"
+roe,2023H1,25.5,%,mgmt,ifrs_6M2024_press_release.pdf,5,03648c61237172890a5772c11db097aa6d01f97ad3ec89e98c7923a874dbde9b,"[зеркало financemarker, распечатка страницы sberbank.ru] выведено: 25,9 + 0,1 и 25,0 + 0,5 (изменение г/г)"
+roe,2023Q3,27.6,%,mgmt,ifrs_9M2023_press_release.pdf,7,3ddac6de85a8b37cb8cf48e787a2beceb3f8deac7729db305ab924665dc80e37,"[зеркало financemarker, распечатка страницы IR] "
+roe,2023M9,26.2,%,mgmt,ifrs_9M2023_press_release.pdf,7,3ddac6de85a8b37cb8cf48e787a2beceb3f8deac7729db305ab924665dc80e37,"[зеркало financemarker, распечатка страницы IR] "
+roe,2023Q4,22.9,%,mgmt,2024Q4_ifrs_press_release.pdf,3,22a137f32087d146785846df7b91bb33c620133d76a32659f8357c9bca1ace4b,"выведено: 20,6 + 2,3 и 24,0 + 1,3"
+roe,2023FY,25.3,%,mgmt,2024Q4_ifrs_press_release.pdf,3,22a137f32087d146785846df7b91bb33c620133d76a32659f8357c9bca1ace4b,"выведено: 20,6 + 2,3 и 24,0 + 1,3"
+roe,2024Q1,24.2,%,mgmt,2025Q1_ifrs_presentation.pdf,4,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,
+roe,2024Q2,25.9,%,mgmt,ifrs_9M2024_press_release.pdf,10,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru] "
+roe,2024H1,25.0,%,mgmt,2024Q2_ifrs_presentation.pdf,4,842234301302bebcedc5d0391086fac61837500694a316ae6013e9d41880f904,
+roe,2024Q3,25.4,%,mgmt,2024Q4_ifrs_press_release.pdf,3,22a137f32087d146785846df7b91bb33c620133d76a32659f8357c9bca1ace4b,
+roe,2024M9,25.2,%,mgmt,ifrs_9M2024_press_release.pdf,10,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru] "
+roe,2024Q4,20.6,%,mgmt,2025Q4_ifrs_press_release.pdf,3,9fcc844f65e099c25b733fc8c491f21d2a23190c89b2c5ad29afbb0749a78b61,
+roe,2024FY,24.0,%,mgmt,2025Q4_ifrs_press_release.pdf,3,9fcc844f65e099c25b733fc8c491f21d2a23190c89b2c5ad29afbb0749a78b61,
+roe,2025Q1,24.4,%,mgmt,2025Q1_ifrs_presentation.pdf,4,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,
+roe,2025Q2,23.0,%,mgmt,2025Q2_ifrs_presentation.pdf,4,160364ed4904d8efb7dea4f911a01c5a6bafbbb26286b7b634646803c4a8f093,
+roe,2025H1,23.7,%,mgmt,2025Q2_ifrs_presentation.pdf,4,160364ed4904d8efb7dea4f911a01c5a6bafbbb26286b7b634646803c4a8f093,
+roe,2025Q3,23.7,%,mgmt,2025Q3_ifrs_presentation.pdf,4,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,
+roe,2025M9,23.7,%,mgmt,2025Q3_ifrs_presentation.pdf,4,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,ROE 9М2025
+roe,2025Q4,19.9,%,mgmt,2025Q4_ifrs_press_release.pdf,3,9fcc844f65e099c25b733fc8c491f21d2a23190c89b2c5ad29afbb0749a78b61,
+roe,2025FY,22.7,%,mgmt,2025Q4_ifrs_presentation.pdf,5,cc61c42c0890c448912ce7061add0c112b28176d8e28e26817389cef6a99d479,
+roe,2026Q1,24.4,%,mgmt,2026Q1_ifrs_presentation.pdf,6,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,
+roe,2026Q2,24.0,%,mgmt,2026Q2_ifrs_presentation.pdf,6,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,рентабельность капитала
+roe,2026H1,24.2,%,mgmt,2026Q2_ifrs_presentation.pdf,6,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,рентабельность капитала
+rwa_density,2020Q2,92.9,%,mgmt,2020Q3_ifrs_press_release_en_webdisclosure.html,,380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec,"[EQS/WebDisclosure, EN] «RWA density decreased from 92.9% to 92.0%»"
+rwa_density,2020Q3,92.0,%,mgmt,2020Q3_ifrs_press_release_en_webdisclosure.html,,380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec,"[EQS/WebDisclosure, EN] «RWA density decreased from 92.9% to 92.0%»"
+rwa_density,2020Q4,90.3,%,mgmt,2021Q3_ifrs_presentation.pdf,30,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2021Q2,85.8,%,mgmt,2021Q3_ifrs_presentation.pdf,30,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2021Q3,88.1,%,mgmt,2021Q3_ifrs_presentation.pdf,30,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2021Q4,87.0,%,mgmt,FY2022_ifrs_presentation.pdf,25,03bcb49309a55139e63b5d67fec663e2cc19d0888024e8f7878ed394673a25f6,до пересчёта по МСФО 17; годовые (квартальная отчётность 2022 не публиковалась). RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2022Q4,83.9,%,mgmt,2023Q4_ifrs_presentation.pdf,23,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,RWA / совокупный размер риска для показателя финансового рычага | ранее: 83.8 (FY2022_ifrs_presentation.pdf с.25); 83.8 (2023Q1_ifrs_presentation.pdf с.13)
+rwa_density,2023Q1,82.8,%,mgmt,2023Q2_ifrs_presentation.pdf,14,e35e9e6c9a4ae798836b4b573c289d1d2ec9883e99850449bd819b3306ae2d02,"31.12.22 пересчитан 83,8 → 83,9"
+rwa_density,2023Q2,82.7,%,mgmt,2023Q2_ifrs_presentation.pdf,14,e35e9e6c9a4ae798836b4b573c289d1d2ec9883e99850449bd819b3306ae2d02,"31.12.22 пересчитан 83,8 → 83,9"
+rwa_density,2023Q3,84.7,%,mgmt,2023Q4_ifrs_presentation.pdf,23,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2023Q4,85.1,%,mgmt,2024Q4_ifrs_presentation.pdf,20,717cfd764ad9967161887e516ad63d5538cf89d7d6ee15e6836bb8aacc001cf9,RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2024Q1,85.9,%,mgmt,2025Q1_ifrs_presentation.pdf,18,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2024Q2,87.5,%,mgmt,2025Q2_ifrs_presentation.pdf,18,160364ed4904d8efb7dea4f911a01c5a6bafbbb26286b7b634646803c4a8f093,RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2024Q3,87.1,%,mgmt,2025Q3_ifrs_presentation.pdf,21,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2024Q4,84.2,%,mgmt,2025Q3_ifrs_presentation.pdf,21,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2025Q1,84.0,%,mgmt,2026Q1_ifrs_presentation.pdf,19,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2025Q2,83.9,%,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2025Q3,83.2,%,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2025Q4,78.9,%,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2026Q1,80.6,%,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,RWA / совокупный размер риска для показателя финансового рычага
+rwa_density,2026Q2,83.3,%,mgmt,2026Q2_ifrs_presentation.pdf,20,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,RWA / совокупный размер риска для показателя финансового рычага

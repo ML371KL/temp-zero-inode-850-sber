@@ -1,0 +1,13 @@
+{
+ "basis": "IFRS",
+ "as_of": "2026-06-30",
+ "period": "2026Q2",
+ "documents": [
+  {
+   "key": "ifrs_6m26",
+   "file": "2026H1_ifrs_interim_statements.pdf",
+   "sha256": "5b3a3de88ae6c96b6441054cd8e65dd5e45c170666d6d493534c400cdcd01a08",
+   "url": null
+  }
+ ]
+}

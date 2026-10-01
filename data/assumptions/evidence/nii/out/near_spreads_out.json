@@ -1,0 +1,117 @@
+{
+ "anchor_year": 2026,
+ "first_period": "2026Q3",
+ "reference_half": "2026H2",
+ "facts": "data/facts/nii_books.json (rate_anchor)",
+ "books": {
+  "corp_loans": {
+   "side": "asset",
+   "ref": "ofz_1y",
+   "rho": 0.33,
+   "rate_anchor": 0.14214,
+   "ref_H_first_quarter": 0.1396,
+   "beta": 1.0,
+   "calibration_Y0_plus_2": 0.00428,
+   "rule": {
+    "2026": 0.00254,
+    "2027": 0.00341
+   },
+   "book": {
+    "2026": 0.00254,
+    "2027": 0.00341
+   },
+   "rate_first_quarter_H": 0.14214
+  },
+  "mortgage": {
+   "side": "asset",
+   "ref": "ofz_3y",
+   "rho": 0.12,
+   "rate_anchor": 0.16501,
+   "ref_H_first_quarter": 0.1596,
+   "beta": 1.0,
+   "calibration_Y0_plus_2": 0.02785,
+   "rule": {
+    "2026": 0.00541,
+    "2027": 0.01663
+   },
+   "book": {
+    "2026": 0.00541,
+    "2027": 0.01663
+   },
+   "rate_first_quarter_H": 0.16501
+  },
+  "retail_loans": {
+   "side": "asset",
+   "ref": "ofz_3y",
+   "rho": 0.12,
+   "rate_anchor": 0.16501,
+   "ref_H_first_quarter": 0.1596,
+   "beta": 1.0,
+   "calibration_Y0_plus_2": 0.02785,
+   "rule": {
+    "2026": 0.00541,
+    "2027": 0.01663
+   },
+   "book": {
+    "2026": 0.00541,
+    "2027": 0.01663
+   },
+   "rate_first_quarter_H": 0.16501
+  },
+  "securities": {
+   "side": "asset",
+   "ref": "ofz_3y",
+   "rho": 0.33,
+   "rate_anchor": 0.131655,
+   "ref_H_first_quarter": 0.1596,
+   "beta": 1.0,
+   "calibration_Y0_plus_2": -0.01604,
+   "rule": {
+    "2026": -0.02795,
+    "2027": -0.022
+   },
+   "book": {
+    "2026": -0.02795,
+    "2027": -0.022
+   },
+   "rate_first_quarter_H": 0.13165
+  },
+  "liquidity": {
+   "side": "asset",
+   "ref": "key",
+   "rho": 1.0,
+   "rate_anchor": 0.07399,
+   "ref_H_first_quarter": 0.14,
+   "beta": 1.0,
+   "calibration_Y0_plus_2": -0.07954,
+   "rule": {
+    "2026": -0.06601,
+    "2027": -0.07278
+   },
+   "book": {
+    "2026": -0.06601,
+    "2027": -0.07278
+   },
+   "rate_first_quarter_H": 0.07399
+  },
+  "wholesale": {
+   "side": "liability",
+   "ref": "key",
+   "rho": 1.0,
+   "rate_anchor": 0.156224,
+   "ref_H_first_quarter": 0.14,
+   "beta": 1.0,
+   "calibration_Y0_plus_2": -0.01555,
+   "rule": {
+    "2026": 0.01622,
+    "2027": 0.00034
+   },
+   "book": {
+    "2026": 0.01622,
+    "2027": 0.00034
+   },
+   "rate_first_quarter_H": 0.15622
+  }
+ },
+ "book_mismatches": []
+}

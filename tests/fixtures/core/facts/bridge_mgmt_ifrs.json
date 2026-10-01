@@ -1,0 +1,125 @@
+{
+ "basis": "mgmt↔IFRS",
+ "as_of": "2026-06-30",
+ "window": [
+  "2024Q1",
+  "2026Q2"
+ ],
+ "cor": {
+  "method": "additive",
+  "value": {
+   "v": 0.0017,
+   "calc": "среднее (движок − упр.) 1К24–2К26, n = 10, σ 0,16 п.п. (критик, cor_bridge.py)"
+  },
+  "history": [
+   {
+    "period": "2026Q1",
+    "mgmt": {
+     "v": 0.0129,
+     "src": "mgmt_kpi.csv"
+    },
+    "engine": {
+     "v": 0.013841,
+     "calc": "−llp_debt_fa / средние кредиты АС × 365/d"
+    },
+    "gap": {
+     "v": 0.000941,
+     "calc": "engine − mgmt"
+    }
+   },
+   {
+    "period": "2026Q2",
+    "mgmt": {
+     "v": 0.01,
+     "src": "mgmt_kpi.csv"
+    },
+    "engine": {
+     "v": 0.014297,
+     "calc": "−llp_debt_fa / средние кредиты АС × 365/d"
+    },
+    "gap": {
+     "v": 0.004297,
+     "calc": "engine − mgmt"
+    }
+   }
+  ]
+ },
+ "nim": {
+  "method": "additive",
+  "value": {
+   "v": -0.00412,
+   "calc": "calib-nii: упр. − движок = 0,412 п.п. (1К24–2К26)"
+  },
+  "history": [
+   {
+    "period": "2026Q1",
+    "mgmt": {
+     "v": 0.0634,
+     "src": "mgmt_kpi.csv"
+    },
+    "engine": {
+     "v": 0.059495,
+     "calc": "nii × 365/d / средние процентные активы"
+    },
+    "gap": {
+     "v": -0.003905,
+     "calc": "engine − mgmt"
+    }
+   },
+   {
+    "period": "2026Q2",
+    "mgmt": {
+     "v": 0.067,
+     "src": "mgmt_kpi.csv"
+    },
+    "engine": {
+     "v": 0.063548,
+     "calc": "nii × 365/d / средние процентные активы"
+    },
+    "gap": {
+     "v": -0.003452,
+     "calc": "engine − mgmt"
+    }
+   }
+  ]
+ },
+ "cir": {
+  "method": "additive",
+  "value": {
+   "v": -0.017,
+   "calc": "фикстура core (W1): CIR движка − упр., окно 1К24–2К26 (порядок sanity-val: −1,3…−2,5 п.п.)"
+  },
+  "history": [
+   {
+    "period": "2026Q1",
+    "mgmt": {
+     "v": 0.267,
+     "src": "mgmt_kpi.csv"
+    },
+    "engine": {
+     "v": 0.25821,
+     "calc": "−opex / (nii + fees_net + insurance_net + misc_net)"
+    },
+    "gap": {
+     "v": -0.00879,
+     "calc": "engine − mgmt"
+    }
+   },
+   {
+    "period": "2026Q2",
+    "mgmt": {
+     "v": 0.291,
+     "src": "mgmt_kpi.csv"
+    },
+    "engine": {
+     "v": 0.272565,
+     "calc": "−opex / (nii + fees_net + insurance_net + misc_net)"
+    },
+    "gap": {
+     "v": -0.018435,
+     "calc": "engine − mgmt"
+    }
+   }
+  ]
+ }
+}

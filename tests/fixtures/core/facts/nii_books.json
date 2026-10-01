@@ -1,0 +1,82 @@
+{
+ "basis": "IFRS",
+ "as_of": "2026-06-30",
+ "books": {
+  "corp_loans": {
+   "rate_anchor": {
+    "v": 0.14214,
+    "calc": "упр. доходность ЮЛ 2К26 14,2 % × 1.0010 (масштаб к доходности кредитов МСФО 2К26)"
+   }
+  },
+  "securities": {
+   "rate_anchor": {
+    "v": 0.128335,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "liquidity": {
+   "rate_anchor": {
+    "v": 0.07399,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "retail_current": {
+   "rate_anchor": {
+    "v": 0.034311,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "retail_term": {
+   "rate_anchor": {
+    "v": 0.117063,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "corp_funds": {
+   "rate_anchor": {
+    "v": 0.087861,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "wholesale": {
+   "rate_anchor": {
+    "v": 0.156224,
+    "calc": "interest_q / средний остаток × 365/91"
+   }
+  },
+  "mortgage": {
+   "rate_anchor": {
+    "v": 0.16501,
+    "calc": "как у розницы (calib-nii: рыночная ипотека и прочая розница — одна упр. доходность ФЛ)"
+   }
+  },
+  "retail_loans": {
+   "rate_anchor": {
+    "v": 0.16501,
+    "calc": "упр. доходность ФЛ 2К26 16,7 % × масштаб, за вычетом льготной (ключевая 2К26 + 2,5 п.п.) по средней доле"
+   }
+  },
+  "mortgage_sub": {
+   "rate_anchor": {
+    "v": 0.17118,
+    "calc": "ключевая 2К26 14,618 % + компенсация 2,5 п.п. [НП]"
+   }
+  }
+ },
+ "dia_q": {
+  "v": 44.1,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de8…"
+ },
+ "current_share_anchor": {
+  "v": 0.415012,
+  "calc": "retail_current / (retail_current + retail_term)"
+ },
+ "key_avg_anchor_q": {
+  "v": 0.14618,
+  "calc": "средняя ключевая 2К26 по календарным дням (calib-nii)"
+ },
+ "nim_eng_q": {
+  "v": 0.063548,
+  "calc": "фикстура core (W1): ЧПМ движка 2К26 = nii × 365/91 / средние процентные активы"
+ }
+}

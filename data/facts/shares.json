@@ -1,0 +1,65 @@
+{
+ "basis": "IFRS",
+ "as_of": "2026-06-30",
+ "unit": "млн шт.; номинал — ₽",
+ "issued_ordinary": {
+  "v": 21586.948,
+  "src": "stage1/market/shares_dividends/iss_description_SBER.json, ISSUESIZE, FACEVALUE, sha256 7005c0ab2fe1d973",
+  "calc": "ISSUESIZE / 10⁶; = МСФО 2025, примечание об уставном капитале (21 587 млн)"
+ },
+ "issued_preferred": {
+  "v": 1000.0,
+  "src": "stage1/market/shares_dividends/iss_description_SBERP.json, ISSUESIZE, FACEVALUE, sha256 3c31bb74a1ebad23",
+  "calc": "ISSUESIZE / 10⁶"
+ },
+ "issued_total": {
+  "v": 22586.948,
+  "calc": "issued_ordinary + issued_preferred (N_iss — делитель DPS, политика п. 1.6)"
+ },
+ "treasury_ordinary": {
+  "v": 209.9,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 43, sha256 5b3a3de88ae6c96b",
+  "calc": "дивиденд за 2025 на собственные обыкновенные 7,9 млрд / DPS 37,64 ₽ × 1000 (на отсечку 20.07.2026; на 30.06.2026 число не раскрыто; точность ±1–2 млн)"
+ },
+ "treasury_preferred": {
+  "v": 34.5,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 43, sha256 5b3a3de88ae6c96b",
+  "calc": "дивиденд на собственные привилегированные 1,3 млрд / 37,64 ₽ × 1000"
+ },
+ "treasury_prev_year_end": {
+  "as_of": "2025-12-31",
+  "ordinary": {
+   "v": 199.2,
+   "src": "ifrs_FY2025_statements_sber.pdf, с. 80, sha256 06ac4bd4164d576e"
+  },
+  "preferred": {
+   "v": 34.3,
+   "src": "ifrs_FY2025_statements_sber.pdf, с. 80, sha256 06ac4bd4164d576e"
+  }
+ },
+ "outstanding_ordinary": {
+  "v": 21377.048,
+  "calc": "issued_ordinary − treasury_ordinary"
+ },
+ "outstanding_preferred": {
+  "v": 965.5,
+  "calc": "issued_preferred − treasury_preferred"
+ },
+ "outstanding_total": {
+  "v": 22342.548,
+  "calc": "outstanding_ordinary + outstanding_preferred (N_out)"
+ },
+ "par_value": {
+  "v": 3.0,
+  "src": "stage1/market/shares_dividends/iss_description_SBER.json, ISSUESIZE, FACEVALUE, sha256 7005c0ab2fe1d973",
+  "calc": "номинал обеих категорий, ₽"
+ },
+ "by_ticker": {
+  "SBER": {
+   "class": "ordinary"
+  },
+  "SBERP": {
+   "class": "preferred"
+  }
+ }
+}

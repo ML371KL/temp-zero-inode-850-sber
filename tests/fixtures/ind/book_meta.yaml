@@ -1,0 +1,11 @@
+# Заглушка книги для тестов индикаторов: meta.company и квартал ГОСА (формат прил. A MODEL).
+meta:
+  company:
+    name: "Сбербанк"
+    tickers: [SBER, SBERP]
+    main_ticker: SBER
+    cbr_regnum: 1481
+    fiscal_year_end: "12-31"
+dividends:
+  calendar:
+    agm_quarter: 2

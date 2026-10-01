@@ -1,0 +1,333 @@
+{
+ "basis": "mgmt",
+ "unit": "share",
+ "source": "stage1/mgmt/mgmt_kpi.csv (nim, cor_total)",
+ "quarters": {
+  "2013Q4": {
+   "nim": {
+    "v": 0.061,
+    "src": "2014Q4_ifrs_presentation.pdf, с. 8, sha256 c942b450a501"
+   }
+  },
+  "2014Q1": {
+   "nim": {
+    "v": 0.057,
+    "src": "2014Q4_ifrs_presentation.pdf, с. 8, sha256 c942b450a501"
+   }
+  },
+  "2014Q2": {
+   "nim": {
+    "v": 0.057,
+    "src": "2014Q4_ifrs_presentation.pdf, с. 8, sha256 c942b450a501"
+   }
+  },
+  "2014Q3": {
+   "nim": {
+    "v": 0.056,
+    "src": "2014Q4_ifrs_presentation.pdf, с. 8, sha256 c942b450a501"
+   }
+  },
+  "2014Q4": {
+   "nim": {
+    "v": 0.054,
+    "src": "2014Q4_ifrs_presentation.pdf, с. 8, sha256 c942b450a501"
+   }
+  },
+  "2017Q4": {
+   "nim": {
+    "v": 0.0631,
+    "src": "2018Q4_ifrs_presentation.pdf, с. 9, sha256 9678e71772fc"
+   }
+  },
+  "2018Q1": {
+   "cor": {
+    "v": 0.0053,
+    "src": "2018Q4_ifrs_presentation.pdf, с. 18, sha256 9678e71772fc"
+   },
+   "nim": {
+    "v": 0.0603,
+    "src": "2018Q4_ifrs_presentation.pdf, с. 9, sha256 9678e71772fc"
+   }
+  },
+  "2018Q2": {
+   "cor": {
+    "v": 0.0149,
+    "src": "2018Q4_ifrs_presentation.pdf, с. 18, sha256 9678e71772fc"
+   },
+   "nim": {
+    "v": 0.0609,
+    "src": "2018Q4_ifrs_presentation.pdf, с. 9, sha256 9678e71772fc"
+   }
+  },
+  "2018Q3": {
+   "cor": {
+    "v": 0.0157,
+    "src": "2018Q4_ifrs_presentation.pdf, с. 18, sha256 9678e71772fc"
+   },
+   "nim": {
+    "v": 0.0596,
+    "src": "2018Q4_ifrs_presentation.pdf, с. 9, sha256 9678e71772fc"
+   }
+  },
+  "2018Q4": {
+   "cor": {
+    "v": 0.0067,
+    "src": "2019Q4_ifrs_presentation.pdf, с. 17, sha256 e8c3b7acdb0c"
+   },
+   "nim": {
+    "v": 0.0562,
+    "src": "2019Q4_ifrs_presentation.pdf, с. 7, sha256 e8c3b7acdb0c"
+   }
+  },
+  "2019Q1": {
+   "cor": {
+    "v": 0.0096,
+    "src": "2019Q4_ifrs_presentation.pdf, с. 17, sha256 e8c3b7acdb0c"
+   },
+   "nim": {
+    "v": 0.0527,
+    "src": "2019Q4_ifrs_presentation.pdf, с. 7, sha256 e8c3b7acdb0c"
+   }
+  },
+  "2019Q2": {
+   "cor": {
+    "v": 0.0014,
+    "src": "2020Q2_ifrs_presentation.pdf, с. 24, sha256 0f36d709e908"
+   },
+   "nim": {
+    "v": 0.0541,
+    "src": "2020Q2_ifrs_presentation.pdf, с. 14, sha256 0f36d709e908"
+   }
+  },
+  "2019Q3": {
+   "cor": {
+    "v": 0.0106,
+    "src": "2020Q3_ifrs_presentation.pdf, с. 18, sha256 c2b223b9c972"
+   },
+   "nim": {
+    "v": 0.053,
+    "src": "2020Q3_ifrs_presentation.pdf, с. 10, sha256 c2b223b9c972"
+   }
+  },
+  "2019Q4": {
+   "cor": {
+    "v": 0.008,
+    "src": "IR_presentation_2021-04.pdf, с. 37, sha256 3ce1f5ac0f83"
+   },
+   "nim": {
+    "v": 0.0552,
+    "src": "IR_presentation_2021-04.pdf, с. 30, sha256 3ce1f5ac0f83"
+   }
+  },
+  "2020Q1": {
+   "cor": {
+    "v": 0.0292,
+    "src": "IR_presentation_2021-04.pdf, с. 37, sha256 3ce1f5ac0f83"
+   },
+   "nim": {
+    "v": 0.0549,
+    "src": "IR_presentation_2021-04.pdf, с. 30, sha256 3ce1f5ac0f83"
+   }
+  },
+  "2020Q2": {
+   "cor": {
+    "v": 0.0225,
+    "src": "IR_presentation_2021-04.pdf, с. 37, sha256 3ce1f5ac0f83"
+   },
+   "nim": {
+    "v": 0.0561,
+    "src": "IR_presentation_2021-04.pdf, с. 30, sha256 3ce1f5ac0f83"
+   }
+  },
+  "2020Q3": {
+   "cor": {
+    "v": 0.0143,
+    "src": "2021Q3_ifrs_presentation.pdf, с. 29, sha256 b02667e46584"
+   },
+   "nim": {
+    "v": 0.0548,
+    "src": "2021Q3_ifrs_presentation.pdf, с. 16, sha256 b02667e46584"
+   }
+  },
+  "2020Q4": {
+   "cor": {
+    "v": 0.0171,
+    "src": "2021Q3_ifrs_presentation.pdf, с. 29, sha256 b02667e46584"
+   },
+   "nim": {
+    "v": 0.0534,
+    "src": "2021Q3_ifrs_presentation.pdf, с. 16, sha256 b02667e46584"
+   }
+  },
+  "2021Q1": {
+   "cor": {
+    "v": 0.0041,
+    "src": "2021Q3_ifrs_presentation.pdf, с. 29, sha256 b02667e46584"
+   },
+   "nim": {
+    "v": 0.0518,
+    "src": "2021Q3_ifrs_presentation.pdf, с. 16, sha256 b02667e46584"
+   }
+  },
+  "2021Q2": {
+   "cor": {
+    "v": 0.0043,
+    "src": "2021Q3_ifrs_presentation.pdf, с. 29, sha256 b02667e46584"
+   },
+   "nim": {
+    "v": 0.0522,
+    "src": "2021Q3_ifrs_presentation.pdf, с. 16, sha256 b02667e46584"
+   }
+  },
+  "2021Q3": {
+   "cor": {
+    "v": 0.0085,
+    "src": "2021Q3_ifrs_presentation.pdf, с. 29, sha256 b02667e46584"
+   },
+   "nim": {
+    "v": 0.0536,
+    "src": "2021Q3_ifrs_presentation.pdf, с. 16, sha256 b02667e46584"
+   }
+  },
+  "2023Q1": {
+   "cor": {
+    "v": 0.011,
+    "src": "2023Q3_ifrs_presentation.pdf, с. 11, sha256 81a3eb68d68e"
+   },
+   "nim": {
+    "v": 0.0578,
+    "src": "2023Q1_ifrs_press_release.pdf, с. 3, sha256 d0edbd118f15"
+   }
+  },
+  "2023Q2": {
+   "cor": {
+    "v": 0.012,
+    "src": "2023Q4_ifrs_presentation.pdf, с. 22, sha256 b2d507a33171"
+   },
+   "nim": {
+    "v": 0.058,
+    "src": "ifrs_6M2024_press_release.pdf, с. 6, sha256 03648c612371"
+   }
+  },
+  "2023Q3": {
+   "cor": {
+    "v": 0.005,
+    "src": "2023Q4_ifrs_presentation.pdf, с. 22, sha256 b2d507a33171"
+   },
+   "nim": {
+    "v": 0.0601,
+    "src": "ifrs_9M2024_press_release.pdf, с. 10, sha256 c5543662504f"
+   }
+  },
+  "2023Q4": {
+   "cor": {
+    "v": 0.0031,
+    "src": "2024Q4_ifrs_presentation.pdf, с. 10, sha256 717cfd764ad9"
+   },
+   "nim": {
+    "v": 0.0626,
+    "src": "2023Q4_ifrs_press_release.pdf, с. 3, sha256 e9453a68d881"
+   }
+  },
+  "2024Q1": {
+   "cor": {
+    "v": 0.0054,
+    "src": "2025Q1_ifrs_presentation.pdf, с. 9, sha256 22f8cca1c7e2"
+   },
+   "nim": {
+    "v": 0.0588,
+    "src": "ifrs_9M2024_press_release.pdf, с. 10, sha256 c5543662504f"
+   }
+  },
+  "2024Q2": {
+   "cor": {
+    "v": 0.0097,
+    "src": "2025Q2_ifrs_presentation.pdf, с. 10, sha256 160364ed4904"
+   },
+   "nim": {
+    "v": 0.0584,
+    "src": "ifrs_9M2024_press_release.pdf, с. 10, sha256 c5543662504f"
+   }
+  },
+  "2024Q3": {
+   "cor": {
+    "v": 0.0116,
+    "src": "2025Q3_ifrs_presentation.pdf, с. 12, sha256 00d0fc066a3a"
+   },
+   "nim": {
+    "v": 0.0586,
+    "src": "2024Q4_ifrs_press_release.pdf, с. 3, sha256 22a137f32087"
+   }
+  },
+  "2024Q4": {
+   "cor": {
+    "v": 0.0119,
+    "src": "2025Q3_ifrs_presentation.pdf, с. 12, sha256 00d0fc066a3a"
+   },
+   "nim": {
+    "v": 0.0601,
+    "src": "2024Q4_ifrs_press_release.pdf, с. 3, sha256 22a137f32087"
+   }
+  },
+  "2025Q1": {
+   "cor": {
+    "v": 0.0124,
+    "src": "2026Q1_ifrs_presentation.pdf, с. 6, sha256 6002b43d7cbe"
+   },
+   "nim": {
+    "v": 0.0611,
+    "src": "2026Q1_ifrs_presentation.pdf, с. 6, sha256 6002b43d7cbe"
+   }
+  },
+  "2025Q2": {
+   "cor": {
+    "v": 0.0171,
+    "src": "2025Q3_ifrs_presentation.pdf, с. 12, sha256 00d0fc066a3a"
+   },
+   "nim": {
+    "v": 0.061,
+    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137"
+   }
+  },
+  "2025Q3": {
+   "cor": {
+    "v": 0.0142,
+    "src": "2025Q3_ifrs_presentation.pdf, с. 12, sha256 00d0fc066a3a"
+   },
+   "nim": {
+    "v": 0.062,
+    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137"
+   }
+  },
+  "2025Q4": {
+   "cor": {
+    "v": 0.009,
+    "src": "2026Q2_ifrs_presentation.pdf, с. 12, sha256 d17d36167137"
+   },
+   "nim": {
+    "v": 0.0646,
+    "src": "2025Q4_ifrs_press_release.pdf, с. 3, sha256 9fcc844f65e0"
+   }
+  },
+  "2026Q1": {
+   "cor": {
+    "v": 0.0129,
+    "src": "2026Q1_ifrs_presentation.pdf, с. 6, sha256 6002b43d7cbe"
+   },
+   "nim": {
+    "v": 0.0634,
+    "src": "2026Q1_ifrs_presentation.pdf, с. 6, sha256 6002b43d7cbe"
+   }
+  },
+  "2026Q2": {
+   "cor": {
+    "v": 0.01,
+    "src": "2026Q2_ifrs_presentation.pdf, с. 12, sha256 d17d36167137"
+   },
+   "nim": {
+    "v": 0.067,
+    "src": "2026Q2_ifrs_presentation.pdf, с. 6, sha256 d17d36167137"
+   }
+  }
+ }
+}

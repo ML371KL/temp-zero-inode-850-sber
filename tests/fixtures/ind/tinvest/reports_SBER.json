@@ -1,0 +1,54 @@
+{
+ "_note": "синтетика в формате ответа T-Invest (только поля, которые читает indicators/tinvest.py); не ответ API",
+ "events": [
+  {
+   "reportDate": "2026-07-09T00:00:00Z",
+   "periodYear": 2026,
+   "periodNum": 2,
+   "periodType": "PERIOD_TYPE_QUARTER",
+   "createdAt": "2026-06-01T09:00:00Z"
+  },
+  {
+   "reportDate": "2026-07-30T00:00:00Z",
+   "periodYear": 2026,
+   "periodNum": 2,
+   "periodType": "PERIOD_TYPE_QUARTER",
+   "createdAt": "2026-06-01T09:00:00Z"
+  },
+  {
+   "reportDate": "2026-10-09T00:00:00Z",
+   "periodYear": 2026,
+   "periodNum": 3,
+   "periodType": "PERIOD_TYPE_QUARTER",
+   "createdAt": "2026-06-01T09:00:00Z"
+  },
+  {
+   "reportDate": "2026-10-28T00:00:00Z",
+   "periodYear": 2026,
+   "periodNum": 3,
+   "periodType": "PERIOD_TYPE_QUARTER",
+   "createdAt": "2026-06-01T09:00:00Z"
+  },
+  {
+   "reportDate": "2026-10-28T00:00:00Z",
+   "periodYear": 2026,
+   "periodNum": 3,
+   "periodType": "PERIOD_TYPE_QUARTER",
+   "createdAt": "2026-06-01T09:00:00Z"
+  },
+  {
+   "reportDate": "2027-01-19T00:00:00Z",
+   "periodYear": 2026,
+   "periodNum": 4,
+   "periodType": "PERIOD_TYPE_QUARTER",
+   "createdAt": "2026-06-01T09:00:00Z"
+  },
+  {
+   "reportDate": "2027-02-25T00:00:00Z",
+   "periodYear": 2026,
+   "periodNum": 4,
+   "periodType": "PERIOD_TYPE_QUARTER",
+   "createdAt": "2026-06-01T09:00:00Z"
+  }
+ ]
+}

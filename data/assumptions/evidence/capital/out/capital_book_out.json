@@ -1,0 +1,41 @@
+{
+ "ded20_anchor": 936.7,
+ "n20_gap_pp": -0.0012,
+ "n20_gap_history": {
+  "2024_2026": {
+   "n": 10,
+   "mean_pp": 0.157,
+   "sd_pp": 0.534
+  },
+  "2025_2026": {
+   "n": 6,
+   "mean_pp": -0.206,
+   "sd_pp": 0.294
+  }
+ },
+ "bvreg_minus_e": 8294.3,
+ "base_capital_bank": 7120.5,
+ "ded11_anchor": 1173.8,
+ "n11_model": 0.12004,
+ "n11_fact": 0.11961,
+ "n11_gap_pp": -0.0004,
+ "rwa_bank_to_group": 1.0036,
+ "density_scale": 0.896,
+ "density": {
+  "corp_loans": 1.031,
+  "mortgage": 0.515,
+  "mortgage_sub": 0.515,
+  "retail_loans": 1.485,
+  "securities": 0.155,
+  "liquidity": 0.103,
+  "other_assets": 1.546
+ },
+ "fvoci_ofz_share_2025": 0.77,
+ "fvoci_duration": {
+  "D": 2.04,
+  "se": 0.29,
+  "r2": 0.91,
+  "n": 7
+ },
+ "book_mismatches": []
+}

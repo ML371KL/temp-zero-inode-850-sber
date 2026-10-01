@@ -1,0 +1,30 @@
+{
+ "area": "dividends",
+ "root": "$BANK_HANDOFF_DIR",
+ "files": [
+  {
+   "path": "stage1/market/shares_dividends/pool_check.csv",
+   "sha256_full": "a85c5cc0181e995f1acac1823edefcac018a455b491b02c0e029347e322be405",
+   "sha256_input": "a85c5cc0181e995f1acac1823edefcac018a455b491b02c0e029347e322be405",
+   "filter": "весь лист",
+   "rows_kept": 4,
+   "rows_total": 4
+  },
+  {
+   "path": "stage1/market/shares_dividends/iss_description_SBER.json",
+   "sha256_full": "7005c0ab2fe1d9730ff7cbb29067bd9b5bad3b4a00700e52c90f8f7bf8c01329",
+   "sha256_input": "7005c0ab2fe1d9730ff7cbb29067bd9b5bad3b4a00700e52c90f8f7bf8c01329",
+   "filter": "весь лист",
+   "rows_kept": 34,
+   "rows_total": 34
+  },
+  {
+   "path": "stage1/market/shares_dividends/iss_description_SBERP.json",
+   "sha256_full": "3c31bb74a1ebad23c67c04c77310ecc1d7ec7b7850c58406c61e2378fdfe5ff2",
+   "sha256_input": "3c31bb74a1ebad23c67c04c77310ecc1d7ec7b7850c58406c61e2378fdfe5ff2",
+   "filter": "весь лист",
+   "rows_kept": 34,
+   "rows_total": 34
+  }
+ ]
+}

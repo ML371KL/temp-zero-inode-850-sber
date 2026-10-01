@@ -1,0 +1,38 @@
+{
+ "area": "bridges",
+ "root": "$BANK_HANDOFF_DIR",
+ "files": [
+  {
+   "path": "stage1/ifrs/ifrs_quarterly.csv",
+   "sha256_full": "ae5ec240c1a8220b4f3d5b9c160798ad79186a5fcd561a79a81ae0e78d246134",
+   "sha256_input": "af5fb77cc6fe2b6587472ca2f0734dba7c0d73fbeddb75859eeea1bc549edc3c",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 194,
+   "rows_total": 1264
+  },
+  {
+   "path": "stage1/ifrs/ifrs_history.csv",
+   "sha256_full": "e5f9b71e9e743dee0230f163aa990e0b87e80d6d748c37412f558e5be9bad71d",
+   "sha256_input": "09cee5366b88e83be7f72c7a5d1aaa1f30924ddd567de63d4dcb7aef5e631800",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 397,
+   "rows_total": 5452
+  },
+  {
+   "path": "stage1/mgmt/mgmt_kpi.csv",
+   "sha256_full": "1af38e667eeafcb3b0b0386c3acb0d5678a904d0b21fc06b2d95f196a64e88bc",
+   "sha256_input": "b4ce4a131c6cc66c299df9ff487165ffbec7d918ba5478070799968b4460013b",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 145,
+   "rows_total": 1173
+  },
+  {
+   "path": "stage1/ras/ras_release_monthly_wide.csv",
+   "sha256_full": "1e14ee0726e33198813713ba3816e3463eee5cbe3ee58911d5a56d0f861ac946",
+   "sha256_input": "c1fcd13f788188fe414f7417111a391740917a8fe28479ac816eecf7ca7d020e",
+   "filter": "весь лист",
+   "rows_kept": 45,
+   "rows_total": 45
+  }
+ ]
+}

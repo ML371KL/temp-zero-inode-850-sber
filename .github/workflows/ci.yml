@@ -1,0 +1,196 @@
+name: Проверки модели
+
+# Репозиторий публичный: минуты hosted-раннеров бесплатны, поэтому весь набор
+# идёт на каждый push в любую ветку и на каждый PR. Коммит из одних документов
+# (*.md) этот прогон не будит — его проверяет docs.yml (тесты документов,
+# гигиена дерева и истории, числа документов). Данные (выпуски) живут в
+# отдельном репозитории: ветки `release` здесь нет.
+on:
+  push:
+    paths-ignore: ["**/*.md"]
+  pull_request:
+    paths-ignore: ["**/*.md"]
+  workflow_dispatch:
+    inputs:
+      future_days:
+        # Прогон «в будущем»: весь набор с «сегодня» = сегодня + N дней (плагин
+        # tests/fakedate_plugin.py, переменная FAKE_TODAY). Ловит тесты,
+        # привязанные к дате: они остановят такт через N дней.
+        description: "Прогнать тесты «в будущем»: сегодня + N дней (0 — обычный прогон)"
+        required: false
+        default: 0
+        type: number
+  schedule:
+    # Раз в месяц, 1-го числа, — репетиция на полгода вперёд (future_days 180),
+    # как у 850oa и «Ленты». Набор обязан быть зелёным на любой будущей дате:
+    # тесты сроков данных (метка deadline) в прогон «в будущем» не входят, и
+    # красным он бывает только из-за теста, привязанного к дате, — это дефект
+    # теста. В публичном репозитории GitHub выключает расписание после 60 дней
+    # без активности, поэтому сервер дублирует прогон: утренний такт по
+    # понедельникам гоняет тесты такта с «сегодня» + 60 дней (ops/run.sh) и
+    # шлёт тревогу кодом 8.
+    - cron: "17 5 1 * *"
+
+# Только чтение: секретов у CI нет, pull_request_target не используется.
+permissions:
+  contents: read
+
+# Прогон «в будущем» — своя группа: иначе ежемесячный запуск по расписанию
+# отменял бы идущий push-прогон (и наоборот).
+concurrency:
+  group: ci-${{ github.ref }}-future${{ github.event_name == 'schedule' && '180' || inputs.future_days || '0' }}
+  cancel-in-progress: true
+
+env:
+  PYTHONUNBUFFERED: "1"
+  PYTHONIOENCODING: utf-8
+  # У раннера 2 ядра: полоса неопределённости — двумя процессами (tests/conftest.py
+  # держит тесты последовательными, пул — только в фикстуре parallel_band). Имя —
+  # без префикса банка: его читает ядро (docs/INTERFACES.md §8).
+  BANK_WORKERS: "2"
+
+jobs:
+  tests:
+    # Раннер закреплён версией (сервер — Ubuntu 24.04); действия — по полному SHA
+    # коммита (тег можно передвинуть, коммит — нет), тег — в комментарии.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      # 0 — обычный прогон; больше нуля — прогон «в будущем» вместо обычного.
+      FUTURE_DAYS: ${{ github.event_name == 'schedule' && '180' || inputs.future_days || '0' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Вся история всех веток — для шага «Гигиена истории».
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+
+      - name: Зависимости
+        run: python -m pip install --quiet -r requirements.txt
+
+      - name: Гигиена истории
+        # Метаданные коммитов публичного репозитория видны всем и не удаляются
+        # задним числом. Каждый адрес автора и коммиттера во ВСЕЙ истории всех
+        # веток — из списка .github/commit-emails.allow. Нарушители печатаются
+        # хэшами коммитов, без самих адресов: журнал CI тоже публичный.
+        run: |
+          git log --all --format='%H %ae %ce' > "$RUNNER_TEMP/who.txt"
+          bad=$(awk 'NR==FNR { if ($0 !~ /^#/ && NF) ok[$1] = 1; next }
+                     !(($2 in ok) && ($3 in ok)) { print $1 }' .github/commit-emails.allow "$RUNNER_TEMP/who.txt")
+          if [ -n "$bad" ]; then
+            echo "::error::адрес автора или коммиттера вне .github/commit-emails.allow в коммитах:"
+            echo "$bad"
+            exit 1
+          fi
+          echo "коммитов: $(wc -l < "$RUNNER_TEMP/who.txt"), все адреса из списка"
+
+      - name: Тесты
+        # Маркеры исключаются ВЫРАЖЕНИЕМ и названы здесь: `network` — тесты ходят
+        # на MOEX, ЦБ и T-Invest (раннер GitHub живёт вне России), `archive` —
+        # нужна папка передачи, которой на раннере нет. `--strict-markers` не даёт
+        # завести маркер мимо pytest.ini; -rs печатает причину каждого пропуска.
+        # Тихий режим уже задан в pytest.ini (-q): второй -q убрал бы итоговую
+        # строку «N passed», а журнал обязан её нести.
+        if: env.FUTURE_DAYS == '0'
+        run: python -m pytest -rs -m "not network and not archive" --strict-markers
+
+      - name: Канон миров, машинная книга и числа документов
+        # Рецепт миров воспроизводит запись семейства; сборка — машинную книгу бит
+        # в бит; числа ядра в документах равны results.json (метки render_numbers).
+        if: env.FUTURE_DAYS == '0'
+        run: |
+          (cd data/assumptions && python -B worlds_recipe.py --check)
+          python -B data/assumptions/build_assumptions.py --check
+          python -B ops/tools/refresh_worlds.py --check
+          python -B ops/tools/render_numbers.py --check
+
+      - name: Тесты такта — замер времени
+        # Тот же белый список, что сервер гоняет перед сборкой (TACT_TESTS в
+        # ops/run.sh), с временем каждого теста. Потолок шага —
+        # tact_tests_ci_ceiling из ops/budgets.json (300 с): дольше — шаг
+        # краснеет, белый список сокращается (метка tact). Цель сервера
+        # (tact_tests_target, 3 минуты, решение ведущего 01.10.2026) раннер с
+        # двумя ядрами не сверяет — её сверяет замер на сервере (шаг «тесты
+        # такта» журнала такта); время дольше цели здесь — предупреждение.
+        # Ноль выбранных тестов pytest возвращает кодом 5 — шаг краснеет, как и
+        # такт на сервере.
+        if: env.FUTURE_DAYS == '0'
+        run: |
+          tact=$(sed -n 's/^TACT_TESTS="\(.*\)"$/\1/p' ops/run.sh)
+          [ -n "$tact" ] || { echo "::error::нет TACT_TESTS в ops/run.sh"; exit 1; }
+          target=$(python -c 'import json; print(json.load(open("ops/budgets.json", encoding="utf-8"))["tact_tests_target"])')
+          ceiling=$(python -c 'import json; print(json.load(open("ops/budgets.json", encoding="utf-8"))["tact_tests_ci_ceiling"])')
+          echo "выражение такта: $tact; потолок шага: $ceiling с; цель сервера: $target с"
+          start=$(date +%s)
+          python -m pytest -m "($tact)" --strict-markers --durations=0 -p no:cacheprovider
+          spent=$(( $(date +%s) - start ))
+          echo "такт: $spent с из $ceiling (цель сервера — $target с)"
+          if [ "$spent" -gt "$ceiling" ]; then
+            echo "::error::тесты такта идут $spent с — дольше $ceiling с (ops/budgets.json, tact_tests_ci_ceiling)"
+            exit 1
+          fi
+          if [ "$spent" -gt "$target" ]; then
+            echo "::warning::тесты такта на раннере идут $spent с — дольше цели сервера $target с; цель сверяется замером на сервере (ops/README.md, раздел 9)"
+          fi
+
+      - name: Тесты «в будущем» (FAKE_TODAY = сегодня + future_days)
+        # Тот же набор, но «сегодня» сдвинуто: подмена даты доходит и до
+        # подпроцессов (настоящая сборка в тестах). Тесты сроков данных
+        # (deadline: объяснение сработавшего гейта действует на сегодня) сюда
+        # не входят — на будущей дате они красные по смыслу; срок проверяет
+        # сама сборка, о его приближении сообщает плашка выпуска. Красный
+        # прогон — тест, привязанный к дате: править тест.
+        if: env.FUTURE_DAYS != '0'
+        run: |
+          case "$FUTURE_DAYS" in
+            ''|*[!0-9]*) echo "future_days: ожидается целое число дней, получено «$FUTURE_DAYS»"; exit 2;;
+          esac
+          FAKE_TODAY=$(date -u -d "+${FUTURE_DAYS} days" +%F)
+          export FAKE_TODAY
+          echo "прогон «в будущем»: FAKE_TODAY=$FAKE_TODAY (сегодня $(date -u +%F) + $FUTURE_DAYS дн)"
+          python -m pytest -rs -m "not network and not archive and not deadline" --strict-markers
+
+      - name: Переводы строк
+        # Windows-редактор ставит CRLF; шелл-скрипт с CRLF на сервере не
+        # запускается вовсе («bad interpreter»). Байты с -text не проверяются.
+        run: |
+          bad=$(git ls-files --eol | grep -v 'attr/-text' | grep 'w/crlf' || true)
+          if [ -n "$bad" ]; then echo "$bad"; exit 1; fi
+
+      - name: Синтаксис скриптов и юнитов
+        run: |
+          bash -n ops/run.sh
+          for unit in ops/systemd/*.service ops/systemd/*.timer; do
+            grep -q '^\[Unit\]' "$unit" || { echo "нет секции [Unit]: $unit"; exit 1; }
+          done
+
+  release-contract:
+    # Настоящая сборка в памяти (`--check --fast`: мало прогонов полосы, без
+    # поисков, ничего не пишет): контракт sber-v1, инварианты, гейты с
+    # объяснениями, защита заголовка. `--book-only` — цена, дата и реестр книги:
+    # состояния сборщиков на раннере нет, а без принятой цены главного тикера
+    # живая сборка по правилу М§15 не выходит.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Зависимости
+        run: python -m pip install --quiet -r requirements.txt
+
+      - name: Контракт выпуска
+        run: python -m model.build_release --check --fast --book-only

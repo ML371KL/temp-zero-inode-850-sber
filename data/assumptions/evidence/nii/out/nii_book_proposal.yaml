@@ -1,0 +1,25 @@
+# Предложение calib-nii для блока nii книги 1.0 (доли). Сгенерировано stage1/calib/nii/calib_nii.py, 30.09.2026.
+# Спред активов — траектория в мире H в форме движка: s − (1 − a)·ref_H(q) (наклон истории a < 1 внутри мира H);
+# сжатие между мирами — φ (выводит ядро из A-N3), LT-сдвиг σ0 — из A-N2. Обоснование — REPORT-nii.md.
+nii:
+  books:
+    corp_loans:     {side: asset, ref: ofz_1y, rho: 0.33, spread: {"2026": 0.00286, "2027": 0.00285, "2028": 0.00428, "2029": 0.00536, "2030": 0.00608, "LT": 0.00666, "LT_from": 2031}, phi: true, lt_shift: true, sector: corporate, cor_segment: corporate, fv_share: anchor}   # история: a = 0.894, s = 1.77 п.п., ρ 95 % 0.3–0.37
+    retail_loans:   {side: asset, ref: ofz_3y, rho: 0.12, spread: {"2026": 0.02209, "2027": 0.0239, "2028": 0.02785, "2029": 0.03064, "2030": 0.03229, "LT": 0.03408, "LT_from": 2031}, phi: true, lt_shift: true, sector: retail_other, cor_segment: retail}   # рыночная ипотека + потреб + карты + авто (история не различает); a = 0.716, s = 6.74, ρ 95 % 0.06–0.18; sector — решение ведущего
+    mortgage_sub:   {side: asset, ref: key, rho: 1.0, spread: 0.025, phi: false, lt_shift: false, sector: mortgage, cor_segment: retail}   # ключевая + компенсация [НП: 2,0 МКД / 2,5 ИЖС с 2026, rg.ru 31.12.2025]; ось 0,020–0,035
+    securities:     {side: asset, ref: ofz_3y, rho: 0.33, spread: {"2026": -0.01961, "2027": -0.01849, "2028": -0.01604, "2029": -0.0143, "2030": -0.01327, "LT": -0.01216, "LT_from": 2031}, phi: false, lt_shift: false, balancing: true}   # a = 0.823, s = 0.86, ρ 95 % 0.26–0.4
+    liquidity:      {side: asset, ref: key, rho: 1.0, spread: {"2026": -0.07219, "2027": -0.07966, "2028": -0.07954, "2029": -0.07347, "2030": -0.06969, "LT": -0.0659, "LT_from": 2031}, phi: false, lt_shift: false, balancing: true}   # a = 0.394 (касса без дохода); 2026 — по ставке якоря 7.40 %
+    retail_current: {side: liability, ref: key, rho: 0.31, beta: 0.272, spread: -0.00929}   # ρ 95 % 0.15–0.53
+    retail_term:    {side: liability, ref: key, rho: 0.37, beta: 0.855, spread: -0.01983}   # ρ 95 % 0.29–0.46
+    corp_funds:     {side: liability, ref: key, rho: 0.97, beta: 0.709, spread: -0.01496}   # ρ 95 % 0.73–1.0
+    wholesale:      {side: liability, ref: key, rho: 1.0, beta: 1.0, spread: {"2026": 0.01004, "2027": -0.00275, "LT": -0.01555, "LT_from": 2028}, balancing: true}   # 2К26: ключевая +1.00 п.п. (с арендой/ПФИ/короткими +2.32); история -1.56
+  transmission:
+    target: 0.06                # A-N3: центр 0,06, ось 0,00–0,14 (REPORT-nii §4); φ при T(H) = 0,06: 0.547; φ при реализованной (M − N) = 0,06: 0.484
+  retail_current_share:
+    c_ref: anchor               # 14 309,0 / 34 478,5 = 0,415 [Ф: МСФО 6М26]
+    key_ref: anchor             # средняя ключевая 2К26 по календарным дням = 0.14618
+    psi: 1.120                  # доля на долю ключевой; оценка 2022К4–2026К2, ст. ош. 0.18
+    rho: 0.21
+    bounds: [0.35, 0.52]        # [В] вокруг наблюдённых 40–50 % (2022К4–2026К2)
+  dia_rate: 0.0053             # взносы АСВ / средние средства ФЛ, среднее 1К23–2К26 (2К26: 0.517 %)
+volumes:
+  liquid_min_share: 0.20      # минимум (долговые бумаги + ликвидность)/активы на отчётных датах 2018–2026: 20.70 % (2024Q2); якорь 21.41 %

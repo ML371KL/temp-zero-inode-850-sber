@@ -1,0 +1,45 @@
+{
+ "about": "Время шагов тактов на сервере, из которого считаются потолки юнитов (RuntimeMaxSec), ожидание замка (LOCK_WAIT_SECONDS в ops/run.sh) и окно перезапуска (StartLimitIntervalSec). Потолок юнита = ceil(сумма шагов × safety / round_to) × round_to; у тактов, ждущих замок (lock_waiters), плюс ожидание замка = наибольший потолок держателей замка (lock_holders: пересборка и дозор со сборкой; сами они на занятом замке тихо выходят). ПОВТОР СБОРА (collect_retry): утренний такт повторяет сбор сам, внутри прогона, только при отказе невосполнимого источника — до attempts попыток с паузой pause_s (числа повторены в ops/run.sh); шаг collect_retries = (attempts − 1) × (collect_morning + pause_s). ПЕРЕЗАПУСК systemd (restart): у юнитов units — StartLimitBurst = burst, RestartSec = pause_s, RestartPreventExitStatus = no_restart_codes (тревога 8 и ошибки настройки 64, 78 не повторяются), StartLimitIntervalSec = ceil(burst × (потолок юнита + pause_s + stop_s) / round_to) × round_to: окно systemd отсчитывается от первого старта и не скользит, поэтому оно обязано вмещать burst самых долгих прогонов с паузами и остановкой (stop_s — предел ExecStopPost, TimeoutStopSec по умолчанию) — тогда стартов за окно не больше burst, дальше юнит стоит до следующего таймера. СТОРОЖ ВЕТКИ ДАННЫХ: data_branch_alert_mb — размер дерева ветки release, с которого ops/publish.py публикует с тревогой (предел сайта GitHub Pages — 1 ГБ). Равенство с ops/systemd/*.service и run.sh сверяет tests/test_ops_units.py. ДО ЗАМЕРА ЭТО ОЦЕНКА по «Ленте» (сборка 684 с на 2 000 прогонов полугодовой сетки; у банка квартальная сетка — сборка заложена 1 200 с; цель MODEL §10 — полный выпуск на 4 процессах не дольше 900 с). Время сборки зависит от числа процессов полосы BANK_WORKERS env-файла сервера: замер — при том числе, что вписано туда. Порядок замера: время шагов из журнала такта (строки «── шаг ── чч:мм:ссZ») → сюда, status=measured и measured_on → потолки юнитов, окна перезапуска и LOCK_WAIT_SECONDS → юниты заново (ops/README.md, «Потолки»). tact_tests_target — цель времени всего набора тестов такта НА СЕРВЕРЕ (решение ведущего 01.10.2026: не дольше 3 минут); сверяется замером — шаг «тесты такта» журнала такта. tact_tests_ci_ceiling — потолок шага CI «Тесты такта — замер времени»: раннер GitHub с двумя ядрами медленнее сервера, поэтому шаг краснеет после 300 с, а время дольше цели сервера печатает предупреждением.",
+ "status": "estimate",
+ "measured_on": null,
+ "safety": 1.5,
+ "round_to": 60,
+ "seconds": {
+  "pip": 120,
+  "collect_morning": 600,
+  "collect_retries": 1560,
+  "future_tests": 300,
+  "status_health": 60,
+  "collect_evening": 420,
+  "watch": 300,
+  "nowcast": 120,
+  "health": 30,
+  "data_sync": 60,
+  "tact_tests": 180,
+  "build": 1200,
+  "publish": 120,
+  "verify_timeout": 600
+ },
+ "units": {
+  "collect": ["pip", "collect_morning", "collect_retries", "future_tests", "status_health"],
+  "release-watch": ["pip", "watch", "nowcast", "tact_tests", "data_sync", "build", "publish", "verify_timeout"],
+  "daily": ["pip", "collect_evening", "nowcast", "health", "tact_tests", "data_sync", "build", "publish", "verify_timeout", "status_health"],
+  "rebuild": ["pip", "tact_tests", "data_sync", "build", "publish", "verify_timeout"]
+ },
+ "lock_holders": ["rebuild", "release-watch"],
+ "lock_waiters": ["collect", "daily"],
+ "collect_retry": {
+  "attempts": 3,
+  "pause_s": 180
+ },
+ "restart": {
+  "units": ["collect", "daily"],
+  "burst": 3,
+  "pause_s": 180,
+  "stop_s": 90,
+  "no_restart_codes": [8, 64, 78]
+ },
+ "data_branch_alert_mb": 700,
+ "tact_tests_target": 180,
+ "tact_tests_ci_ceiling": 300
+}

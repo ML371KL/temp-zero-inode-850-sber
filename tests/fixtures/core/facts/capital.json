@@ -1,0 +1,81 @@
+{
+ "basis": "IFRS",
+ "as_of": "2026-06-30",
+ "at1": {
+  "amount": {
+   "v": 150.0,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de8…"
+  },
+  "coupon_annual": {
+   "v": 9.7,
+   "src": "FY2025_ifrs_summary_statements_en.pdf, с. 81"
+  },
+  "coupon_quarter": {
+   "v": 4,
+   "calc": "купон в декабре (МСФО 2025 прим. 23)"
+  }
+ },
+ "t2_recognized": {
+  "v": 500.3,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de8… (Базель T2; регуляторный T2 группы не раскрыт)"
+ },
+ "basel": {
+  "cet1_ratio": {
+   "v": 0.126,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de8…"
+  },
+  "cet1": {
+   "v": 7450.5,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de8…"
+  },
+  "total_ratio": {
+   "v": 0.137,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de8…"
+  },
+  "rwa": {
+   "v": 59318.1,
+   "src": "2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de8…"
+  }
+ },
+ "n20_0": {
+  "value": {
+   "v": 0.151,
+   "src": "2026Q2_ifrs_presentation.pdf, с. 21 (оперативные данные)"
+  },
+  "as_of": "2026-06-30",
+  "pre_dividend": true
+ },
+ "n1_1_bank": {
+  "value": {
+   "v": 0.11961,
+   "src": "форма 0409135 на 01.07.2026 (ras/cbr_f135.csv)"
+  },
+  "as_of": "2026-07-01"
+ },
+ "bank_base_capital": {
+  "v": 7120.5,
+  "src": "форма 0409123 на 01.07.2026"
+ },
+ "fvoci_reserve": {
+  "v": -374.9,
+  "src": "2026H1_ifrs_interim_statements.pdf, с. 44, sha256 5b3a3de8…"
+ },
+ "ofz_curve_anchor": {
+  "1": {
+   "v": 0.1341,
+   "src": "MOEX ISS zcyc 30.06.2026, sha256 90b297f6…"
+  },
+  "3": {
+   "v": 0.1447,
+   "src": "MOEX ISS zcyc 30.06.2026, sha256 90b297f6…"
+  },
+  "5": {
+   "v": 0.1542,
+   "src": "MOEX ISS zcyc 30.06.2026, sha256 90b297f6…"
+  },
+  "10": {
+   "v": 0.1638,
+   "src": "MOEX ISS zcyc 30.06.2026, sha256 90b297f6…"
+  }
+ }
+}

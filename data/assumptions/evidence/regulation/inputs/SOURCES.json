@@ -1,0 +1,14 @@
+{
+ "area": "regulation",
+ "root": "$BANK_HANDOFF_DIR",
+ "files": [
+  {
+   "path": "stage1/regulation/schedule.yaml",
+   "sha256_full": "cb03ca0fbd00e68b241969dca2808aa6c12f2fd19a4a87609527668ccc37ab3e",
+   "sha256_input": "24447b56a43ae749abedc86729d0755e7f8b069850e5c2bb904030706ac46a8e",
+   "filter": "весь лист",
+   "rows_kept": 436,
+   "rows_total": 436
+  }
+ ]
+}

@@ -1,0 +1,960 @@
+{
+ "definition": {
+  "flat_ref": "размах опоры книги за 4 квартала не больше 1 п.п.",
+  "lag_adjusted": "доходность − опора, усреднённая весами ρ(1 − ρ)^k (ρ книги)",
+  "high_rate": "опора книги не ниже 12 %",
+  "rule": "пол подтверждён, если он не выше минимума кварталов с ровной опорой"
+ },
+ "floors": {
+  "corp_loans": 0.005,
+  "mortgage": 0.015,
+  "mortgage_sub": 0.015,
+  "retail_loans": 0.015
+ },
+ "verdict": {
+  "corp_loans": {
+   "floor_pp": 0.5,
+   "lt_spread_calibration_pp": 0.666,
+   "flat_ref_min_pp": 0.76,
+   "flat_ref_median_pp": 1.21,
+   "flat_ref_quarters": 5,
+   "confirmed": true,
+   "headroom_to_min_pp": 0.26,
+   "floor_to_median": 0.41,
+   "calibration_below_flat_min": true,
+   "lag_adjusted_median_ref_12_plus_pp": 0.29,
+   "floor_above_lag_adjusted_median_at_high_rates": true
+  },
+  "mortgage": {
+   "floor_pp": 1.5,
+   "lt_spread_calibration_pp": 3.408,
+   "flat_ref_min_pp": 2.83,
+   "flat_ref_median_pp": 3.94,
+   "flat_ref_quarters": 4,
+   "confirmed": true,
+   "headroom_to_min_pp": 1.33,
+   "floor_to_median": 0.38,
+   "calibration_below_flat_min": false,
+   "lag_adjusted_median_ref_12_plus_pp": 5.32,
+   "floor_above_lag_adjusted_median_at_high_rates": false
+  },
+  "retail_loans": {
+   "floor_pp": 1.5,
+   "lt_spread_calibration_pp": 3.408,
+   "flat_ref_min_pp": 2.83,
+   "flat_ref_median_pp": 3.94,
+   "flat_ref_quarters": 4,
+   "confirmed": true,
+   "headroom_to_min_pp": 1.33,
+   "floor_to_median": 0.38,
+   "calibration_below_flat_min": false,
+   "lag_adjusted_median_ref_12_plus_pp": 5.32,
+   "floor_above_lag_adjusted_median_at_high_rates": false
+  }
+ },
+ "history": {
+  "corp_loans": {
+   "ref": "ofz_1y",
+   "rho": 0.33,
+   "yield": "corp_loan_yield_mgmt",
+   "quarters": 26,
+   "from": "2019Q1",
+   "to": "2026Q2",
+   "flat_ref": {
+    "n": 5,
+    "min_pp": 0.76,
+    "median_pp": 1.21,
+    "max_pp": 1.78,
+    "min_at": "2023Q2",
+    "quarters": [
+     {
+      "quarter": "2019Q2",
+      "spread_pp": 1.21,
+      "ref_pct": 7.39
+     },
+     {
+      "quarter": "2019Q3",
+      "spread_pp": 1.31,
+      "ref_pct": 6.79
+     },
+     {
+      "quarter": "2021Q1",
+      "spread_pp": 1.78,
+      "ref_pct": 4.62
+     },
+     {
+      "quarter": "2023Q2",
+      "spread_pp": 0.76,
+      "ref_pct": 7.64
+     },
+     {
+      "quarter": "2026Q2",
+      "spread_pp": 1.21,
+      "ref_pct": 12.99
+     }
+    ]
+   },
+   "lag_adjusted": {
+    "all": {
+     "n": 26,
+     "min_pp": -0.37,
+     "median_pp": 0.59,
+     "max_pp": 1.51
+    },
+    "ref_below_12": {
+     "n": 15,
+     "min_pp": 0.25,
+     "median_pp": 1.02,
+     "max_pp": 1.51
+    },
+    "ref_12_plus": {
+     "n": 11,
+     "min_pp": -0.37,
+     "median_pp": 0.29,
+     "max_pp": 1.5
+    }
+   },
+   "raw": {
+    "n": 26,
+    "min_pp": -4.54,
+    "median_pp": 0.8,
+    "max_pp": 2.62
+   },
+   "rows": [
+    {
+     "quarter": "2019Q1",
+     "yield_mgmt_pct": 8.0,
+     "ref_pct": 7.53,
+     "spread_pp": 0.47,
+     "ref_range_4q_pp": 1.02,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 0.55
+    },
+    {
+     "quarter": "2019Q2",
+     "yield_mgmt_pct": 8.6,
+     "ref_pct": 7.39,
+     "spread_pp": 1.21,
+     "ref_range_4q_pp": 0.41,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 1.17
+    },
+    {
+     "quarter": "2019Q3",
+     "yield_mgmt_pct": 8.1,
+     "ref_pct": 6.79,
+     "spread_pp": 1.31,
+     "ref_range_4q_pp": 0.89,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 0.88
+    },
+    {
+     "quarter": "2019Q4",
+     "yield_mgmt_pct": 7.8,
+     "ref_pct": 5.89,
+     "spread_pp": 1.91,
+     "ref_range_4q_pp": 1.64,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 1.02
+    },
+    {
+     "quarter": "2020Q1",
+     "yield_mgmt_pct": 7.2,
+     "ref_pct": 5.59,
+     "spread_pp": 1.61,
+     "ref_range_4q_pp": 1.8,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 0.81
+    },
+    {
+     "quarter": "2020Q2",
+     "yield_mgmt_pct": 7.1,
+     "ref_pct": 4.9,
+     "spread_pp": 2.2,
+     "ref_range_4q_pp": 1.89,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 1.2
+    },
+    {
+     "quarter": "2020Q3",
+     "yield_mgmt_pct": 6.8,
+     "ref_pct": 4.23,
+     "spread_pp": 2.57,
+     "ref_range_4q_pp": 1.66,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 1.45
+    },
+    {
+     "quarter": "2020Q4",
+     "yield_mgmt_pct": 6.3,
+     "ref_pct": 4.34,
+     "spread_pp": 1.96,
+     "ref_range_4q_pp": 1.36,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 1.28
+    },
+    {
+     "quarter": "2021Q1",
+     "yield_mgmt_pct": 6.4,
+     "ref_pct": 4.62,
+     "spread_pp": 1.78,
+     "ref_range_4q_pp": 0.67,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 1.51
+    },
+    {
+     "quarter": "2021Q2",
+     "yield_mgmt_pct": 6.6,
+     "ref_pct": 5.64,
+     "spread_pp": 0.96,
+     "ref_range_4q_pp": 1.41,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 1.46
+    },
+    {
+     "quarter": "2021Q3",
+     "yield_mgmt_pct": 7.1,
+     "ref_pct": 6.67,
+     "spread_pp": 0.43,
+     "ref_range_4q_pp": 2.33,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 1.46
+    },
+    {
+     "quarter": "2022Q4",
+     "yield_mgmt_pct": 8.4,
+     "ref_pct": 7.58,
+     "spread_pp": 0.82,
+     "ref_range_4q_pp": 3.4,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 0.25
+    },
+    {
+     "quarter": "2023Q1",
+     "yield_mgmt_pct": 8.3,
+     "ref_pct": 7.56,
+     "spread_pp": 0.74,
+     "ref_range_4q_pp": 2.98,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 0.34
+    },
+    {
+     "quarter": "2023Q2",
+     "yield_mgmt_pct": 8.4,
+     "ref_pct": 7.64,
+     "spread_pp": 0.76,
+     "ref_range_4q_pp": 0.13,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 0.55
+    },
+    {
+     "quarter": "2023Q3",
+     "yield_mgmt_pct": 9.2,
+     "ref_pct": 10.01,
+     "spread_pp": -0.81,
+     "ref_range_4q_pp": 2.45,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 0.64
+    },
+    {
+     "quarter": "2023Q4",
+     "yield_mgmt_pct": 11.3,
+     "ref_pct": 12.32,
+     "spread_pp": -1.02,
+     "ref_range_4q_pp": 4.76,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 1.5
+    },
+    {
+     "quarter": "2024Q1",
+     "yield_mgmt_pct": 12.2,
+     "ref_pct": 13.73,
+     "spread_pp": -1.53,
+     "ref_range_4q_pp": 6.09,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 1.1
+    },
+    {
+     "quarter": "2024Q2",
+     "yield_mgmt_pct": 12.7,
+     "ref_pct": 15.2,
+     "spread_pp": -2.5,
+     "ref_range_4q_pp": 5.19,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 0.25
+    },
+    {
+     "quarter": "2024Q3",
+     "yield_mgmt_pct": 13.8,
+     "ref_pct": 17.67,
+     "spread_pp": -3.87,
+     "ref_range_4q_pp": 5.35,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": -0.37
+    },
+    {
+     "quarter": "2024Q4",
+     "yield_mgmt_pct": 16.4,
+     "ref_pct": 20.94,
+     "spread_pp": -4.54,
+     "ref_range_4q_pp": 7.22,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": -0.01
+    },
+    {
+     "quarter": "2025Q1",
+     "yield_mgmt_pct": 17.4,
+     "ref_pct": 18.51,
+     "spread_pp": -1.11,
+     "ref_range_4q_pp": 5.75,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 0.3
+    },
+    {
+     "quarter": "2025Q2",
+     "yield_mgmt_pct": 17.6,
+     "ref_pct": 17.73,
+     "spread_pp": -0.13,
+     "ref_range_4q_pp": 3.27,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 0.29
+    },
+    {
+     "quarter": "2025Q3",
+     "yield_mgmt_pct": 16.5,
+     "ref_pct": 13.88,
+     "spread_pp": 2.62,
+     "ref_range_4q_pp": 7.06,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 0.32
+    },
+    {
+     "quarter": "2025Q4",
+     "yield_mgmt_pct": 15.9,
+     "ref_pct": 13.87,
+     "spread_pp": 2.03,
+     "ref_range_4q_pp": 4.64,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 0.49
+    },
+    {
+     "quarter": "2026Q1",
+     "yield_mgmt_pct": 14.7,
+     "ref_pct": 13.91,
+     "spread_pp": 0.79,
+     "ref_range_4q_pp": 3.86,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": -0.22
+    },
+    {
+     "quarter": "2026Q2",
+     "yield_mgmt_pct": 14.2,
+     "ref_pct": 12.99,
+     "spread_pp": 1.21,
+     "ref_range_4q_pp": 0.91,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": -0.08
+    }
+   ]
+  },
+  "mortgage": {
+   "ref": "ofz_3y",
+   "rho": 0.12,
+   "yield": "retail_loan_yield_mgmt",
+   "quarters": 26,
+   "from": "2019Q1",
+   "to": "2026Q2",
+   "flat_ref": {
+    "n": 4,
+    "min_pp": 2.83,
+    "median_pp": 3.94,
+    "max_pp": 5.73,
+    "min_at": "2026Q2",
+    "quarters": [
+     {
+      "quarter": "2019Q2",
+      "spread_pp": 4.57,
+      "ref_pct": 7.63
+     },
+     {
+      "quarter": "2021Q1",
+      "spread_pp": 5.73,
+      "ref_pct": 5.47
+     },
+     {
+      "quarter": "2023Q2",
+      "spread_pp": 3.3,
+      "ref_pct": 8.7
+     },
+     {
+      "quarter": "2026Q2",
+      "spread_pp": 2.83,
+      "ref_pct": 13.87
+     }
+    ]
+   },
+   "lag_adjusted": {
+    "all": {
+     "n": 26,
+     "min_pp": 3.28,
+     "median_pp": 4.57,
+     "max_pp": 6.17
+    },
+    "ref_below_12": {
+     "n": 15,
+     "min_pp": 3.75,
+     "median_pp": 4.53,
+     "max_pp": 4.8
+    },
+    "ref_12_plus": {
+     "n": 11,
+     "min_pp": 3.28,
+     "median_pp": 5.32,
+     "max_pp": 6.17
+    }
+   },
+   "raw": {
+    "n": 26,
+    "min_pp": -2.2,
+    "median_pp": 3.17,
+    "max_pp": 6.9
+   },
+   "rows": [
+    {
+     "quarter": "2019Q1",
+     "yield_mgmt_pct": 12.0,
+     "ref_pct": 7.92,
+     "spread_pp": 4.08,
+     "ref_range_4q_pp": 1.35,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 3.75
+    },
+    {
+     "quarter": "2019Q2",
+     "yield_mgmt_pct": 12.2,
+     "ref_pct": 7.63,
+     "spread_pp": 4.57,
+     "ref_range_4q_pp": 0.61,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 4.03
+    },
+    {
+     "quarter": "2019Q3",
+     "yield_mgmt_pct": 12.1,
+     "ref_pct": 6.93,
+     "spread_pp": 5.17,
+     "ref_range_4q_pp": 1.32,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.09
+    },
+    {
+     "quarter": "2019Q4",
+     "yield_mgmt_pct": 12.5,
+     "ref_pct": 6.07,
+     "spread_pp": 6.43,
+     "ref_range_4q_pp": 1.85,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.73
+    },
+    {
+     "quarter": "2020Q1",
+     "yield_mgmt_pct": 12.1,
+     "ref_pct": 5.94,
+     "spread_pp": 6.16,
+     "ref_range_4q_pp": 1.69,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.56
+    },
+    {
+     "quarter": "2020Q2",
+     "yield_mgmt_pct": 11.9,
+     "ref_pct": 5.27,
+     "spread_pp": 6.63,
+     "ref_range_4q_pp": 1.65,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.64
+    },
+    {
+     "quarter": "2020Q3",
+     "yield_mgmt_pct": 11.7,
+     "ref_pct": 4.8,
+     "spread_pp": 6.9,
+     "ref_range_4q_pp": 1.28,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.75
+    },
+    {
+     "quarter": "2020Q4",
+     "yield_mgmt_pct": 11.5,
+     "ref_pct": 4.87,
+     "spread_pp": 6.63,
+     "ref_range_4q_pp": 1.14,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.8
+    },
+    {
+     "quarter": "2021Q1",
+     "yield_mgmt_pct": 11.2,
+     "ref_pct": 5.47,
+     "spread_pp": 5.73,
+     "ref_range_4q_pp": 0.68,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 4.66
+    },
+    {
+     "quarter": "2021Q2",
+     "yield_mgmt_pct": 11.1,
+     "ref_pct": 6.36,
+     "spread_pp": 4.74,
+     "ref_range_4q_pp": 1.56,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.58
+    },
+    {
+     "quarter": "2021Q3",
+     "yield_mgmt_pct": 11.1,
+     "ref_pct": 6.89,
+     "spread_pp": 4.21,
+     "ref_range_4q_pp": 2.02,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.53
+    },
+    {
+     "quarter": "2022Q4",
+     "yield_mgmt_pct": 11.7,
+     "ref_pct": 8.55,
+     "spread_pp": 3.15,
+     "ref_range_4q_pp": 2.39,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 3.92
+    },
+    {
+     "quarter": "2023Q1",
+     "yield_mgmt_pct": 11.7,
+     "ref_pct": 8.64,
+     "spread_pp": 3.06,
+     "ref_range_4q_pp": 1.77,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 3.82
+    },
+    {
+     "quarter": "2023Q2",
+     "yield_mgmt_pct": 12.0,
+     "ref_pct": 8.7,
+     "spread_pp": 3.3,
+     "ref_range_4q_pp": 0.43,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 4.02
+    },
+    {
+     "quarter": "2023Q3",
+     "yield_mgmt_pct": 12.4,
+     "ref_pct": 10.58,
+     "spread_pp": 1.82,
+     "ref_range_4q_pp": 2.03,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.1
+    },
+    {
+     "quarter": "2023Q4",
+     "yield_mgmt_pct": 14.1,
+     "ref_pct": 12.09,
+     "spread_pp": 2.01,
+     "ref_range_4q_pp": 3.45,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 5.35
+    },
+    {
+     "quarter": "2024Q1",
+     "yield_mgmt_pct": 14.9,
+     "ref_pct": 12.67,
+     "spread_pp": 2.23,
+     "ref_range_4q_pp": 3.96,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 5.67
+    },
+    {
+     "quarter": "2024Q2",
+     "yield_mgmt_pct": 15.2,
+     "ref_pct": 14.64,
+     "spread_pp": 0.56,
+     "ref_range_4q_pp": 4.07,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 5.32
+    },
+    {
+     "quarter": "2024Q3",
+     "yield_mgmt_pct": 16.2,
+     "ref_pct": 17.05,
+     "spread_pp": -0.85,
+     "ref_range_4q_pp": 4.96,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 5.46
+    },
+    {
+     "quarter": "2024Q4",
+     "yield_mgmt_pct": 17.4,
+     "ref_pct": 19.6,
+     "spread_pp": -2.2,
+     "ref_range_4q_pp": 6.93,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 5.59
+    },
+    {
+     "quarter": "2025Q1",
+     "yield_mgmt_pct": 18.6,
+     "ref_pct": 16.93,
+     "spread_pp": 1.67,
+     "ref_range_4q_pp": 4.95,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 6.17
+    },
+    {
+     "quarter": "2025Q2",
+     "yield_mgmt_pct": 17.8,
+     "ref_pct": 16.05,
+     "spread_pp": 1.75,
+     "ref_range_4q_pp": 3.54,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.94
+    },
+    {
+     "quarter": "2025Q3",
+     "yield_mgmt_pct": 17.0,
+     "ref_pct": 13.81,
+     "spread_pp": 3.19,
+     "ref_range_4q_pp": 5.79,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.02
+    },
+    {
+     "quarter": "2025Q4",
+     "yield_mgmt_pct": 16.9,
+     "ref_pct": 14.73,
+     "spread_pp": 2.17,
+     "ref_range_4q_pp": 3.12,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 3.71
+    },
+    {
+     "quarter": "2026Q1",
+     "yield_mgmt_pct": 16.9,
+     "ref_pct": 14.63,
+     "spread_pp": 2.27,
+     "ref_range_4q_pp": 2.25,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 3.54
+    },
+    {
+     "quarter": "2026Q2",
+     "yield_mgmt_pct": 16.7,
+     "ref_pct": 13.87,
+     "spread_pp": 2.83,
+     "ref_range_4q_pp": 0.92,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 3.28
+    }
+   ]
+  },
+  "retail_loans": {
+   "ref": "ofz_3y",
+   "rho": 0.12,
+   "yield": "retail_loan_yield_mgmt",
+   "quarters": 26,
+   "from": "2019Q1",
+   "to": "2026Q2",
+   "flat_ref": {
+    "n": 4,
+    "min_pp": 2.83,
+    "median_pp": 3.94,
+    "max_pp": 5.73,
+    "min_at": "2026Q2",
+    "quarters": [
+     {
+      "quarter": "2019Q2",
+      "spread_pp": 4.57,
+      "ref_pct": 7.63
+     },
+     {
+      "quarter": "2021Q1",
+      "spread_pp": 5.73,
+      "ref_pct": 5.47
+     },
+     {
+      "quarter": "2023Q2",
+      "spread_pp": 3.3,
+      "ref_pct": 8.7
+     },
+     {
+      "quarter": "2026Q2",
+      "spread_pp": 2.83,
+      "ref_pct": 13.87
+     }
+    ]
+   },
+   "lag_adjusted": {
+    "all": {
+     "n": 26,
+     "min_pp": 3.28,
+     "median_pp": 4.57,
+     "max_pp": 6.17
+    },
+    "ref_below_12": {
+     "n": 15,
+     "min_pp": 3.75,
+     "median_pp": 4.53,
+     "max_pp": 4.8
+    },
+    "ref_12_plus": {
+     "n": 11,
+     "min_pp": 3.28,
+     "median_pp": 5.32,
+     "max_pp": 6.17
+    }
+   },
+   "raw": {
+    "n": 26,
+    "min_pp": -2.2,
+    "median_pp": 3.17,
+    "max_pp": 6.9
+   },
+   "rows": [
+    {
+     "quarter": "2019Q1",
+     "yield_mgmt_pct": 12.0,
+     "ref_pct": 7.92,
+     "spread_pp": 4.08,
+     "ref_range_4q_pp": 1.35,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 3.75
+    },
+    {
+     "quarter": "2019Q2",
+     "yield_mgmt_pct": 12.2,
+     "ref_pct": 7.63,
+     "spread_pp": 4.57,
+     "ref_range_4q_pp": 0.61,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 4.03
+    },
+    {
+     "quarter": "2019Q3",
+     "yield_mgmt_pct": 12.1,
+     "ref_pct": 6.93,
+     "spread_pp": 5.17,
+     "ref_range_4q_pp": 1.32,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.09
+    },
+    {
+     "quarter": "2019Q4",
+     "yield_mgmt_pct": 12.5,
+     "ref_pct": 6.07,
+     "spread_pp": 6.43,
+     "ref_range_4q_pp": 1.85,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.73
+    },
+    {
+     "quarter": "2020Q1",
+     "yield_mgmt_pct": 12.1,
+     "ref_pct": 5.94,
+     "spread_pp": 6.16,
+     "ref_range_4q_pp": 1.69,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.56
+    },
+    {
+     "quarter": "2020Q2",
+     "yield_mgmt_pct": 11.9,
+     "ref_pct": 5.27,
+     "spread_pp": 6.63,
+     "ref_range_4q_pp": 1.65,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.64
+    },
+    {
+     "quarter": "2020Q3",
+     "yield_mgmt_pct": 11.7,
+     "ref_pct": 4.8,
+     "spread_pp": 6.9,
+     "ref_range_4q_pp": 1.28,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.75
+    },
+    {
+     "quarter": "2020Q4",
+     "yield_mgmt_pct": 11.5,
+     "ref_pct": 4.87,
+     "spread_pp": 6.63,
+     "ref_range_4q_pp": 1.14,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.8
+    },
+    {
+     "quarter": "2021Q1",
+     "yield_mgmt_pct": 11.2,
+     "ref_pct": 5.47,
+     "spread_pp": 5.73,
+     "ref_range_4q_pp": 0.68,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 4.66
+    },
+    {
+     "quarter": "2021Q2",
+     "yield_mgmt_pct": 11.1,
+     "ref_pct": 6.36,
+     "spread_pp": 4.74,
+     "ref_range_4q_pp": 1.56,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.58
+    },
+    {
+     "quarter": "2021Q3",
+     "yield_mgmt_pct": 11.1,
+     "ref_pct": 6.89,
+     "spread_pp": 4.21,
+     "ref_range_4q_pp": 2.02,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.53
+    },
+    {
+     "quarter": "2022Q4",
+     "yield_mgmt_pct": 11.7,
+     "ref_pct": 8.55,
+     "spread_pp": 3.15,
+     "ref_range_4q_pp": 2.39,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 3.92
+    },
+    {
+     "quarter": "2023Q1",
+     "yield_mgmt_pct": 11.7,
+     "ref_pct": 8.64,
+     "spread_pp": 3.06,
+     "ref_range_4q_pp": 1.77,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 3.82
+    },
+    {
+     "quarter": "2023Q2",
+     "yield_mgmt_pct": 12.0,
+     "ref_pct": 8.7,
+     "spread_pp": 3.3,
+     "ref_range_4q_pp": 0.43,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 4.02
+    },
+    {
+     "quarter": "2023Q3",
+     "yield_mgmt_pct": 12.4,
+     "ref_pct": 10.58,
+     "spread_pp": 1.82,
+     "ref_range_4q_pp": 2.03,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.1
+    },
+    {
+     "quarter": "2023Q4",
+     "yield_mgmt_pct": 14.1,
+     "ref_pct": 12.09,
+     "spread_pp": 2.01,
+     "ref_range_4q_pp": 3.45,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 5.35
+    },
+    {
+     "quarter": "2024Q1",
+     "yield_mgmt_pct": 14.9,
+     "ref_pct": 12.67,
+     "spread_pp": 2.23,
+     "ref_range_4q_pp": 3.96,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 5.67
+    },
+    {
+     "quarter": "2024Q2",
+     "yield_mgmt_pct": 15.2,
+     "ref_pct": 14.64,
+     "spread_pp": 0.56,
+     "ref_range_4q_pp": 4.07,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 5.32
+    },
+    {
+     "quarter": "2024Q3",
+     "yield_mgmt_pct": 16.2,
+     "ref_pct": 17.05,
+     "spread_pp": -0.85,
+     "ref_range_4q_pp": 4.96,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 5.46
+    },
+    {
+     "quarter": "2024Q4",
+     "yield_mgmt_pct": 17.4,
+     "ref_pct": 19.6,
+     "spread_pp": -2.2,
+     "ref_range_4q_pp": 6.93,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 5.59
+    },
+    {
+     "quarter": "2025Q1",
+     "yield_mgmt_pct": 18.6,
+     "ref_pct": 16.93,
+     "spread_pp": 1.67,
+     "ref_range_4q_pp": 4.95,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 6.17
+    },
+    {
+     "quarter": "2025Q2",
+     "yield_mgmt_pct": 17.8,
+     "ref_pct": 16.05,
+     "spread_pp": 1.75,
+     "ref_range_4q_pp": 3.54,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.94
+    },
+    {
+     "quarter": "2025Q3",
+     "yield_mgmt_pct": 17.0,
+     "ref_pct": 13.81,
+     "spread_pp": 3.19,
+     "ref_range_4q_pp": 5.79,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 4.02
+    },
+    {
+     "quarter": "2025Q4",
+     "yield_mgmt_pct": 16.9,
+     "ref_pct": 14.73,
+     "spread_pp": 2.17,
+     "ref_range_4q_pp": 3.12,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 3.71
+    },
+    {
+     "quarter": "2026Q1",
+     "yield_mgmt_pct": 16.9,
+     "ref_pct": 14.63,
+     "spread_pp": 2.27,
+     "ref_range_4q_pp": 2.25,
+     "flat_ref": false,
+     "spread_lag_adjusted_pp": 3.54
+    },
+    {
+     "quarter": "2026Q2",
+     "yield_mgmt_pct": 16.7,
+     "ref_pct": 13.87,
+     "spread_pp": 2.83,
+     "ref_range_4q_pp": 0.92,
+     "flat_ref": true,
+     "spread_lag_adjusted_pp": 3.28
+    }
+   ]
+  }
+ },
+ "book_mismatches": []
+}

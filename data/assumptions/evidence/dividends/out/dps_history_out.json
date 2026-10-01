@@ -1,0 +1,66 @@
+{
+ "n_issued": {
+  "ordinary": "21586.948",
+  "preferred": "1000",
+  "total": "22586.948"
+ },
+ "history": [
+  {
+   "year": 2023,
+   "ni_shareholders": "1511.8",
+   "at1_coupon": "9.7",
+   "tau": "0.20",
+   "base": "1504.040",
+   "pool": "752.0200",
+   "dps_exact": "33.29445",
+   "dps_ceil": "33.30",
+   "dps_half_up": "33.29",
+   "dps_declared": "33.30",
+   "ceil_matches": true,
+   "half_up_matches": false,
+   "dps_ceil_if_tau_25": "33.31",
+   "src": "FY2023_ifrs_summary_statements.pdf (sha256 724849f5…), с. 6 (ОПУ: «акционеров Банка 1 511,8») и с. 19 (прим. 5: «за вычетом объявленных дивидендов по субординированному займу (9,7)»); ставка 20 % (НК РФ до 2025)"
+  },
+  {
+   "year": 2024,
+   "ni_shareholders": "1581.6",
+   "at1_coupon": "9.7",
+   "tau": "0.20",
+   "base": "1573.840",
+   "pool": "786.9200",
+   "dps_exact": "34.83959",
+   "dps_ceil": "34.84",
+   "dps_half_up": "34.84",
+   "dps_declared": "34.84",
+   "ceil_matches": true,
+   "half_up_matches": true,
+   "dps_ceil_if_tau_25": "34.86",
+   "src": "FY2025_ifrs_summary_statements_en.pdf (sha256 79e35699…), PDF-с. 6 (ОПУ, сравнит. 2024), 73 (прим. 23: 9,7 в дек. 2024), 80 (прим. 30), 81 (ставка 2024 — 20,0 %, прим. 29 на с. 77)"
+  },
+  {
+   "year": 2025,
+   "ni_shareholders": "1707.4",
+   "at1_coupon": "9.7",
+   "tau": "0.25",
+   "base": "1700.125",
+   "pool": "850.0625",
+   "dps_exact": "37.63512",
+   "dps_ceil": "37.64",
+   "dps_half_up": "37.64",
+   "dps_declared": "37.64",
+   "ceil_matches": true,
+   "half_up_matches": true,
+   "dps_ceil_if_tau_25": "37.64",
+   "src": "FY2025_ifrs_summary_statements_en.pdf, PDF-с. 6, 73 (9,7 в дек. 2025), 80; ставка 25,0 % (прим. 29, PDF-с. 77)"
+  }
+ ],
+ "anchor": {
+  "treasury_on_record_2026": {
+   "ordinary": "209.9",
+   "preferred": "34.5"
+  },
+  "outstanding_total": "22342.5",
+  "dividends_payable": "841.0"
+ },
+ "book_mismatches": []
+}

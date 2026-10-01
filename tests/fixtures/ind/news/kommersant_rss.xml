@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- синтетика: лента в формате RSS 2.0 издания; ссылки и тексты сочинены -->
+<rss version="2.0"><channel><title>Лента</title>
+<item><title>Сбербанк раскрыл прибыль по РСБУ за январь-август</title>
+<link>https://www.kommersant.ru/doc/9000401</link>
+<guid>https://www.kommersant.ru/doc/9000401</guid>
+<pubDate>Wed, 09 Sep 2026 10:14:57 +0300</pubDate>
+<description>Банк заработал 1,332 трлн руб., что на 19% выше прошлогоднего, указано в его релизе.</description>
+<category>Финансы</category>
+</item>
+<item><title>Погода на выходные</title>
+<link>https://www.kommersant.ru/doc/9000402</link>
+<guid>https://www.kommersant.ru/doc/9000402</guid>
+<pubDate>Wed, 09 Sep 2026 10:20:00 +0300</pubDate>
+<description>Синоптики обещают дожди.</description>
+</item>
+</channel></rss>

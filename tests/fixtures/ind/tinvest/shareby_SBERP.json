@@ -1,0 +1,10 @@
+{
+ "_note": "синтетика в формате ответа T-Invest (только поля, которые читает indicators/tinvest.py); не ответ API",
+ "instrument": {
+  "uid": "00000000-0000-4000-8000-00000000a002",
+  "figi": "TEST0000SBERP",
+  "ticker": "SBERP",
+  "classCode": "TQBR",
+  "issueSize": "1000000000"
+ }
+}

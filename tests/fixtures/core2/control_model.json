@@ -1,0 +1,51 @@
+{
+ "as_of": "2026-10-02",
+ "commit": "0000000000000000000000000000000000000000",
+ "rows": [
+  {
+   "what": "передача: сдвиг спредов активов σ0",
+   "unit": "pp",
+   "core": -0.0017,
+   "control": -0.0017,
+   "diff": 0.0,
+   "diff_rel": 0.0,
+   "tol": 1e-06,
+   "tol_kind": "abs",
+   "ok": true
+  },
+  {
+   "what": "V0 слоя «свой взгляд»",
+   "unit": "bn",
+   "core": 10000.0,
+   "control": 10120.0,
+   "diff": 120.0,
+   "diff_rel": 0.012,
+   "tol": 0.03,
+   "tol_kind": "rel",
+   "ok": true
+  },
+  {
+   "what": "DPS года",
+   "unit": "rub",
+   "core": 40.0,
+   "control": 41.0,
+   "diff": 1.0,
+   "diff_rel": 0.025,
+   "tol": 0.1,
+   "tol_kind": "rel",
+   "tol_abs": 2.0,
+   "ok": true
+  },
+  {
+   "what": "прибыль при нулевой базе",
+   "unit": "bn",
+   "core": 0.0,
+   "control": 0.4,
+   "diff": 0.4,
+   "diff_rel": null,
+   "tol": 0.02,
+   "tol_kind": "abs",
+   "ok": true
+  }
+ ]
+}

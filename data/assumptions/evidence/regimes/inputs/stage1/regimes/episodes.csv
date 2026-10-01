@@ -1,0 +1,373 @@
+metric,period,value,unit,basis,entity,source,note
+cor,2008,2.1,%,"IFRS (IAS 39), расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] 97.9 / ср.(4 033.0; 5 280.2) валовых; 2007 = 3 921.5 нетто (FS2007 с.5) + 111.5 резерв (KOMM09); 2008 = 5 077.9 нетто (INV1001 с.14) + 202.3 резерв (KOMM09)
+cor,1H2009,7.1,% годовых,"IFRS (IAS 39), расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,"[Р] 191.5×2 / ср.(5 280.2; 5 489); 30.06.09 = 5 099.4/(1−0.071) (INV0910 с.11, INV1001 с.17)"
+cor,3Q2009,8.0,% годовых,"IFRS (IAS 39), расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] 109.8×4 / ср.(5 489; 5 531); 30.09.09 = 5 039.1/(1−0.089)
+cor,2009,7.25,%,"IFRS (IAS 39), расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] 388.9 / ср.(5 280.2; 5 444); кредиты 2009 — INV1304 с.10
+cor,4Q2009,6.4,% годовых,"IFRS (IAS 39), расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] 87.6×4 / ср.(5 531; 5 444)
+cor,2010,2.64,%,"IFRS (IAS 39), расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] 153.8 / ср.(5 444; 6 191.9); FS2011 с.36–37
+cor,2011,-0.02,%,"IFRS (IAS 39), расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] −1.2 / ср.(6 191.9; 8 382.1)
+cor,2012,0.2,%,"IFRS (IAS 39), как раскрыто",Сбер,"handoff/primary/regimes_pres_YE2013_ru.pdf (Итоги МСФО 2013), с. 6",
+cor,2013,1.12,%,"IFRS (IAS 39), как раскрыто",Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 2",
+cor,4Q2013,0.8,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 16",
+cor,1Q2014,2.2,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 16",
+cor,2Q2014,2.0,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 16",
+cor,3Q2014,2.7,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 16",
+cor,9M2014,2.3,%,IFRS (IAS 39),Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),презентация 9М15 с.2
+cor,2014,2.33,%,"IFRS (IAS 39), как раскрыто",Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 2",
+cor,4Q2014,2.4,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 16",
+cor,1Q2015,2.5,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 17",
+cor,2Q2015,2.6,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 17",
+cor,3Q2015,2.8,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 17",
+cor,9M2015,2.6,%,IFRS (IAS 39),Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),презентация 9М15 с.2
+cor,2015,2.5,%,"IFRS (IAS 39), как раскрыто",Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 3",
+cor,4Q2015,2.3,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 17",
+cor,1Q2016,1.7,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 18",
+cor,2Q2016,2.0,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 18",
+cor,3Q2016,2.1,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 18",
+cor,9M2016,1.95,%,IFRS (IAS 39),Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),презентация 9М16 с.2
+cor,2016,1.8,%,"IFRS (IAS 39), как раскрыто",Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 18",без эффекта укрепления рубля ≈2.0
+cor,4Q2016,1.2,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 18",
+cor,1Q2017,1.5,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 15",
+cor,2Q2017,1.9,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 15",
+cor,3Q2017,1.2,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 15",
+cor,2017,1.5,%,"IFRS (IAS 39), расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] среднее кварталов 1.5/1.9/1.2/1.5 (P1Q18 с.15); годовое раскрытие не найдено
+cor,4Q2017,1.5,% годовых,IFRS (IAS 39),Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 15",
+cor,1Q2018,0.53,% годовых,"IFRS-mgmt (МСФО 9, вкл. переоценку по СС)",Сбер,"handoff/primary/regimes_pres_12M2018_ru.pdf (Итоги МСФО 2018), с. 18",как раскрыто в 2019; в P4Q19 4К18 = 0.67
+cor,1Q2018_IAS39,1.1,% годовых,"IFRS (IAS 39, для сопоставимости)",Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 15",
+cor,2Q2018,1.49,% годовых,"IFRS-mgmt (МСФО 9, вкл. переоценку по СС)",Сбер,"handoff/primary/regimes_pres_12M2018_ru.pdf (Итоги МСФО 2018), с. 18",как раскрыто в 2019; в P4Q19 4К18 = 0.67
+cor,3Q2018,1.57,% годовых,"IFRS-mgmt (МСФО 9, вкл. переоценку по СС)",Сбер,"handoff/primary/regimes_pres_12M2018_ru.pdf (Итоги МСФО 2018), с. 18",как раскрыто в 2019; в P4Q19 4К18 = 0.67
+cor,2018,1.15,%,"IFRS-mgmt (МСФО 9, вкл. переоценку кредитов по СС)",Сбер,"handoff/primary/regimes_pres_12M2018_ru.pdf (Итоги МСФО 2018), с. 3,18",в P4Q19 с.17 пересчёт 2018 = 0.78
+cor,4Q2018,0.99,% годовых,"IFRS-mgmt (МСФО 9, вкл. переоценку по СС)",Сбер,"handoff/primary/regimes_pres_12M2018_ru.pdf (Итоги МСФО 2018), с. 18",как раскрыто в 2019; в P4Q19 4К18 = 0.67
+cor,1Q2019,0.96,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2019_ru.pdf (Итоги МСФО 2019; без текстового слоя, чтение рендером), с. 17",
+cor,2Q2019,0.14,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2019_ru.pdf (Итоги МСФО 2019; без текстового слоя, чтение рендером), с. 17",
+cor,3Q2019,1.06,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2019_ru.pdf (Итоги МСФО 2019; без текстового слоя, чтение рендером), с. 17",
+cor,2019,0.74,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2019_ru.pdf (Итоги МСФО 2019; без текстового слоя, чтение рендером), с. 3,17",
+cor,4Q2019,0.8,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2019_ru.pdf (Итоги МСФО 2019; без текстового слоя, чтение рендером), с. 17",
+cor,1Q2020,2.92,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_2Q2020_ru.pdf (Итоги МСФО 2К2020; рендер), с. 24",
+cor,2Q2020,2.25,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_2Q2020_ru.pdf (Итоги МСФО 2К2020; рендер), с. 24",
+cor,3Q2020,1.43,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 29",
+cor,2020,2.06,%,IFRS-mgmt,Сбер,"handoff/research/facts/sber_facts.csv, строки «вторичный источник» [вторичн.]",[вторичн.]; согласуется с суммой резервов кварталов 484.0 (первичка)
+cor,4Q2020,1.71,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 29",
+cor,1Q2021,0.41,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 29",
+cor,2Q2021,0.43,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 29",
+cor,3Q2021,0.85,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 29",
+cor,2021,0.56,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_AR2021_results_ru.pdf (Годовой отчёт 2021, раздел результатов; шрифт без Unicode, числа читаемы), с. 4",56 б.п.
+cor,4Q2021,,% годовых,IFRS-mgmt,Сбер,[Р] расчёт агента regimes; формула и входы — в note,не найдено; из 9М21 0.57 и 2021 0.56 ⇒ ≈0.55 [Р]
+cor,1Q2022,,% годовых,IFRS-mgmt,Сбер,[Р] расчёт агента regimes; формула и входы — в note,квартальная МСФО 2022 не раскрывалась
+cor,2Q2022,,% годовых,IFRS-mgmt,Сбер,[Р] расчёт агента regimes; формула и входы — в note,квартальная МСФО 2022 не раскрывалась
+cor,3Q2022,,% годовых,IFRS-mgmt,Сбер,[Р] расчёт агента regimes; формула и входы — в note,квартальная МСФО 2022 не раскрывалась
+cor,2022,1.9,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),пресс-релиз МСФО 2023 с.3; PFY23 с.9: 2023 0.8 (−1.1 п.п.)
+cor,4Q2022,,% годовых,IFRS-mgmt,Сбер,[Р] расчёт агента regimes; формула и входы — в note,квартальная МСФО 2022 не раскрывалась
+cor,1Q2023,1.09,% годовых,"IFRS-mgmt, расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] 84.2×4 / оценка ср. портфеля 31000 млрд (резервы — PFY24 с.10); точность ±0.2
+cor,2Q2023,1.26,% годовых,"IFRS-mgmt, расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] 102.7×4 / оценка ср. портфеля 32500 млрд (резервы — PFY24 с.10); точность ±0.2
+cor,3Q2023,0.56,% годовых,"IFRS-mgmt, расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] 48.0×4 / оценка ср. портфеля 34500 млрд (резервы — PFY24 с.10); точность ±0.2
+cor,2023,0.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_FY2023_ru.pdf (Итоги МСФО 2023; рендер), с. 9",
+cor,4Q2023,0.31,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_FY2024_ru.pdf (Итоги МСФО 2024; рендер), с. 10",
+cor,1Q2024,0.54,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_FY2024_ru.pdf (Итоги МСФО 2024; рендер), с. 10",
+cor,2Q2024,0.97,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_FY2024_ru.pdf (Итоги МСФО 2024; рендер), с. 10",
+cor,3Q2024,1.16,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_FY2024_ru.pdf (Итоги МСФО 2024; рендер), с. 10",
+cor,2024,1.0,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_FY2024_ru.pdf (Итоги МСФО 2024; рендер), с. 10",
+cor,4Q2024,1.19,% годовых,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_FY2024_ru.pdf (Итоги МСФО 2024; рендер), с. 10",
+cor,1Q2025,1.2,% годовых,"IFRS-mgmt, расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,"[Р] 140×4 / ≈45.9 трлн (портфель, вменённый 2К25: 195×4/1.7%); резервы — FACTS"
+cor,2Q2025,1.7,% годовых,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),презентация 2К26 с.12
+cor,3Q2025,1.4,% годовых,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),презентация 2К26 с.12
+cor,2025,1.3,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),пресс-релиз МСФО 12М25 с.3
+cor,4Q2025,0.9,% годовых,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),презентация 2К26 с.12
+cor,1Q2026,1.3,% годовых,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),презентация 2К26 с.12
+cor,2026H1,1.2,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),МСФО 6М26
+cor,2Q2026,1.0,% годовых,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),презентация 2К26 с.12
+nim,9M2008,7.0,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_invpres_2010-01_ru.pdf (Презентация для инвесторов, янв. 2010; МСФО 9М09), с. 14",
+nim,2008,,%,IFRS-mgmt,Сбер,[Р] расчёт агента regimes; формула и входы — в note,годовое не найдено (9М08 7.0)
+nim,9M2009,7.9,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_invpres_2010-01_ru.pdf (Презентация для инвесторов, янв. 2010; МСФО 9М09), с. 14",
+nim,2009,,%,IFRS-mgmt,Сбер,[Р] расчёт агента regimes; формула и входы — в note,годовое не найдено (9М09 7.9)
+nim,2010,6.4,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_invpres_2013-04_ru.pdf (Презентация для инвесторов, апр. 2013), с. 12",график ЧПМ 2010–2012
+nim,2011,6.4,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2012_ru.pdf (Итоги МСФО 2012), с. 5",
+nim,2012,6.1,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2012_ru.pdf (Итоги МСФО 2012), с. 5",
+nim,4Q2012,6.2,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2013_ru.pdf (Итоги МСФО 2013), с. 12",
+nim,1Q2013,5.9,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2013_ru.pdf (Итоги МСФО 2013), с. 12",
+nim,2Q2013,5.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2013_ru.pdf (Итоги МСФО 2013), с. 12",
+nim,3Q2013,5.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2013_ru.pdf (Итоги МСФО 2013), с. 12",
+nim,2013,5.9,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2013_ru.pdf (Итоги МСФО 2013), с. 8",
+nim,4Q2013,6.1,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2013_ru.pdf (Итоги МСФО 2013), с. 12",
+nim,1Q2014,5.7,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 8",
+nim,2Q2014,5.7,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 8",
+nim,3Q2014,5.6,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 8",
+nim,2014,5.6,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 4",
+nim,4Q2014,5.4,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 8",
+nim,1Q2015,3.7,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 9",
+nim,2Q2015,4.2,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 9",
+nim,3Q2015,4.7,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 9",
+nim,2015,4.4,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 5",
+nim,4Q2015,4.9,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 9",
+nim,1Q2016,5.3,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 9",
+nim,2Q2016,5.6,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 9",
+nim,3Q2016,5.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 9",
+nim,2016,5.7,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 5",
+nim,4Q2016,6.1,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 9",
+nim,1Q2017,5.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 6",
+nim,2Q2017,6.0,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 6",
+nim,3Q2017,6.1,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 6",
+nim,2017,6.0,%,IFRS-mgmt,Сбер,[Р] расчёт агента regimes; формула и входы — в note,"[Р] среднее 1К–4К17 (5.8, 6.0, 6.1, 6.1; P1Q18 с.6)"
+nim,4Q2017,6.1,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 6",
+nim,1Q2018,5.6,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 6",
+nim,2018,5.66,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_12M2018_ru.pdf (Итоги МСФО 2018), с. 3",методика 2018
+nim,2019,5.35,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2019_ru.pdf (Итоги МСФО 2019; без текстового слоя, чтение рендером), с. 3",старая методика; новая — 5.52
+nim,3Q2020,5.48,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 16",методика 2019+
+nim,2020,5.47,%,IFRS-mgmt,Сбер,"handoff/research/facts/sber_facts.csv, строки «вторичный источник» [вторичн.]",[вторичн.]
+nim,4Q2020,5.34,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 16",методика 2019+
+nim,1Q2021,5.18,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 16",методика 2019+
+nim,2Q2021,5.22,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 16",методика 2019+
+nim,3Q2021,5.36,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 16",методика 2019+
+nim,9M2021,5.26,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 16",
+nim,2021,5.44,%,IFRS-mgmt,Сбер,"handoff/research/facts/sber_facts.csv, строки «вторичный источник» [вторичн.]",[вторичн.]; по первичке 9М21 = 5.26 (P3Q21 с.16) — расхождение не разрешено
+nim,2022,5.32,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,2023,5.98,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,1Q2024,5.9,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,2Q2024,5.8,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,3Q2024,5.86,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,2024,5.9,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,4Q2024,6.01,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,1Q2025,6.1,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,2Q2025,6.1,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,3Q2025,6.2,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,2025,6.2,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,4Q2025,6.5,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,1Q2026,6.3,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+nim,2Q2026,6.7,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),
+oneoff_loss_to_equity,2008,5.0,%,"IFRS, расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] 37.3 / 750.2
+oneoff_loss_to_equity,2014,0.5,%,"IFRS, расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,[Р] 10.1 / 2 020.1
+oneoff_loss_to_equity,2022,11.9,%,"IFRS, расчёт",Сбер,[Р] расчёт агента regimes; формула и входы — в note,"[Р] (525.5 + 143.3) / 5 638.6, до налога"
+roe,2007,22.5,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_invpres_2013-04_ru.pdf (Презентация для инвесторов, апр. 2013), с. 12",
+roe,9M2008,17.9,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_invpres_2010-01_ru.pdf (Презентация для инвесторов, янв. 2010; МСФО 9М09), с. 14",
+roe,2008,14.1,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_invpres_2013-04_ru.pdf (Презентация для инвесторов, апр. 2013), с. 12",
+roe,9M2009,1.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_invpres_2010-01_ru.pdf (Презентация для инвесторов, янв. 2010; МСФО 9М09), с. 14",
+roe,2009,3.2,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_invpres_2013-04_ru.pdf (Презентация для инвесторов, апр. 2013), с. 12",
+roe,2010,20.6,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_invpres_2013-04_ru.pdf (Презентация для инвесторов, апр. 2013), с. 12",
+roe,2011,28.0,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2012_ru.pdf (Итоги МСФО 2012), с. 5",
+roe,2012,24.2,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2012_ru.pdf (Итоги МСФО 2012), с. 5",
+roe,2013,20.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2013_ru.pdf (Итоги МСФО 2013), с. 8",
+roe,4Q2013,20.3,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 6",
+roe,1Q2014,15.3,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 6",
+roe,2Q2014,20.1,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 6",
+roe,3Q2014,14.3,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 6",
+roe,2014,14.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 4",
+roe,4Q2014,9.7,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2014_ru.pdf (Итоги МСФО 2014), с. 6",
+roe,1Q2015,5.9,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 7",
+roe,2Q2015,10.3,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 7",
+roe,3Q2015,11.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 7",
+roe,2015,10.2,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 5",
+roe,4Q2015,12.6,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2015_ru.pdf (Итоги МСФО 2015), с. 7",
+roe,1Q2016,19.3,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 7",
+roe,2Q2016,22.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 7",
+roe,3Q2016,20.5,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 7",
+roe,2016,20.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 5",
+roe,4Q2016,20.4,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_YE2016_ru.pdf (Итоги МСФО 2016), с. 7",
+roe,1Q2017,23.1,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 4",
+roe,2Q2017,24.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 4",
+roe,3Q2017,28.4,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 4",
+roe,2017,24.2,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_12M2018_ru.pdf (Итоги МСФО 2018), с. 7",
+roe,4Q2017,20.6,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 4",
+roe,1Q2018,24.2,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_1Q2018_ru.pdf (Итоги МСФО 1К2018; кварталы 2017), с. 4",
+roe,2018,23.1,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_12M2018_ru.pdf (Итоги МСФО 2018), с. 3",
+roe,2Q2019,24.9,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_2Q2020_ru.pdf (Итоги МСФО 2К2020; рендер), с. 3",3К19 — продолжающаяся деятельность (с Денизбанком 15.2)
+roe,3Q2019,22.4,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_2Q2020_ru.pdf (Итоги МСФО 2К2020; рендер), с. 3",3К19 — продолжающаяся деятельность (с Денизбанком 15.2)
+roe,2019,20.5,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_4Q2019_ru.pdf (Итоги МСФО 2019; без текстового слоя, чтение рендером), с. 3",
+roe,4Q2019,19.4,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_2Q2020_ru.pdf (Итоги МСФО 2К2020; рендер), с. 3",3К19 — продолжающаяся деятельность (с Денизбанком 15.2)
+roe,1Q2020,10.6,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_2Q2020_ru.pdf (Итоги МСФО 2К2020; рендер), с. 3",3К19 — продолжающаяся деятельность (с Денизбанком 15.2)
+roe,2Q2020,14.2,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_2Q2020_ru.pdf (Итоги МСФО 2К2020; рендер), с. 3",3К19 — продолжающаяся деятельность (с Денизбанком 15.2)
+roe,3Q2020,22.7,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 4",
+roe,2020,16.2,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_AR2021_results_ru.pdf (Годовой отчёт 2021, раздел результатов; шрифт без Unicode, числа читаемы), с. 4",
+roe,4Q2020,16.7,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 4",
+roe,1Q2021,24.7,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 4",
+roe,2Q2021,25.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 4",
+roe,3Q2021,26.8,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_pres_3Q2021_ru.pdf (Итоги МСФО 3К2021; рендер), с. 4",
+roe,2021,24.2,%,IFRS-mgmt,Сбер,"handoff/primary/regimes_AR2021_results_ru.pdf (Годовой отчёт 2021, раздел результатов; шрифт без Unicode, числа читаемы), с. 4",
+roe,2022,5.2,%,IFRS-mgmt (пересчёт МСФО 17),Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),пресс-релиз МСФО 2023 с.3
+roe,2023,25.3,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),пресс-релиз МСФО 2023 с.3
+roe,3Q2024,25.4,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),пресс-релиз МСФО 12М24 с.3
+roe,2024,24.0,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),пресс-релиз МСФО 12М25 с.3
+roe,4Q2024,20.6,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),пресс-релиз МСФО 12М25 с.3
+roe,1Q2025,24.4,%,IFRS-mgmt,Сбер,handoff/research/sber-business.md §5.1 (страница «Дивиденды» sberbank.com через WebFetch 30.09.2026) [вторичн. пересказ],sber-business.md §2.2 (презентация 1К25)
+roe,2Q2025,23.0,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),страница IR (WebFetch) — вторичн. пересказ
+roe,3Q2025,23.7,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),страница IR (WebFetch) — вторичн. пересказ
+roe,2025,22.7,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),пресс-релиз МСФО 12М25 с.3
+roe,4Q2025,19.9,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),пресс-релиз МСФО 12М25 с.3
+roe,1Q2026,24.4,%,IFRS-mgmt,Сбер,handoff/research/sber-business.md §5.1 (страница «Дивиденды» sberbank.com через WebFetch 30.09.2026) [вторичн. пересказ],sber-business.md §2.2
+roe,2026H1,24.2,%,IFRS-mgmt,Сбер,handoff/research/facts/sber_facts.csv (исследование; документ и страница — в строке факта),МСФО 6М26
+roe,2Q2026,24.0,%,IFRS-mgmt,Сбер,handoff/research/sber-business.md §5.1 (страница «Дивиденды» sberbank.com через WebFetch 30.09.2026) [вторичн. пересказ],sber-business.md §2.2 (презентация 2К26)
+cpi_yoy_eoq,3Q2013,6.14,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2013,6.47,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2014,6.92,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2014,7.81,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2014,8.03,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2014,11.35,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2015,16.9,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2015,15.3,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2015,15.7,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2015,12.9,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2016,7.3,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2016,7.5,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2016,6.4,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2016,5.4,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2017,4.3,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2017,4.4,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2017,3.0,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2017,2.5,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2018,2.4,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2018,2.3,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2018,3.4,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2018,4.3,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2019,5.3,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2019,4.7,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2019,4.0,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2019,3.0,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2020,2.5,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2020,3.2,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2020,3.7,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2020,4.9,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2021,5.8,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2021,6.5,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2021,7.4,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2021,8.39,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2022,16.69,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2022,15.9,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2022,13.68,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2022,11.94,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2023,3.51,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2023,3.25,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2023,6.0,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2023,7.42,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2024,7.72,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2024,8.59,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2024,8.63,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2024,9.52,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2025,10.34,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2025,9.4,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,3Q2025,7.98,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,4Q2025,5.59,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,1Q2026,5.86,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+cpi_yoy_eoq,2Q2026,6.02,%,"Росстат через ЦБ, г/г на конец квартала",макро,"handoff/primary/regimes_cbr_hd_base_infl_2013_2026.html (https://www.cbr.ru/hd_base/infl/, доступ 30.09.2026)",
+gdp_real_growth,2007,8.5,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2008,5.2,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2009,-7.8,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2010,4.5,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2011,4.3,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2012,4.02,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2013,1.76,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2014,0.74,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2015,-1.97,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2016,0.19,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2017,1.83,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2018,2.81,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2019,2.2,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2020,-2.65,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2021,5.87,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2022,-1.44,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2023,4.07,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2024,4.92,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2025,1.0,%,реальный ВВП,макро,"handoff/primary/regimes_wb_gdp_growth_RUS.json (World Bank API NY.GDP.MKTP.KD.ZG, lastupdated 2026-07-13; компиляция Росстата) [вторичн.]",
+gdp_real_growth,2026F,,%,база ЦБ 0.0–1.0,макро,"handoff/research/regulation-macro.md (§4.C, §4.E, §5.A; первоисточники ЦБ там же)","прогноз ЦБ 24.07.2026, не факт"
+key_rate_avg,3Q2013,5.5,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2013,5.5,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2014,6.03,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2014,7.34,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2014,7.86,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2014,10.4,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2015,15.33,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2015,12.88,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2015,11.17,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2015,11.0,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2016,11.0,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2016,10.89,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2016,10.42,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2016,10.0,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2017,9.98,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2017,9.37,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2017,8.92,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2017,8.25,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2018,7.58,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2018,7.25,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2018,7.29,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2018,7.54,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2019,7.75,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2019,7.71,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2019,7.26,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2019,6.6,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2020,6.1,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2020,5.55,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2020,4.32,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2020,4.25,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2021,4.28,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2021,4.96,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2021,6.29,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2021,7.45,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2022,12.93,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2022,13.82,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2022,8.29,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2022,7.5,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2023,7.5,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2023,7.5,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2023,10.25,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2023,14.54,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2024,16.0,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2024,16.0,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2024,17.56,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2024,20.42,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2025,21.0,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2025,20.76,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,3Q2025,18.39,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,4Q2025,16.59,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,1Q2026,15.68,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+key_rate_avg,2Q2026,14.62,%,"ЦБ, среднее за квартал",макро,"handoff/research/facts/cbr_key_rate_quarterly_avg.csv (ЦБ, среднее по рабочим дням)",
+real_key_rate_expost,3Q2013,-0.64,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2013,-0.97,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2014,-0.89,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2014,-0.47,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2014,-0.17,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2014,-0.95,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2015,-1.57,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2015,-2.42,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2015,-4.53,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2015,-1.9,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2016,3.7,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2016,3.39,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2016,4.02,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2016,4.6,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2017,5.68,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2017,4.97,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2017,5.92,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2017,5.75,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2018,5.19,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2018,4.95,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2018,3.89,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2018,3.24,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2019,2.45,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2019,3.01,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2019,3.26,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2019,3.6,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2020,3.6,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2020,2.35,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2020,0.62,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2020,-0.65,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2021,-1.52,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2021,-1.54,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2021,-1.11,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2021,-0.94,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2022,-3.76,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2022,-2.08,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2022,-5.39,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2022,-4.44,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2023,3.99,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2023,4.25,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2023,4.25,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2023,7.12,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2024,8.28,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2024,7.41,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2024,8.93,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2024,10.9,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2025,10.66,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2025,11.36,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,3Q2025,10.41,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,4Q2025,11.0,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,1Q2026,9.82,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL
+real_key_rate_expost,2Q2026,8.6,п.п.,ключевая (ср. кв.) − ИПЦ г/г на конец квартала,макро,[Р] расчёт агента regimes; формула и входы — в note,[Р] KEYQ − CBRINFL

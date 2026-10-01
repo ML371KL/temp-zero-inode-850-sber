@@ -1,0 +1,62 @@
+{
+ "area": "capital",
+ "root": "$BANK_HANDOFF_DIR",
+ "files": [
+  {
+   "path": "stage1/mgmt/mgmt_kpi.csv",
+   "sha256_full": "1af38e667eeafcb3b0b0386c3acb0d5678a904d0b21fc06b2d95f196a64e88bc",
+   "sha256_input": "654aa365ebbd65f079c7c64b8544dcdf76b736a9801c44ef5a186c9c27cf034e",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 206,
+   "rows_total": 1173
+  },
+  {
+   "path": "stage1/ifrs/ifrs_history.csv",
+   "sha256_full": "e5f9b71e9e743dee0230f163aa990e0b87e80d6d748c37412f558e5be9bad71d",
+   "sha256_input": "84f0aa9103ac4ffb65f4e28fa0e145f11ad34b296f116bf271406ef0755b8a2a",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 537,
+   "rows_total": 5452
+  },
+  {
+   "path": "stage1/ifrs/ifrs_quarterly.csv",
+   "sha256_full": "ae5ec240c1a8220b4f3d5b9c160798ad79186a5fcd561a79a81ae0e78d246134",
+   "sha256_input": "097c2339b5d4e2a1a85e7cf35c414d7f9860e3bf8ae4eb176c18912069f8000c",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 24,
+   "rows_total": 1264
+  },
+  {
+   "path": "stage1/ras/cbr_f135.csv",
+   "sha256_full": "c8640f1242e3497ff879b361fd5ebe7f129db1493e0303b25c1c75680542461e",
+   "sha256_input": "d25b03826d510e28ce235a3f1a0ca0a4b5799b6cd6ccb34d83f4c3b1c28f9bc4",
+   "filter": "строки, где norm — литерал кода области",
+   "rows_kept": 435,
+   "rows_total": 2928
+  },
+  {
+   "path": "stage1/ras/cbr_f123.csv",
+   "sha256_full": "e5a59c9a78a6c47277cd2df2002038fed5532ac5a5f575784a93ad97c1cc391b",
+   "sha256_input": "3af519a12a3c36a0f9f3f9bc6c74d604be94e56377f4719f5da4dcbcefef17a1",
+   "filter": "строки, где code — литерал кода области",
+   "rows_kept": 685,
+   "rows_total": 24505
+  },
+  {
+   "path": "stage1/ras/ras_release_monthly_wide.csv",
+   "sha256_full": "1e14ee0726e33198813713ba3816e3463eee5cbe3ee58911d5a56d0f861ac946",
+   "sha256_input": "c1fcd13f788188fe414f7417111a391740917a8fe28479ac816eecf7ca7d020e",
+   "filter": "весь лист",
+   "rows_kept": 45,
+   "rows_total": 45
+  },
+  {
+   "path": "stage1/calib/capital/data/zcyc_quarter_ends.csv",
+   "sha256_full": "426a3be181cf480b00793add08ec844fcc0a09d0744f2c6bf457aff149a9514e",
+   "sha256_input": "3f785b66150cc8bb761f8aa204a49bb62015ac5a2269dc69efe1189de715c06b",
+   "filter": "весь лист",
+   "rows_kept": 386,
+   "rows_total": 386
+  }
+ ]
+}

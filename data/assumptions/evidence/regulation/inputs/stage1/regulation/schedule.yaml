@@ -1,0 +1,436 @@
+# Регуляторный график капитала СЗКО 2026–2031 — ЧЕРНОВИК (этап 1, ключ market, 30.09.2026). Собрано reg_schedule_build.py.
+meta: {status: 'черновик этапа 1 (ключ market), 30.09.2026; числа ЦБ — факт с источником, фазировка и АЦН по годам — [В]', units: '% от АВР (RWA); значения
+    действуют с 1 января года, если не указано иное', sources_file: 'primary/MANIFEST-market.md',
+  build: reg_schedule_build.py (не править YAML руками — править скрипт)}
+minimums: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0, source: Инструкция 220-И п. 2.2 (primary/cbr_220-I_p2.2_ch3_text_via_kontur_20260930.txt); для группы — те же
+    Н20.1/Н20.2/Н20.0 по Положению 729-П}
+buffers:
+  conservation:
+    values: {'2025-08-18': 0.5, '2026-01-01': 1.0, '2027-01-01': 1.5, '2028-01-01': 2.5}
+    source: '220-И п. 3.2 (таблица: со дня вступления в силу / с 01.01.2026 / 01.01.2027 / 01.01.2028)'
+  sifi_base:
+    values: {'2025-08-18': 0.25, '2026-01-01': 0.5, '2027-01-01': 0.75, '2028-01-01': 1.0}
+    source: '220-И п. 3.4; подтверждение: ОФС ЦБ май 2026, печ. с. 63 (2026: СЗКО 0,25→0,5, поддержания 0,5→1,0); «Банковский сектор II кв. 2026», печ.
+      с. 18 (с 01.01.2027 для СЗКО +0,75 п.п., до 2,75 % с АЦН)'
+  sifi_differentiated:
+    preliminary_by_group: {'1': 2.5, '2': 2.0, '3': 1.5, '4': 1.0, '5': 0.5}
+    source_sizes: доклад ЦБ «Новая концепция методики определения СЗКО» 22.05.2025, печ. с. 19 — «предварительные»
+    timing: новая методика ориентировочно с 2027; первый перечень по ней — осень 2027; дифф. надбавки — постепенно, ориентировочно с 2028, после выхода
+      всех СЗКО на 1 % к 01.01.2028 (отчёт ЦБ 20.02.2026, печ. с. 4 и 9; доклад 22.05.2025, печ. с. 4)
+    sber_group: null
+    sber_group_note: группа Сбера не объявлена (null); по масштабу — кандидат в группу 1 [В]
+    phase_in_assumption: {center: 'gradual: +0,5 п.п. в год с 01.01.2029 до цели сценария [В]', alternative: 'fast: вся цель с 01.01.2029 (как DESIGN §3.4:
+        пол 13,5–14,0 % с 2029)'}
+  ccyb:
+    values: {'2025-02-01': 0.25, '2025-07-01': 0.5}
+    current: 0.5
+    target_neutral: 1.0
+    source: 'страница ЦБ «Национальная антициклическая надбавка» (снимок 30.09.2026); пресс-релиз 08.11.2024: «до целевого уровня в 1% от активов, взвешенных
+      по риску»; пресс-релиз 27.07.2026: 0,5 сохранена, «признаков кредитного перегрева не наблюдается»'
+    decisions_rhythm: ежеквартально с макропакетом (30.01, 29.04, 27.07.2026); следующее — ориентировочно конец октября 2026 [НП]
+    crisis: распускается в случае кризиса (страница ЦБ); макробуфер сектора 1,3 трлн ₽ (ОФС май 2026) тоже может быть распущен
+  group_only: 'Головные КО банковских групп соблюдают надбавки только на консолидированной основе (220-И п. 3.5, абз. 1) → у банка соло пол Н1.x = минимум;
+    надбавки — к Н20.x группы. Подтверждение: МСФО 6М26 прим. 18 (с. 67): «Н1.0 Банка … не менее 8,0%», «Н20.0 с учётом максимальных надбавок … не менее
+    12,0%».'
+distribution_rule:
+  source: 220-И п. 3.5, абз. 2 и таблица
+  measure: фактическая сумма надбавок = min(Н20.1 − 4,5; Н20.2 − 6; Н20.0 − 8) (для группы; у соло-банка — по Н1.x)
+  bands:
+  - {if: 'сумма надбавок ≤ минимума периода (пп. 3.2, 3.4 для года + АЦН)', distributable_share_of_profit: 0}
+  - {if: 'между минимумом периода и значениями графы 5 (2,5 + 1,0 + АЦН)', distributable_share_of_profit: 50 % прибыли текущего и предыдущего года; 0 —
+      прибыли прошлых лет}
+  - {if: больше значений графы 5, distributable_share_of_profit: 100}
+  model_note: 'До 2028 выплата 50 % разрешена уже при Н20.0 выше пола года (10,0 % в 2026, 10,75 % в 2027); 100 % — при Н20.0 > 12,0 % (АЦН 0,5). С 2028
+    полосы сливаются. Для дифф. надбавок СЗКО графа 5 не определена — принято: порог = пол года [В].'
+policy: {sber_N20_0_target: 13.3, source: 'дивполитика 05.12.2023, п. 2.2–2.3 (research/primary/dividend_policy_2023.pdf, с. 3–4): не менее 13,3 % при надбавке
+    СЗКО ≤ 1,0, поддержания ≤ 2,5 и АЦН 0 %; срок действия — 3 года (п. 6.4) → до 05.12.2026', mgmt_buffer_center: 1.3, mgmt_buffer_note: '1,3 = 13,3 −
+    12,0 (пол с АЦН 0,5); в допущениях самой политики (АЦН 0) пол 11,5 и буфер 1,8 п.п. — выбор автора книги', requirement_formula: 'требование Н20.0 =
+    max(13,3; пол_t + буфер) (DESIGN §3.4)'}
+scenarios:
+  A_po_grafiku: {name: По графику, sifi_target: 1.0, ccyb_now: 0.5, ccyb_target: 0.5, ccyb_from: null, prob_design: 0.25}
+  B_verkhnyaya_gruppa: {name: Верхняя группа СЗКО, sifi_target: 2.0, ccyb_now: 0.5, ccyb_target: 1.0, ccyb_from: 2028, prob_design: 0.45}
+  C_zhestkiy: {name: Жёсткий, sifi_target: 2.5, ccyb_now: 0.5, ccyb_target: 1.0, ccyb_from: 2028, prob_design: 0.3}
+schedule:
+  A_po_grafiku:
+    gradual:
+      2026:
+        conservation: 1.0
+        sifi: 0.5
+        ccyb: 0.5
+        buffers_total: 2.0
+        group_floor: {N20_1: 6.5, N20_2: 8.0, N20_0: 10.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2027:
+        conservation: 1.5
+        sifi: 0.75
+        ccyb: 0.5
+        buffers_total: 2.75
+        group_floor: {N20_1: 7.25, N20_2: 8.75, N20_0: 10.75}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.75, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2028:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 0.5
+        buffers_total: 4.0
+        group_floor: {N20_1: 8.5, N20_2: 10.0, N20_0: 12.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2029:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 0.5
+        buffers_total: 4.0
+        group_floor: {N20_1: 8.5, N20_2: 10.0, N20_0: 12.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2030:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 0.5
+        buffers_total: 4.0
+        group_floor: {N20_1: 8.5, N20_2: 10.0, N20_0: 12.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2031:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 0.5
+        buffers_total: 4.0
+        group_floor: {N20_1: 8.5, N20_2: 10.0, N20_0: 12.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+    fast:
+      2026:
+        conservation: 1.0
+        sifi: 0.5
+        ccyb: 0.5
+        buffers_total: 2.0
+        group_floor: {N20_1: 6.5, N20_2: 8.0, N20_0: 10.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2027:
+        conservation: 1.5
+        sifi: 0.75
+        ccyb: 0.5
+        buffers_total: 2.75
+        group_floor: {N20_1: 7.25, N20_2: 8.75, N20_0: 10.75}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.75, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2028:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 0.5
+        buffers_total: 4.0
+        group_floor: {N20_1: 8.5, N20_2: 10.0, N20_0: 12.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2029:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 0.5
+        buffers_total: 4.0
+        group_floor: {N20_1: 8.5, N20_2: 10.0, N20_0: 12.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2030:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 0.5
+        buffers_total: 4.0
+        group_floor: {N20_1: 8.5, N20_2: 10.0, N20_0: 12.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2031:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 0.5
+        buffers_total: 4.0
+        group_floor: {N20_1: 8.5, N20_2: 10.0, N20_0: 12.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+  B_verkhnyaya_gruppa:
+    gradual:
+      2026:
+        conservation: 1.0
+        sifi: 0.5
+        ccyb: 0.5
+        buffers_total: 2.0
+        group_floor: {N20_1: 6.5, N20_2: 8.0, N20_0: 10.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2027:
+        conservation: 1.5
+        sifi: 0.75
+        ccyb: 0.5
+        buffers_total: 2.75
+        group_floor: {N20_1: 7.25, N20_2: 8.75, N20_0: 10.75}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.75, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2028:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 1.0
+        buffers_total: 4.5
+        group_floor: {N20_1: 9.0, N20_2: 10.5, N20_0: 12.5}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.5, half_up_to: 12.5, full_above: 12.5}
+        dividend_requirement_N20_0: 13.8
+      2029:
+        conservation: 2.5
+        sifi: 1.5
+        ccyb: 1.0
+        buffers_total: 5.0
+        group_floor: {N20_1: 9.5, N20_2: 11.0, N20_0: 13.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 13.0, half_up_to: 13.0, full_above: 13.0}
+        dividend_requirement_N20_0: 14.3
+      2030:
+        conservation: 2.5
+        sifi: 2.0
+        ccyb: 1.0
+        buffers_total: 5.5
+        group_floor: {N20_1: 10.0, N20_2: 11.5, N20_0: 13.5}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 13.5, half_up_to: 13.5, full_above: 13.5}
+        dividend_requirement_N20_0: 14.8
+      2031:
+        conservation: 2.5
+        sifi: 2.0
+        ccyb: 1.0
+        buffers_total: 5.5
+        group_floor: {N20_1: 10.0, N20_2: 11.5, N20_0: 13.5}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 13.5, half_up_to: 13.5, full_above: 13.5}
+        dividend_requirement_N20_0: 14.8
+    fast:
+      2026:
+        conservation: 1.0
+        sifi: 0.5
+        ccyb: 0.5
+        buffers_total: 2.0
+        group_floor: {N20_1: 6.5, N20_2: 8.0, N20_0: 10.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2027:
+        conservation: 1.5
+        sifi: 0.75
+        ccyb: 0.5
+        buffers_total: 2.75
+        group_floor: {N20_1: 7.25, N20_2: 8.75, N20_0: 10.75}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.75, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2028:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 1.0
+        buffers_total: 4.5
+        group_floor: {N20_1: 9.0, N20_2: 10.5, N20_0: 12.5}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.5, half_up_to: 12.5, full_above: 12.5}
+        dividend_requirement_N20_0: 13.8
+      2029:
+        conservation: 2.5
+        sifi: 2.0
+        ccyb: 1.0
+        buffers_total: 5.5
+        group_floor: {N20_1: 10.0, N20_2: 11.5, N20_0: 13.5}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 13.5, half_up_to: 13.5, full_above: 13.5}
+        dividend_requirement_N20_0: 14.8
+      2030:
+        conservation: 2.5
+        sifi: 2.0
+        ccyb: 1.0
+        buffers_total: 5.5
+        group_floor: {N20_1: 10.0, N20_2: 11.5, N20_0: 13.5}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 13.5, half_up_to: 13.5, full_above: 13.5}
+        dividend_requirement_N20_0: 14.8
+      2031:
+        conservation: 2.5
+        sifi: 2.0
+        ccyb: 1.0
+        buffers_total: 5.5
+        group_floor: {N20_1: 10.0, N20_2: 11.5, N20_0: 13.5}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 13.5, half_up_to: 13.5, full_above: 13.5}
+        dividend_requirement_N20_0: 14.8
+  C_zhestkiy:
+    gradual:
+      2026:
+        conservation: 1.0
+        sifi: 0.5
+        ccyb: 0.5
+        buffers_total: 2.0
+        group_floor: {N20_1: 6.5, N20_2: 8.0, N20_0: 10.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2027:
+        conservation: 1.5
+        sifi: 0.75
+        ccyb: 0.5
+        buffers_total: 2.75
+        group_floor: {N20_1: 7.25, N20_2: 8.75, N20_0: 10.75}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.75, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2028:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 1.0
+        buffers_total: 4.5
+        group_floor: {N20_1: 9.0, N20_2: 10.5, N20_0: 12.5}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.5, half_up_to: 12.5, full_above: 12.5}
+        dividend_requirement_N20_0: 13.8
+      2029:
+        conservation: 2.5
+        sifi: 1.5
+        ccyb: 1.0
+        buffers_total: 5.0
+        group_floor: {N20_1: 9.5, N20_2: 11.0, N20_0: 13.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 13.0, half_up_to: 13.0, full_above: 13.0}
+        dividend_requirement_N20_0: 14.3
+      2030:
+        conservation: 2.5
+        sifi: 2.0
+        ccyb: 1.0
+        buffers_total: 5.5
+        group_floor: {N20_1: 10.0, N20_2: 11.5, N20_0: 13.5}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 13.5, half_up_to: 13.5, full_above: 13.5}
+        dividend_requirement_N20_0: 14.8
+      2031:
+        conservation: 2.5
+        sifi: 2.5
+        ccyb: 1.0
+        buffers_total: 6.0
+        group_floor: {N20_1: 10.5, N20_2: 12.0, N20_0: 14.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 14.0, half_up_to: 14.0, full_above: 14.0}
+        dividend_requirement_N20_0: 15.3
+    fast:
+      2026:
+        conservation: 1.0
+        sifi: 0.5
+        ccyb: 0.5
+        buffers_total: 2.0
+        group_floor: {N20_1: 6.5, N20_2: 8.0, N20_0: 10.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.0, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2027:
+        conservation: 1.5
+        sifi: 0.75
+        ccyb: 0.5
+        buffers_total: 2.75
+        group_floor: {N20_1: 7.25, N20_2: 8.75, N20_0: 10.75}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 10.75, half_up_to: 12.0, full_above: 12.0}
+        dividend_requirement_N20_0: 13.3
+      2028:
+        conservation: 2.5
+        sifi: 1.0
+        ccyb: 1.0
+        buffers_total: 4.5
+        group_floor: {N20_1: 9.0, N20_2: 10.5, N20_0: 12.5}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 12.5, half_up_to: 12.5, full_above: 12.5}
+        dividend_requirement_N20_0: 13.8
+      2029:
+        conservation: 2.5
+        sifi: 2.5
+        ccyb: 1.0
+        buffers_total: 6.0
+        group_floor: {N20_1: 10.5, N20_2: 12.0, N20_0: 14.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 14.0, half_up_to: 14.0, full_above: 14.0}
+        dividend_requirement_N20_0: 15.3
+      2030:
+        conservation: 2.5
+        sifi: 2.5
+        ccyb: 1.0
+        buffers_total: 6.0
+        group_floor: {N20_1: 10.5, N20_2: 12.0, N20_0: 14.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 14.0, half_up_to: 14.0, full_above: 14.0}
+        dividend_requirement_N20_0: 15.3
+      2031:
+        conservation: 2.5
+        sifi: 2.5
+        ccyb: 1.0
+        buffers_total: 6.0
+        group_floor: {N20_1: 10.5, N20_2: 12.0, N20_0: 14.0}
+        bank_floor: {N1_1: 4.5, N1_2: 6.0, N1_0: 8.0}
+        distribution_bands_N20_0: {zero_at_or_below: 14.0, half_up_to: 14.0, full_above: 14.0}
+        dividend_requirement_N20_0: 15.3
+rchl_immobilized_assets:
+  limit_pct_of_capital: {'2027-04-01': 100, '2028-01-01': 85, '2029-01-01': 70, '2030-01-01': 50, '2031-01-01': 25}
+  excess: превышение показателя концентрации над РЧЛ уменьшает источники основного и дополнительного капитала (п. 1.6 проекта; 646-П п. 4.2.2 / 729-П для
+    группы)
+  coefficients: три группы ИА с коэффициентом иммобилизации 1–3 (пояснительная записка, с. 21–24)
+  applies_to: головные КО банковских групп (на консолидированной основе) и банки вне групп
+  status: ПРОЕКТ Положения ЦБ от 01.12.2025 (вступление с 01.04.2027); принятие на 30.09.2026 не подтверждено [НП]
+  source: primary/cbr_rchl_draft_regulation_20251201.pdf, п. 1.5 (PDF-с. 6–7), гл. V (с. 20), записка с. 24
+  sber_exposure: null
+  sber_note: доля ИА Сбера не раскрыта (null); заявление менеджмента «в 2026 давления не будет» — вторично (Интерфакс 04.02.2026, research/regulation-macro.md
+    §1.D). В research стоит «25 % к 2030» — по проекту 25 % с 01.01.2031.
+group_consolidation:
+  change: исключить из периметра консолидации нефинансовые компании, страховщиков и НПФ; обязательный перечень фин. организаций; пороги 1 % или 50 млрд
+    (индивид.), 5 % или 300 млрд (совокупно; сейчас 10 %)
+  timing: ориентировочно к концу 2027 года (IV кв. 2027), возможно поэтапно
+  effect_sector: до −0,9 п.п. достаточности у нескольких крупных банков; около половины эффекта банки смогут нивелировать
+  source: primary/cbr_group_ratios_consultation_20260205.pdf, с. 3; primary/cbr_bankreg_review_2025q4.pdf, печ. с. 7
+  sber_effect: null
+  proposed_axis_N20_0_pp:
+    center: -0.45
+    range: [-0.9, 0.0]
+    from: '2027-12-31'
+    basis: '[В]: половина эффекта ЦБ «до −0,9» нивелируется'
+risk_weights_and_macro_addons:
+- item: надбавка к RW на прирост требований к крупным закредитованным компаниям (долг > 50 млрд и > 2 % капитала банка, ICR < 3)
+  path: {'2025-04-01': 20, '2025-12-01': 40, '2026-03-01': 100}
+  unit: '% надбавки к коэффициенту риска'
+  source: пресс-релиз ЦБ 27.07.2026 п. 4 (100 % с 01.03.2026; буфер сектора 74 млрд на 01.07.2026; «может продолжить повышение»); ОФС май 2026, печ. с.
+    30; путь 20→40 — ОФС/research [частично вторично]
+- {item: 'розничные МПН (ипотека, НПС, авто) — значения не пересматривались 27.07.2026; макробуфер на 01.07.2026: НПС 7,8 %, ипотека МКД 1,4 %, авто 2,5
+    % портфеля за вычетом резервов', source: пресс-релиз ЦБ 27.07.2026 п. 1–3; Указание 6960-У (страница ЦБ «Надбавки к коэффициентам риска»)}
+- {item: 'МПЛ на IV кв. 2026: НПС без лимита ПДН>50 % — 15 % (было 18), из них ПДН>80 % — 1 % (было 3), срок >5 лет — 1 % (было 5); целевые автокредиты
+    ПДН>50 % — 20 % (было 25), ПДН>80 % — 1 % (было 5); ипотека — без изменений', source: 'пресс-релиз ЦБ 27.07.2026, таблицы п. 1 и 3'}
+- {item: надбавка 250 % на облигации секьюритизации потребкредитов и автокредитов с 15.10.2026, source: 'вторично: garant.ru hotlaw 2240239; research/regulation-macro.md
+    §1.C [НП по первичке]'}
+- {item: 'концентрация: с 01.01.2028 коэффициент риска 100 % всем корпоративным заёмщикам в расчёте Н6/Н21', source: 'вторично: Ведомости 21.05.2026 (research
+    §1.D) [НП]'}
+- {item: 'НМА импортозамещения: вычет из капитала в течение 4 лет', source: 'Обзор банковского регулирования IV кв. 2025, печ. с. 2; МСФО 6М26 прим. 18
+    (с. 67): решение СД ЦБ 27.02.2026 о поэтапном вычете'}
+- {item: 'ПВР: Сбер применяет ПВР (МСФО 6М26 прим. 18, с. 67); обязательный переход всех СЗКО к 01.01.2030', source: 'МСФО 6М26 с. 67 (факт применения);
+    срок 2030 — вторично (ЦБ 02.04.2024, research §1.D)'}
+- {item: 'плотность RWA — ось дрейфа модели (+0,5 %/год до 2029, 0…+1,5), не уровень сетки', source: 'DESIGN §4 [В]'}
+crisis_override: {rule: 'в кризисном режиме регуляторный сценарий сдвигается к «по графику», АЦН = 0 с года кризиса до года восстановления; макробуферы
+    распускаются', source: 'страница ЦБ АЦН («распускается в случае кризиса»); ОФС май 2026 (макробуфер 1,3 трлн); прецедент 2022 — надбавки обнулены (вторично,
+    research §1.A)'}
+current_state_sber:
+  bank_solo_2026_06_30: {N1_1: 12.0, N1_2: 12.2, N1_0: 14.6, source: 'МСФО 6М26 прим. 18, с. 67'}
+  bank_solo_2026_09_01: {N1_1: 10.115, N1_2: 10.358, N1_0: 13.095, source: 'форма 0409135 ЦБ (SOAP Data135FormFullXML, рег. № 1481), research/samples/cbr_coi_f135_sber_20260901.xml'}
+  group_N20_0_2026_06_30: {value: 15.1, basis: до вычета дивиденда за 2025, source: 'презентация 2К26 с. 21 (research/sber-business.md) [в research]'}
+  group_N20_0_min_with_max_buffers: {value: 12.0, source: 'МСФО 6М26 прим. 18, с. 67'}

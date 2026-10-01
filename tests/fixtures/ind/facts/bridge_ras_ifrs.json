@@ -1,0 +1,617 @@
+{
+ "basis": "RAS→IFRS",
+ "as_of": "2026-06-30",
+ "note": "заглушка потока indicators для тестов: формат INTERFACES §3.2; ЧП — STAGE1-SUMMARY §3; блоки nii, iea, cor — копия data/facts/bridge_ras_ifrs.json на 01.10.2026 (тесты не зависят от будущих правок фактов)",
+ "quarters": [],
+ "by_quarter": {
+  "1": {
+   "v": 1.058,
+   "calc": "среднее отношения ЧП акционерам МСФО / ЧП РСБУ за 1-е кварталы 2023–2026 (1,025; 1,092; 1,078; 1,036)"
+  },
+  "2": {
+   "v": 1.015,
+   "calc": "среднее 2-х кварталов 2023–2026"
+  },
+  "3": {
+   "v": 1.003,
+   "calc": "среднее 3-х кварталов 2023–2025"
+  },
+  "4": {
+   "v": 0.962,
+   "calc": "среднее 4-х кварталов 2023–2025 (0,989; 0,958; 0,940)"
+  }
+ },
+ "nii": {
+  "definition": "ras — ЧПД банка РСБУ квартала по релизу (внутренняя методика банка; кварталы 2–4 — разность нарастающих итогов); ifrs — ЧПД группы МСФО квартала (pnl_quarterly.nii); ratio = ifrs / ras",
+  "method": "value — среднее ratio за последние 4 кв. до якоря (окно window); ЧПД МСФО квартала = ЧПД РСБУ квартала × value; by_quarter = value (сезонного моста нет); нау-каст замораживает отношение при первой записи квартала",
+  "window": [
+   "2025Q3",
+   "2026Q2"
+  ],
+  "quarters": [
+   {
+    "period": "2023Q1",
+    "ras": {
+     "v": 517.1,
+     "src": "ras_2023M03_press_release.pdf, с. 2, sha256 c45e3c13d98283af",
+     "calc": "nii_ytd за 3 месяца 2023 (релиз РСБУ)"
+    },
+    "ifrs": {
+     "v": 562.8,
+     "src": "ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+    },
+    "ratio": {
+     "v": 1.088377,
+     "calc": "ifrs / ras"
+    },
+    "src": "ras_2023M03_press_release.pdf, с. 2, sha256 c45e3c13d98283af; ifrs_3M2024_statements.pdf, с. 6, sha256 c8d802e70395f39f"
+   },
+   {
+    "period": "2023Q2",
+    "ras": {
+     "v": 547.3,
+     "src": "ras_2023M06_press_release.pdf, с. 2, sha256 bfd8e8d728c781e5; ras_2023M03_press_release.pdf, с. 2, sha256 c45e3c13d98283af",
+     "calc": "nii_ytd: 1064,4 (2023-06) − 517,1 (2023-03) — разность нарастающих итогов релизов"
+    },
+    "ifrs": {
+     "v": 597.6,
+     "src": "ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+    },
+    "ratio": {
+     "v": 1.091906,
+     "calc": "ifrs / ras"
+    },
+    "src": "ras_2023M06_press_release.pdf, с. 2, sha256 bfd8e8d728c781e5; ras_2023M03_press_release.pdf, с. 2, sha256 c45e3c13d98283af; ifrs_6M2024_statements.pdf, с. 6, sha256 44e423398dfb4e3c"
+   },
+   {
+    "period": "2023Q3",
+    "ras": {
+     "v": 610.2,
+     "src": "ras_2023M09_press_release.pdf, с. 2, sha256 7d23a0feab2b78f5; ras_2023M06_press_release.pdf, с. 2, sha256 bfd8e8d728c781e5",
+     "calc": "nii_ytd: 1674,6 (2023-09) − 1064,4 (2023-06) — разность нарастающих итогов релизов"
+    },
+    "ifrs": {
+     "v": 667.9,
+     "src": "ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+    },
+    "ratio": {
+     "v": 1.094559,
+     "calc": "ifrs / ras"
+    },
+    "src": "ras_2023M09_press_release.pdf, с. 2, sha256 7d23a0feab2b78f5; ras_2023M06_press_release.pdf, с. 2, sha256 bfd8e8d728c781e5; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   {
+    "period": "2023Q4",
+    "ras": {
+     "v": 659.1,
+     "src": "ras_2023M12_press_release.pdf, с. 2, sha256 99e47a414a8bb8d7; ras_2023M09_press_release.pdf, с. 2, sha256 7d23a0feab2b78f5",
+     "calc": "nii_ytd: 2333,7 (2023-12) − 1674,6 (2023-09) — разность нарастающих итогов релизов"
+    },
+    "ifrs": {
+     "v": 736.3,
+     "src": "ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954",
+     "calc": "FY2023 − 9M2023 (разность нарастающих итогов)"
+    },
+    "ratio": {
+     "v": 1.117129,
+     "calc": "ifrs / ras"
+    },
+    "src": "ras_2023M12_press_release.pdf, с. 2, sha256 99e47a414a8bb8d7; ras_2023M09_press_release.pdf, с. 2, sha256 7d23a0feab2b78f5; ifrs_FY2024_statements.pdf, с. 7, sha256 fbd4d739ce58c597; ifrs_9M2024_statements.pdf, с. 6, sha256 75c4a0d7f4932954"
+   },
+   {
+    "period": "2024Q1",
+    "ras": {
+     "v": 618.8,
+     "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2024-03: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1005997.php; подтверждено: img+ifx), sha256 cc7e47203d02983d",
+     "calc": "nii_ytd за 3 месяца 2024 (релиз РСБУ)"
+    },
+    "ifrs": {
+     "v": 699.9,
+     "src": "2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+    },
+    "ratio": {
+     "v": 1.13106,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2024-03: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1005997.php; подтверждено: img+ifx), sha256 cc7e47203d02983d; 2025Q1_ifrs_interim_statements.pdf, с. 6, sha256 1f25a2344d65ea90"
+   },
+   {
+    "period": "2024Q2",
+    "ras": {
+     "v": 625.3,
+     "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2024-06: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1036371.php; подтверждено: img), sha256 cc7e47203d02983d; stage1/ras/ras_release_monthly.csv, nii_ytd 2024-03: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1005997.php; подтверждено: img+ifx), sha256 cc7e47203d02983d",
+     "calc": "nii_ytd: 1244,1 (2024-06) − 618,8 (2024-03) — разность нарастающих итогов релизов"
+    },
+    "ifrs": {
+     "v": 713.2,
+     "src": "ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+    },
+    "ratio": {
+     "v": 1.140573,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2024-06: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1036371.php; подтверждено: img), sha256 cc7e47203d02983d; stage1/ras/ras_release_monthly.csv, nii_ytd 2024-03: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1005997.php; подтверждено: img+ifx), sha256 cc7e47203d02983d; ifrs_6M2025_statements_sber.pdf, с. 6, sha256 090e4b47f88773b3"
+   },
+   {
+    "period": "2024Q3",
+    "ras": {
+     "v": 669.5,
+     "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2024-09: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1069073.php; подтверждено: img+ifx), sha256 cc7e47203d02983d; stage1/ras/ras_release_monthly.csv, nii_ytd 2024-06: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1036371.php; подтверждено: img), sha256 cc7e47203d02983d",
+     "calc": "nii_ytd: 1913,6 (2024-09) − 1244,1 (2024-06) — разность нарастающих итогов релизов"
+    },
+    "ifrs": {
+     "v": 762.1,
+     "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+    },
+    "ratio": {
+     "v": 1.138312,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2024-09: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1069073.php; подтверждено: img+ifx), sha256 cc7e47203d02983d; stage1/ras/ras_release_monthly.csv, nii_ytd 2024-06: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1036371.php; подтверждено: img), sha256 cc7e47203d02983d; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   {
+    "period": "2024Q4",
+    "ras": {
+     "v": 709.1,
+     "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2024-12: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1105105.php; подтверждено: img+ifx+txt), sha256 cc7e47203d02983d; stage1/ras/ras_release_monthly.csv, nii_ytd 2024-09: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1069073.php; подтверждено: img+ifx), sha256 cc7e47203d02983d",
+     "calc": "nii_ytd: 2622,7 (2024-12) − 1913,6 (2024-09) — разность нарастающих итогов релизов"
+    },
+    "ifrs": {
+     "v": 824.4,
+     "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+     "calc": "FY2024 − 9M2024 (разность нарастающих итогов)"
+    },
+    "ratio": {
+     "v": 1.1626,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2024-12: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1105105.php; подтверждено: img+ifx+txt), sha256 cc7e47203d02983d; stage1/ras/ras_release_monthly.csv, nii_ytd 2024-09: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1069073.php; подтверждено: img+ifx), sha256 cc7e47203d02983d; ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   {
+    "period": "2025Q1",
+    "ras": {
+     "v": 711.6,
+     "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2025-03: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1139086.php; подтверждено: img+ifx), sha256 cc7e47203d02983d",
+     "calc": "nii_ytd за 3 месяца 2025 (релиз РСБУ)"
+    },
+    "ifrs": {
+     "v": 832.4,
+     "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+    },
+    "ratio": {
+     "v": 1.169758,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2025-03: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1139086.php; подтверждено: img+ifx), sha256 cc7e47203d02983d; ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   {
+    "period": "2025Q2",
+    "ras": {
+     "v": 725.7,
+     "src": "ras_2025M06_press_release.pdf, с. 2, sha256 f9fcc061265bd746; stage1/ras/ras_release_monthly.csv, nii_ytd 2025-03: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1139086.php; подтверждено: img+ifx), sha256 cc7e47203d02983d",
+     "calc": "nii_ytd: 1437,3 (2025-06) − 711,6 (2025-03) — разность нарастающих итогов релизов"
+    },
+    "ifrs": {
+     "v": 841.8,
+     "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+    },
+    "ratio": {
+     "v": 1.159983,
+     "calc": "ifrs / ras"
+    },
+    "src": "ras_2025M06_press_release.pdf, с. 2, sha256 f9fcc061265bd746; stage1/ras/ras_release_monthly.csv, nii_ytd 2025-03: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1139086.php; подтверждено: img+ifx), sha256 cc7e47203d02983d; 2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   },
+   {
+    "period": "2025Q3",
+    "ras": {
+     "v": 793.1,
+     "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2025-09: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1215093.php; подтверждено: img), sha256 cc7e47203d02983d; ras_2025M06_press_release.pdf, с. 2, sha256 f9fcc061265bd746",
+     "calc": "nii_ytd: 2230,4 (2025-09) − 1437,3 (2025-06) — разность нарастающих итогов релизов"
+    },
+    "ifrs": {
+     "v": 893.6,
+     "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+    },
+    "ratio": {
+     "v": 1.126718,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/ras_release_monthly.csv, nii_ytd 2025-09: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1215093.php; подтверждено: img), sha256 cc7e47203d02983d; ras_2025M06_press_release.pdf, с. 2, sha256 f9fcc061265bd746; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   {
+    "period": "2025Q4",
+    "ras": {
+     "v": 857.7,
+     "src": "ras_2025M12_press_release.pdf, с. 2, sha256 f4db795314b45209; stage1/ras/ras_release_monthly.csv, nii_ytd 2025-09: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1215093.php; подтверждено: img), sha256 cc7e47203d02983d",
+     "calc": "nii_ytd: 3088,1 (2025-12) − 2230,4 (2025-09) — разность нарастающих итогов релизов"
+    },
+    "ifrs": {
+     "v": 988.2,
+     "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+     "calc": "FY2025 − 9M2025 (разность нарастающих итогов)"
+    },
+    "ratio": {
+     "v": 1.152151,
+     "calc": "ifrs / ras"
+    },
+    "src": "ras_2025M12_press_release.pdf, с. 2, sha256 f4db795314b45209; stage1/ras/ras_release_monthly.csv, nii_ytd 2025-09: вторичный: скриншот таблицы релиза на smart-lab (OCR) (https://smart-lab.ru/blog/1215093.php; подтверждено: img), sha256 cc7e47203d02983d; ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1"
+   },
+   {
+    "period": "2026Q1",
+    "ras": {
+     "v": 861.4,
+     "src": "2026M03_ras_press_release.pdf, с. 3, sha256 216a30a59107e3b5",
+     "calc": "nii_ytd за 3 месяца 2026 (релиз РСБУ)"
+    },
+    "ifrs": {
+     "v": 984.3,
+     "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+    },
+    "ratio": {
+     "v": 1.142675,
+     "calc": "ifrs / ras"
+    },
+    "src": "2026M03_ras_press_release.pdf, с. 3, sha256 216a30a59107e3b5; ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826"
+   },
+   {
+    "period": "2026Q2",
+    "ras": {
+     "v": 939.5,
+     "src": "ras_2026M06_press_release.pdf, с. 3, sha256 cfff8ed466a03af4; 2026M03_ras_press_release.pdf, с. 3, sha256 216a30a59107e3b5",
+     "calc": "nii_ytd: 1800,9 (2026-06) − 861,4 (2026-03) — разность нарастающих итогов релизов"
+    },
+    "ifrs": {
+     "v": 1066.8,
+     "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+    },
+    "ratio": {
+     "v": 1.135498,
+     "calc": "ifrs / ras"
+    },
+    "src": "ras_2026M06_press_release.pdf, с. 3, sha256 cfff8ed466a03af4; 2026M03_ras_press_release.pdf, с. 3, sha256 216a30a59107e3b5; 2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+   }
+  ],
+  "value": {
+   "v": 1.139261,
+   "calc": "среднее ratio 2025Q3–2026Q2 (n = 4: 1,1267, 1,1522, 1,1427, 1,1355)"
+  },
+  "n": {
+   "v": 4,
+   "calc": "кварталов в окне"
+  },
+  "by_quarter": {
+   "1": {
+    "v": 1.139261,
+    "calc": "сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 3,8 % против 1,7 % по прошлому кварталу — все кварталы = value"
+   },
+   "2": {
+    "v": 1.139261,
+    "calc": "сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 3,8 % против 1,7 % по прошлому кварталу — все кварталы = value"
+   },
+   "3": {
+    "v": 1.139261,
+    "calc": "сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 3,8 % против 1,7 % по прошлому кварталу — все кварталы = value"
+   },
+   "4": {
+    "v": 1.139261,
+    "calc": "сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 3,8 % против 1,7 % по прошлому кварталу — все кварталы = value"
+   }
+  },
+  "backtest": {
+   "prev_quarter": {
+    "v": 0.017091,
+    "calc": "RMSE: отношение прошлого квартала, 2024Q1–2026Q2, n = 10"
+   },
+   "mean_4": {
+    "v": 0.022978,
+    "calc": "RMSE: среднее четырёх прошлых кварталов, 2024Q1–2026Q2, n = 10"
+   },
+   "same_quarter": {
+    "v": 0.037599,
+    "calc": "RMSE: среднее того же квартала прошлых лет, 2024Q1–2026Q2, n = 10"
+   }
+  },
+  "sd": {
+   "v": 0.01079,
+   "calc": "выборочное стандартное отклонение ratio по окну"
+  }
+ },
+ "iea": {
+  "definition": "ras — средние процентные активы банка РСБУ квартала: (форма 0409101 на 1-е число первого месяца квартала + на 1-е число месяца после квартала) / 2, исходящие остатки актива по кодам codes (кредиты, МБК размещённые, долговые бумаги); ifrs — средние процентные активы движка группы (balance.history.iea: кредиты АС валовые + по СС + долговые бумаги + ликвидность); ratio = ifrs / ras. ЧПМ движка (T3) = ЧПД РСБУ × nii.value × 365/d / (средние активы РСБУ × iea.value)",
+  "method": "value — среднее ratio за последние 1 кв. до якоря (окно window); средние процентные активы движка = средние процентные активы РСБУ × value; by_quarter = value (сезонного моста нет); нау-каст замораживает отношение при первой записи квартала",
+  "window": [
+   "2026Q2",
+   "2026Q2"
+  ],
+  "quarters": [
+   {
+    "period": "2023Q3",
+    "ras": {
+     "v": 43288.900326,
+     "src": "stage1/ras/raw/101/2023-07-01.xml, форма 0409101 на 2023-07-01, sha256 a4ad41cde5d98bf6; stage1/ras/raw/101/2023-10-01.xml, форма 0409101 на 2023-10-01, sha256 3afac4c81cfe5dae",
+     "calc": "(на 2023-07-01: 41538,9 + на 2023-10-01: 45038,9) / 2; на 2023-10-01: loans 37055,6 + interbank 1183,7 + securities 6799,7 (нет в форме — нулевой остаток: 441, 443, 444, 319)"
+    },
+    "ifrs": {
+     "v": 46554.3,
+     "calc": "(balance.history.2023Q2.iea 45034,9 + balance.history.2023Q3.iea 48073,7) / 2 — процентные активы движка; на дату — оценка (обобщённая форма)"
+    },
+    "ratio": {
+     "v": 1.075433,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2023-07-01.xml, форма 0409101 на 2023-07-01, sha256 a4ad41cde5d98bf6; stage1/ras/raw/101/2023-10-01.xml, форма 0409101 на 2023-10-01, sha256 3afac4c81cfe5dae"
+   },
+   {
+    "period": "2023Q4",
+    "ras": {
+     "v": 45753.493487,
+     "src": "stage1/ras/raw/101/2023-10-01.xml, форма 0409101 на 2023-10-01, sha256 3afac4c81cfe5dae; stage1/ras/raw/101/2024-01-01.xml, форма 0409101 на 2024-01-01, sha256 5082fa10a2e9c161",
+     "calc": "(на 2023-10-01: 45038,9 + на 2024-01-01: 46468,0) / 2; на 2024-01-01: loans 38459,5 + interbank 1051,7 + securities 6956,9 (нет в форме — нулевой остаток: 441, 443, 444)"
+    },
+    "ifrs": {
+     "v": 49459.35,
+     "calc": "(balance.history.2023Q3.iea 48073,7 + balance.history.2023Q4.iea 50845,0) / 2 — процентные активы движка; на дату — оценка (обобщённая форма)"
+    },
+    "ratio": {
+     "v": 1.080996,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2023-10-01.xml, форма 0409101 на 2023-10-01, sha256 3afac4c81cfe5dae; stage1/ras/raw/101/2024-01-01.xml, форма 0409101 на 2024-01-01, sha256 5082fa10a2e9c161"
+   },
+   {
+    "period": "2024Q1",
+    "ras": {
+     "v": 46931.263837,
+     "src": "stage1/ras/raw/101/2024-01-01.xml, форма 0409101 на 2024-01-01, sha256 5082fa10a2e9c161; stage1/ras/raw/101/2024-04-01.xml, форма 0409101 на 2024-04-01, sha256 0f63db2e811b8eaa",
+     "calc": "(на 2024-01-01: 46468,0 + на 2024-04-01: 47394,5) / 2; на 2024-04-01: loans 38996,9 + interbank 1288,1 + securities 7109,5 (нет в форме — нулевой остаток: 441, 443, 444, 319)"
+    },
+    "ifrs": {
+     "v": 51034.75,
+     "calc": "(balance.history.2023Q4.iea 50845,0 + balance.history.2024Q1.iea 51224,5) / 2 — процентные активы движка; на дату — оценка (обобщённая форма)"
+    },
+    "ratio": {
+     "v": 1.087436,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2024-01-01.xml, форма 0409101 на 2024-01-01, sha256 5082fa10a2e9c161; stage1/ras/raw/101/2024-04-01.xml, форма 0409101 на 2024-04-01, sha256 0f63db2e811b8eaa"
+   },
+   {
+    "period": "2024Q2",
+    "ras": {
+     "v": 48259.817778,
+     "src": "stage1/ras/raw/101/2024-04-01.xml, форма 0409101 на 2024-04-01, sha256 0f63db2e811b8eaa; stage1/ras/raw/101/2024-07-01.xml, форма 0409101 на 2024-07-01, sha256 8e349a06ffdd4aaa",
+     "calc": "(на 2024-04-01: 47394,5 + на 2024-07-01: 49125,1) / 2; на 2024-07-01: loans 40654,9 + interbank 1362,2 + securities 7108,1 (нет в форме — нулевой остаток: 441, 443, 444)"
+    },
+    "ifrs": {
+     "v": 52290.45,
+     "calc": "(balance.history.2024Q1.iea 51224,5 + balance.history.2024Q2.iea 53356,4) / 2 — процентные активы движка; на дату — оценка (обобщённая форма)"
+    },
+    "ratio": {
+     "v": 1.083519,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2024-04-01.xml, форма 0409101 на 2024-04-01, sha256 0f63db2e811b8eaa; stage1/ras/raw/101/2024-07-01.xml, форма 0409101 на 2024-07-01, sha256 8e349a06ffdd4aaa"
+   },
+   {
+    "period": "2024Q3",
+    "ras": {
+     "v": 50693.285754,
+     "src": "stage1/ras/raw/101/2024-07-01.xml, форма 0409101 на 2024-07-01, sha256 8e349a06ffdd4aaa; stage1/ras/raw/101/2024-10-01.xml, форма 0409101 на 2024-10-01, sha256 597519d6641e1f1c",
+     "calc": "(на 2024-07-01: 49125,1 + на 2024-10-01: 52261,4) / 2; на 2024-10-01: loans 43277,2 + interbank 1667,8 + securities 7316,5 (нет в форме — нулевой остаток: 443, 444)"
+    },
+    "ifrs": {
+     "v": 55135.75,
+     "calc": "(balance.history.2024Q2.iea 53356,4 + balance.history.2024Q3.iea 56915,1) / 2 — процентные активы движка; на дату — оценка (обобщённая форма)"
+    },
+    "ratio": {
+     "v": 1.087634,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2024-07-01.xml, форма 0409101 на 2024-07-01, sha256 8e349a06ffdd4aaa; stage1/ras/raw/101/2024-10-01.xml, форма 0409101 на 2024-10-01, sha256 597519d6641e1f1c"
+   },
+   {
+    "period": "2024Q4",
+    "ras": {
+     "v": 53214.909621,
+     "src": "stage1/ras/raw/101/2024-10-01.xml, форма 0409101 на 2024-10-01, sha256 597519d6641e1f1c; stage1/ras/raw/101/2025-01-01.xml, форма 0409101 на 2025-01-01, sha256 62eee7ee1e1719ea",
+     "calc": "(на 2024-10-01: 52261,4 + на 2025-01-01: 54168,4) / 2; на 2025-01-01: loans 44630,0 + interbank 1893,6 + securities 7644,8 (нет в форме — нулевой остаток: 441, 443, 444)"
+    },
+    "ifrs": {
+     "v": 58031.8,
+     "calc": "(balance.history.2024Q3.iea 56915,1 + balance.history.2024Q4.iea 59148,5) / 2 — процентные активы движка; на дату — оценка (обобщённая форма)"
+    },
+    "ratio": {
+     "v": 1.090518,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2024-10-01.xml, форма 0409101 на 2024-10-01, sha256 597519d6641e1f1c; stage1/ras/raw/101/2025-01-01.xml, форма 0409101 на 2025-01-01, sha256 62eee7ee1e1719ea"
+   },
+   {
+    "period": "2025Q1",
+    "ras": {
+     "v": 53488.503129,
+     "src": "stage1/ras/raw/101/2025-01-01.xml, форма 0409101 на 2025-01-01, sha256 62eee7ee1e1719ea; stage1/ras/raw/101/2025-04-01.xml, форма 0409101 на 2025-04-01, sha256 451b26b80f11c202",
+     "calc": "(на 2025-01-01: 54168,4 + на 2025-04-01: 52808,6) / 2; на 2025-04-01: loans 44041,2 + interbank 1268,7 + securities 7498,7 (нет в форме — нулевой остаток: 441, 443, 444, 319)"
+    },
+    "ifrs": {
+     "v": 58820.5,
+     "calc": "(balance.history.2024Q4.iea 59148,5 + balance.history.2025Q1.iea 58492,5) / 2 — процентные активы движка"
+    },
+    "ratio": {
+     "v": 1.099685,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2025-01-01.xml, форма 0409101 на 2025-01-01, sha256 62eee7ee1e1719ea; stage1/ras/raw/101/2025-04-01.xml, форма 0409101 на 2025-04-01, sha256 451b26b80f11c202"
+   },
+   {
+    "period": "2025Q2",
+    "ras": {
+     "v": 53238.454207,
+     "src": "stage1/ras/raw/101/2025-04-01.xml, форма 0409101 на 2025-04-01, sha256 451b26b80f11c202; stage1/ras/raw/101/2025-07-01.xml, форма 0409101 на 2025-07-01, sha256 205664dca92af54b",
+     "calc": "(на 2025-04-01: 52808,6 + на 2025-07-01: 53668,3) / 2; на 2025-07-01: loans 44414,2 + interbank 1223,9 + securities 8030,2 (нет в форме — нулевой остаток: 441, 443, 444)"
+    },
+    "ifrs": {
+     "v": 59160.35,
+     "calc": "(balance.history.2025Q1.iea 58492,5 + balance.history.2025Q2.iea 59828,2) / 2 — процентные активы движка"
+    },
+    "ratio": {
+     "v": 1.111233,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2025-04-01.xml, форма 0409101 на 2025-04-01, sha256 451b26b80f11c202; stage1/ras/raw/101/2025-07-01.xml, форма 0409101 на 2025-07-01, sha256 205664dca92af54b"
+   },
+   {
+    "period": "2025Q3",
+    "ras": {
+     "v": 54831.949019,
+     "src": "stage1/ras/raw/101/2025-07-01.xml, форма 0409101 на 2025-07-01, sha256 205664dca92af54b; stage1/ras/raw/101/2025-10-01.xml, форма 0409101 на 2025-10-01, sha256 54f507168272936a",
+     "calc": "(на 2025-07-01: 53668,3 + на 2025-10-01: 55995,6) / 2; на 2025-10-01: loans 46598,8 + interbank 1122,6 + securities 8274,2 (нет в форме — нулевой остаток: 441, 443, 444, 319)"
+    },
+    "ifrs": {
+     "v": 61365.5,
+     "calc": "(balance.history.2025Q2.iea 59828,2 + balance.history.2025Q3.iea 62902,8) / 2 — процентные активы движка"
+    },
+    "ratio": {
+     "v": 1.119156,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2025-07-01.xml, форма 0409101 на 2025-07-01, sha256 205664dca92af54b; stage1/ras/raw/101/2025-10-01.xml, форма 0409101 на 2025-10-01, sha256 54f507168272936a"
+   },
+   {
+    "period": "2025Q4",
+    "ras": {
+     "v": 57603.082481,
+     "src": "stage1/ras/raw/101/2025-10-01.xml, форма 0409101 на 2025-10-01, sha256 54f507168272936a; stage1/ras/raw/101/2026-01-01.xml, форма 0409101 на 2026-01-01, sha256 1bb4581f5ee3f989",
+     "calc": "(на 2025-10-01: 55995,6 + на 2026-01-01: 59210,6) / 2; на 2026-01-01: loans 48281,9 + interbank 1753,9 + securities 9174,8 (нет в форме — нулевой остаток: 441, 443, 444)"
+    },
+    "ifrs": {
+     "v": 64905.25,
+     "calc": "(balance.history.2025Q3.iea 62902,8 + balance.history.2025Q4.iea 66907,7) / 2 — процентные активы движка"
+    },
+    "ratio": {
+     "v": 1.126767,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2025-10-01.xml, форма 0409101 на 2025-10-01, sha256 54f507168272936a; stage1/ras/raw/101/2026-01-01.xml, форма 0409101 на 2026-01-01, sha256 1bb4581f5ee3f989"
+   },
+   {
+    "period": "2026Q1",
+    "ras": {
+     "v": 59307.652319,
+     "src": "stage1/ras/raw/101/2026-01-01.xml, форма 0409101 на 2026-01-01, sha256 1bb4581f5ee3f989; stage1/ras/raw/101/2026-04-01.xml, форма 0409101 на 2026-04-01, sha256 2e3e0fcd99123a2f",
+     "calc": "(на 2026-01-01: 59210,6 + на 2026-04-01: 59404,7) / 2; на 2026-04-01: loans 49009,6 + interbank 912,2 + securities 9482,9 (нет в форме — нулевой остаток: 441, 443, 444, 319)"
+    },
+    "ifrs": {
+     "v": 67095.7,
+     "calc": "(balance.history.2025Q4.iea 66907,7 + balance.history.2026Q1.iea 67283,7) / 2 — процентные активы движка"
+    },
+    "ratio": {
+     "v": 1.131316,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2026-01-01.xml, форма 0409101 на 2026-01-01, sha256 1bb4581f5ee3f989; stage1/ras/raw/101/2026-04-01.xml, форма 0409101 на 2026-04-01, sha256 2e3e0fcd99123a2f"
+   },
+   {
+    "period": "2026Q2",
+    "ras": {
+     "v": 59778.063713,
+     "src": "stage1/ras/raw/101/2026-04-01.xml, форма 0409101 на 2026-04-01, sha256 2e3e0fcd99123a2f; stage1/ras/raw/101/2026-07-01.xml, форма 0409101 на 2026-07-01, sha256 be56704db086abad",
+     "calc": "(на 2026-04-01: 59404,7 + на 2026-07-01: 60151,4) / 2; на 2026-07-01: loans 49521,3 + interbank 875,8 + securities 9754,3 (нет в форме — нулевой остаток: 441, 443, 444, 319)"
+    },
+    "ifrs": {
+     "v": 67334.05,
+     "calc": "(balance.history.2026Q1.iea 67283,7 + balance.history.2026Q2.iea 67384,4) / 2 — процентные активы движка"
+    },
+    "ratio": {
+     "v": 1.126401,
+     "calc": "ifrs / ras"
+    },
+    "src": "stage1/ras/raw/101/2026-04-01.xml, форма 0409101 на 2026-04-01, sha256 2e3e0fcd99123a2f; stage1/ras/raw/101/2026-07-01.xml, форма 0409101 на 2026-07-01, sha256 be56704db086abad"
+   }
+  ],
+  "value": {
+   "v": 1.126401,
+   "calc": "среднее ratio 2026Q2–2026Q2 (n = 1: 1,1264)"
+  },
+  "n": {
+   "v": 1,
+   "calc": "кварталов в окне"
+  },
+  "by_quarter": {
+   "1": {
+    "v": 1.126401,
+    "calc": "сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 2,9 % против 0,7 % по прошлому кварталу — все кварталы = value"
+   },
+   "2": {
+    "v": 1.126401,
+    "calc": "сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 2,9 % против 0,7 % по прошлому кварталу — все кварталы = value"
+   },
+   "3": {
+    "v": 1.126401,
+    "calc": "сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 2,9 % против 0,7 % по прошлому кварталу — все кварталы = value"
+   },
+   "4": {
+    "v": 1.126401,
+    "calc": "сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 2,9 % против 0,7 % по прошлому кварталу — все кварталы = value"
+   }
+  },
+  "backtest": {
+   "prev_quarter": {
+    "v": 0.007143,
+    "calc": "RMSE: отношение прошлого квартала, 2024Q3–2026Q2, n = 8"
+   },
+   "mean_4": {
+    "v": 0.015464,
+    "calc": "RMSE: среднее четырёх прошлых кварталов, 2024Q3–2026Q2, n = 8"
+   },
+   "same_quarter": {
+    "v": 0.028554,
+    "calc": "RMSE: среднее того же квартала прошлых лет, 2024Q3–2026Q2, n = 8"
+   }
+  },
+  "codes": {
+   "loans": [
+    "45.0|45.1",
+    "45.2",
+    "441",
+    "442",
+    "443",
+    "444",
+    "445",
+    "446",
+    "447",
+    "448",
+    "449",
+    "450",
+    "451",
+    "453",
+    "454"
+   ],
+   "interbank": [
+    "32.1",
+    "32.2",
+    "319"
+   ],
+   "securities": [
+    "501",
+    "502",
+    "504"
+   ]
+  },
+  "codes_required": [
+   "45.0|45.1",
+   "45.2",
+   "32.1",
+   "32.2",
+   "501",
+   "502",
+   "504"
+  ],
+  "codes_note": "«45.0|45.1» — 45.0, до 01.2024 — 45.1 (актив); кода нет в форме — нулевой остаток; нет обязательного кода — квартал не считается; 501/502/504 — долговые бумаги по СС через ПУ / через ПСД / по амортизированной стоимости (справочник ЦБ называет их по старому плану счетов)"
+ },
+ "cor": {
+  "v": null,
+  "src": "ras_2026M06_press_release.pdf, с. 3, sha256 cfff8ed466a03af4",
+  "calc": "нет данных для моста: CoR РСБУ (релиз, «без валютной переоценки») публикуется нарастающим итогом с точностью 0,1 п.п. — квартал разностью несёт ошибку округления до ±0,35 п.п.; РСБУ — банк без дочерних обществ. Квартальный CoR РСБУ минус упр. CoR, 2023Q3–2026Q2 (n = 10): среднее 0,49 п.п., σ 0,50 п.п. — не меньше разброса самого упр. CoR тех же кварталов (σ 0,44 п.п.): мост не несёт информации. Нау-каст CoR (T4) = ожидание модели (MODEL §12)"
+ }
+}

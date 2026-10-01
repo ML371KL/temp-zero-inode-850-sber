@@ -1,0 +1,41 @@
+{
+ "_note": "синтетика в формате ответа T-Invest (только поля, которые читает indicators/tinvest.py); не ответ API. Размер дивиденда и дата отсечки — публичные решения собраний акционеров, последний день покупки — день торгов перед отсечкой; даты выплаты и создания записи сочинены",
+ "dividends": [
+  {
+   "dividendNet": {
+    "currency": "rub",
+    "units": "37",
+    "nano": 640000000
+   },
+   "recordDate": "2026-07-20T00:00:00Z",
+   "lastBuyDate": "2026-07-17T00:00:00Z",
+   "paymentDate": "2026-08-03T00:00:00Z",
+   "regularity": "Annual",
+   "createdAt": "2026-08-05T09:00:00Z"
+  },
+  {
+   "dividendNet": {
+    "currency": "rub",
+    "units": "34",
+    "nano": 840000000
+   },
+   "recordDate": "2025-07-18T00:00:00Z",
+   "lastBuyDate": "2025-07-17T00:00:00Z",
+   "paymentDate": "2025-07-31T00:00:00Z",
+   "regularity": "Annual",
+   "createdAt": "2025-07-18T09:00:00Z"
+  },
+  {
+   "dividendNet": {
+    "currency": "rub",
+    "units": "33",
+    "nano": 300000000
+   },
+   "recordDate": "2024-07-11T00:00:00Z",
+   "lastBuyDate": "2024-07-10T00:00:00Z",
+   "paymentDate": "2024-07-25T00:00:00Z",
+   "regularity": "Annual",
+   "createdAt": "2024-04-23T09:00:00Z"
+  }
+ ]
+}

@@ -1,0 +1,78 @@
+{
+ "area": "nii",
+ "root": "$BANK_HANDOFF_DIR",
+ "files": [
+  {
+   "path": "research/facts/cbr_key_rate_changes.csv",
+   "sha256_full": "97ef7898b8e6addab892f299ffe4de0b69b731fcb1f992cae491caadedee8c64",
+   "sha256_input": "c83c8b54838bdab4808d48c73690ee42d5459f1b7b616576aa1d8eb3f7e2ac09",
+   "filter": "весь лист",
+   "rows_kept": 67,
+   "rows_total": 67
+  },
+  {
+   "path": "research/facts/sber_facts.csv",
+   "sha256_full": "735ac321b061d1d1dc56a75745b8db00437ff25ce6d7bd260d9481c9f0ddf9ea",
+   "sha256_input": "a762e3ca0600d3607330866a69f92fb7affedfb7c8afe28e026739d853dec7b1",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 154,
+   "rows_total": 972
+  },
+  {
+   "path": "stage1/mgmt/mgmt_kpi.csv",
+   "sha256_full": "1af38e667eeafcb3b0b0386c3acb0d5678a904d0b21fc06b2d95f196a64e88bc",
+   "sha256_input": "109a49474c94b874849a32099c06e8226d23f0d7964b34b017cc61e98bd823b6",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 235,
+   "rows_total": 1173
+  },
+  {
+   "path": "stage1/ifrs/ifrs_quarterly.csv",
+   "sha256_full": "ae5ec240c1a8220b4f3d5b9c160798ad79186a5fcd561a79a81ae0e78d246134",
+   "sha256_input": "21e3502b1b8fe8a303ea10a51e03e4c4029a73943337b23e9830756ca78a281c",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 310,
+   "rows_total": 1264
+  },
+  {
+   "path": "stage1/ifrs/ifrs_history.csv",
+   "sha256_full": "e5f9b71e9e743dee0230f163aa990e0b87e80d6d748c37412f558e5be9bad71d",
+   "sha256_input": "5927634a142bc399bfc3ac18512fad372ceec05788be74275e6d43e4aa5e1bdd",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 1141,
+   "rows_total": 5452
+  },
+  {
+   "path": "stage1/ifrs/ifrs_all.csv",
+   "sha256_full": "a04dc5b1e287d157b11df14305e59befdeb83338f867284399edf1fd10539b28",
+   "sha256_input": "31e8e22c978cca293c3161149d0e0a872b696aa73831c35c9013f81bab28f148",
+   "filter": "строки, где metric и period — литерал кода области",
+   "rows_kept": 916,
+   "rows_total": 8707
+  },
+  {
+   "path": "stage1/calib/nii/data/ofz_quarterly.csv",
+   "sha256_full": "6cdbf5c445008dddcff1c25e1eb9c4be5af2fe10708ca2142fbe5a997100733b",
+   "sha256_input": "3e4043fbdba1daa4119a2e7c42f9636da5e53b600a67ae4cf3070cd0505114a7",
+   "filter": "весь лист",
+   "rows_kept": 52,
+   "rows_total": 52
+  },
+  {
+   "path": "stage1/calib/nii/data/zcyc_index.csv",
+   "sha256_full": "3cfc1d2b7760cb4d4cc6a1f1a6b1c625b84bf2809edfdff4d230aa11b52cc729",
+   "sha256_input": "c1e17470acd9c7bc9a2cdb13a71a2619ea83af29385530d11289f31ead1adb7b",
+   "filter": "весь лист",
+   "rows_kept": 457,
+   "rows_total": 457
+  },
+  {
+   "path": "stage1/worlds/world_paths_quarterly.csv",
+   "sha256_full": "4a8412c6ccb5a920d45db1a35a54705bcda299e2e825becd6f440bd333e432af",
+   "sha256_input": "4a8412c6ccb5a920d45db1a35a54705bcda299e2e825becd6f440bd333e432af",
+   "filter": "весь лист",
+   "rows_kept": 130,
+   "rows_total": 130
+  }
+ ]
+}

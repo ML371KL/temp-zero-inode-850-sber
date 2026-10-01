@@ -1,0 +1,32 @@
+# Конфигурация Cloudflare Pages как код (схема Ленты).
+#
+# Биндингов у проекта нет: выпуск функция `functions/api/model.js` читает из
+# ветки `release` публичного репозитория данных (GitHub Pages, запасной путь —
+# raw), а не из хранилища Cloudflare. Адреса и схема — переменные ниже: в коде
+# функции нет имени банка, дверь копируется в следующий банк правкой этого файла.
+#
+# Выкладка витрины — с ноутбука (docs/DASHBOARD.md §8):
+#     npx wrangler@4.135.0 pages deploy web --project-name tzi-850-sber --branch main
+# Метка --branch обязана совпадать с производственной веткой проекта (main),
+# иначе выкладка молча уйдёт в предпросмотр.
+
+name = "tzi-850-sber"
+
+# Каталог статики. Функции wrangler ищет не внутри него, а в `functions/` рядом.
+pages_build_output_dir = "web"
+
+# Дата фиксирует поведение рантайма.
+compatibility_date = "2026-08-01"
+
+# Переменные двери данных — единственное, что читает functions/api/model.js
+# (docs/INTERFACES.md §8, docs/DASHBOARD.md §6); в коде функции нет имени банка:
+#   DATA_SCHEMA    — схема выпуска; ответ с другой `schema` дверь не отдаёт;
+#   DATA_PAGES_URL — основной источник: latest.json ветки release (GitHub Pages,
+#                    минутная метка в запросе);
+#   DATA_RAW_URL   — запасной: raw той же ветки.
+# Нет переменной — 503 `upstream unavailable` без подзапросов. Выкладка везёт их
+# из этого файла; в панели Cloudflare их не правят.
+[vars]
+DATA_SCHEMA = "sber-v1"
+DATA_PAGES_URL = "https://ml371kl.github.io/temp-zero-inode-850-sber-data/latest.json"
+DATA_RAW_URL = "https://raw.githubusercontent.com/ML371KL/temp-zero-inode-850-sber-data/release/latest.json"

@@ -1,0 +1,14 @@
+{
+ "area": "regimes",
+ "root": "$BANK_HANDOFF_DIR",
+ "files": [
+  {
+   "path": "stage1/regimes/episodes.csv",
+   "sha256_full": "179e9a99c795f1a614bcccacf142b4bb88faa1586b219e1c5982c0cc65f92bef",
+   "sha256_input": "d0feeb6313dfee532688d7877c78cf7233de4940b82a5dfc3c876b2e91d04cd3",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 372,
+   "rows_total": 835
+  }
+ ]
+}

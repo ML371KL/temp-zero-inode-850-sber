@@ -1,0 +1,383 @@
+{
+ "cor_bridge": {
+  "rows": [
+   {
+    "period": "2023Q1",
+    "days": 90,
+    "avg_loans_ac": 30646.2,
+    "llp_debt_fa": -64.4,
+    "cor_engine_pct": 0.85,
+    "cor_mgmt_pct": 1.1,
+    "gap_pp": -0.25
+   },
+   {
+    "period": "2023Q2",
+    "days": 91,
+    "avg_loans_ac": 32387.2,
+    "llp_debt_fa": -88.9,
+    "cor_engine_pct": 1.1,
+    "cor_mgmt_pct": 1.2,
+    "gap_pp": -0.1
+   },
+   {
+    "period": "2023Q3",
+    "days": 92,
+    "avg_loans_ac": 34942.9,
+    "llp_debt_fa": -32.2,
+    "cor_engine_pct": 0.37,
+    "cor_mgmt_pct": 0.5,
+    "gap_pp": -0.13
+   },
+   {
+    "period": "2023Q4",
+    "days": 92,
+    "avg_loans_ac": 37086.9,
+    "llp_debt_fa": -49.9,
+    "cor_engine_pct": 0.53,
+    "cor_mgmt_pct": 0.31,
+    "gap_pp": 0.22
+   },
+   {
+    "period": "2024Q1",
+    "days": 91,
+    "avg_loans_ac": 37837.5,
+    "llp_debt_fa": -47.7,
+    "cor_engine_pct": 0.51,
+    "cor_mgmt_pct": 0.54,
+    "gap_pp": -0.03
+   },
+   {
+    "period": "2024Q2",
+    "days": 91,
+    "avg_loans_ac": 38852.4,
+    "llp_debt_fa": -122.3,
+    "cor_engine_pct": 1.26,
+    "cor_mgmt_pct": 0.97,
+    "gap_pp": 0.29
+   },
+   {
+    "period": "2024Q3",
+    "days": 92,
+    "avg_loans_ac": 40984.4,
+    "llp_debt_fa": -113.3,
+    "cor_engine_pct": 1.1,
+    "cor_mgmt_pct": 1.16,
+    "gap_pp": -0.06
+   },
+   {
+    "period": "2024Q4",
+    "days": 92,
+    "avg_loans_ac": 42565.9,
+    "llp_debt_fa": -159.5,
+    "cor_engine_pct": 1.49,
+    "cor_mgmt_pct": 1.19,
+    "gap_pp": 0.3
+   },
+   {
+    "period": "2025Q1",
+    "days": 90,
+    "avg_loans_ac": 42673.2,
+    "llp_debt_fa": -153.3,
+    "cor_engine_pct": 1.46,
+    "cor_mgmt_pct": 1.24,
+    "gap_pp": 0.22
+   },
+   {
+    "period": "2025Q2",
+    "days": 91,
+    "avg_loans_ac": 42583.7,
+    "llp_debt_fa": -211.5,
+    "cor_engine_pct": 1.99,
+    "cor_mgmt_pct": 1.71,
+    "gap_pp": 0.28
+   },
+   {
+    "period": "2025Q3",
+    "days": 92,
+    "avg_loans_ac": 43798.8,
+    "llp_debt_fa": -170.5,
+    "cor_engine_pct": 1.54,
+    "cor_mgmt_pct": 1.42,
+    "gap_pp": 0.12
+   },
+   {
+    "period": "2025Q4",
+    "days": 92,
+    "avg_loans_ac": 45777.6,
+    "llp_debt_fa": -111.3,
+    "cor_engine_pct": 0.96,
+    "cor_mgmt_pct": 0.9,
+    "gap_pp": 0.06
+   },
+   {
+    "period": "2026Q1",
+    "days": 90,
+    "avg_loans_ac": 47232.1,
+    "llp_debt_fa": -161.2,
+    "cor_engine_pct": 1.38,
+    "cor_mgmt_pct": 1.29,
+    "gap_pp": 0.09
+   },
+   {
+    "period": "2026Q2",
+    "days": 91,
+    "avg_loans_ac": 48113.6,
+    "llp_debt_fa": -171.5,
+    "cor_engine_pct": 1.43,
+    "cor_mgmt_pct": 1.0,
+    "gap_pp": 0.43
+   }
+  ],
+  "window": [
+   "2024Q1",
+   "2026Q2"
+  ],
+  "n": 10,
+  "additive_mean_pp": 0.17,
+  "sd_pp": 0.159,
+  "ratio_mean": 1.144
+ },
+ "nim_bridge": {
+  "window": [
+   "2024Q1",
+   "2026Q2"
+  ],
+  "n": 10,
+  "mgmt_minus_engine_pp": 0.412,
+  "sd_pp": 0.025
+ },
+ "ras_to_ifrs": {
+  "rows": [
+   {
+    "period": "2023Q1",
+    "ras": 350.2,
+    "ifrs": 358.9,
+    "ratio": 1.025
+   },
+   {
+    "period": "2023Q2",
+    "ras": 377.6,
+    "ifrs": 381.4,
+    "ratio": 1.01
+   },
+   {
+    "period": "2023Q3",
+    "ras": 401.5,
+    "ifrs": 411.7,
+    "ratio": 1.025
+   },
+   {
+    "period": "2023Q4",
+    "ras": 363.8,
+    "ifrs": 359.8,
+    "ratio": 0.989
+   },
+   {
+    "period": "2024Q1",
+    "ras": 364.0,
+    "ifrs": 397.6,
+    "ratio": 1.092
+   },
+   {
+    "period": "2024Q2",
+    "ras": 404.7,
+    "ifrs": 418.7,
+    "ratio": 1.035
+   },
+   {
+    "period": "2024Q3",
+    "ras": 424.5,
+    "ifrs": 411.7,
+    "ratio": 0.97
+   },
+   {
+    "period": "2024Q4",
+    "ras": 369.2,
+    "ifrs": 353.6,
+    "ratio": 0.958
+   },
+   {
+    "period": "2025Q1",
+    "ras": 404.5,
+    "ifrs": 436.0,
+    "ratio": 1.078
+   },
+   {
+    "period": "2025Q2",
+    "ras": 422.1,
+    "ifrs": 422.6,
+    "ratio": 1.001
+   },
+   {
+    "period": "2025Q3",
+    "ras": 443.3,
+    "ifrs": 449.8,
+    "ratio": 1.015
+   },
+   {
+    "period": "2025Q4",
+    "ras": 424.3,
+    "ifrs": 399.0,
+    "ratio": 0.94
+   },
+   {
+    "period": "2026Q1",
+    "ras": 491.0,
+    "ifrs": 508.5,
+    "ratio": 1.036
+   },
+   {
+    "period": "2026Q2",
+    "ras": 504.3,
+    "ifrs": 511.6,
+    "ratio": 1.014
+   }
+  ],
+  "by_quarter": {
+   "1": {
+    "mean": 1.058,
+    "n": 4,
+    "values": [
+     1.025,
+     1.092,
+     1.078,
+     1.036
+    ]
+   },
+   "2": {
+    "mean": 1.015,
+    "n": 4,
+    "values": [
+     1.01,
+     1.035,
+     1.001,
+     1.014
+    ]
+   },
+   "3": {
+    "mean": 1.003,
+    "n": 3,
+    "values": [
+     1.025,
+     0.97,
+     1.015
+    ]
+   },
+   "4": {
+    "mean": 0.962,
+    "n": 3,
+    "values": [
+     0.989,
+     0.958,
+     0.94
+    ]
+   }
+  },
+  "by_year": {
+   "2023": 1.013,
+   "2024": 1.012,
+   "2025": 1.008
+  }
+ },
+ "pnl": {
+  "misc": {
+   "2024": -161.4,
+   "2025": -246.5,
+   "6M2026": -141.9
+  },
+  "insurance_net": {
+   "2024": 143.0,
+   "2025": 147.1,
+   "6M2026": 79.5
+  },
+  "noncore": {
+   "2024": -284.1,
+   "2025": -156.3,
+   "6M2026": -87.7
+  },
+  "fees": {
+   "H1_2026": 419.8,
+   "H1_2025": 398.2,
+   "yoy_H1": 0.0542,
+   "FY2025": 833.7,
+   "H2_2025": 435.5,
+   "H2_2026_if_year_flat": 413.9,
+   "yoy_H2_if_year_flat": -0.0496
+  },
+  "opex": {
+   "H1_2026": 639.6,
+   "H1_2025": 555.0,
+   "yoy_H1": 0.1524
+  },
+  "tax_effective": {
+   "2025": 0.2418,
+   "6M2026": 0.2443
+  },
+  "tax_effective_gap_vs_25pct": -0.007,
+  "nci_share_2025": -0.00088,
+  "dia_rate_6M2026": 0.00518,
+  "dia_inputs": {
+   "dia_6m": 87.3,
+   "retail_funds_avg": 33972.1,
+   "days": 181
+  }
+ },
+ "misc_profile": {
+  "years": [
+   2024,
+   2025
+  ],
+  "by_quarter": {
+   "1": {
+    "2024": -45.2,
+    "2025": -36.9
+   },
+   "2": {
+    "2024": 6.3,
+    "2025": 1.9
+   },
+   "3": {
+    "2024": -29.2,
+    "2025": -33.6
+   },
+   "4": {
+    "2024": -93.3,
+    "2025": -177.9
+   }
+  },
+  "sum_by_quarter": {
+   "1": -82.1,
+   "2": 8.2,
+   "3": -62.8,
+   "4": -271.2
+  },
+  "total": -407.9,
+  "shares_raw": {
+   "1": 0.2013,
+   "2": -0.0201,
+   "3": 0.154,
+   "4": 0.6649
+  },
+  "shares_by_year": {
+   "2024": {
+    "1": 0.28,
+    "2": -0.039,
+    "3": 0.181,
+    "4": 0.578
+   },
+   "2025": {
+    "1": 0.15,
+    "2": -0.008,
+    "3": 0.136,
+    "4": 0.722
+   }
+  },
+  "shares": {
+   "1": 0.197,
+   "2": 0.0,
+   "3": 0.151,
+   "4": 0.652
+  }
+ },
+ "book_mismatches": []
+}

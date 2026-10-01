@@ -1,0 +1,44 @@
+{
+ "basis": "ifrs",
+ "unit": "RUB bn",
+ "target": "ni_q",
+ "source": "research/facts/np_inputs.json (cons: консенсус перед отчётом, вторичные источники)",
+ "quarters": {
+  "2023Q1": {
+   "v": 362.0,
+   "src": "Синара, 1 аналитик, https://smart-lab.ru/blog/904118.php"
+  },
+  "2023Q3": {
+   "v": 405.1,
+   "src": "прогноз (консенсус, источник в заголовке), https://smart-lab.ru/blog/956157.php"
+  },
+  "2024Q3": {
+   "v": 408.0,
+   "src": "БКС, 1 аналитик, https://smart-lab.ru/blog/1076576.php"
+  },
+  "2024Q4": {
+   "v": 351.79999999999995,
+   "src": "FY консенсус РБК 1579 − 9M факт, https://smart-lab.ru/blog/1121375.php"
+  },
+  "2025Q1": {
+   "v": 420.0,
+   "src": "РБК, https://smart-lab.ru/blog/1145448.php"
+  },
+  "2025Q3": {
+   "v": 424.0,
+   "src": "Интерфакс-консенсус (по WebSearch forbes/interfax)"
+  },
+  "2025Q4": {
+   "v": 398.70000000000005,
+   "src": "FY консенсус 1706 − 9M факт, https://smart-lab.ru/blog/(24.02.2026)"
+  },
+  "2026Q1": {
+   "v": 501.0,
+   "src": "опрос, https://smart-lab.ru/blog/ (24.04.2026)"
+  },
+  "2026Q2": {
+   "v": 503.0,
+   "src": "12 аналитиков, https://smart-lab.ru/blog/1331979.php"
+  }
+ }
+}

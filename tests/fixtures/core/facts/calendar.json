@@ -1,0 +1,35 @@
+{
+ "as_of": "2026-09-30",
+ "events": [
+  {
+   "id": "ras-2026M09",
+   "kind": "ras",
+   "date": "2026-10-09",
+   "title": "РСБУ 9М",
+   "covers": "2026M09",
+   "confirmed": false,
+   "precision": "day",
+   "src": "DESIGN §0 [НП]"
+  },
+  {
+   "id": "cbr-2026-10-23",
+   "kind": "cbr_rate",
+   "date": "2026-10-23",
+   "title": "Заседание ЦБ",
+   "covers": null,
+   "confirmed": true,
+   "precision": "day",
+   "src": "календарь ЦБ"
+  },
+  {
+   "id": "ifrs-2026Q3",
+   "kind": "ifrs",
+   "date": "2026-10-28",
+   "title": "МСФО 3К26",
+   "covers": "2026Q3",
+   "confirmed": false,
+   "precision": "day",
+   "src": "DESIGN §0 [НП]"
+  }
+ ]
+}

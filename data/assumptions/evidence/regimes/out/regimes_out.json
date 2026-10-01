@@ -1,0 +1,285 @@
+{
+ "classes": {
+  "years": {
+   "2008": {
+    "cor": 2.1,
+    "roe": 14.1,
+    "regime": "downturn"
+   },
+   "2009": {
+    "cor": 7.25,
+    "roe": 3.2,
+    "regime": "crisis"
+   },
+   "2010": {
+    "cor": 2.64,
+    "roe": 20.6,
+    "regime": "downturn"
+   },
+   "2011": {
+    "cor": -0.02,
+    "roe": 28.0,
+    "regime": "soft"
+   },
+   "2012": {
+    "cor": 0.2,
+    "roe": 24.2,
+    "regime": "soft"
+   },
+   "2013": {
+    "cor": 1.12,
+    "roe": 20.8,
+    "regime": "norm"
+   },
+   "2014": {
+    "cor": 2.33,
+    "roe": 14.8,
+    "regime": "downturn"
+   },
+   "2015": {
+    "cor": 2.5,
+    "roe": 10.2,
+    "regime": "crisis"
+   },
+   "2016": {
+    "cor": 1.8,
+    "roe": 20.8,
+    "regime": "downturn"
+   },
+   "2017": {
+    "cor": 1.5,
+    "roe": 24.2,
+    "regime": "norm"
+   },
+   "2018": {
+    "cor": 1.15,
+    "roe": 23.1,
+    "regime": "norm"
+   },
+   "2019": {
+    "cor": 0.74,
+    "roe": 20.5,
+    "regime": "soft"
+   },
+   "2020": {
+    "cor": 2.06,
+    "roe": 16.2,
+    "regime": "downturn"
+   },
+   "2021": {
+    "cor": 0.56,
+    "roe": 24.2,
+    "regime": "soft"
+   },
+   "2022": {
+    "cor": 1.9,
+    "roe": 5.2,
+    "regime": "crisis"
+   },
+   "2023": {
+    "cor": 0.8,
+    "roe": 25.3,
+    "regime": "soft"
+   },
+   "2024": {
+    "cor": 1.0,
+    "roe": 24.0,
+    "regime": "norm"
+   },
+   "2025": {
+    "cor": 1.3,
+    "roe": 22.7,
+    "regime": "norm"
+   }
+  },
+  "counts": {
+   "soft": 5,
+   "norm": 5,
+   "downturn": 5,
+   "crisis": 3
+  },
+  "n_years": 18,
+  "windows3_with_crisis": 8,
+  "windows3_total": 16,
+  "p_shock_in_1_25y": 0.188,
+  "cor_mean_2008_2025": 1.72,
+  "cor_mean_ex2009": 1.39,
+  "cor_mean_2013_2025": 1.44,
+  "cor_median": 1.4
+ },
+ "book": {
+  "cor_lt_mgmt": 0.01535,
+  "cor_lt_engine": 0.01705,
+  "nim_shift_lt": -0.0003,
+  "cor_2027_mgmt": 0.0201,
+  "cor_2027_2029_avg_mgmt": 0.01703,
+  "excess_over_1_2pct_2027_2029_pp_years": 1.51
+ },
+ "kappa": {
+  "quarterly": [
+   {
+    "lag_q": 0,
+    "sample": "all",
+    "n": 45,
+    "a": 1.557,
+    "kappa": -0.076,
+    "se": 0.043,
+    "r2": 0.067
+   },
+   {
+    "lag_q": 0,
+    "sample": "ex_shocks",
+    "n": 36,
+    "a": 1.253,
+    "kappa": -0.018,
+    "se": 0.039,
+    "r2": 0.007
+   },
+   {
+    "lag_q": 0,
+    "sample": "2016+",
+    "n": 37,
+    "a": 1.259,
+    "kappa": -0.02,
+    "se": 0.038,
+    "r2": 0.007
+   },
+   {
+    "lag_q": 2,
+    "sample": "all",
+    "n": 45,
+    "a": 1.515,
+    "kappa": -0.058,
+    "se": 0.046,
+    "r2": 0.035
+   },
+   {
+    "lag_q": 2,
+    "sample": "ex_shocks",
+    "n": 36,
+    "a": 1.219,
+    "kappa": -0.002,
+    "se": 0.04,
+    "r2": 0.0
+   },
+   {
+    "lag_q": 2,
+    "sample": "2016+",
+    "n": 37,
+    "a": 1.227,
+    "kappa": -0.003,
+    "se": 0.04,
+    "r2": 0.0
+   },
+   {
+    "lag_q": 4,
+    "sample": "all",
+    "n": 43,
+    "a": 1.479,
+    "kappa": -0.066,
+    "se": 0.054,
+    "r2": 0.035
+   },
+   {
+    "lag_q": 4,
+    "sample": "ex_shocks",
+    "n": 34,
+    "a": 1.167,
+    "kappa": -0.002,
+    "se": 0.044,
+    "r2": 0.0
+   },
+   {
+    "lag_q": 4,
+    "sample": "2016+",
+    "n": 37,
+    "a": 1.244,
+    "kappa": -0.018,
+    "se": 0.046,
+    "r2": 0.004
+   },
+   {
+    "lag_q": 6,
+    "sample": "all",
+    "n": 41,
+    "a": 1.404,
+    "kappa": -0.067,
+    "se": 0.069,
+    "r2": 0.024
+   },
+   {
+    "lag_q": 6,
+    "sample": "ex_shocks",
+    "n": 33,
+    "a": 1.11,
+    "kappa": 0.009,
+    "se": 0.052,
+    "r2": 0.001
+   },
+   {
+    "lag_q": 6,
+    "sample": "2016+",
+    "n": 37,
+    "a": 1.245,
+    "kappa": -0.026,
+    "se": 0.06,
+    "r2": 0.005
+   }
+  ],
+  "with_gdp": [
+   {
+    "lag_q": 0,
+    "n": 43,
+    "kappa": -0.032,
+    "se_kappa": 0.043,
+    "gdp_sens": 0.406,
+    "se_gdp": 0.109
+   },
+   {
+    "lag_q": 2,
+    "n": 43,
+    "kappa": -0.01,
+    "se_kappa": 0.049,
+    "gdp_sens": 0.423,
+    "se_gdp": 0.108
+   },
+   {
+    "lag_q": 4,
+    "n": 41,
+    "kappa": -0.018,
+    "se_kappa": 0.063,
+    "gdp_sens": 0.443,
+    "se_gdp": 0.106
+   }
+  ],
+  "current_cycle_excess_real_rate_pp": {
+   "min": 3.41,
+   "max": 7.36,
+   "n": 10
+  }
+ },
+ "noise": {
+  "quiet_years": [
+   2017,
+   2018,
+   2019,
+   2023,
+   2024,
+   2025
+  ],
+  "cor_dev_from_year_sd_pp": 0.385,
+  "cor_dev_n": 24,
+  "cor_dev_from_year_sd_pp_ex_2Q2019": 0.359,
+  "cor_qoq_sd_pp": 0.656,
+  "cor_qoq_n": 36,
+  "nim_qoq_sd_pp": 0.221,
+  "nim_qoq_n": 21
+ },
+ "oneoff_loss_to_equity_pct": {
+  "2008": 5.0,
+  "2014": 0.5,
+  "2022": 11.9
+ },
+ "oneoff_book_to_bv0": -0.0477,
+ "book_mismatches": []
+}

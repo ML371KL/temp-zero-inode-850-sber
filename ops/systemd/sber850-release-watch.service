@@ -1,0 +1,55 @@
+[Unit]
+Description=Сбер 850 · дозор релизов РСБУ и МСФО: приём, нау-каст, выпуск, публикация
+Documentation=https://github.com/ML371KL/temp-zero-inode-850-sber/blob/main/ops/README.md
+# Дозор читает новости и статические PDF эмитента, публикация пушит в
+# репозиторий данных.
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+# Таймер будит `run.sh release-watch` каждые 10 минут в окне релизов по
+# будням. Почти всегда делать нечего: вне окна релиза по календарю индикаторов
+# (и без отложенного — принято, но не опубликовано) выход 0 без единой строки.
+# В день релиза: дозор (новость + статический PDF, месяц принимается при двух
+# источниках); принят месяц РСБУ или новый кандидат МСФО — нау-каст, тесты
+# такта, сборка, публикация, сверка.
+#
+# Перезапуска нет (Restart=no по умолчанию) — намеренно: следующая проверка
+# через 10 минут, а принятое, но не опубликованное помнит отметка
+# release_watch.pending — выпуск соберёт следующий такт дозора или суточный.
+Type=exec
+User=dash
+Group=dash
+WorkingDirectory=/srv/dash/repo-850-sber
+# Env-файл читает сам run.sh (см. sber850-collect.service): строки
+# EnvironmentFile нет намеренно.
+Environment=ENV_FILE=/usr/local/etc/sber-850/env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/bin/bash /srv/dash/repo-850-sber/ops/run.sh release-watch
+# Потолок = дозор + нау-каст + тесты такта + сборка + публикация + до 600 с
+# сверки, с запасом; он же (вместе с пересборкой) задаёт LOCK_WAIT_SECONDS в
+# run.sh. Расчёт — ops/budgets.json, равенство сверяет tests/test_ops_units.py.
+# ДО ЗАМЕРА НА СЕРВЕРЕ ЭТО ОЦЕНКА.
+RuntimeMaxSec=4080
+SyslogIdentifier=sber850
+
+StateDirectory=sber-850
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+# Репозиторий пишется: git reset при обновлении кода, pip в .venv, var/ тестов.
+# /srv/dash/.ssh нужен для чтения: публикация пушит через ssh-алиас ключа записи.
+ReadWritePaths=/srv/dash/repo-850-sber
+
+# Сборка считает полосу пулом из BANK_WORKERS процессов (env-файл): до замера
+# auto — до 7 процессов. Потолок памяти и число процессов задаются ОДНИМ замером
+# первых тактов (ops/README.md §9); ПРЕДВАРИТЕЛЬНО, по Ленте.
+MemoryHigh=384M
+MemoryMax=512M
+Nice=10
+
+# Мост тревог шлёт СМЕНУ состояния: тихие проверки с кодом 0 ничего не присылают.
+ExecStopPost=-+/usr/local/sbin/dash-alert %n
+
+# Секции [Install] намеренно НЕТ: юнит запускается таймером.

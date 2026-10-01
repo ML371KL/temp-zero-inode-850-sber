@@ -1,0 +1,440 @@
+{
+ "as_of": "2026-10-01",
+ "basis": "МСФО групп на 30.06.2026 (последний отчёт). Капитал для P/B — капитал обыкновенных акционеров: капитал акционеров материнской компании за вычетом бессрочных инструментов, где они раскрыты (как капитал Сбера без бессрочного субординированного займа). Прибыль для P/E и ROE — чистая прибыль акционерам за четыре квартала, 3К25–2К26; ROE — к среднему капиталу на 30.06.2025 и 30.06.2026. Дивидендная доходность — по дивидендам с датой реестра за 12 месяцев до 01.10.2026. Норматив достаточности капитала — как раскрыт банком, название — в строке. Цены — живые.",
+ "subject_ticker": "SBER",
+ "note": "Файл ведётся вручную (ops/tools/build_facts.py его не пишет); источники — sources (копии в папке передачи, sha256 полностью; в src — первые 16 знаков). Вторичные источники помечены в title.",
+ "sources": [
+  {
+   "key": "vtb_6m26",
+   "title": "ВТБ: обобщённая промежуточная сокращённая консолидированная отчётность МСФО на 30.06.2026",
+   "url": "https://www.vtb.ru/media-files/vtb.ru/sitepages/ir/statements/results/rus-vtb-group-ifrs-as-of-30-june-2026.pdf",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/vtb_rus-vtb-group-ifrs-as-of-30-june-2026.pdf",
+   "sha256": "9bef55d9357d5f6d152ffdd33c0ab2a8504814c1215f7791afdc037b4cbd06f4"
+  },
+  {
+   "key": "vtb_fy25",
+   "title": "ВТБ: обобщённая консолидированная отчётность МСФО за 2025 г.",
+   "url": "https://www.vtb.ru/media-files/vtb.ru/sitepages/ir/statements/results/rus-vtb-group-ifrs-as-of-31-december-2025.pdf",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/vtb_rus-vtb-group-ifrs-as-of-31-december-2025.pdf",
+   "sha256": "9c64c57daa58142db1fc1d72f9c27310bbc3b6e42899473bb31bc622a221147a"
+  },
+  {
+   "key": "vtb_div",
+   "title": "Интерфакс 30.06.2026: акционеры ВТБ утвердили дивиденды за 2025 г. (9,71 ₽, реестр 20.07.2026)",
+   "url": "https://www.interfax.ru/business/1099260",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/interfax_1099260_20260630.html",
+   "sha256": "86a71f3cac4ed83ed92e62aa0dec9c06148c560bac3eedd63ffbc1863f3f184a"
+  },
+  {
+   "key": "tt_2q26",
+   "title": "Т-Технологии: пресс-релиз «Финансовые результаты по МСФО за II квартал и первое полугодие 2026 г.» (11.08.2026)",
+   "url": "https://cdn.tbank-online.com/static/documents/724f5d58-cb93-443b-a7eb-72da6d42fe74.pdf",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/tt_2q26_results.pdf",
+   "sha256": "529eb43fb73641df9773a68a4190c498f6066b2fe9159efb2485f7301ac24d9d"
+  },
+  {
+   "key": "tt_4q25",
+   "title": "Т-Технологии: пресс-релиз МСФО за IV квартал и 2025 г. (19.03.2026)",
+   "url": "https://cdn.tbank-online.com/static/documents/28c2366b-4e68-43f2-a18d-68ef1ba68b2b.pdf",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/tt_4q25_results.pdf",
+   "sha256": "85a4dbc6c02d9264909b0f1a827b785f2e5f39f6ad10533012cfb380492f53d9"
+  },
+  {
+   "key": "svcb_ved",
+   "title": "Ведомости 14.08.2026: чистая прибыль Совкомбанка за 1П26 по МСФО (пересказ отчёта; вторичный)",
+   "url": "https://www.vedomosti.ru/investments/news/2026/08/14/1221113-pribil-sovkombanka",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/vedomosti_1221113_svcb_6m26.html",
+   "sha256": "593fb3f3635e4dcf929091723a1ca11854858c20e1d460ba054acaf938773d93"
+  },
+  {
+   "key": "svcb_rv",
+   "title": "Реальное время: пресс-релиз Совкомбанка по МСФО за 6М26 (перепечатка; вторичный)",
+   "url": "https://realnoevremya.ru/news/404365-chistaya-pribyl-sovkombanka-po-msfo-za-6-mesyacev-vyrosla-do-45-mlrd-rubley",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/realnoevremya_404365_svcb_6m26.html",
+   "sha256": "d9e876baa55b63ce0f3310e232bd61ad00ba5b9fb2179d7e758ca2a4eba53b45"
+  },
+  {
+   "key": "svcb_f135",
+   "title": "Банк России: форма 0409135 ПАО «Совкомбанк» на 01.07.2026 (ответ SOAP)",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML, рег. № 963, 2026-07-01)",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/cbr_f135_963_2026-07-01.xml",
+   "sha256": "8b974743f1d8f901555fb0a4b8d79ce33835b25ac42bb407dca92df7be144490"
+  },
+  {
+   "key": "bspb_6m26",
+   "title": "Банк «Санкт-Петербург»: сокращённая промежуточная финансовая информация специального назначения по МСФО за 6М26",
+   "url": "https://storage.yandexcloud.net/bucket-cms-prod-7ff1c333-51d7-4a2d-9e7d-9e26f8ee3b6e/BSPB_IFRS_1_H2026_public_ru_f289192350.pdf",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/bspb_ifrs_6m2026.pdf",
+   "sha256": "89771c1e28a52886e689d7e7559c37592a501de5beda41d5cc95466600162481"
+  },
+  {
+   "key": "bspb_fy25",
+   "title": "Банк «Санкт-Петербург»: консолидированная финансовая отчётность МСФО за 2025 г.",
+   "url": "https://storage.yandexcloud.net/bucket-cms-prod-7ff1c333-51d7-4a2d-9e7d-9e26f8ee3b6e/BSPB_IFRS_FY_2025_public_ru_1_325230e819.pdf",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/bspb_ifrs_fy2025.pdf",
+   "sha256": "f0d9251f0e443495519a2a7a105c796431835b0a86d53d3f2fde42d2c4ecb30e"
+  },
+  {
+   "key": "mtsb_6m26",
+   "title": "МТС Банк: промежуточная обобщённая публикуемая консолидированная отчётность МСФО за 6М26",
+   "url": "https://www.mtsbank.ru/upload/static/o-banke/raskritie-informacii/q-reports/msfo-2-kv-26.pdf",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/mtsb_ifrs_6m2026.pdf",
+   "sha256": "3298a442392241808aaaf32e63f0beb0d579279a1172784bae87a933e6dd7dbe"
+  },
+  {
+   "key": "mtsb_4q25",
+   "title": "МТС Банк: пресс-релиз МСФО за 2025 г.",
+   "url": "https://www.mtsbank.ru/upload/static/documents/press-reliz-4-kv-25.pdf",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/mtsb_press_4q25.pdf",
+   "sha256": "c50279e9b7c866a1801678a4f8467aa9e97696286b74af48dc3afaacc51e0472"
+  },
+  {
+   "key": "iss_vtbr",
+   "title": "MOEX ISS: описание VTBR (ISSUESIZE)",
+   "url": "https://iss.moex.com/iss/securities/VTBR.json",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/iss_desc_VTBR.json",
+   "sha256": "ce8a63478b9d4f908d115b8f0a53b910fba7ff3e911e3fdaf3614032470934a4"
+  },
+  {
+   "key": "iss_t",
+   "title": "MOEX ISS: описание T (ISSUESIZE)",
+   "url": "https://iss.moex.com/iss/securities/T.json",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/iss_desc_T.json",
+   "sha256": "197d67ee647e04399ad37217e0946b889cad9801c19fcb38a88d24051b369b31"
+  },
+  {
+   "key": "iss_svcb",
+   "title": "MOEX ISS: описание SVCB (ISSUESIZE)",
+   "url": "https://iss.moex.com/iss/securities/SVCB.json",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/iss_desc_SVCB.json",
+   "sha256": "bb4627b98dc248e12dd0897c46d2f91723a5858b0b947c70e0e2d98583d62ec4"
+  },
+  {
+   "key": "iss_bspb",
+   "title": "MOEX ISS: описание BSPB (ISSUESIZE)",
+   "url": "https://iss.moex.com/iss/securities/BSPB.json",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/iss_desc_BSPB.json",
+   "sha256": "a4dbe9a1d37731b61e46984a6a9c7e3210d30b79cf51036e69a5da735df80605"
+  },
+  {
+   "key": "iss_mbnk",
+   "title": "MOEX ISS: описание MBNK (ISSUESIZE)",
+   "url": "https://iss.moex.com/iss/securities/MBNK.json",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/iss_desc_MBNK.json",
+   "sha256": "23732dda300ebc6fce7c17a481f6d731bd462c19eaa390ec921e5b6ac20562c5"
+  },
+  {
+   "key": "dohod_vtbr",
+   "title": "ДОХОДЪ: история дивидендов VTBR (даты реестра; вторичный)",
+   "url": "https://www.dohod.ru/ik/analytics/dividend/vtbr",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/dohod_div_vtbr.html",
+   "sha256": "9720232f522b0bb55fac93406d3ae13e39e98dd5309caae7c999b7b5acb8e943"
+  },
+  {
+   "key": "dohod_t",
+   "title": "ДОХОДЪ: история дивидендов T (вторичный)",
+   "url": "https://www.dohod.ru/ik/analytics/dividend/t",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/dohod_div_t.html",
+   "sha256": "6e5a0645e2eaf5ce2accf15f2ba85436580ade619e367bc36580aebc50e74c74"
+  },
+  {
+   "key": "dohod_svcb",
+   "title": "ДОХОДЪ: история дивидендов SVCB (вторичный)",
+   "url": "https://www.dohod.ru/ik/analytics/dividend/svcb",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/dohod_div_svcb.html",
+   "sha256": "4a6245da4e9a06326edbc62917c5bcc6f57d9ae1b92e608e01df2b6e2bdf7390"
+  },
+  {
+   "key": "dohod_bspb",
+   "title": "ДОХОДЪ: история дивидендов BSPB (вторичный)",
+   "url": "https://www.dohod.ru/ik/analytics/dividend/bspb",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/dohod_div_bspb.html",
+   "sha256": "62aa87756b9985c86689d4d9a4127095232f01853b238f268d1b2fadcfd22b61"
+  },
+  {
+   "key": "dohod_mbnk",
+   "title": "ДОХОДЪ: история дивидендов MBNK (вторичный)",
+   "url": "https://www.dohod.ru/ik/analytics/dividend/mbnk",
+   "accessed": "2026-10-01",
+   "file": "stage2/reports/facts-sources/dohod_div_mbnk.html",
+   "sha256": "ccb93c3e029ec7f41bb33d5e4d1801da2facd2e9d9b0c18b3afee6b5f901d6bd"
+  }
+ ],
+ "banks": [
+  {
+   "ticker": "VTBR",
+   "name": "ВТБ",
+   "basis": "МСФО группы",
+   "bv_date": "2026-06-30",
+   "ni_ltm_period": "2025Q3–2026Q2",
+   "bv": {
+    "v": 2402.2,
+    "src": "vtb_rus-vtb-group-ifrs-as-of-30-june-2026.pdf, с. 8, sha256 9bef55d9357d5f6d",
+    "calc": "капитал, приходящийся на акционеров материнского банка, 2 770,2 − бессрочные облигации и ноты участия в кредите 368,0 (AT1 — вне капитала обыкновенных акционеров, как у Сбера)"
+   },
+   "bv_prev": {
+    "v": 2181.8,
+    "src": "vtb_rus-vtb-group-ifrs-as-of-30-june-2026.pdf, с. 8, sha256 9bef55d9357d5f6d",
+    "calc": "на 30.06.2025 (скорр.): 2 599,7 − бессрочные 417,9"
+   },
+   "ni_ltm": {
+    "v": 428.4,
+    "src": "vtb_rus-vtb-group-ifrs-as-of-31-december-2025.pdf, с. 5, sha256 9c64c57daa58142d; vtb_rus-vtb-group-ifrs-as-of-30-june-2026.pdf, с. 8, sha256 9bef55d9357d5f6d",
+    "calc": "ЧП акционерам материнского банка: 2025 г. 483,7 − 6М25 (скорр.) 271,4 + 6М26 216,1"
+   },
+   "roe_ltm": {
+    "v": 0.1869,
+    "calc": "ni_ltm / среднее (bv_prev, bv); ЧП включает часть держателей бессрочных (выплаты по ним — из капитала)"
+   },
+   "shares_outstanding": {
+    "v": 12847.983,
+    "src": "vtb_rus-vtb-group-ifrs-as-of-30-june-2026.pdf, с. 31, sha256 9bef55d9357d5f6d",
+    "calc": "обыкновенные акции в обращении на 30.06.2026 (после конвертации привилегированных в обыкновенные, апрель 2026); ГОСА 30.06.2026 решила увеличить капитал допэмиссией обыкновенных акций — число может вырасти"
+   },
+   "shares_issued": {
+    "v": 12927.766,
+    "src": "iss_desc_VTBR.json, ISSUESIZE, sha256 ce8a63478b9d4f90",
+    "calc": "выпущено (ISS)"
+   },
+   "dps_ltm": {
+    "v": 9.71,
+    "src": "interfax_1099260_20260630.html, sha256 86a71f3cac4ed83e; dohod_div_vtbr.html, sha256 9720232f522b0bb5",
+    "calc": "DPS с отсечкой за 12 мес. до as_of: за 2025 г. — 9,71 ₽ (реестр 20.07.2026)"
+   },
+   "capital_ratio": {
+    "name": "Н20.0",
+    "value": {
+     "v": 0.107,
+     "src": "vtb_rus-vtb-group-ifrs-as-of-30-june-2026.pdf, с. 43, sha256 9bef55d9357d5f6d",
+     "calc": "норматив достаточности собственных средств банковской группы, 10,7 %"
+    },
+    "as_of": "2026-06-30"
+   },
+   "src": "vtb_rus-vtb-group-ifrs-as-of-30-june-2026.pdf, sha256 9bef55d9357d5f6d"
+  },
+  {
+   "ticker": "T",
+   "name": "Т-Технологии",
+   "basis": "МСФО группы (пресс-релиз)",
+   "bv_date": "2026-06-30",
+   "ni_ltm_period": "2025Q3–2026Q2",
+   "bv": {
+    "v": 757.0,
+    "src": "tt_2q26_results.pdf, с. 5, sha256 529eb43fb73641df",
+    "calc": "капитал, приходящийся на акционеров (млрд ₽, округлён в релизе); выделение бессрочных инструментов в релизе не раскрыто"
+   },
+   "bv_prev": {
+    "v": 613.0,
+    "src": "tt_2q26_results.pdf, с. 5, sha256 529eb43fb73641df",
+    "calc": "на 30.06.2025"
+   },
+   "ni_ltm": {
+    "v": 184.4,
+    "src": "tt_4q25_results.pdf, с. 3, sha256 85a4dbc6c02d9264; tt_2q26_results.pdf, с. 4, sha256 529eb43fb73641df",
+    "calc": "ЧП, приходящаяся на акционеров: 2025 г. 177,0 − 6М25 75,7 + 6М26 83,1 (отчётная, не «операционная»)"
+   },
+   "roe_ltm": {
+    "v": 0.2692,
+    "calc": "ni_ltm / среднее (bv_prev, bv)"
+   },
+   "shares_outstanding": {
+    "v": 2682.748,
+    "src": "iss_desc_T.json, ISSUESIZE, sha256 197d67ee647e0439",
+    "calc": "выпущенные акции (ISS); собственные акции (программа выкупа до 5 %) не вычтены — число в обращении не раскрыто в релизе"
+   },
+   "shares_issued": {
+    "v": 2682.748,
+    "src": "iss_desc_T.json, ISSUESIZE, sha256 197d67ee647e0439",
+    "calc": "выпущено (ISS)"
+   },
+   "dps_ltm": {
+    "v": 16.2,
+    "src": "dohod_div_t.html, sha256 6e5a0645e2eaf5ce",
+    "calc": "квартальные DPS с отсечкой за 12 мес.: 3,5 (06.10.2025) + 3,6 (08.01.2026) + 4,5 (25.05.2026) + 4,6 (10.08.2026)"
+   },
+   "capital_ratio": {
+    "name": "достаточность общего капитала (группа, МСФО-расчёт)",
+    "value": {
+     "v": 0.129,
+     "src": "tt_2q26_results.pdf, с. 6, sha256 529eb43fb73641df",
+     "calc": "коэффициент достаточности общего капитала на 30.06.2026 — 12,9 %"
+    },
+    "as_of": "2026-06-30"
+   },
+   "src": "tt_2q26_results.pdf, sha256 529eb43fb73641df"
+  },
+  {
+   "ticker": "SVCB",
+   "name": "Совкомбанк",
+   "basis": "МСФО группы (по пересказам пресс-релиза в прессе; сам документ не получен)",
+   "bv_date": "2026-06-30",
+   "ni_ltm_period": "2025Q3–2026Q2",
+   "bv": {
+    "v": 425.8,
+    "src": "realnoevremya_404365_svcb_6m26.html, sha256 d9e876baa55b63ce",
+    "calc": "«капитал акционеров вырос на 20,3 % и достиг 425,8 млрд рублей» (пресс-релиз в перепечатке; вторичный); состав (бессрочные) не раскрыт"
+   },
+   "bv_prev": {
+    "v": 353.9,
+    "calc": "425,8 / 1,203 (рост за год 20,3 % из того же релиза) — оценка на 30.06.2025"
+   },
+   "ni_ltm": {
+    "v": 80.3,
+    "src": "vedomosti_1221113_svcb_6m26.html, sha256 593fb3f3635e4dcf",
+    "calc": "ЧП по МСФО: 2025 г. 53,2 − 1П25 (53,2 − 35 за 2П25 = 18,2) + 1П26 45,3 (вторичный источник)"
+   },
+   "roe_ltm": {
+    "v": 0.206,
+    "calc": "ni_ltm / среднее (bv_prev, bv); отчётный ROE 1П26 — 21,1 % (Ведомости)"
+   },
+   "shares_outstanding": {
+    "v": 22516.229,
+    "src": "iss_desc_SVCB.json, ISSUESIZE, sha256 bb4627b98dc248e1",
+    "calc": "выпущенные акции (ISS); акции у страховой компании группы (программа покупки 2 млрд ₽ в квартал) не вычтены — не раскрыто"
+   },
+   "shares_issued": {
+    "v": 22516.229,
+    "src": "iss_desc_SVCB.json, ISSUESIZE, sha256 bb4627b98dc248e1",
+    "calc": "выпущено (ISS)"
+   },
+   "dps_ltm": {
+    "v": 0.35,
+    "src": "dohod_div_svcb.html, sha256 4a6245da4e9a0632",
+    "calc": "DPS с отсечкой за 12 мес.: за 2025 г. — 0,35 ₽ (реестр 13.07.2026)"
+   },
+   "capital_ratio": {
+    "name": "Н1.0 (банк)",
+    "value": {
+     "v": 0.10985,
+     "src": "cbr_f135_963_2026-07-01.xml, форма 0409135, Н1.0, sha256 8b974743f1d8f901",
+     "calc": "норматив Н1.0 банка на 01.07.2026, 10,985 % / 100 (группа Н20.0 в найденных источниках не раскрыт)"
+    },
+    "as_of": "2026-07-01"
+   },
+   "src": "realnoevremya_404365_svcb_6m26.html, sha256 d9e876baa55b63ce; vedomosti_1221113_svcb_6m26.html, sha256 593fb3f3635e4dcf"
+  },
+  {
+   "ticker": "BSPB",
+   "name": "Банк «Санкт-Петербург»",
+   "basis": "МСФО группы",
+   "bv_date": "2026-06-30",
+   "ni_ltm_period": "2025Q3–2026Q2",
+   "bv": {
+    "v": 218.353,
+    "src": "bspb_ifrs_6m2026.pdf, с. 9, sha256 89771c1e28a52886",
+    "calc": "итого собственного капитала, причитающегося акционерам Банка, 218 353 млн ₽ (бессрочных инструментов нет)"
+   },
+   "bv_prev": {
+    "v": 212.872,
+    "src": "bspb_ifrs_6m2026.pdf, с. 8, sha256 89771c1e28a52886",
+    "calc": "на 30.06.2025: 212 872 млн ₽"
+   },
+   "ni_ltm": {
+    "v": 29.686,
+    "src": "bspb_ifrs_fy2025.pdf, с. 55, sha256 f0d9251f0e443495; bspb_ifrs_6m2026.pdf, с. 6, sha256 89771c1e28a52886",
+    "calc": "прибыль, причитающаяся акционерам Банка: 2025 г. 37 847 − 6М25 24 652 + 6М26 16 491 млн ₽"
+   },
+   "roe_ltm": {
+    "v": 0.1377,
+    "calc": "ni_ltm / среднее (bv_prev, bv)"
+   },
+   "shares_outstanding": {
+    "v": 430.117,
+    "src": "bspb_ifrs_6m2026.pdf, с. 38, sha256 89771c1e28a52886",
+    "calc": "обыкновенные 445 368 тыс. − выкупленные в 2025–2026 гг. 6 251 + 9 000 тыс. (в собственных акциях на 30.06.2026: 5 120 млн ₽ = 2 060 + 3 060); привилегированные 20 100 тыс. — отдельно"
+   },
+   "shares_issued": {
+    "v": 445.369,
+    "src": "iss_desc_BSPB.json, ISSUESIZE, sha256 a4dbe9a1d37731b6",
+    "calc": "выпущено обыкновенных (ISS)"
+   },
+   "dps_ltm": {
+    "v": 42.84,
+    "src": "dohod_div_bspb.html, sha256 62aa87756b9985c8",
+    "calc": "DPS с отсечкой за 12 мес.: 16,61 (06.10.2025) + 26,23 (12.05.2026)"
+   },
+   "capital_ratio": {
+    "name": "Н20.0",
+    "value": {
+     "v": 0.1931,
+     "src": "bspb_ifrs_6m2026.pdf, с. 51, sha256 89771c1e28a52886",
+     "calc": "общий показатель достаточности капитала группы Н20.0 на 30.06.2026 — 19,31 %"
+    },
+    "as_of": "2026-06-30"
+   },
+   "src": "bspb_ifrs_6m2026.pdf, sha256 89771c1e28a52886"
+  },
+  {
+   "ticker": "MBNK",
+   "name": "МТС Банк",
+   "basis": "МСФО группы",
+   "bv_date": "2026-06-30",
+   "ni_ltm_period": "2025Q3–2026Q2",
+   "bv": {
+    "v": 106.664,
+    "src": "mtsb_ifrs_6m2026.pdf, с. 7, sha256 3298a44239224180",
+    "calc": "капитал, относящийся к акционерам материнского Банка, 126 164 − бессрочные облигации 19 500 млн ₽"
+   },
+   "bv_prev": {
+    "v": 93.532,
+    "src": "mtsb_ifrs_6m2026.pdf, с. 8, sha256 3298a44239224180",
+    "calc": "на 30.06.2025: 113 032 − бессрочные 19 500 млн ₽"
+   },
+   "ni_ltm": {
+    "v": 18.17,
+    "src": "mtsb_press_4q25.pdf, с. 1, sha256 c50279e9b7c866a1; mtsb_ifrs_6m2026.pdf, с. 5, sha256 3298a44239224180",
+    "calc": "ЧП: 2025 г. 14,4 (пресс-релиз, всего) − 6М25 3 467 + 6М26 7 237 млн ₽ (акционерам материнского Банка)"
+   },
+   "roe_ltm": {
+    "v": 0.1815,
+    "calc": "ni_ltm / среднее (bv_prev, bv); отчётный ROE без суборда за 6М26 — 13,6 %"
+   },
+   "shares_outstanding": {
+    "v": 37.442981,
+    "src": "mtsb_ifrs_6m2026.pdf, с. 49, sha256 3298a44239224180",
+    "calc": "средневзвешенное число обыкновенных акций в обращении за 6М26 и 2К26 (одинаково — в обращении на 30.06.2026)"
+   },
+   "shares_issued": {
+    "v": 37.526637,
+    "src": "iss_desc_MBNK.json, ISSUESIZE, sha256 23732dda300ebc6f",
+    "calc": "выпущено обыкновенных (ISS)"
+   },
+   "dps_ltm": {
+    "v": 96.12,
+    "src": "dohod_div_mbnk.html, sha256 ccb93c3e029ec7f4",
+    "calc": "DPS с отсечкой за 12 мес.: за 2025 г. — 96,12 ₽ (реестр 10.07.2026)"
+   },
+   "capital_ratio": {
+    "name": "Н1.0 (банк)",
+    "value": {
+     "v": 0.1253,
+     "src": "mtsb_ifrs_6m2026.pdf, с. 67, sha256 3298a44239224180",
+     "calc": "коэффициент достаточности собственного капитала Н1.0 на 30.06.2026 — 12,53 %"
+    },
+    "as_of": "2026-06-30"
+   },
+   "src": "mtsb_ifrs_6m2026.pdf, sha256 3298a44239224180"
+  }
+ ]
+}

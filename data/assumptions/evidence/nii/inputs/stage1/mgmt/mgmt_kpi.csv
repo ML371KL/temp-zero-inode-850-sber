@@ -1,0 +1,236 @@
+metric,period,value,unit,basis,doc,page,sha256,note
+asset_yield,2013Q4,10.2,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,"доходность активов, приносящих процентный доход"
+asset_yield,2014Q1,9.9,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,"доходность активов, приносящих процентный доход"
+asset_yield,2014Q2,10.1,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,"доходность активов, приносящих процентный доход"
+asset_yield,2014Q3,10.1,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,"доходность активов, приносящих процентный доход"
+asset_yield,2014Q4,10.3,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,"доходность активов, приносящих процентный доход"
+asset_yield,2017Q4,9.6,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). 
+asset_yield,2018Q1,8.9,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). 
+asset_yield,2018Q2,8.9,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). 
+asset_yield,2018Q3,8.9,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). 
+asset_yield,2018Q4,8.8,%,mgmt,2019Q4_ifrs_presentation.pdf,7,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] «доходность активов, приносящих процентный доход»"
+asset_yield,2019Q1,8.6,%,mgmt,2019Q4_ifrs_presentation.pdf,7,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] «доходность активов, приносящих процентный доход»"
+asset_yield,2019Q2,8.9,%,mgmt,2020Q2_ifrs_presentation.pdf,14,0f36d709e90858aaa1eabbbe1d113a6d4646997df0c8943ff5c23c9c1f3e4ab7,[копия Internet Archive] 
+asset_yield,2019Q3,8.7,%,mgmt,2020Q3_ifrs_presentation.pdf,10,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,"[копия Internet Archive] доходность активов, приносящих процентный доход"
+asset_yield,2019Q4,8.8,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] yield on interest earning assets; в 9М21 4К20 = 7,5"
+asset_yield,2020Q1,8.2,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] yield on interest earning assets; в 9М21 4К20 = 7,5"
+asset_yield,2020Q2,8.0,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] yield on interest earning assets; в 9М21 4К20 = 7,5"
+asset_yield,2020Q3,7.7,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] доходность активов, приносящих процентный доход"
+asset_yield,2020Q4,7.5,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] доходность активов, приносящих процентный доход | ранее: 7.6 (IR_presentation_2021-04.pdf с.30)"
+asset_yield,2021Q1,7.3,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] доходность активов, приносящих процентный доход"
+asset_yield,2021Q2,7.5,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] доходность активов, приносящих процентный доход"
+asset_yield,2021Q3,7.9,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] доходность активов, приносящих процентный доход"
+asset_yield,2021FY,7.9,%,mgmt,FY2022_ifrs_presentation.pdf,20,03bcb49309a55139e63b5d67fec663e2cc19d0888024e8f7878ed394673a25f6,"до пересчёта по МСФО 17; годовые (квартальная отчётность 2022 не публиковалась). доходность активов, приносящих процентный доход"
+asset_yield,2022FY,9.8,%,mgmt,FY2022_ifrs_presentation.pdf,20,03bcb49309a55139e63b5d67fec663e2cc19d0888024e8f7878ed394673a25f6,"до пересчёта по МСФО 17; годовые (квартальная отчётность 2022 не публиковалась). доходность активов, приносящих процентный доход"
+asset_yield,2023Q1,9.2,%,mgmt,2023Q3_ifrs_presentation.pdf,8,81a3eb68d68ec9f39436c81ad9ff9df60898a8321c5ad165c7c6dcebb314deb8,
+asset_yield,2023Q2,9.4,%,mgmt,2023Q4_ifrs_presentation.pdf,19,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,"«доходность активов, приносящих процентный доход»; 4К22 и 1К23 не подписаны"
+asset_yield,2023Q3,10.2,%,mgmt,2023Q4_ifrs_presentation.pdf,19,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,"«доходность активов, приносящих процентный доход»; 4К22 и 1К23 не подписаны"
+asset_yield,2023Q4,12.1,%,mgmt,2024Q4_ifrs_presentation.pdf,7,717cfd764ad9967161887e516ad63d5538cf89d7d6ee15e6836bb8aacc001cf9,доходность активов
+asset_yield,2024Q1,13.0,%,mgmt,2025Q3_ifrs_presentation.pdf,16,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,доходность активов
+asset_yield,2024Q2,13.5,%,mgmt,2025Q3_ifrs_presentation.pdf,16,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,доходность активов
+asset_yield,2024Q3,14.6,%,mgmt,2025Q3_ifrs_presentation.pdf,16,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,доходность активов
+asset_yield,2024Q4,16.5,%,mgmt,2025Q4_ifrs_presentation.pdf,6,cc61c42c0890c448912ce7061add0c112b28176d8e28e26817389cef6a99d479,
+asset_yield,2025Q1,17.3,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Доходность активов» (процентных), квартал"
+asset_yield,2025Q2,17.1,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Доходность активов» (процентных), квартал"
+asset_yield,2025Q3,16.1,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Доходность активов» (процентных), квартал"
+asset_yield,2025Q4,15.5,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Доходность активов» (процентных), квартал"
+asset_yield,2026Q1,15.0,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Доходность активов» (процентных), квартал"
+asset_yield,2026Q2,14.7,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Доходность активов» (процентных), квартал"
+corp_loan_yield,2018Q4,8.2,%,mgmt,2019Q4_ifrs_presentation.pdf,8,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,[копия Internet Archive] средняя доходность кредитов ЮЛ
+corp_loan_yield,2019Q1,8.0,%,mgmt,2019Q4_ifrs_presentation.pdf,8,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,[копия Internet Archive] средняя доходность кредитов ЮЛ
+corp_loan_yield,2019Q2,8.6,%,mgmt,2020Q2_ifrs_presentation.pdf,14,0f36d709e90858aaa1eabbbe1d113a6d4646997df0c8943ff5c23c9c1f3e4ab7,[копия Internet Archive] 
+corp_loan_yield,2019Q3,8.1,%,mgmt,2020Q3_ifrs_presentation.pdf,10,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] средняя доходность кредитов ЮЛ
+corp_loan_yield,2019Q4,7.8,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] "
+corp_loan_yield,2020Q1,7.2,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] "
+corp_loan_yield,2020Q2,7.1,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] "
+corp_loan_yield,2020Q3,6.8,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] средняя доходность кредитов ЮЛ | ранее: 6.9 (2020Q3_ifrs_presentation.pdf с.10)
+corp_loan_yield,2020Q4,6.3,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] средняя доходность кредитов ЮЛ
+corp_loan_yield,2021Q1,6.4,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] средняя доходность кредитов ЮЛ
+corp_loan_yield,2021Q2,6.6,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] средняя доходность кредитов ЮЛ
+corp_loan_yield,2021Q3,7.1,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] средняя доходность кредитов ЮЛ
+corp_loan_yield,2021FY,7.2,%,mgmt,FY2022_ifrs_press_release.pdf,5,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,"до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане. выведено: 9,8 − 2,6 | ранее: 7.0 (FY2022_ifrs_presentation.pdf с.20)"
+corp_loan_yield,2022Q4,8.4,%,mgmt,2023Q4_ifrs_press_release.pdf,5,e9453a68d881b7a00c37007a1e9ce13f001ca044cff710a54ca5a687b611bf76,"выведено: 11,3 − 2,9"
+corp_loan_yield,2022FY,9.0,%,mgmt,FY2022_ifrs_presentation.pdf,20,03bcb49309a55139e63b5d67fec663e2cc19d0888024e8f7878ed394673a25f6,"до пересчёта по МСФО 17; годовые (квартальная отчётность 2022 не публиковалась). средняя доходность кредитов ЮЛ; в пресс-релизе того же дня — 9,8% (+2,6 пп) — расхождение | ранее: 9.8 (FY2022_ifrs_press_release.pdf с.5)"
+corp_loan_yield,2023Q1,8.3,%,mgmt,2023Q3_ifrs_presentation.pdf,8,81a3eb68d68ec9f39436c81ad9ff9df60898a8321c5ad165c7c6dcebb314deb8,
+corp_loan_yield,2023Q2,8.4,%,mgmt,2023Q4_ifrs_presentation.pdf,19,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,средняя доходность кредитов ЮЛ
+corp_loan_yield,2023Q3,9.2,%,mgmt,2023Q4_ifrs_presentation.pdf,19,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,средняя доходность кредитов ЮЛ
+corp_loan_yield,2023Q4,11.3,%,mgmt,2024Q4_ifrs_presentation.pdf,12,717cfd764ad9967161887e516ad63d5538cf89d7d6ee15e6836bb8aacc001cf9,средняя доходность кредитов ЮЛ
+corp_loan_yield,2024Q1,12.2,%,mgmt,2025Q1_ifrs_presentation.pdf,11,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,средняя доходность кредитов ЮЛ
+corp_loan_yield,2024Q2,12.7,%,mgmt,2025Q2_ifrs_presentation.pdf,7,160364ed4904d8efb7dea4f911a01c5a6bafbbb26286b7b634646803c4a8f093,средняя доходность кредитов ЮЛ
+corp_loan_yield,2024Q3,13.8,%,mgmt,2025Q3_ifrs_presentation.pdf,9,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,средняя доходность кредитов ЮЛ
+corp_loan_yield,2024Q4,16.4,%,mgmt,2025Q3_ifrs_presentation.pdf,9,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,средняя доходность кредитов ЮЛ
+corp_loan_yield,2025Q1,17.4,%,mgmt,2026Q1_ifrs_presentation.pdf,10,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,средняя доходность кредитов ЮЛ
+corp_loan_yield,2025Q2,17.6,%,mgmt,2026Q2_ifrs_presentation.pdf,9,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"средняя доходность кредитов ЮЛ, квартал"
+corp_loan_yield,2025Q3,16.5,%,mgmt,2026Q2_ifrs_presentation.pdf,9,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"средняя доходность кредитов ЮЛ, квартал"
+corp_loan_yield,2025Q4,15.9,%,mgmt,2026Q2_ifrs_presentation.pdf,9,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"средняя доходность кредитов ЮЛ, квартал"
+corp_loan_yield,2026Q1,14.7,%,mgmt,2026Q2_ifrs_presentation.pdf,9,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"средняя доходность кредитов ЮЛ, квартал"
+corp_loan_yield,2026Q2,14.2,%,mgmt,2026Q2_ifrs_presentation.pdf,9,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"средняя доходность кредитов ЮЛ, квартал"
+cost_of_funding,2013Q4,4.3,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,стоимость заёмных средств
+cost_of_funding,2014Q1,4.3,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,стоимость заёмных средств
+cost_of_funding,2014Q2,4.6,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,стоимость заёмных средств
+cost_of_funding,2014Q3,4.7,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,стоимость заёмных средств
+cost_of_funding,2014Q4,4.9,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,стоимость заёмных средств
+cost_of_funding,2017Q4,3.9,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). 
+cost_of_funding,2018Q1,3.7,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). 
+cost_of_funding,2018Q2,3.6,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). 
+cost_of_funding,2018Q3,3.6,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). 
+cost_of_funding,2018Q4,3.8,%,mgmt,2019Q4_ifrs_presentation.pdf,7,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,[копия Internet Archive] «стоимость заёмных средств»
+cost_of_funding,2019Q1,4.1,%,mgmt,2019Q4_ifrs_presentation.pdf,7,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,[копия Internet Archive] «стоимость заёмных средств»
+cost_of_funding,2019Q2,4.3,%,mgmt,2020Q2_ifrs_presentation.pdf,14,0f36d709e90858aaa1eabbbe1d113a6d4646997df0c8943ff5c23c9c1f3e4ab7,[копия Internet Archive] 
+cost_of_funding,2019Q3,4.1,%,mgmt,2020Q3_ifrs_presentation.pdf,10,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] стоимость заёмных средств
+cost_of_funding,2019Q4,3.9,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] "
+cost_of_funding,2020Q1,3.4,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] "
+cost_of_funding,2020Q2,3.1,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] "
+cost_of_funding,2020Q3,2.8,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] стоимость заёмных средств
+cost_of_funding,2020Q4,2.8,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] стоимость заёмных средств
+cost_of_funding,2021Q1,2.7,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] стоимость заёмных средств
+cost_of_funding,2021Q2,2.8,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] стоимость заёмных средств
+cost_of_funding,2021Q3,3.1,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] стоимость заёмных средств
+cost_of_funding,2021FY,3.1,%,mgmt,FY2022_ifrs_presentation.pdf,20,03bcb49309a55139e63b5d67fec663e2cc19d0888024e8f7878ed394673a25f6,до пересчёта по МСФО 17; годовые (квартальная отчётность 2022 не публиковалась). стоимость заёмных средств
+cost_of_funding,2022FY,5.4,%,mgmt,FY2022_ifrs_presentation.pdf,20,03bcb49309a55139e63b5d67fec663e2cc19d0888024e8f7878ed394673a25f6,до пересчёта по МСФО 17; годовые (квартальная отчётность 2022 не публиковалась). стоимость заёмных средств
+cost_of_funding,2023Q1,4.1,%,mgmt,2023Q3_ifrs_presentation.pdf,8,81a3eb68d68ec9f39436c81ad9ff9df60898a8321c5ad165c7c6dcebb314deb8,
+cost_of_funding,2023Q2,4.3,%,mgmt,2023Q4_ifrs_presentation.pdf,19,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,стоимость заёмных средств; 4К22 и 1К23 не подписаны
+cost_of_funding,2023Q3,5.0,%,mgmt,2023Q4_ifrs_presentation.pdf,19,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,стоимость заёмных средств; 4К22 и 1К23 не подписаны
+cost_of_funding,2023Q4,6.9,%,mgmt,2024Q4_ifrs_presentation.pdf,7,717cfd764ad9967161887e516ad63d5538cf89d7d6ee15e6836bb8aacc001cf9,стоимость заёмных средств
+cost_of_funding,2024Q1,8.2,%,mgmt,2025Q3_ifrs_presentation.pdf,16,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,стоимость заёмных средств
+cost_of_funding,2024Q2,8.8,%,mgmt,2025Q3_ifrs_presentation.pdf,16,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,стоимость заёмных средств
+cost_of_funding,2024Q3,10.0,%,mgmt,2025Q3_ifrs_presentation.pdf,16,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,стоимость заёмных средств
+cost_of_funding,2024Q4,12.0,%,mgmt,2025Q4_ifrs_presentation.pdf,6,cc61c42c0890c448912ce7061add0c112b28176d8e28e26817389cef6a99d479,
+cost_of_funding,2025Q1,13.0,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Стоимость заёмных средств», квартал"
+cost_of_funding,2025Q2,12.9,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Стоимость заёмных средств», квартал"
+cost_of_funding,2025Q3,11.7,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Стоимость заёмных средств», квартал"
+cost_of_funding,2025Q4,10.5,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Стоимость заёмных средств», квартал"
+cost_of_funding,2026Q1,10.2,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Стоимость заёмных средств», квартал"
+cost_of_funding,2026Q2,9.7,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"«Стоимость заёмных средств», квартал"
+nim,2013Q4,6.1,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,ЧПМ квартала
+nim,2013FY,5.9,%,mgmt,2014Q4_ifrs_presentation.pdf,4,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,«отношение ЧПД к средневзвешенным процентным активам»
+nim,2014Q1,5.7,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,ЧПМ квартала
+nim,2014Q2,5.7,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,ЧПМ квартала
+nim,2014Q3,5.6,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,ЧПМ квартала
+nim,2014Q4,5.4,%,mgmt,2014Q4_ifrs_presentation.pdf,8,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,ЧПМ квартала
+nim,2014FY,5.6,%,mgmt,2014Q4_ifrs_presentation.pdf,4,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,«отношение ЧПД к средневзвешенным процентным активам»
+nim,2015FY,4.4,%,mgmt,2015Q4_ifrs_presentation.pdf,2,4b55805bb44cca7b6b0b71a3ecded52a2c993e695a1238a34a3e26122f173f12,факт 2015 (средняя)
+nim,2016FY,5.7,%,mgmt,2016Q4_ifrs_presentation.pdf,2,0d4cae3e9e2e1ad114cd08ccbc0290bb4711d238567fcab819dd64eae1bc4307,факт 2016 (среднее)
+nim,2017Q4,6.31,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). ЧПМ по методике 2019 (пересчёт)
+nim,2018Q1,6.03,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). ЧПМ по методике 2019 (пересчёт)
+nim,2018Q2,6.09,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). ЧПМ по методике 2019 (пересчёт)
+nim,2018Q3,5.96,%,mgmt,2018Q4_ifrs_presentation.pdf,9,9678e71772fc577411a62ca69c2672e62bfa134cadb7b467e81f64009fd8f7ba,без Денизбанка (деконсолидирован с 2018). ЧПМ по методике 2019 (пересчёт)
+nim,2018Q4,5.62,%,mgmt,2019Q4_ifrs_presentation.pdf,7,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,[копия Internet Archive] ЧПМ «методика 2019»: уточнён учёт резервов против кредитов 3 стадии в работающих активах (сноска). Методика 2019 используется далее (2020+) как «ЧПМ»
+nim,2018FY,5.92,%,mgmt,2019Q4_ifrs_presentation.pdf,7,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,[копия Internet Archive] ЧПМ «методика 2019»: уточнён учёт резервов против кредитов 3 стадии в работающих активах (сноска). Методика 2019 используется далее (2020+) как «ЧПМ»
+nim,2019Q1,5.27,%,mgmt,2019Q4_ifrs_presentation.pdf,7,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,[копия Internet Archive] ЧПМ «методика 2019»: уточнён учёт резервов против кредитов 3 стадии в работающих активах (сноска). Методика 2019 используется далее (2020+) как «ЧПМ»
+nim,2019Q2,5.41,%,mgmt,2020Q2_ifrs_presentation.pdf,14,0f36d709e90858aaa1eabbbe1d113a6d4646997df0c8943ff5c23c9c1f3e4ab7,[копия Internet Archive] 
+nim,2019Q3,5.3,%,mgmt,2020Q3_ifrs_presentation.pdf,10,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] ЧПМ (методика 2019; с 2020 — единственная)
+nim,2019M9,5.33,%,mgmt,2020Q3_ifrs_press_release_en_webdisclosure.html,,380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec,"[EQS/WebDisclosure, EN] "
+nim,2019Q4,5.52,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] "
+nim,2019FY,5.38,%,mgmt,2019Q4_ifrs_presentation.pdf,7,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,[копия Internet Archive] ЧПМ «методика 2019»: уточнён учёт резервов против кредитов 3 стадии в работающих активах (сноска). Методика 2019 используется далее (2020+) как «ЧПМ»
+nim,2020Q1,5.49,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] "
+nim,2020Q2,5.61,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] "
+nim,2020Q3,5.48,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] ЧПМ
+nim,2020M9,5.52,%,mgmt,2021Q3_ifrs_press_release_en_eqs.html,,6bd883ab2317f391b945727d3aafbb4c12ae67422a27012963d15a9aaa2d4c13,"[EQS, EN] "
+nim,2020Q4,5.34,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] ЧПМ
+nim,2020FY,5.47,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] "
+nim,2021Q1,5.18,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] ЧПМ
+nim,2021Q2,5.22,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] ЧПМ
+nim,2021Q3,5.36,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] ЧПМ
+nim,2021M9,5.26,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,[копия Internet Archive] ЧПМ
+nim,2021FY,5.38,%,mgmt,FY2022_ifrs_press_release.pdf,3,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,"до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане. в пресс-релизе 2023 (после МСФО 17) 2022 = 5,32 | ранее: 5.4 (FY2022_ifrs_presentation.pdf с.20)"
+nim,2022FY,5.32,%,mgmt,2023Q4_ifrs_press_release.pdf,3,e9453a68d881b7a00c37007a1e9ce13f001ca044cff710a54ca5a687b611bf76,ранее: 5.3 (FY2022_ifrs_presentation.pdf с.20); 5.31 (FY2022_ifrs_press_release.pdf с.3)
+nim,2023Q1,5.78,%,mgmt,2023Q1_ifrs_press_release.pdf,3,d0edbd118f1578b60b396133d2255957694efc355d7b8e69255f25ea6bd85287,после МСФО 17 (впервые в 2023).  | ранее: 5.8 (2023Q1_ifrs_presentation.pdf с.6); 5.8 (2023Q2_ifrs_presentation.pdf с.9); 5.8 (2023Q3_ifrs_presentation.pdf с.8)
+nim,2023Q2,5.8,%,mgmt,ifrs_6M2024_press_release.pdf,6,03648c61237172890a5772c11db097aa6d01f97ad3ec89e98c7923a874dbde9b,"[зеркало financemarker, распечатка страницы sberbank.ru] выведено: 5,84 − 0,04 и 5,86 − 0,1 (изменение г/г)"
+nim,2023H1,5.76,%,mgmt,ifrs_6M2024_press_release.pdf,6,03648c61237172890a5772c11db097aa6d01f97ad3ec89e98c7923a874dbde9b,"[зеркало financemarker, распечатка страницы sberbank.ru] выведено: 5,84 − 0,04 и 5,86 − 0,1 (изменение г/г)"
+nim,2023Q3,6.01,%,mgmt,ifrs_9M2024_press_release.pdf,10,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru] выведено: 5,86 + 0,15 и 5,86 + 0,01 (совпадает с релизом 9М23) | ранее: 6.0 (2023Q3_ifrs_presentation.pdf с.8); 6.0 (2023Q4_ifrs_presentation.pdf с.19)"
+nim,2023M9,5.87,%,mgmt,ifrs_9M2024_press_release.pdf,10,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru] выведено: 5,86 + 0,15 и 5,86 + 0,01 (совпадает с релизом 9М23)"
+nim,2023Q4,6.26,%,mgmt,2023Q4_ifrs_press_release.pdf,3,e9453a68d881b7a00c37007a1e9ce13f001ca044cff710a54ca5a687b611bf76,ранее: 6.3 (2023Q4_ifrs_presentation.pdf с.19); 6.3 (2024Q4_ifrs_presentation.pdf с.7)
+nim,2023FY,5.98,%,mgmt,2023Q4_ifrs_presentation.pdf,19,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,ЧПМ; точки 4К22 и 1К23 на графике не подписаны
+nim,2024Q1,5.88,%,mgmt,ifrs_9M2024_press_release.pdf,10,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru]  | ранее: 5.9 (2024Q4_ifrs_presentation.pdf с.7); 5.9 (2025Q1_ifrs_presentation.pdf с.6); 5.9 (2025Q2_ifrs_presentation.pdf с.6); 5.9 (2025Q3_ifrs_presentation.pdf с.16)"
+nim,2024Q2,5.84,%,mgmt,ifrs_9M2024_press_release.pdf,10,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru]  | ранее: 5.8 (2024Q4_ifrs_presentation.pdf с.7); 5.8 (2025Q1_ifrs_presentation.pdf с.6); 5.8 (2025Q2_ifrs_presentation.pdf с.6); 5.8 (2025Q3_ifrs_presentation.pdf с.16)"
+nim,2024H1,5.86,%,mgmt,ifrs_6M2024_press_release.pdf,6,03648c61237172890a5772c11db097aa6d01f97ad3ec89e98c7923a874dbde9b,"[зеркало financemarker, распечатка страницы sberbank.ru] "
+nim,2024Q3,5.86,%,mgmt,2024Q4_ifrs_press_release.pdf,3,22a137f32087d146785846df7b91bb33c620133d76a32659f8357c9bca1ace4b,ранее: 5.9 (2024Q4_ifrs_presentation.pdf с.7); 5.9 (2025Q1_ifrs_presentation.pdf с.6); 5.9 (2025Q2_ifrs_presentation.pdf с.6); 5.9 (2025Q3_ifrs_presentation.pdf с.16)
+nim,2024M9,5.86,%,mgmt,ifrs_9M2024_press_release.pdf,10,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru] "
+nim,2024Q4,6.01,%,mgmt,2024Q4_ifrs_press_release.pdf,3,22a137f32087d146785846df7b91bb33c620133d76a32659f8357c9bca1ace4b,ранее: 6.0 (2024Q4_ifrs_presentation.pdf с.7); 6.0 (2025Q1_ifrs_presentation.pdf с.6); 6.0 (2025Q2_ifrs_presentation.pdf с.6); 6.0 (2025Q3_ifrs_presentation.pdf с.16); 6.0 (2025Q4_ifrs_presentation.pdf с.6)
+nim,2024FY,5.9,%,mgmt,2025Q4_ifrs_press_release.pdf,3,9fcc844f65e099c25b733fc8c491f21d2a23190c89b2c5ad29afbb0749a78b61,"в таблице 4К25 = 6,5; в тексте «выросла до 6,46% в 4 квартале»"
+nim,2025Q1,6.11,%,mgmt,2026Q1_ifrs_presentation.pdf,6,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,"выведено: 6,34 − 0,23 (подпись «+0,23 пп г/г») | ранее: 6.1 (2025Q1_ifrs_presentation.pdf с.6); 6.1 (2025Q2_ifrs_presentation.pdf с.6); 6.1 (2025Q3_ifrs_presentation.pdf с.16); 6.1 (2025Q4_ifrs_presentation.pdf с.6); 6.1 (2026Q1_ifrs_presentation.pdf с.7); 6.1 (2026Q2_ifrs_presentation.pdf с.8)"
+nim,2025Q2,6.1,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"ЧПМ квартала, годовых"
+nim,2025Q3,6.2,%,mgmt,2026Q2_ifrs_presentation.pdf,8,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"ЧПМ квартала, годовых"
+nim,2025Q4,6.46,%,mgmt,2025Q4_ifrs_press_release.pdf,3,9fcc844f65e099c25b733fc8c491f21d2a23190c89b2c5ad29afbb0749a78b61,"в таблице 4К25 = 6,5; в тексте «выросла до 6,46% в 4 квартале» | ранее: 6.5 (2025Q4_ifrs_presentation.pdf с.6); 6.5 (2026Q1_ifrs_presentation.pdf с.7); 6.5 (2026Q2_ifrs_presentation.pdf с.8)"
+nim,2025FY,6.2,%,mgmt,2025Q4_ifrs_press_release.pdf,3,9fcc844f65e099c25b733fc8c491f21d2a23190c89b2c5ad29afbb0749a78b61,"в таблице 4К25 = 6,5; в тексте «выросла до 6,46% в 4 квартале»"
+nim,2026Q1,6.34,%,mgmt,2026Q1_ifrs_presentation.pdf,6,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,"ЧПМ 1К26 с двумя знаками; «+0,23 пп г/г» | ранее: 6.3 (2026Q1_ifrs_presentation.pdf с.7); 6.3 (2026Q2_ifrs_presentation.pdf с.8)"
+nim,2026Q2,6.7,%,mgmt,2026Q2_ifrs_presentation.pdf,6,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"+0,6 пп г/г"
+retail_loan_yield,2018Q4,12.5,%,mgmt,2019Q4_ifrs_presentation.pdf,8,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,[копия Internet Archive] средняя доходность кредитов ФЛ
+retail_loan_yield,2019Q1,12.0,%,mgmt,2019Q4_ifrs_presentation.pdf,8,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,[копия Internet Archive] средняя доходность кредитов ФЛ
+retail_loan_yield,2019Q2,12.2,%,mgmt,2020Q2_ifrs_presentation.pdf,14,0f36d709e90858aaa1eabbbe1d113a6d4646997df0c8943ff5c23c9c1f3e4ab7,[копия Internet Archive] 
+retail_loan_yield,2019Q3,12.1,%,mgmt,2020Q3_ifrs_presentation.pdf,10,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] средняя доходность кредитов ФЛ
+retail_loan_yield,2019Q4,12.5,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] loans to individuals; в презентации 9М21 4К20 = 11,5 (пересчёт)"
+retail_loan_yield,2020Q1,12.1,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] loans to individuals; в презентации 9М21 4К20 = 11,5 (пересчёт)"
+retail_loan_yield,2020Q2,11.9,%,mgmt,IR_presentation_2021-04.pdf,30,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] loans to individuals; в презентации 9М21 4К20 = 11,5 (пересчёт)"
+retail_loan_yield,2020Q3,11.7,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] средняя доходность кредитов ФЛ (3К20 пересчитан: 11,8 → 11,7) | ранее: 11.8 (2020Q3_ifrs_presentation.pdf с.10); 11.8 (2020Q3_ifrs_press_release_en_webdisclosure.html с.None); 11.8 (IR_presentation_2021-04.pdf с.30)"
+retail_loan_yield,2020Q4,11.5,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] средняя доходность кредитов ФЛ (3К20 пересчитан: 11,8 → 11,7) | ранее: 11.6 (IR_presentation_2021-04.pdf с.30)"
+retail_loan_yield,2021Q1,11.2,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] средняя доходность кредитов ФЛ (3К20 пересчитан: 11,8 → 11,7)"
+retail_loan_yield,2021Q2,11.1,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] средняя доходность кредитов ФЛ (3К20 пересчитан: 11,8 → 11,7)"
+retail_loan_yield,2021Q3,11.1,%,mgmt,2021Q3_ifrs_presentation.pdf,16,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] средняя доходность кредитов ФЛ (3К20 пересчитан: 11,8 → 11,7)"
+retail_loan_yield,2021FY,11.26,%,mgmt,FY2022_ifrs_press_release.pdf,4,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,"до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане. выведено: 11,9 − 0,64 | ранее: 11.3 (FY2022_ifrs_presentation.pdf с.20)"
+retail_loan_yield,2022Q4,11.7,%,mgmt,2023Q4_ifrs_press_release.pdf,4,e9453a68d881b7a00c37007a1e9ce13f001ca044cff710a54ca5a687b611bf76,"выведено: 14,1 − 2,4"
+retail_loan_yield,2022FY,11.9,%,mgmt,FY2022_ifrs_presentation.pdf,20,03bcb49309a55139e63b5d67fec663e2cc19d0888024e8f7878ed394673a25f6,до пересчёта по МСФО 17; годовые (квартальная отчётность 2022 не публиковалась). средняя доходность кредитов ФЛ
+retail_loan_yield,2023Q1,11.7,%,mgmt,2023Q3_ifrs_presentation.pdf,8,81a3eb68d68ec9f39436c81ad9ff9df60898a8321c5ad165c7c6dcebb314deb8,
+retail_loan_yield,2023Q2,12.0,%,mgmt,2023Q4_ifrs_presentation.pdf,19,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,средняя доходность кредитов ФЛ
+retail_loan_yield,2023Q3,12.4,%,mgmt,2023Q4_ifrs_presentation.pdf,19,b2d507a33171a819d23f9aae02f890c2740f10eb51b95362eed1f8b7346c5acd,средняя доходность кредитов ФЛ
+retail_loan_yield,2023Q4,14.1,%,mgmt,2024Q4_ifrs_presentation.pdf,16,717cfd764ad9967161887e516ad63d5538cf89d7d6ee15e6836bb8aacc001cf9,средняя доходность кредитов ФЛ
+retail_loan_yield,2024Q1,14.9,%,mgmt,2025Q1_ifrs_presentation.pdf,14,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,средняя доходность кредитов ФЛ
+retail_loan_yield,2024Q2,15.2,%,mgmt,2025Q2_ifrs_presentation.pdf,9,160364ed4904d8efb7dea4f911a01c5a6bafbbb26286b7b634646803c4a8f093,средняя доходность кредитов ФЛ
+retail_loan_yield,2024Q3,16.2,%,mgmt,2025Q3_ifrs_presentation.pdf,11,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,средняя доходность кредитов ФЛ
+retail_loan_yield,2024Q4,17.4,%,mgmt,2025Q4_ifrs_presentation.pdf,7,cc61c42c0890c448912ce7061add0c112b28176d8e28e26817389cef6a99d479,
+retail_loan_yield,2025Q1,18.6,%,mgmt,2026Q1_ifrs_presentation.pdf,8,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,средняя доходность кредитов ФЛ
+retail_loan_yield,2025Q2,17.8,%,mgmt,2026Q2_ifrs_presentation.pdf,11,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"средняя доходность кредитов ФЛ, квартал"
+retail_loan_yield,2025Q3,17.0,%,mgmt,2026Q2_ifrs_presentation.pdf,11,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"средняя доходность кредитов ФЛ, квартал"
+retail_loan_yield,2025Q4,16.9,%,mgmt,2026Q2_ifrs_presentation.pdf,11,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"средняя доходность кредитов ФЛ, квартал"
+retail_loan_yield,2026Q1,16.9,%,mgmt,2026Q2_ifrs_presentation.pdf,11,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"средняя доходность кредитов ФЛ, квартал"
+retail_loan_yield,2026Q2,16.7,%,mgmt,2026Q2_ifrs_presentation.pdf,11,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,"средняя доходность кредитов ФЛ, квартал"
+roe,2013FY,20.8,%,mgmt,2014Q4_ifrs_presentation.pdf,4,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,
+roe,2014FY,14.8,%,mgmt,2014Q4_ifrs_presentation.pdf,4,c942b450a5018a0a4ac570be9ea1b99c3c1857875d24bab14a33fee547a20fb7,
+roe,2015FY,10.2,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2016FY,20.8,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2017FY,24.2,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2018Q4,18.8,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2018FY,23.1,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2019Q1,22.9,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2019Q2,24.9,%,mgmt,2020Q2_ifrs_presentation.pdf,3,0f36d709e90858aaa1eabbbe1d113a6d4646997df0c8943ff5c23c9c1f3e4ab7,"[копия Internet Archive] ROE; 3К19 — по всей прибыли (по продолжающейся деятельности 22,4%)"
+roe,2019Q3,15.2,%,mgmt,2020Q3_ifrs_presentation.pdf,2,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] ROE по чистой прибыли (3К19 — с убытком от продажи Денизбанка)
+roe,2019M9,20.9,%,mgmt,2020Q3_ifrs_press_release_en_webdisclosure.html,,380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec,"[EQS/WebDisclosure, EN] "
+roe,2019Q4,19.4,%,mgmt,2020Q3_ifrs_presentation.pdf,2,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] ROE по чистой прибыли (3К19 — с убытком от продажи Денизбанка)
+roe,2019FY,20.5,%,mgmt,2019Q4_ifrs_presentation.pdf,5,e8c3b7acdb0c5c07cf7a6f7f50b469fce9ef985690bc3484df7ff5370e8309cf,"[копия Internet Archive] ROE; 3К19 = 22,4% по прибыли от продолжающейся деятельности (с учётом прекращённой — 15,2%, Денизбанк)"
+roe,2020Q1,10.6,%,mgmt,2020Q3_ifrs_presentation.pdf,2,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] ROE по чистой прибыли (3К19 — с убытком от продажи Денизбанка)
+roe,2020Q2,14.2,%,mgmt,2020Q3_ifrs_presentation.pdf,2,c2b223b9c972cf33a77fb53c8e23576029ff6e1fc06b22c10283a9557b0c040c,[копия Internet Archive] ROE по чистой прибыли (3К19 — с убытком от продажи Денизбанка)
+roe,2020Q3,22.7,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7 | ранее: 22.8 (2020Q3_ifrs_presentation.pdf с.2); 22.8 (2020Q3_ifrs_press_release_en_webdisclosure.html с.None)"
+roe,2020M9,15.9,%,mgmt,2020Q3_ifrs_press_release_en_webdisclosure.html,,380c059997a389351c00e2d500d28d7032fc514d24820e54f4b61bac47757eec,"[EQS/WebDisclosure, EN]  | ранее: 16.0 (2021Q3_ifrs_press_release_en_eqs.html с.None)"
+roe,2020Q4,16.7,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7"
+roe,2020FY,16.1,%,mgmt,IR_presentation_2021-04.pdf,26,3ce1f5ac0f833d6070d4191a8b9c60e88b68c46ac8828eb2ec2b339d78b7ec3d,"[IR-презентация март 2021, раздел FY2020 Earnings, EN] заголовок «ROE came at 16.1%»"
+roe,2021Q1,24.7,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7"
+roe,2021Q2,25.8,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7"
+roe,2021Q3,26.8,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7"
+roe,2021M9,25.8,%,mgmt,2021Q3_ifrs_presentation.pdf,4,b02667e465845e8dc7fd748252ff77f4ce880b1db197f76e3220385aa4b69711,"[копия Internet Archive] ROE; с 2021 капитал без бессрочного субординированного кредита 150 млрд (сноска релиза) — 3К20 пересчитан 22,8 → 22,7"
+roe,2021FY,24.2,%,mgmt,FY2022_ifrs_press_release.pdf,3,68dd451a6a384e3d454138a170e878a191ea7308522b84ea2b981e2446053a0e,до пересчёта по МСФО 17; 2021 — с учётом выбытия Сбербанк Европа и банка в Казахстане. 
+roe,2022FY,5.2,%,mgmt,2023Q4_ifrs_press_release.pdf,3,e9453a68d881b7a00c37007a1e9ce13f001ca044cff710a54ca5a687b611bf76,
+roe,2023Q1,25.0,%,mgmt,2023Q1_ifrs_presentation.pdf,4,ac7606bfa9b320c999210c84b09c929ea673ea188dc9e5975dafd614c75b9cd2,после МСФО 17 (впервые в 2023). 
+roe,2023Q2,26.0,%,mgmt,ifrs_6M2024_press_release.pdf,5,03648c61237172890a5772c11db097aa6d01f97ad3ec89e98c7923a874dbde9b,"[зеркало financemarker, распечатка страницы sberbank.ru] выведено: 25,9 + 0,1 и 25,0 + 0,5 (изменение г/г)"
+roe,2023H1,25.5,%,mgmt,ifrs_6M2024_press_release.pdf,5,03648c61237172890a5772c11db097aa6d01f97ad3ec89e98c7923a874dbde9b,"[зеркало financemarker, распечатка страницы sberbank.ru] выведено: 25,9 + 0,1 и 25,0 + 0,5 (изменение г/г)"
+roe,2023Q3,27.6,%,mgmt,ifrs_9M2023_press_release.pdf,7,3ddac6de85a8b37cb8cf48e787a2beceb3f8deac7729db305ab924665dc80e37,"[зеркало financemarker, распечатка страницы IR] "
+roe,2023M9,26.2,%,mgmt,ifrs_9M2023_press_release.pdf,7,3ddac6de85a8b37cb8cf48e787a2beceb3f8deac7729db305ab924665dc80e37,"[зеркало financemarker, распечатка страницы IR] "
+roe,2023Q4,22.9,%,mgmt,2024Q4_ifrs_press_release.pdf,3,22a137f32087d146785846df7b91bb33c620133d76a32659f8357c9bca1ace4b,"выведено: 20,6 + 2,3 и 24,0 + 1,3"
+roe,2023FY,25.3,%,mgmt,2024Q4_ifrs_press_release.pdf,3,22a137f32087d146785846df7b91bb33c620133d76a32659f8357c9bca1ace4b,"выведено: 20,6 + 2,3 и 24,0 + 1,3"
+roe,2024Q1,24.2,%,mgmt,2025Q1_ifrs_presentation.pdf,4,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,
+roe,2024Q2,25.9,%,mgmt,ifrs_9M2024_press_release.pdf,10,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru] "
+roe,2024H1,25.0,%,mgmt,2024Q2_ifrs_presentation.pdf,4,842234301302bebcedc5d0391086fac61837500694a316ae6013e9d41880f904,
+roe,2024Q3,25.4,%,mgmt,2024Q4_ifrs_press_release.pdf,3,22a137f32087d146785846df7b91bb33c620133d76a32659f8357c9bca1ace4b,
+roe,2024M9,25.2,%,mgmt,ifrs_9M2024_press_release.pdf,10,c5543662504fe6744d585bb707a4854ae9703f97c0e0808fbefc0f311eae287d,"[зеркало financemarker, распечатка страницы sberbank.ru] "
+roe,2024Q4,20.6,%,mgmt,2025Q4_ifrs_press_release.pdf,3,9fcc844f65e099c25b733fc8c491f21d2a23190c89b2c5ad29afbb0749a78b61,
+roe,2024FY,24.0,%,mgmt,2025Q4_ifrs_press_release.pdf,3,9fcc844f65e099c25b733fc8c491f21d2a23190c89b2c5ad29afbb0749a78b61,
+roe,2025Q1,24.4,%,mgmt,2025Q1_ifrs_presentation.pdf,4,22f8cca1c7e275388efc216f9ea67f15796869785e2cce440af96629f310e0db,
+roe,2025Q2,23.0,%,mgmt,2025Q2_ifrs_presentation.pdf,4,160364ed4904d8efb7dea4f911a01c5a6bafbbb26286b7b634646803c4a8f093,
+roe,2025H1,23.7,%,mgmt,2025Q2_ifrs_presentation.pdf,4,160364ed4904d8efb7dea4f911a01c5a6bafbbb26286b7b634646803c4a8f093,
+roe,2025Q3,23.7,%,mgmt,2025Q3_ifrs_presentation.pdf,4,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,
+roe,2025M9,23.7,%,mgmt,2025Q3_ifrs_presentation.pdf,4,00d0fc066a3a630ccc98b5b8545afda3d259b0326e1e837943d9f08770f977e3,ROE 9М2025
+roe,2025Q4,19.9,%,mgmt,2025Q4_ifrs_press_release.pdf,3,9fcc844f65e099c25b733fc8c491f21d2a23190c89b2c5ad29afbb0749a78b61,
+roe,2025FY,22.7,%,mgmt,2025Q4_ifrs_presentation.pdf,5,cc61c42c0890c448912ce7061add0c112b28176d8e28e26817389cef6a99d479,
+roe,2026Q1,24.4,%,mgmt,2026Q1_ifrs_presentation.pdf,6,6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261,
+roe,2026Q2,24.0,%,mgmt,2026Q2_ifrs_presentation.pdf,6,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,рентабельность капитала
+roe,2026H1,24.2,%,mgmt,2026Q2_ifrs_presentation.pdf,6,d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a,рентабельность капитала

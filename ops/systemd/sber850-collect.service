@@ -1,0 +1,78 @@
+[Unit]
+Description=Сбер 850 · утренний сбор источников, здоровье состояния, прогон «в будущем»
+Documentation=https://github.com/ML371KL/temp-zero-inode-850-sber/blob/main/ops/README.md
+# Именно network-online: первый шаг идёт на ЦБ, T-Invest и MOEX ISS, и запуск до
+# поднятия маршрутов дал бы прогон, где «все источники недоступны».
+Wants=network-online.target
+After=network-online.target
+# Окно перезапуска: systemd отсчитывает его от первого старта и не двигает,
+# поэтому оно обязано вмещать три самых долгих прогона с паузами — иначе повтор
+# фактически не ограничен. Расчёт — ops/budgets.json (restart), равенство
+# сверяет tests/test_ops_units.py: не больше 3 стартов за окно, дальше юнит
+# стоит до следующего таймера.
+StartLimitIntervalSec=24960
+StartLimitBurst=3
+
+[Service]
+# Type=exec, а не oneshot: systemd отказывается загружать oneshot с Restart!=no.
+Type=exec
+User=dash
+Group=dash
+WorkingDirectory=/srv/dash/repo-850-sber
+# Env-файл читает сам run.sh (ENV_FILE), а не systemd (строки EnvironmentFile нет
+# намеренно): иначе токен T-Invest лежал бы в окружении всего юнита, включая
+# мост тревог. run.sh снимает токен из окружения такта сразу после чтения
+# файла и отдаёт его одной команде — сборщику T-Invest (docs/INTERFACES.md §8).
+Environment=ENV_FILE=/usr/local/etc/sber-850/env
+# Без этого журнал наполняется только в конце: питон буферизует stdout, когда он
+# не терминал, и в аварии видно результат вместо того, на чём всё встало.
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/bin/bash /srv/dash/repo-850-sber/ops/run.sh collect
+# Провал шага (код 1: отказ критического источника, pip, обновление кода) и
+# занятый замок (75) повторяются через 3 минуты — в пределах окна StartLimit.
+# Тревога (код 8) НЕ повторяется: повтор её не снимет. Моргнувший
+# невосполнимый источник (винтажи форм ЦБ, снимки T-Invest, новости) такт
+# добирает сам, внутри прогона (ops/budgets.json → collect_retry), и только
+# его: красное «будущее», деградация восполнимого источника или источник без
+# токена повтора не заслуживают. 64/78 — ошибки настройки.
+Restart=on-failure
+RestartSec=180
+RestartPreventExitStatus=8 64 78
+# Для Type=exec потолок задаёт RuntimeMaxSec. Потолок = прогон с запасом (сбор
+# и до двух его повторов с паузами) + ожидание замка (LOCK_WAIT_SECONDS =
+# наибольший потолок пересборки и дозора);
+# расчёт — ops/budgets.json, равенство сверяет tests/test_ops_units.py.
+# ДО ЗАМЕРА НА СЕРВЕРЕ ЭТО ОЦЕНКА.
+RuntimeMaxSec=8040
+SyslogIdentifier=sber850
+
+StateDirectory=sber-850
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+# Репозиторий пишется: git reset при обновлении кода, pip в .venv, var/ тестов.
+ReadWritePaths=/srv/dash/repo-850-sber
+# Утренний такт ничего не публикует, но разбирает чужой HTML (PDF разбирает
+# дозор): ключу записи в репозиторий данных здесь делать нечего. Это
+# наименьшие права, а не граница доверия: тот же пользователь пишет в код, в
+# .venv и в клон данных, которые исполняют такты с ключом. Дозору, суточному
+# такту и пересборке каталог нужен — они пушат выпуск через ssh-алиас.
+InaccessiblePaths=/srv/dash/.ssh
+
+# Машина общая с соседними панелями. Лимиты не про экономию, а про то, чтобы
+# отказ конвейера остался отказом конвейера и не забрал с собой sshd через
+# глобальный OOM. ПРЕДВАРИТЕЛЬНО, по Ленте: уточнить замером (ops/budgets.json).
+MemoryHigh=384M
+MemoryMax=512M
+Nice=10
+
+# Мост тревог: ExecStopPost, а НЕ OnFailure — выполняется всегда, поэтому из
+# одного хука приходят обе новости: и что прогон упал, и что он снова проходит.
+# Префикс «-» — отказ моста не красит прогон; «+» — иначе под
+# ProtectSystem=strict мост не запишет маркер дедупа.
+ExecStopPost=-+/usr/local/sbin/dash-alert %n
+
+# Секции [Install] намеренно НЕТ: юнит запускается таймером. С ней `enable`
+# дал бы прогон при каждой загрузке, и с Persistent=true у таймера это
+# наложилось бы на догоняющий запуск.

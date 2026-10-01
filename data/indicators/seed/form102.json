@@ -1,0 +1,454 @@
+{
+ "basis": "ras",
+ "unit": "RUB bn",
+ "source": "stage1/ras/cbr_f102_monthly.csv (ЦБ SOAP Data102FXML)",
+ "note": "дата формы — на 1-е число месяца после месяца данных; момент первой выкладки до запуска сборщика неизвестен",
+ "months": {
+  "2009M03": {
+   "form_date": "2009-04-01",
+   "sha256": "d17b8c13c7a560b4599fd21c27a1d8167ffb0156a2f7fe005d3725f6f4ccbc34",
+   "pretax_ytd": 6.439489
+  },
+  "2009M06": {
+   "form_date": "2009-07-01",
+   "sha256": "8e2f4855244bc5d6afb884cf43965e4d1773ecfcf5b58afbb66e2dad88745584",
+   "pretax_ytd": 7.041673
+  },
+  "2009M09": {
+   "form_date": "2009-10-01",
+   "sha256": "ab12c3c98b716822760f918f66b70eb575710a8abcd1beb0efe1f00fa6ff8de2",
+   "pretax_ytd": 11.931306
+  },
+  "2009M12": {
+   "form_date": "2010-01-01",
+   "sha256": "914ac5b65a3b1accd477a90d44bbf2788f490103976e84c99233b1e580a12894",
+   "pretax_ytd": 43.28574
+  },
+  "2010M03": {
+   "form_date": "2010-04-01",
+   "sha256": "4e7ff27133b892b088d05e8eae89642364f84ad1d1a518d1cdf144d79cdc23d7",
+   "pretax_ytd": 45.429761
+  },
+  "2010M06": {
+   "form_date": "2010-07-01",
+   "sha256": "814c5058d65c28655e51e1529d64016eedfc7c293ff93e3b0e54b60347c15085",
+   "pretax_ytd": 94.766089
+  },
+  "2010M09": {
+   "form_date": "2010-10-01",
+   "sha256": "3b73c9ced92528659946fc7b38ec1d7a3a176a7238b42552d923dff9f1ab41d1",
+   "pretax_ytd": 131.27632
+  },
+  "2010M12": {
+   "form_date": "2011-01-01",
+   "sha256": "3f43746a999eb1c022f41801dcf88e0a2a48e3063b08941c465ff3c13866c781",
+   "pretax_ytd": 224.953689
+  },
+  "2011M03": {
+   "form_date": "2011-04-01",
+   "sha256": "cba054bcb783faca4f7a5835bbb604419f04395eae3f2846801c66651e1e8806",
+   "pretax_ytd": 93.579479
+  },
+  "2011M06": {
+   "form_date": "2011-07-01",
+   "sha256": "6840428c19f95b09136e365a20da3ce2109068c2e2ed64a72ecb37199317f41b",
+   "pretax_ytd": 211.4732
+  },
+  "2011M09": {
+   "form_date": "2011-10-01",
+   "sha256": "7a137b2316fa78d6a1aae1253cf1a56d36d16b6cfb855cfe22e1c34902b42a7a",
+   "pretax_ytd": 317.772512
+  },
+  "2011M12": {
+   "form_date": "2012-01-01",
+   "sha256": "1be1a12174cf0d96c093240aa015f075203690dfa8b6fc2e00ce9f942d90d325",
+   "pretax_ytd": 393.806058
+  },
+  "2012M03": {
+   "form_date": "2012-04-01",
+   "sha256": "41373bb171d817dd6ad611fc9bb4e3f7e20d46ce9901149b32ed3c45aeb56ded",
+   "pretax_ytd": 111.238757
+  },
+  "2012M06": {
+   "form_date": "2012-07-01",
+   "sha256": "52df921df8707bc79698f19476989838490e11c679d0b8ff12fbe0b67dfa825d",
+   "pretax_ytd": 230.586332
+  },
+  "2012M09": {
+   "form_date": "2012-10-01",
+   "sha256": "9683c53fd0a3738b461eb1780aeee56dbe9a902dde0757b5abad6d5ac6d7f2e0",
+   "pretax_ytd": 336.94948
+  },
+  "2012M12": {
+   "form_date": "2013-01-01",
+   "sha256": "7544b2daa252727d65af1adce4eb7e6ffa97d418f27cfe80a65e20bfe0ed87fd",
+   "pretax_ytd": 439.832203
+  },
+  "2013M03": {
+   "form_date": "2013-04-01",
+   "sha256": "c67e486abf008bfde0eff5023df8f008a82710d0c4a341dfce68727013dd38ec",
+   "pretax_ytd": 121.205863
+  },
+  "2013M06": {
+   "form_date": "2013-07-01",
+   "sha256": "2bff60c63d326f2c9aff68eb421321010cc19c35456fcd68ac83f7afcb5e47a5",
+   "pretax_ytd": 233.656311
+  },
+  "2013M09": {
+   "form_date": "2013-10-01",
+   "sha256": "c70438028a8a96de66dddedfe3f0e946b0bccc26f811297dc8de2c03d67487bb",
+   "pretax_ytd": 350.610659
+  },
+  "2013M12": {
+   "form_date": "2014-01-01",
+   "sha256": "02c95722808aaf44c7a328cfa5c0b9f99e6b06d26feebdc5109259c5c9bc3394",
+   "pretax_ytd": 480.602792
+  },
+  "2014M03": {
+   "form_date": "2014-04-01",
+   "sha256": "80610ce000b17ef8faacb139c74bf88708e2ad91f8cfae29ed34b788ea7162bf",
+   "pretax_ytd": 121.464406
+  },
+  "2014M06": {
+   "form_date": "2014-07-01",
+   "sha256": "7ac13767f61701a9719e1bc9f481734fcefea8fbc90c75e518f6e2ac2d0b38df",
+   "pretax_ytd": 227.313243
+  },
+  "2014M09": {
+   "form_date": "2014-10-01",
+   "sha256": "6282f78fdcef31a94d23ec2dde1b170dc289e228af5fb24754aaa4be185730e7",
+   "pretax_ytd": 359.737128
+  },
+  "2014M12": {
+   "form_date": "2015-01-01",
+   "sha256": "5ea1f381ccf3a980a2c0751aa18a03c466990dfea48fa9dd180081c9b2c45d66",
+   "pretax_ytd": 399.973181
+  },
+  "2015M03": {
+   "form_date": "2015-04-01",
+   "sha256": "1d5e9f75ac18f7a6ec4d6df5086b658c9c0756d8566f98f2b55d9d20da772773",
+   "pretax_ytd": 46.225779
+  },
+  "2015M06": {
+   "form_date": "2015-07-01",
+   "sha256": "8614ae14c55ad4b2bdac67b4755ead2e067bc675ef2e1ef7da98e91f799b4615",
+   "pretax_ytd": 95.037158
+  },
+  "2015M09": {
+   "form_date": "2015-10-01",
+   "sha256": "f9e5872297394e75370da37141ce897483144b03399276310bc8b3ef564b9b61",
+   "pretax_ytd": 180.285348
+  },
+  "2015M12": {
+   "form_date": "2016-01-01",
+   "sha256": "19c2e4c1353afaf03b4938aad3f17a18b2b57c0668fca3470bdedf31f5a36ad3",
+   "pretax_ytd": 281.881395
+  },
+  "2016M03": {
+   "form_date": "2016-04-01",
+   "sha256": "1361f113c7c6a7c1259487facb356b4bed94e970c4d0761532d85eafc4129c8b",
+   "pretax_ytd": 111.278757,
+   "ni_ytd": 100.44383
+  },
+  "2016M06": {
+   "form_date": "2016-07-01",
+   "sha256": "822b60b1abf6cd00c3c9d48d7a496a05750eb6b4f622b987a1a93eee22a54f4b",
+   "pretax_ytd": 298.521234,
+   "ni_ytd": 229.409972
+  },
+  "2016M09": {
+   "form_date": "2016-10-01",
+   "sha256": "35658a7b5b5a02795b9f64821141300d5bc892d413b6d17fdf5575fec61974d0",
+   "pretax_ytd": 485.221165,
+   "ni_ytd": 376.649546
+  },
+  "2016M12": {
+   "form_date": "2017-01-01",
+   "sha256": "f4456bf661c439e7d2fdabf6290478e763f5501a4ad015464da2072bbb9a00e2",
+   "pretax_ytd": 666.347329,
+   "ni_ytd": 516.987788
+  },
+  "2017M03": {
+   "form_date": "2017-04-01",
+   "sha256": "83d5ed85dd16350a48bb04365c6dc32f90444d5d8038e7dfaecb0c0add8b0c5d",
+   "pretax_ytd": 210.857051,
+   "ni_ytd": 154.989329
+  },
+  "2017M06": {
+   "form_date": "2017-07-01",
+   "sha256": "aaa9a0ce4ed608ed7a0ca22ffcf265f4265d8505958141cd94bdfc3424103168",
+   "pretax_ytd": 416.047523,
+   "ni_ytd": 316.963837
+  },
+  "2017M09": {
+   "form_date": "2017-10-01",
+   "sha256": "97c04134ff8cc354149219bf36b7a7ddfb8a76f3f162d98349a39fbcdc493837",
+   "pretax_ytd": 612.924598,
+   "ni_ytd": 495.841094
+  },
+  "2017M12": {
+   "form_date": "2018-01-01",
+   "sha256": "bc7d3184f0538b48e29bef8f87503902a0ae8225cd1882cfdfbf4232085490eb",
+   "pretax_ytd": 847.935739,
+   "ni_ytd": 674.119836
+  },
+  "2018M03": {
+   "form_date": "2018-04-01",
+   "sha256": "436f8f44869511697409bd2c928465e8436f66cba0156c3426f13772c593fb31",
+   "pretax_ytd": 246.911954,
+   "ni_ytd": 195.859235
+  },
+  "2018M06": {
+   "form_date": "2018-07-01",
+   "sha256": "b06c7c0d0eb5e4e7062a788fa121a614e6525879d561d4e84e1001b156f1169f",
+   "pretax_ytd": 505.119534,
+   "ni_ytd": 397.78321
+  },
+  "2018M09": {
+   "form_date": "2018-10-01",
+   "sha256": "ede4c74c586fa9a5ec852fa62e6e4464189b09f8702b894acb5ea03b7dbf789a",
+   "pretax_ytd": 753.255156,
+   "ni_ytd": 612.735587
+  },
+  "2018M12": {
+   "form_date": "2019-01-01",
+   "sha256": "0685555037f8f018def59eaa1eeeab04828e57d46f951c03280a6ae619503f05",
+   "pretax_ytd": 1002.587504,
+   "ni_ytd": 811.103711
+  },
+  "2019M03": {
+   "form_date": "2019-04-01",
+   "sha256": "e8731563edb9f2ea4cea4754468bfc7d09de08fc09f63b1af8d3e6b3f0a13854",
+   "pretax_ytd": 261.123041,
+   "ni_ytd": 218.170999
+  },
+  "2019M06": {
+   "form_date": "2019-07-01",
+   "sha256": "793edf3a39ab765191edc2d7310f4c795d3e1a1a8880ab317b9fafa353ed6ad0",
+   "pretax_ytd": 566.339654,
+   "ni_ytd": 444.159907
+  },
+  "2019M09": {
+   "form_date": "2019-10-01",
+   "sha256": "e708095456d29c43130122fe83bdd8762126929bf4d37a88a2c7db8217497317",
+   "pretax_ytd": 834.028175,
+   "ni_ytd": 665.371106
+  },
+  "2019M12": {
+   "form_date": "2020-01-01",
+   "sha256": "a68d332b225ced592a933a936b5886f55b620ff6cae7e294855bbec72fe3c12f",
+   "pretax_ytd": 1088.621352,
+   "ni_ytd": 870.056666
+  },
+  "2020M03": {
+   "form_date": "2020-04-01",
+   "sha256": "8b013a5372db8f59cb353259f2b0052c640575d6cee1ff8d72022de8797a0174",
+   "pretax_ytd": 269.845761,
+   "ni_ytd": 218.651586
+  },
+  "2020M06": {
+   "form_date": "2020-07-01",
+   "sha256": "1db8958ee57f79954b315e50f2aa38041b152c7b60078dcf16896dc70ac52af1",
+   "pretax_ytd": 394.922021,
+   "ni_ytd": 337.529993
+  },
+  "2020M09": {
+   "form_date": "2020-10-01",
+   "sha256": "91dff5ed541a6ece64aba1876db9d0250ec71ec0dc9fd2bdffab459fdef4622f",
+   "pretax_ytd": 691.088865,
+   "ni_ytd": 559.41219
+  },
+  "2020M12": {
+   "form_date": "2021-01-01",
+   "sha256": "2a4e4953efb9d5a17f20e8d52debef0f6b2d84d9729ec278ac8acea8ec263dd2",
+   "pretax_ytd": 966.740686,
+   "ni_ytd": 781.587558
+  },
+  "2021M03": {
+   "form_date": "2021-04-01",
+   "sha256": "724c2bb4242ee349dec41b6ee9aeb2ba18c806930f643085e340898560e2ac69",
+   "pretax_ytd": 349.554957,
+   "ni_ytd": 282.514838
+  },
+  "2021M06": {
+   "form_date": "2021-07-01",
+   "sha256": "371002632706f5e3352229651bb2673cd6fd4c214925676623a88c4301b1c943",
+   "pretax_ytd": 734.528116,
+   "ni_ytd": 594.843562
+  },
+  "2021M09": {
+   "form_date": "2021-10-01",
+   "sha256": "3647ddf6737f1afc0be8041fbfb1a2669dba9fc6adb52f1bd262a0ab997ebe95",
+   "pretax_ytd": 1155.838504,
+   "ni_ytd": 936.65268
+  },
+  "2021M12": {
+   "form_date": "2022-01-01",
+   "sha256": "71fd6a6b989d2e9ddb842b9a00d9b7211fe293a8e61274652674443a77bea6ab",
+   "pretax_ytd": 1526.126668,
+   "ni_ytd": 1237.067467
+  },
+  "2023M06": {
+   "form_date": "2023-07-01",
+   "sha256": "df118a18be9e15b1fc844829c1d6aa5d56032e88d376d88d25e4efbc023cbddf",
+   "pretax_ytd": 958.374542,
+   "ni_ytd": 727.819933
+  },
+  "2023M09": {
+   "form_date": "2023-10-01",
+   "sha256": "01fc3ad2c2397a8bb3ad75261c44e98158d00062f00e1322829c98f48033a00c",
+   "pretax_ytd": 1454.715035,
+   "ni_ytd": 1129.260124
+  },
+  "2023M12": {
+   "form_date": "2024-01-01",
+   "sha256": "ecc2f217cee93b69144e3659ed16bfbbd812372ac5f1922df5815688de0427ed",
+   "pretax_ytd": 1904.626575,
+   "ni_ytd": 1493.148578
+  },
+  "2024M03": {
+   "form_date": "2024-04-01",
+   "sha256": "b8fb359b706c5a5df8effbd30ca279a31ab50fc887b1bbdd8f9727c0cc02e8c5",
+   "pretax_ytd": 448.085686,
+   "ni_ytd": 363.984622
+  },
+  "2024M06": {
+   "form_date": "2024-07-01",
+   "sha256": "50429c032d5a75e5e927663cf81e3dc158a245d67686f78f34f6b80eb0e8104e",
+   "pretax_ytd": 942.173211,
+   "ni_ytd": 768.741123
+  },
+  "2024M09": {
+   "form_date": "2024-10-01",
+   "sha256": "8753dde7d85b5c9f0e23d145d63d06e96ecdc4a1ec2f01fbfb9e3a4823e5e455",
+   "pretax_ytd": 1462.757302,
+   "ni_ytd": 1193.217895
+  },
+  "2024M12": {
+   "form_date": "2025-01-01",
+   "sha256": "7e1ce288e9b309b57816e532ec6a19560f8f236ca019f4b98e05fbac922407af",
+   "pretax_ytd": 1891.42537,
+   "ni_ytd": 1562.382057
+  },
+  "2025M01": {
+   "form_date": "2025-02-01",
+   "sha256": "29d981da9438f6873e14c5c2e94d9f7c51d3eb2f06c6fac638de41c79b0705ba",
+   "pretax_ytd": 163.145003,
+   "ni_ytd": 132.946863
+  },
+  "2025M02": {
+   "form_date": "2025-03-01",
+   "sha256": "c07c743834179f82d9f0a350cdae56c0d521f6463f6694049da0c643273034a2",
+   "pretax_ytd": 338.87397,
+   "ni_ytd": 267.337675
+  },
+  "2025M03": {
+   "form_date": "2025-04-01",
+   "sha256": "3f06a578c402d6793b5052d901995c7f04b82699f9a889dfbcb5594bff775cee",
+   "pretax_ytd": 512.770166,
+   "ni_ytd": 404.524384
+  },
+  "2025M04": {
+   "form_date": "2025-05-01",
+   "sha256": "6eeebd78af056eeb9565bf0855bb6b36d5f7ce97a5938eda74b8609a8f027986",
+   "pretax_ytd": 687.436762,
+   "ni_ytd": 542.318861
+  },
+  "2025M05": {
+   "form_date": "2025-06-01",
+   "sha256": "12eb0e6617dd305bc38cd5d109970272f16185a3310f4dd046381eeeb164b79e",
+   "pretax_ytd": 865.628004,
+   "ni_ytd": 682.893932
+  },
+  "2025M06": {
+   "form_date": "2025-07-01",
+   "sha256": "13e2b24f59fd010009928b075a0d9d8c5b6d3abce2fc61ef602442db09548328",
+   "pretax_ytd": 1047.766501,
+   "ni_ytd": 826.582992
+  },
+  "2025M07": {
+   "form_date": "2025-08-01",
+   "sha256": "b7c5c5d96925db79a6a83abb2cebeccb6d1f6839e1475aded057910ead9db2e8",
+   "pretax_ytd": 1231.464596,
+   "ni_ytd": 971.50242
+  },
+  "2025M08": {
+   "form_date": "2025-09-01",
+   "sha256": "e44d6ae5cc20a9e3abc2879ec831489304d68c7024a2d1994db8f6922865aa6a",
+   "pretax_ytd": 1419.165492,
+   "ni_ytd": 1119.579657
+  },
+  "2025M09": {
+   "form_date": "2025-10-01",
+   "sha256": "36c194c07655efac4d2bdf2b14ceb251b83211a3a46c5dea1a325031130e329d",
+   "pretax_ytd": 1609.652127,
+   "ni_ytd": 1269.854563
+  },
+  "2025M10": {
+   "form_date": "2025-11-01",
+   "sha256": "89e28e6b991a8c0e34aed700a1abdb590b6091d057d89d7351d486124dd3fb87",
+   "pretax_ytd": 1799.307769,
+   "ni_ytd": 1419.473899
+  },
+  "2025M11": {
+   "form_date": "2025-12-01",
+   "sha256": "94ebaf79ed80196f62b9b4d402fc33113cf8a5ab777a85311c4755328520a6db",
+   "pretax_ytd": 1987.852216,
+   "ni_ytd": 1568.216612
+  },
+  "2025M12": {
+   "form_date": "2026-01-01",
+   "sha256": "b5f9ec2a9b111ec944d4b1d5775be33f20cfe62bc572faa5e15c763e53f9e97d",
+   "pretax_ytd": 2147.489976,
+   "ni_ytd": 1694.154842
+  },
+  "2026M01": {
+   "form_date": "2026-02-01",
+   "sha256": "af9313dba535eb48c80dc295f843b52577d5e729bfd5aa1e2d4f870ee6127994",
+   "pretax_ytd": 205.030544,
+   "ni_ytd": 161.748504
+  },
+  "2026M02": {
+   "form_date": "2026-03-01",
+   "sha256": "a02662cac7fd46eb758b108b4ae02d613e4aeedf022e801ce44142ce3c3a73fa",
+   "pretax_ytd": 414.868128,
+   "ni_ytd": 324.551337
+  },
+  "2026M03": {
+   "form_date": "2026-04-01",
+   "sha256": "a73b8acd5b43d68b9d9616d31fe8e94fc496c65335a2b5aec0564f7a0773a8b4",
+   "pretax_ytd": 627.36315,
+   "ni_ytd": 490.990611
+  },
+  "2026M04": {
+   "form_date": "2026-05-01",
+   "sha256": "3b0a19b941cf3546364a7116615375e92409c058a40942f5a03301af595e6552",
+   "pretax_ytd": 866.813494,
+   "ni_ytd": 657.823404
+  },
+  "2026M05": {
+   "form_date": "2026-06-01",
+   "sha256": "22aadb39d16f5214e70fbae76396e901f796f0d72b602e011583a4bb6aa38161",
+   "pretax_ytd": 1103.037605,
+   "ni_ytd": 827.197227
+  },
+  "2026M06": {
+   "form_date": "2026-07-01",
+   "sha256": "f2b31dd5b2e54b3477750053307f5958c4754577092f0ae4d48b67036d0316e3",
+   "pretax_ytd": 1340.858974,
+   "ni_ytd": 995.264348
+  },
+  "2026M07": {
+   "form_date": "2026-08-01",
+   "sha256": "8caaf6528f9d2042220796044f7613100d248969bcf3dd0528f4bad55bbf77ce",
+   "pretax_ytd": 1565.963103,
+   "ni_ytd": 1163.640131
+  },
+  "2026M08": {
+   "form_date": "2026-09-01",
+   "sha256": "4c81823e8ff6635b509a442f2d369b25829ff285b836b31aa61fea06f7fcc5b5",
+   "pretax_ytd": 1799.340898,
+   "ni_ytd": 1332.707281
+  }
+ }
+}
