@@ -409,6 +409,14 @@ def test_the_word_after_a_number_follows_the_printed_number():
     assert APP.count('["год", "года", "лет"]') == 1 and "} лет" not in APP and "} года" not in APP, "срок в годах печатает одна функция"
 
 
+def test_quiet_gates_print_their_messages_next_to_the_corridor():
+    """Аудит 02.10.2026, № 7: сообщение несработавшего гейта печатается рядом с его коридором — у гейтов капитала в
+    нём хвост прогонов полосы, которого в печатаемой сетке нет (М§10); те же правила текста, что у сработавших."""
+    quiet = _function("gatesCard").split("Коридоры несработавших гейтов", 1)[1].split("Инварианты ·", 1)[0]
+    assert "corridor(g)" in quiet and "g.message ?" in quiet
+    assert "sentence(upperFirst(wordsText(d, g.message)))" in quiet
+
+
 def test_check_counters_agree_with_their_numbers():
     """verify-deploy № 5: «1 поднятый флаг», «4 сработавших гейта из 19»; число клеток гейта — словом в падеже числа;
     у гейта, сравнивающего миры целиком (клеток в нём нет), счёт клеток не печатается."""

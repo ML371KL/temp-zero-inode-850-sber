@@ -82,6 +82,65 @@ def test_form102_month_counts_as_known(tmp_path):
     assert out["months_known"] == 3
 
 
+def _ytd(store, *points):
+    for month, value, day in points:
+        store.upsert("cbr.f102.ni_ytd", [Point(month, value, day + "T07:00:00+00:00")], basis="ras", unit="RUB bn")
+    return nowcast.History.load(store)
+
+
+def test_revised_year_to_date_moves_the_next_month(tmp_path):
+    """Месяц по форме 0409102 — разность двух нарастающих итогов: пересмотр прошлого итога (и его запоздавший
+    приход) меняет и следующий месяц — с момента пересмотра, не раньше."""
+    h = _ytd(Store(tmp_path / "revised"), ("2026M01", 100.0, "2026-02-25"), ("2026M02", 220.0, "2026-03-25"),
+             ("2026M01", 110.0, "2026-04-02"))
+    assert h.month("2026M01", "2026-04-01")[0] == pytest.approx(100.0)
+    assert h.month("2026M02", "2026-04-01")[0] == pytest.approx(120.0)     # до пересмотра января
+    assert h.month("2026M01", None)[0] == pytest.approx(110.0)
+    value, source, first = h.month("2026M02", None)
+    assert value == pytest.approx(110.0) and source == "form102" and first.startswith("2026-03-25")
+    assert h.quarter_ras("2026Q1", None) is None                            # марта нет — квартал не собран
+    late = _ytd(Store(tmp_path / "late"), ("2026M02", 220.0, "2026-03-25"), ("2026M01", 100.0, "2026-04-02"))
+    assert late.month("2026M02", "2026-04-01") is None                      # январь ещё неизвестен
+    value, _, first = late.month("2026M02", None)
+    assert value == pytest.approx(120.0) and first.startswith("2026-04-02")  # известен с прихода января
+    same = _ytd(Store(tmp_path / "same"), ("2026M01", 100.0, "2026-02-25"), ("2026M02", 220.0, "2026-03-25"),
+                ("2026M03", 330.0, "2026-04-25"), ("2026M02", 230.0, "2026-05-02"))
+    assert [r[1] for r in same.months["2026M01"]] == [100.0]                # январь пересмотр февраля не трогает
+    assert [r[1] for r in same.months["2026M02"]] == [120.0, 130.0]
+    assert [r[1] for r in same.months["2026M03"]] == [110.0, 100.0]
+    december = _ytd(Store(tmp_path / "year"), ("2025M12", 1500.0, "2026-01-25"), ("2026M01", 100.0, "2026-02-25"),
+                    ("2025M12", 1510.0, "2026-03-02"))
+    assert [r[1] for r in december.months["2026M01"]] == [100.0]            # январь — сам итог, декабрь ни при чём
+    # Два соседних итога пересмотрены в один момент (формы одной перекачки): у февраля на этот момент одно
+    # значение — разность новых итогов, а не нового января и прежнего февраля (200 − 90 = 110 было бы больше
+    # верных 105 и победило бы при выборе последней версии).
+    together = _ytd(Store(tmp_path / "together"), ("2026M01", 100.0, "2026-02-25"), ("2026M02", 200.0, "2026-03-25"),
+                    ("2026M01", 90.0, "2026-04-02"), ("2026M02", 195.0, "2026-04-02"))
+    assert [r[1] for r in together.months["2026M01"]] == [100.0, 90.0]
+    assert [r[1] for r in together.months["2026M02"]] == [100.0, 105.0]
+    assert together.month("2026M02", None)[0] == pytest.approx(105.0)
+    assert together.month("2026M02", "2026-04-01")[0] == pytest.approx(100.0)
+
+
+def test_fact_of_a_quarter_is_read_as_of_the_date(tmp_path):
+    """У факта квартала две версии: на дату между ними история отвечает первой — как хранилище, — а дата
+    отчёта остаётся днём первого появления; без даты — последняя версия."""
+    store = Store(tmp_path)
+    for series, first, second in (("actual.ni_q", 100.0, 120.0), ("actual.nim_q", 0.060, 0.062)):
+        store.upsert(series, [Point("2026Q1", first, "2026-04-30T07:00:00+00:00")])
+        store.upsert(series, [Point("2026Q1", second, "2026-06-30T07:00:00+00:00", "manual")])
+    h = nowcast.History.load(store)
+    assert h.quarter_ifrs("2026Q1", "2026-04-29") is None
+    assert h.quarter_ifrs("2026Q1", "2026-05-01") == store.value_as_of("actual.ni_q", "2026Q1", "2026-05-01") == 100.0
+    assert h.quarter_ifrs("2026Q1", "2026-06-30") == h.quarter_ifrs("2026Q1", None) == 120.0
+    assert h.report_date("2026Q1") == "2026-04-30" and h.ifrs["2026Q1"][1] == 120.0
+    assert h.mgmt_quarter("nim", "2026Q1", "2026-05-01") == 0.060
+    assert h.mgmt_quarter("nim", "2026Q1", None) == 0.062 and h.mgmt_quarter("nim", "2026Q1", "2026-04-01") is None
+    manual = nowcast.History(store=store)                                   # история без версий — последнее значение
+    manual.ifrs = {"2026Q1": ("2026-04-30T07:00:00+00:00", 120.0)}
+    assert manual.quarter_ifrs("2026Q1", "2026-05-01") == 120.0
+
+
 def test_horizons():
     rep = date(2026, 10, 28)
     assert nowcast.horizon_for(date(2026, 7, 30), rep) == "T-90"
@@ -248,6 +307,51 @@ def test_ratio_sigmas_are_measured_out_of_sample(tmp_path):
     assert all(0.0 < v < 0.01 for v in nim["ras"].values()) and 0.0 < nim["base"] < 0.01
     assert s["cor"]["ras"] == {"0": None, "1": None, "2": None, "3": None} and s["cor"]["base"] > 0
     assert retro.ratio_sigma_table(store, bridge=bridge, today=date(2026, 10, 1))["nim"]["quarters"] == []
+
+
+def test_nim_sigma_is_measured_on_the_day_the_month_came_out(tmp_path):
+    """σ_РСБУ(k) меряется на знании дня, когда вышел k-й месяц квартала: процентные активы конца квартала в
+    этот день ещё не вышли и продлеваются ростом, как в живом прогнозе; оценка дня отчёта (с известным концом
+    квартала) в σ не идёт. k = 0 — дата дальнего горизонта. День знания — не раньше открытия квартала (выхода
+    МСФО прошлого): январь выходит до МСФО за год, а журнал квартал ещё не открыл."""
+    store = seeded_store(tmp_path)
+    bridge = config.facts_file("bridge_ras_ifrs", FIX / "facts")
+    h = nowcast.History.load(store)
+
+    def nii_month(m, as_of):
+        return h.release_month("nii_m", m, as_of)
+
+    q = "2026Q2"
+    report = h.mgmt["nim"][q][0][:10]
+    day = retro.known_date(h, q, 1, report, nii_month)
+    assert h.report_date("2026Q1") < day == nii_month("2026M04", None)[2][:10] < report
+    assert retro.known_date(h, q, 0, report, nii_month) == retro.horizon_date(h, q, report, retro.HORIZON_DAYS["T-90"])
+    assert retro.known_date(h, "2031Q1", 1, "2031-04-28", nii_month) is None       # месяца нет — оценки нет
+    first, opened = "2026Q1", h.report_date("2025Q4")
+    first_report = h.mgmt["nim"][first][0][:10]
+    assert nii_month("2026M01", None)[2][:10] < opened < first_report              # январь вышел до МСФО за год
+    assert retro.known_date(h, first, 1, first_report, nii_month) == opened
+    assert retro.known_date(h, first, 1, first_report, h.month) == opened          # то же — у прибыли
+    assert retro.known_date(h, first, 2, first_report, nii_month) == nii_month("2026M02", None)[2][:10] > opened
+    live, late = nowcast.nim_ras(h, q, day, known=1), nowcast.nim_ras(h, q, report, known=1)
+    assert [m["status"] for m in live["iea"]["months"]] == ["known", "estimated"]
+    assert [m["status"] for m in late["iea"]["months"]] == ["known", "known"]
+    assert abs(live["value"] - late["value"]) > 1e-4                               # расхождение — не округление
+    table = retro.ratio_sigma_table(store, bridge=bridge, to_mgmt_nim=_to_mgmt, today=date(2026, 10, 1))["nim"]
+    errors = []
+    for period in table["quarters"]:
+        moment, actual = h.mgmt["nim"][period]
+        when = retro.known_date(h, period, 1, moment[:10], nii_month)
+        est = nowcast.nim_ras(h, period, when, known=1) if when else None
+        if est is None or est["nii"]["months_known"] != 1:
+            continue
+        b = (nowcast.facts_ratio_before(bridge["nii"], period, table["bridge_window"]["nii"])
+             / nowcast.facts_ratio_before(bridge["iea"], period, table["bridge_window"]["iea"]))
+        errors.append(_to_mgmt(est["value"] * b) - actual)
+    assert len(errors) == table["n"]["ras"]["1"] >= 8
+    assert table["ras"]["1"] == pytest.approx(math.sqrt(sum(e * e for e in errors) / len(errors)), rel=1e-12)
+    profit = retro.sigma_table(store, today=date(2026, 10, 1))                    # у прибыли день знания тот же ответ
+    assert profit["n"]["ras"]["1"] >= 8 and 0.0 < profit["ras"]["1"] < profit["ras"]["0"]
 
 
 def test_iea_average_from_an_older_form():

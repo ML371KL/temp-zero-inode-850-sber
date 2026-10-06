@@ -1,9 +1,11 @@
 """RWA, нормативы из BV с аддитивными вычетами, требования и полы (М§3.3, §4.11–§4.12).
 
-K20 = BV + DPreg − (1 − f)·R − Ded20 + AT1 + T2;  K11 = BV + DPreg − (1 − f)·R − E − Ded11;
+K20 = BV + DPreg − (1 − f)·R − Ded20 + AT1 + T2;  K11 = BV + DPreg − (1 − f)·R − max(E, 0) − Ded11;
 Ded_q = Ded_0 × RWA_q / RWA_0 (вычеты растут с бизнесом; дивиденд и прибыль входят
-один к одному). Н20.1 группы — через прокси Н1.1 банка. Пол = минимум + надбавки
-сценария года; требование Н20.0 = max(порог политики; пол + буфер).
+один к одному). Из базового капитала исключается только неаудированная ПРИБЫЛЬ: убыток
+неаудированного периода уменьшает его сразу, вместе с BV. Н20.1 группы — через прокси
+Н1.1 банка. Пол = минимум + надбавки сценария года; требование Н20.0 = max(порог
+политики; пол + буфер).
 """
 
 from __future__ import annotations
@@ -160,14 +162,23 @@ class Ratios:
 
 def ratios(c: CapitalConst, *, bv: float, dpreg: float, reserve: float, unaudited: float,
            t2: float, rwa: float, ded_pp20: float, ded_pp11: float) -> Ratios:
-    """K20, K11, Н20.0 и Н20.1 (прокси Н1.1) на конец квартала (М§4.11)."""
+    """K20, K11, Н20.0 и Н20.1 (прокси Н1.1) на конец квартала (М§4.11).
+
+    `unaudited` — E_q, результат неаудированного периода (знак любой). Из K11 исключается только
+    прибыль, max(E_q, 0): убыток уже уменьшил BV и в базовый капитал не возвращается."""
     ded20 = c.ded20_0 * rwa / c.rwa0
     ded11 = c.ded11_0 * rwa / c.rwa0
     bvreg = bv + dpreg - (1 - c.fvoci_recognition) * reserve
     k20 = bvreg - ded20 + c.at1 + t2
-    k11 = bvreg - unaudited - ded11
+    k11 = bvreg - max(unaudited, 0.0) - ded11
     return Ratios(rwa=rwa, k20=k20, k11=k11, n20=k20 / rwa + c.gap20 - ded_pp20,
                   n11=k11 / rwa + c.gap11 - ded_pp11, ded20=ded20, ded11=ded11)
+
+
+def n11_audited(k11: float, unaudited: float, rwa: float, gap11: float, ded_pp11: float) -> float:
+    """N11* — Н20.1 с прибылью периода в базовом капитале (E = 0, как после аудита; М§7): в K11
+    возвращается ровно то, что из него исключено, — max(E, 0); убыток в нём уже учтён."""
+    return (k11 + max(unaudited, 0.0)) / rwa + gap11 - ded_pp11
 
 
 def after_audit_start(quarter: int, cutoffs: Sequence[int]) -> int:

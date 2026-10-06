@@ -275,7 +275,9 @@ def test_the_decisions_before_the_first_push_are_recorded():
     budgets = (ROOT / "ops" / "budgets.json").read_text(encoding="utf-8")
     assert '"tact_tests_target": 180' in budgets and '"tact_tests_ci_ceiling": 300' in budgets
     headings = re.findall(r"^## Часть (\d+)\. .*?\((\d{2}\.\d{2}\.\d{4})\)", text, re.M)
-    assert [int(n) for n, _ in headings] == list(range(1, 11)), headings
+    numbers = [int(n) for n, _ in headings]
+    # части 1–10 — до первого push; после выкладки журнал продолжается (номера и даты — по порядку)
+    assert numbers[:10] == list(range(1, 11)) and numbers == sorted(set(numbers)), headings
     days = [tuple(reversed(day.split("."))) for _, day in headings]
     assert days == sorted(days), f"части журнала решений идут не по датам: {headings}"
     changelog = (ROOT / "docs" / ("CHANGELOG" + ".md")).read_text(encoding="utf-8")

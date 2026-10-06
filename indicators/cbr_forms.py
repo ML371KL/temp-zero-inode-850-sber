@@ -7,10 +7,22 @@ SOAP `CreditOrgInfo.asmx` отдаёт только ПОСЛЕДНЮЮ верс�
   новая дата — полная форма в сырой архив (защищённый), разбор, ряды, момент
   первого появления `first_seen_utc` в индексе;
 * раз в неделю — перекачка последних `RECHECK_DATES` дат и сравнение sha256: другой
-  ответ — новый винтаж (точки рядов ложатся рядом, прежние не стираются);
+  ответ — новый винтаж (точки рядов ложатся рядом, прежние не стираются); неделя
+  отсчитывается от последней удачной сверки даты (`checked`);
 * первый запуск на пустом состоянии не качает всю историю: прошлые даты помечаются
   известными без `first_seen_utc` (история — в `data/indicators/seed/`), качаются
   последние `RECHECK_DATES`.
+
+Дата «обработана», только когда форма скачана И разобрана. Три состояния записи индекса:
+обнаружена (`versions` пуст), скачана, но не разобрана (`parsed: false` у последней
+версии), в рядах. Первые два — очередь: дата запрашивается в каждом такте, пока не
+дойдёт до рядов (и тогда, когда список дат её уже не называет), и каждый такт сообщает о
+ней деградацией — повтор сбора внутри такта (`ops/run.sh`) и тревога «невосполнимый
+источник не собран» работают по ней, а не гаснут на втором проходе. Заглушка сервиса с
+кодом 200 — не ответ: список без единой даты и «форма» без конверта SOAP — отказ с
+повтором, версией формы заглушка не становится. Неразобранная попытка — не винтаж: в
+записи она одна, последней, и уступает место следующему ответу; о пересмотре (`revised`)
+такт сообщает, когда новый винтаж лёг в ряды, а не когда пришёл другой ответ.
 
 Разбор (перенос разборщиков этапа 1): 102 — прибыль после налога `61101` (минус
 убыток `61102`), до налога `01000` (минус `02000`), налог `03000` − `04000`, итоги
@@ -79,8 +91,13 @@ def _blocks(xml: str, tag: str) -> list[dict[str, str]]:
 
 
 def parse_dates(body: bytes | str) -> list[str]:
+    """Даты форм из ответа `GetDatesForF…`. Ответ без единой даты — не список (у эмитента формы есть
+    за годы): заглушка сервиса с кодом 200 не должна читаться как «новых дат нет»."""
     text = body.decode("utf-8") if isinstance(body, bytes) else body
-    return sorted({d[:10] for d in re.findall(r"<dateTime>([^<]+)</dateTime>", text)})
+    dates = sorted(set(re.findall(r"<dateTime>(\d{4}-\d{2}-\d{2})[^<]*</dateTime>", text)))
+    if not dates:
+        raise FormError("в ответе нет ни одной даты — это не список дат формы")
+    return dates
 
 
 def parse_f102(body: bytes | str) -> dict[str, float | None]:
@@ -281,16 +298,45 @@ def ingest(store: Store, form: str, on: str, body: bytes, *, fetched_at: str, so
     return touched
 
 
+NOTE_BEFORE_START = "до запуска сборщика"
+SOAP_MARK, SOAP_HEAD = b"Envelope", 600       # ответ сервиса — конверт SOAP; знак конверта — в начале ответа
+
+
+def is_service_document(body: bytes) -> bool:
+    """Ответ — документ сервиса (конверт SOAP), а не страница-заглушка с кодом 200 вместо него."""
+    return SOAP_MARK in body[:SOAP_HEAD]
+
+
+def _unparsed(version: Mapping[str, Any]) -> bool:
+    return version.get("parsed") is False
+
+
+def pending(entry: Mapping[str, Any]) -> bool:
+    """Дата известна, а данных в рядах нет: форма ещё не скачана или её последний ответ не разобран.
+    Дата до запуска сборщика (история — в затравке) в очередь не идёт."""
+    if entry.get("note"):
+        return False
+    versions = entry.get("versions") or []
+    return not versions or _unparsed(versions[-1])
+
+
+def recheck_due(entry: Mapping[str, Any], index: Mapping[str, Any], today: date) -> bool:
+    """Пора ли перекачать дату: её последняя удачная сверка (`checked`; у записей прежнего формата — общая
+    отметка `last_recheck`) — `RECHECK_EVERY_DAYS` дней назад или раньше."""
+    last = entry.get("checked") or index.get("last_recheck")
+    return not last or (today - date.fromisoformat(str(last)[:10])).days >= RECHECK_EVERY_DAYS
+
+
 def collect(ctx: Context) -> Result:
-    """Такт форм: новые даты — полная форма; раз в неделю — перекачка последних дат."""
+    """Такт форм: новые даты и очередь (не скачано, не разобрано) — полная форма; раз в неделю —
+    перекачка последних дат. Отметку получает только дата, чья форма дошла до рядов."""
     getter = ctx.getter or http.fetch
     sink = http.Sink(ctx.store, SOURCE)
     regnum = ctx.company["cbr_regnum"]
     res = Result(name="cbr_forms")
     index = load_index(ctx.store)
-    last = index.get("last_recheck")
-    recheck = last is None or (ctx.today - date.fromisoformat(last)).days >= RECHECK_EVERY_DAYS
     failures = 0
+    rechecked, recheck_clean = False, True
     for form in FORMS:
         known: dict[str, Any] = index["forms"].setdefault(form, {})
         op, inner = dates_request(form, regnum)
@@ -299,39 +345,63 @@ def collect(ctx: Context) -> Result:
             dates = parse_dates(listed.body)
         except (http.FetchError, FormError, UnicodeDecodeError) as exc:
             failures += 1
-            res.degrade(f"форма {form}: список дат — {exc}", retry=http.retryable(exc))
+            recheck_clean = False
+            # Нечитаемый список (заглушка с кодом 200) — как отказ сети: повтор сбора может его снять.
+            res.degrade(f"форма {form}: список дат — {exc}",
+                        retry=http.retryable(exc) or not isinstance(exc, http.FetchError))
             continue
         bootstrap = not known
-        todo = []
         for on in dates:
             if on not in known:
                 if bootstrap and on not in dates[-RECHECK_DATES:]:
-                    known[on] = {"first_seen_utc": None, "versions": [], "note": "до запуска сборщика"}
+                    known[on] = {"first_seen_utc": None, "versions": [], "note": NOTE_BEFORE_START}
                     continue
                 known[on] = {"first_seen_utc": None if bootstrap else listed.fetched_at, "versions": []}
-                todo.append(on)
-        if recheck:
-            todo += [d for d in dates[-RECHECK_DATES:] if d not in todo]
-        for on in todo:
+        # Очередь — по записям, а не по списку: дата, которую список перестал называть, не теряется молча.
+        queue = sorted(on for on, entry in known.items() if pending(entry))
+        due = [on for on in dates[-RECHECK_DATES:]
+               if on not in queue and not known[on].get("note") and recheck_due(known[on], index, ctx.today)]
+        rechecked = rechecked or bool(due)
+        for on in queue + due:
             op, inner = form_request(form, regnum, on)
             try:
                 resp = http.soap(URL, op, inner, getter=getter, sink=sink, name=f"f{form}_{on}.xml")
             except http.FetchError as exc:
+                # Запись не трогается: дата остаётся в очереди (или с прежней сверкой) до следующего прохода.
+                recheck_clean = recheck_clean and on not in due
                 res.degrade(f"форма {form} на {on}: {exc}", retry=http.retryable(exc))
+                continue
+            if not is_service_document(resp.body):
+                # Заглушка вместо формы — как отказ сети: версией она не становится, запись не трогается.
+                recheck_clean = recheck_clean and on not in due
+                res.degrade(f"форма {form} на {on}: ответ — не документ сервиса (заглушка с кодом {resp.status})",
+                            retry=True)
                 continue
             entry = known[on]
             versions = entry.setdefault("versions", [])
-            if versions and versions[-1]["sha256"] == resp.sha256:
+            attempt = versions.pop() if versions and _unparsed(versions[-1]) else None   # прежняя неудачная попытка
+            held = versions[-1] if versions else None                                    # последний винтаж в рядах
+            if held is not None and held["sha256"] == resp.sha256:
+                entry["checked"] = resp.fetched_at            # тот же ответ, он уже в рядах
                 continue
-            if versions:
-                res.data.setdefault("revised", []).append(f"{form}:{on}")
-            versions.append({"sha256": resp.sha256, "fetched_at": resp.fetched_at})
+            version = attempt if attempt is not None and attempt["sha256"] == resp.sha256 else {
+                "sha256": resp.sha256, "fetched_at": resp.fetched_at}
+            versions.append(version)
             try:
                 res.series += ingest(ctx.store, form, on, resp.body, fetched_at=resp.fetched_at,
                                      source=f"cbr:0409{form}:{on}:sha256:{resp.sha256[:12]}")
-            except FormError as exc:
-                res.degrade(f"форма {form} на {on}: разбор — {exc}", retry=http.retryable(exc))
-    if recheck:
+            except (FormError, ValueError) as exc:
+                # Попытка помечена неразобранной: тот же ответ в следующем такте разбирается снова, а не
+                # считается известным, — ошибка не исчезает из статуса, пока форма не дошла до рядов.
+                version["parsed"] = False
+                recheck_clean = recheck_clean and on not in due
+                res.degrade(f"форма {form} на {on}: разбор — {exc}", retry=False)
+                continue
+            version.pop("parsed", None)
+            if held is not None:
+                res.data.setdefault("revised", []).append(f"{form}:{on}")     # новый винтаж лёг рядом с прежним
+            entry["checked"] = resp.fetched_at
+    if rechecked and recheck_clean:
         index["last_recheck"] = ctx.today.isoformat()
     ctx.store.write_state(INDEX_FILE, index)
     if failures >= len(FORMS):

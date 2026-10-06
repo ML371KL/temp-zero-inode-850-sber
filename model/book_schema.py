@@ -763,6 +763,88 @@ def _semantic_errors(data: Mapping, ids: Mapping[str, tuple[str, ...]]) -> list[
     for i, axis in enumerate(_get(data, "valuation.reverse_dcf.axes") or []):
         out.extend(_axis_rules(data, axis, f"valuation.reverse_dcf.axes[{i}]"))
     out.extend(_observation_rules(data, anchor, last))
+    out.extend(_unit_interval_rules(data))
+    return out
+
+
+# Таблицы вероятностей книги (М§3.4, §9): каждое значение — вероятность.
+PROBABILITY_TABLES = ("joint.world_prob", "joint.world_prob_market_implied", "joint.regime_prob",
+                      "joint.reg_prob_given_regime")
+# Доли книги с границами [0; 1] (у `nii.sigma0_split`, `nii.phi_split` и
+# `joint.regime_update.floor_share` — свои правила выше).
+UNIT_SHARES = {"joint.own_macro_confidence": "доверие своему взгляду на ставки λ (М§9)",
+               "dividends.excess.epsilon": "доля выплаты избытка ε (М§5.3)"}
+# Концы оси, которые подставляются в книгу как есть: у оси полосы — low и high, у оси обратного
+# расчёта — отрезок поиска и таблица, к которой идёт смесь.
+AXIS_ENDS = {"valuation.uncertainty.axes": ("low", "high"), "valuation.uncertainty.off_band_axes": ("low", "high"),
+             "valuation.reverse_dcf.axes": ("search", "toward")}
+
+
+def _outside_unit(path: str, value: Any, what: str) -> list[str]:
+    """Числа значения (число, список или словарь любой глубины) вне [0; 1] — строками ошибок."""
+    if isinstance(value, Mapping):
+        return [e for k, v in value.items() for e in _outside_unit(f"{path}.{k}", v, what)]
+    if isinstance(value, (list, tuple)):
+        return [e for v in value for e in _outside_unit(path, v, what)]
+    if is_number(value) and not 0 <= float(value) <= 1:
+        return [f"{path} = {value}: {what} — от 0 до 1"]
+    return []
+
+
+def _under(path: str, roots: Iterable[str]) -> bool:
+    return any(path == root or path.startswith(root + ".") for root in roots)
+
+
+def _steps(value: Any) -> list[float]:
+    """Приращения конца оси-сдвига: число (конец оси полосы) или пара чисел (отрезок поиска обратного расчёта)."""
+    if is_number(value):
+        return [float(value)]
+    if isinstance(value, (list, tuple)):
+        return [float(v) for v in value if is_number(v)]
+    return []
+
+
+def _unit_interval_rules(data: Mapping) -> list[str]:
+    """Вероятности и доли книги — в [0; 1] (М§3.4, §5.3, §9; сумму таблицы держит инвариант `probabilities`).
+
+    Без правила отрицательная вероятность при сумме 1 давала отрицательные веса клеток, ε > 1 — выплату
+    сверх запаса капитала, λ вне [0; 1] — точку за пределами слоёв. То же — концам осей, у которых путь —
+    такая вероятность или доля: ось подставляет их в книгу (смесь оси словаря и смесь обратного расчёта —
+    выпуклые). У оси вида «сдвиг» концы — приращения: в книгу ложится её значение плюс приращение, и
+    проверяется оно — иначе книга прошла бы загрузку и не прошла прогон полосы. Вероятность таблицы
+    сдвигом не водят: сумма таблицы перестала бы быть 1."""
+    out: list[str] = []
+    for table in PROBABILITY_TABLES:
+        out.extend(_outside_unit(table, _get(data, table), "вероятность (М§3.4)"))
+    for path, what in UNIT_SHARES.items():
+        out.extend(_outside_unit(path, _get(data, path), what))
+    bounded = tuple(PROBABILITY_TABLES) + tuple(UNIT_SHARES)
+    for group, ends in AXIS_ENDS.items():
+        for i, axis in enumerate(_get(data, group) or []):
+            if not isinstance(axis, Mapping):
+                continue
+            hit = [p for p in map(str, axis.get("paths") or []) if _under(p, bounded)]
+            if not hit:
+                continue
+            where = f"{group}[{i}]"
+            if axis.get("kind") != "shift":
+                for end in ends:
+                    out.extend(_outside_unit(f"{where}.{end}", axis.get(end),
+                                             "конец оси вероятности или доли (М§10, §11.1)"))
+                continue
+            for p in hit:
+                if _under(p, PROBABILITY_TABLES):
+                    out.append(f"{where}: ось-сдвиг по вероятности {p} — сумма таблицы перестала бы быть 1 "
+                               "(М§3.4, §10)")
+                    continue
+                base = _get(data, p)
+                if not is_number(base):
+                    continue
+                for end in ends:
+                    for step in _steps(axis.get(end)):
+                        if not 0 <= float(base) + step <= 1:
+                            out.append(f"{where}.{end} = {step:g}: {p} = {base} со сдвигом — вне [0; 1] "
+                                       "(М§10, §11.1)")
     return out
 
 

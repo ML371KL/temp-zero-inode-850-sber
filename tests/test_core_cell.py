@@ -6,7 +6,7 @@ import math
 
 import pytest
 
-from model.capital import CapitalConst, ratios
+from model.capital import CapitalConst, n11_audited, ratios
 from model.cell import run_cell
 from model.checks import check_invariants
 from model.credit import kappa_addon
@@ -94,6 +94,59 @@ def test_dividend_lowers_k20_and_k11_one_for_one():
     assert a.k20 - b.k20 == pytest.approx(777.0, rel=1e-12)
     assert a.k11 - b.k11 == pytest.approx(777.0, rel=1e-12)
     assert a.ded20 == pytest.approx(900.0 * 65000 / 60000)        # вычеты растут с RWA
+
+
+def test_unaudited_loss_stays_in_base_capital():
+    """Из K11 исключается только неаудированная прибыль; убыток периода уменьшает базовый капитал сразу,
+    вместе с BV, а N11* возвращает в капитал ровно исключённое (М§4.11, §7)."""
+    c = CapitalConst(ded20_0=0.0, ded11_0=0.0, rwa0=1000.0, fvoci_recognition=1.0, gap20=0.0, gap11=0.0,
+                     at1=0.0, audit_cutoffs=(3, 4), buffer20=0.0, buffer11=0.0)
+    kw = dict(dpreg=0.0, reserve=0.0, t2=0.0, rwa=1000.0, ded_pp20=0.0, ded_pp11=0.0)
+    flat = ratios(c, bv=200.0, unaudited=0.0, **kw)
+    loss = ratios(c, bv=100.0, unaudited=-100.0, **kw)          # убыток 100: BV 200 → 100
+    gain = ratios(c, bv=300.0, unaudited=100.0, **kw)           # прибыль 100: BV 200 → 300
+    assert flat.k11 - loss.k11 == pytest.approx(100.0, rel=1e-12)
+    assert gain.k11 == pytest.approx(flat.k11, rel=1e-12)
+    assert flat.k20 - loss.k20 == pytest.approx(100.0, rel=1e-12)
+    assert gain.k20 - flat.k20 == pytest.approx(100.0, rel=1e-12)
+    assert n11_audited(loss.k11, -100.0, 1000.0, 0.0, 0.0) == pytest.approx(0.1, rel=1e-12)
+    assert n11_audited(gain.k11, 100.0, 1000.0, 0.0, 0.0) == pytest.approx(0.3, rel=1e-12)
+
+
+def test_crisis_loss_quarter_lowers_k11_in_the_grid():
+    """В клетках кризиса есть квартал с убытком: K11 = BVreg − Ded11 (E < 0 не возвращается), в прочих
+    кварталах K11 = BVreg − E − Ded11 (М§4.11)."""
+    book, facts = fixture_book(), fixture_facts()
+    f = float(book.get("capital.n20.fvoci_recognition"))
+    ctx = make_context(book, facts)
+    c = run_cell(ctx, "M", "crisis", "strict")
+    q_ = c.quarters
+    losses = 0
+    for q in range(1, ctx.timeline.Q + 1):
+        e = q_["e_unaudited"][q]
+        bvreg = q_["bv"][q] + q_["dpreg"][q] - (1 - f) * q_["reserve"][q]
+        assert q_["k11"][q] == pytest.approx(bvreg - max(e, 0.0) - q_["ded11"][q], rel=1e-12), q
+        losses += e < 0
+    assert losses > 0
+
+
+def test_terminal_n11_star_is_the_audited_ratio_of_the_last_quarter(monkeypatch):
+    """N11* терминала считает `n11_audited` на величинах последнего квартала — K11, неаудированный результат,
+    RWA; знак результата разбирает функция (убыток в капитал не возвращается — тест выше), М§7."""
+    from model import cell as cell_module
+    book, facts = fixture_book(), fixture_facts()
+    ctx = make_context(book, facts)
+    seen = []
+
+    def spy(k11, unaudited, rwa, gap11, ded_pp11):
+        seen.append((k11, unaudited, rwa))
+        return n11_audited(k11, unaudited, rwa, gap11, ded_pp11)
+
+    monkeypatch.setattr(cell_module, "n11_audited", spy)
+    c = run_cell(ctx, "M", "crisis", "strict")
+    Q, q_ = ctx.timeline.Q, c.quarters
+    assert seen == [(q_["k11"][Q], q_["e_unaudited"][Q], q_["rwa"][Q])]
+    assert c.n11_star == pytest.approx(q_["n11"][Q] + max(q_["e_unaudited"][Q], 0.0) / q_["rwa"][Q], rel=1e-12)
 
 
 def test_agm_quarter_is_neutral_for_regulatory_capital():

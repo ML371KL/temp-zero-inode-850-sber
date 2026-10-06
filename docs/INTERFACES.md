@@ -168,7 +168,8 @@ model/                       ядро (Python): книга, клетка, сет
                              стационарный ЧПМ, σ0 и φ по реализованной передаче (М§4.4–§4.5)
   credit.py                  мост упр. ↔ движок (Bridge), CoR режима → движок, κ-добавка, резервы (М§4.6)
   capital.py                 RWA и дрейф плотности, K20/K11 с аддитивными вычетами, E_q по календарю
-                             аудитов, полы и требования по сценариям (М§3.3, §4.11–§4.12)
+                             аудитов (из K11 исключается только прибыль, max(E, 0); N11* — n11_audited),
+                             полы и требования по сценариям (М§3.3, §4.11–§4.12)
   dividends.py               политика данными книги: база, пул, DPS (ceil_kopeck в Decimal), пробный
                              проход, запас H, ступени, догоняющий, ε, календарь, реестр (М§5)
   cell.py                    квартальный проход клетки в порядке М§4.2 → CellResult
@@ -193,7 +194,10 @@ indicators/                  сборщики, хранилище, журнал,
   config.py                  meta.company книги (PyYAML, без импорта model) и data/indicators/sources.yaml
   iss.py                     MOEX ISS: цены (запасные), кривая zcyc, индекс
   cbr.py                     ЦБ: ключевая, RUONIA, ставки вкладов, ликвидность (SOAP)
-  cbr_forms.py               CreditOrgInfo по регномеру: даты и формы 101/102/123/135, винтажи, разбор
+  cbr_forms.py               CreditOrgInfo по регномеру: даты и формы 101/102/123/135, винтажи, разбор;
+                             индекс cbr_forms/index.json: дата обнаружена → скачана → в рядах (очередь
+                             несделанного — в каждом такте, с деградацией; недельная сверка — по записи;
+                             заглушка с кодом 200 — отказ, не версия; неразобранная попытка — одна)
   tinvest.py                 T-Invest (токен из окружения): цены, дивиденды, календарь отчётов, цели брокеров
   news.py                    новостные ленты: тексты и ссылки на документы эмитента
   release_watch.py           дозор релизов РСБУ/МСФО: новость + статический PDF, приём при двух источниках
@@ -202,7 +206,8 @@ indicators/                  сборщики, хранилище, журнал,
   journal.py                 журнал прогнозов (SQLite, записи неизменяемы, эталоны замораживаются), правило допуска
   nowcast.py                 нау-каст квартала: оценка по РСБУ × сезонный мост, вес w, прогноз (DESIGN §5)
   calendar.py                календарь событий для индикаторов и выпуска (из facts/calendar.json + расписание форм)
-  retro.py                   ретро-проверка эталонов на истории
+  retro.py                   ретро-проверка эталонов на истории; σ_РСБУ(k) — на знании дня, когда вышел
+                             k-й месяц квартала, не раньше открытия квартала (known_date)
   seed.py                    история рядов из листов этапа 1 → data/indicators/seed/ (`--check`; $BANK_HANDOFF_DIR)
   outputs.py                 ВЫХОДЫ ДЛЯ ВЫПУСКА: release_inputs() → IndicatorOutputs, реэкспорт combine (§5)
   collect.py                 CLI такта индикаторов
@@ -602,8 +607,13 @@ class Finding:
     name: str                              # имя из М§14.1–§14.3
     kind: str                              # "invariant" | "gate" | "flag"
     fired: bool; mass: float | None; cells: tuple[str, ...]; message: str; detail: Mapping[str, Any]
-def check_invariants(run: GridRun) -> list[Finding]
-def check_gates(run: GridRun, *, today: date | None = None) -> list[Finding]     # гейты М§14.2 и флаги М§14.3 ядра
+def check_invariants(run: GridRun, band: Band | None = None) -> list[Finding]
+    # probabilities — суммы таблиц и неотрицательность каждого веса; dividend_bounds — вся выплата года не
+    # больше запаса капитала ступени (М§14.1); band — DDM = RI и в прогонах полосы
+def check_gates(run: GridRun, *, today: date | None = None, off_band: Mapping | None = None,
+                band: Band | None = None) -> list[Finding]                          # гейты М§14.2 и флаги М§14.3 ядра
+    # band — сообщения гейтов capital_gap и roe_gt_g называют и хвост прогонов полосы (Band.tail, М§10);
+    # условие, масса и клетки гейта — печатаемой сетки
 SHARE_KEYS: tuple[str, ...]                # nii.sigma0_split, nii.phi_split — доли, по осям которых ходит гейт пола
 def share_axis_ends(book: Book) -> list[dict[str, float]]
     # углы области осей долей (сочетания концов осей полосы по SHARE_KEYS, без точки книги): гейт
@@ -636,7 +646,14 @@ class Band:
     s: tuple[tuple[float, ...], ...]       # положение оси s ∈ [−1, 1] по прогонам
     low_draws: tuple[float, ...]; high_draws: tuple[float, ...]   # ₽, 0,1 (ROUND_HALF_UP)
     ddm_ri_max: float                      # max |V_DDM − V_RI| / V_RI по всем клеткам всех прогонов (М§6.4)
+    rows: tuple[Mapping[str, float], ...]  # точные сводки прогонов (run_summary): низ, верх, V0, BV, ROE, k слоёв,
+                                           # ddm_ri и поля хвоста — gap_mass, need_capital_mass, negative_mass
+                                           # (массы клеток под весами «свой взгляд»), low_floor, high_floor (низ и
+                                           # верх прогона при стоимости клетки не ниже нуля)
     def centres(self, lam: float) -> list[float]
+    def tail(self, lam: float) -> Mapping[str, Any] | None
+        # хвост полосы (М§10): {n, capital_gap, need_capital, negative: {draws, mass}, floor_shift: {low, median}};
+        # mass — масса таких клеток в среднем по ВСЕМ прогонам полосы; сводки без полей хвоста — None
     def headline(self, lam: float, prices: Mapping[str, float], main: str) -> Mapping[str, Any]  # квантили тип 7, среднее, P(ниже), печать
     def contributions(self, lam: float) -> list[Mapping[str, Any]]   # Спирмен, средние ранги при равенстве
 def band(book: Book, facts: Facts, live: LiveInputs, *, draws: int | None = None, workers: int | None = None) -> Band

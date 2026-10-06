@@ -478,4 +478,5 @@ def _ded11(af: AnchorFacts, data: Mapping[str, Any]) -> float:
     e0 = unaudited_profit(af, cutoffs, y, q, ni)
     dpreg0 = af.dividends_payable if af.n20_pre_dividend else 0.0
     bvreg = af.bv + dpreg0 - (1 - f) * af.fvoci_reserve
-    return bvreg - e0 - af.bank_base_capital
+    # та же форма, что у норматива пути (model.capital.ratios): исключается только прибыль
+    return bvreg - max(e0, 0.0) - af.bank_base_capital

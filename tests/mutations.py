@@ -192,6 +192,20 @@ MUTATIONS: list[Mutation] = [
              "        root, _ = bisect_point(pg, a, b, tol=tol)"),
     Mutation("M67", "гейт пола спреда не смотрит на концы осей долей", "model/checks.py",
              "    corners = share_axis_ends(book)", "    corners = []"),
+    # --- правки по внешнему аудиту 02.10.2026 (DECISIONS часть 12; М§18, строка «Мутации»)
+    Mutation("M68", "убыток неаудированного периода возвращён в базовый капитал", "model/capital.py",
+             "k11 = bvreg - max(unaudited, 0.0) - ded11", "k11 = bvreg - unaudited - ded11"),
+    Mutation("M69", "N11* возвращает в базовый капитал и убыток периода", "model/capital.py",
+             "return (k11 + max(unaudited, 0.0)) / rwa + gap11 - ded_pp11",
+             "return (k11 + unaudited) / rwa + gap11 - ded_pp11"),
+    Mutation("M70", "граница дивиденда — с добавкой догоняющей выплаты и избытка (проверка ничего не ловит)",
+             "model/checks.py", "if d.div > max(0.0, h) + REL_TOL * max(1.0, abs(d.div)):",
+             "if d.div > max(0.0, h) + d.catch + d.excess + REL_TOL * max(1.0, abs(d.div)):"),
+    Mutation("M71", "инвариант вероятностей не видит отрицательного веса", "model/checks.py",
+             "        if min(values) < 0:\n            negative.append(name)", "        pass"),
+    Mutation("M72", "схема книги не ограничивает вероятности и доли отрезком [0; 1]", "model/book_schema.py",
+             "    if is_number(value) and not 0 <= float(value) <= 1:\n        return [f\"{path} = {value}: {what} — от 0 до 1\"]",
+             "    if False:\n        return []"),
 ]
 
 
@@ -348,6 +362,58 @@ def _checks() -> dict[str, Callable[[], None]]:
                 if tl.h(j) in cut:
                     break
             assert close(c.quarters["e_unaudited"][q], total), q
+
+    def unaudited_loss_in_base_capital() -> None:
+        """K11 = BVreg − max(E, 0) − Ded11: убыток неаудированного периода уменьшает базовый капитал сразу,
+        исключается только прибыль; N11* возвращает в капитал ровно исключённое (М§4.11, §7)."""
+        from model.capital import n11_audited
+        f = float(book.get("capital.n20.fvoci_recognition"))
+        losses = 0
+        for c in base.cells:
+            q_ = c.quarters
+            for q in range(1, tl.Q + 1):
+                e = q_["e_unaudited"][q]
+                bvreg = q_["bv"][q] + q_["dpreg"][q] - (1 - f) * q_["reserve"][q]
+                assert close(q_["k11"][q], bvreg - (e if e > 0 else 0.0) - q_["ded11"][q]), (c.label, q)
+                losses += e < 0
+            assert close(c.n11_star, q_["n11"][tl.Q] + max(q_["e_unaudited"][tl.Q], 0.0) / q_["rwa"][tl.Q]), c.label
+        assert losses > 0                                   # в клетках кризиса есть квартал с убытком
+        assert close(n11_audited(900.0, -50.0, 10000.0, 0.001, 0.002), 0.09 + 0.001 - 0.002, abs_=1e-15)
+        assert close(n11_audited(900.0, 50.0, 10000.0, 0.001, 0.002), 0.095 + 0.001 - 0.002, abs_=1e-15)
+
+    def dividend_bound_is_the_headroom() -> None:
+        """Инвариант `dividend_bounds`: вся выплата года (базовая, догоняющая, доля избытка) не больше запаса
+        капитала ступени; решение с выплатой на 1 млрд ₽ сверх запаса он называет (М§5.3 п. 4, §14.1)."""
+        from dataclasses import replace
+        cell = next(c for c in base.cells if any(d.source == "model" and d.excess > 0 for d in c.decisions))
+        d = next(d for d in cell.decisions if d.source == "model" and d.excess > 0)
+        h = d.headroom[d.step]
+        over = replace(d, excess=d.excess + (h - d.div) + 1.0, div=h + 1.0)
+        changed = replace(cell, decisions=tuple(over if x is d else x for x in cell.decisions))
+        bad = replace(base, cells=tuple(changed if c is cell else c for c in base.cells))
+        found = next(f for f in check_invariants(bad) if f.name == "dividend_bounds")
+        assert found.fired, found.message
+
+    def probabilities_are_not_negative() -> None:
+        """Таблица вероятностей с суммой 1 и отрицательным весом: инвариант `probabilities` срабатывает на
+        прогоне, схема книги — до расчёта; ε и λ вне [0; 1] схема тоже не принимает (М§3.4, §5.3, §9)."""
+        from dataclasses import replace
+        from model.book_schema import BookError
+        layer = base.layers["analytical"]
+        (k1, p1), (k2, p2) = list(layer.prob.items())[:2]
+        prob = {**layer.prob, k1: -p1, k2: p2 + 2 * p1}
+        bad = replace(base, layers={**base.layers, "analytical": replace(layer, prob=prob)})
+        assert next(f for f in check_invariants(bad) if f.name == "probabilities").fired
+        wp = {w: float(v) for w, v in book.get("joint.world_prob").items()}
+        a, b = list(wp)[:2]
+        moved = {**wp, a: -0.1, b: wp[a] + wp[b] + 0.1}
+        for override in ({"joint.world_prob": moved}, {"dividends.excess.epsilon": 1.25},
+                         {"joint.own_macro_confidence": 1.5}):
+            try:
+                book.with_overrides(override)
+            except BookError:
+                continue
+            raise AssertionError(f"схема приняла {override}")
 
     def agm_quarter_neutral_for_capital() -> None:
         agm_q = tl.index(f"{tl.anchor_year + 1}Q{book.get('dividends.calendar.agm_quarter')}")
@@ -953,6 +1019,8 @@ def _checks() -> dict[str, Callable[[], None]]:
                                     dps_is_pool_over_issued, exdate_jump_with_governance,
                                     h_world_independent_of_phi, cor_path_bridged_once,
                                     deductions_scale_with_rwa, unaudited_by_calendar,
+                                    unaudited_loss_in_base_capital, dividend_bound_is_the_headroom,
+                                    probabilities_are_not_negative,
                                     agm_quarter_neutral_for_capital, apu_cap_per_observation,
                                     ddm_ri_mid_quarter, lhs_order, quantile_type_7, quarter_end_continuity,
                                     sigma0_from_year, epsilon_ramp, misc_quarter_profile,

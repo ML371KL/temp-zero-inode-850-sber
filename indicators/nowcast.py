@@ -34,13 +34,14 @@ w = σ²_база / (σ²_база + σ²_РСБУ(k)),   k — известны
 
 from __future__ import annotations
 
+import itertools
 import math
 from dataclasses import dataclass, field
 from datetime import date, datetime, timezone
 from typing import Any, Callable, Mapping
 
 from indicators import cbr_forms, periods
-from indicators.store import Store
+from indicators.store import USABLE, Store
 
 EQUATION = "прогноз = ожидание модели + w·(оценка по РСБУ × сезонный мост − ожидание)"
 EQUATIONS = {
@@ -90,6 +91,24 @@ def _rows(store: Store, sid: str, source: str) -> dict[str, list[Row]]:
     return out
 
 
+Vintage = tuple[str, int, float | None]      # (момент известности, порядок записи, значение)
+
+
+def _vintages(series: Any) -> dict[str, list[Vintage]]:
+    """Период → годные версии точки в порядке записи (правило хранилища: при равных моментах — записанная позже)."""
+    out: dict[str, list[Vintage]] = {}
+    for order, p in enumerate(series.points):
+        if p.status in USABLE:
+            out.setdefault(p.period, []).append((p.fetched_at, order, p.value))
+    return out
+
+
+def _vintage_as_of(rows: list[Vintage], as_of: str) -> float | None:
+    """Значение последней версии, полученной не позже даты, — то же, что `Series.value_as_of`."""
+    rows = [r for r in rows if r[0][:10] <= as_of]
+    return max(rows, key=lambda r: r[:2])[2] if rows else None
+
+
 @dataclass
 class History:
     """Ряды хранилища, нужные нау-касту и ретро, с моментами известности."""
@@ -100,6 +119,10 @@ class History:
     release: dict[str, dict[str, list[Row]]] = field(default_factory=dict)          # метрика релиза → мес → строки
     iea: dict[str, list[Row]] = field(default_factory=dict)                         # мес → процентные активы, ф. 101
     mgmt: dict[str, dict[str, tuple[str, float]]] = field(default_factory=dict)     # nim|cor → кв → (момент, факт)
+    # Версии фактов кварталов: `ifrs` и `mgmt` несут момент ПЕРВОГО появления и ПОСЛЕДНЕЕ значение — на дату
+    # между версиями значение читается отсюда (иначе ретро знало бы пересмотр до его выхода).
+    ifrs_rows: dict[str, list[Vintage]] = field(default_factory=dict)               # кв → версии ЧП МСФО
+    mgmt_rows: dict[str, dict[str, list[Vintage]]] = field(default_factory=dict)    # nim|cor → кв → версии факта
 
     @classmethod
     def load(cls, store: Store) -> "History":
@@ -108,16 +131,30 @@ class History:
             h.months.setdefault(m, []).extend(rows)
         f102 = store.load("cbr.f102.ni_ytd")
         if f102 is not None:
-            ytd_by_moment = sorted((p.fetched_at, p.period, p.value) for p in f102.points
+            # Порядок — момент получения, при равных моментах — порядок записи (правило хранилища).
+            ytd_by_moment = sorted((p.fetched_at, order, p.period, p.value) for order, p in enumerate(f102.points)
                                    if p.value is not None and p.status in ("ok", "manual"))
             known: dict[str, float] = {}
-            for moment, m, v in ytd_by_moment:
-                known[m] = v
-                mv = cbr_forms.month_from_ytd(known).get(m)
-                if mv is not None:
-                    h.months.setdefault(m, []).append((moment, mv, "form102"))
+            held: dict[str, float] = {}                # мес → последнее записанное значение месяца по форме
+            for moment, group in itertools.groupby(ytd_by_moment, key=lambda row: row[0]):
+                # Итоги одного момента входят вместе: месяц — разность двух уже обновлённых итогов, а не
+                # нового и прежнего (иначе у месяца на один момент оказались бы два значения).
+                touched = []
+                for _, _, m, v in group:
+                    known[m] = v
+                    touched.append(m)
+                monthly = cbr_forms.month_from_ytd(known)
+                # Нарастающий итог входит в разность двух месяцев — своего и следующего: пересмотр итога (или
+                # его запоздавший приход) с этого момента меняет и следующий месяц, если тот уже известен.
+                for mm in sorted({x for m in touched for x in (m, periods.shift_month(m, 1))}):
+                    mv = monthly.get(mm)
+                    if mm not in known or mv is None or held.get(mm) == mv:
+                        continue
+                    held[mm] = mv
+                    h.months.setdefault(mm, []).append((moment, mv, "form102"))
         act = store.load("actual.ni_q")
         if act is not None:
+            h.ifrs_rows = _vintages(act)
             for q, p in act.points_as_of(None).items():
                 if p.value is not None:
                     h.ifrs[q] = (act.first_seen(q) or p.fetched_at, p.value)
@@ -126,10 +163,17 @@ class History:
         h.iea = _rows(store, "cbr.f101.iea", "form101")
         for key in ("nim", "cor"):
             s = store.load(f"actual.{key}_q")
+            h.mgmt_rows[key] = {} if s is None else _vintages(s)
             h.mgmt[key] = {} if s is None else {
                 q: (s.first_seen(q) or p.fetched_at, p.value) for q, p in s.points_as_of(None).items()
                 if p.value is not None}
         return h
+
+    @staticmethod
+    def _fact(latest: float, rows: list[Vintage] | None, as_of: str | None) -> float | None:
+        """Факт квартала на дату: версия, известная не позже `as_of`; без даты (или без версий — история
+        собрана не из хранилища) — последнее значение."""
+        return latest if as_of is None or not rows else _vintage_as_of(rows, as_of)
 
     def month(self, m: str, as_of: str | None) -> tuple[float, str, str] | None:
         """(значение, источник, момент) ЧП месяца, известное на дату; релиз важнее формы."""
@@ -154,13 +198,13 @@ class History:
         row = self.mgmt.get(key, {}).get(q)
         if row is None or (as_of is not None and row[0][:10] > as_of):
             return None
-        return row[1]
+        return self._fact(row[1], self.mgmt_rows.get(key, {}).get(q), as_of)
 
     def quarter_ifrs(self, q: str, as_of: str | None) -> float | None:
         row = self.ifrs.get(q)
         if row is None or (as_of is not None and row[0][:10] > as_of):
             return None
-        return row[1]
+        return self._fact(row[1], self.ifrs_rows.get(q), as_of)
 
     def report_date(self, q: str) -> str | None:
         row = self.ifrs.get(q)

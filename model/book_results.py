@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import textwrap
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -30,6 +31,8 @@ OUT_DIR = ROOT / "data" / "assumptions"
 CENTRAL_RULE = ("мода по каждой оси в слое «свой взгляд»: мир с наибольшим весом, режим с наибольшей вероятностью "
                 "после наблюдений, сценарий капитала с наибольшей вероятностью при этом режиме; при равенстве — "
                 "первый по порядку книги")
+MESSAGE_WIDTH = 140       # строка сообщения проверки в `run_output.txt`; длинное переносится, а не обрезается
+MESSAGE_INDENT = 35       # продолжение сообщения — под началом его первой строки (вид и имя проверки — слева)
 
 
 def _layer(L) -> dict[str, Any]:
@@ -78,7 +81,7 @@ def book_results(book: Book | None = None, facts: Facts | None = None, *, slow: 
                "terminal_share": cc.terminal_share}
     judg = U.judgements(book, facts, live, band, point=run.point) if slow else None
     off_band = U.off_band_shift(book, facts, live, run.point, judg)
-    findings = check_invariants(run, band) + check_gates(run, off_band=off_band)
+    findings = check_invariants(run, band) + check_gates(run, off_band=off_band, band=band)
     checks = [{"name": f.name, "kind": f.kind, "fired": f.fired, "mass": f.mass, "message": f.message}
               for f in findings]
     derived = derived_values(run.ctx)
@@ -171,7 +174,10 @@ def render_run_output(results: Mapping[str, Any]) -> str:
     for c in results["checks"]:
         mark = ("НАРУШЕН" if c["kind"] == "invariant" else "сработал") if c["fired"] else "ок"
         mass = "" if c["mass"] is None else f" (масса {c['mass']:.3f})"
-        lines.append(f"  {c['kind']:<9} {c['name']:<22} {mark}{mass}: {c['message'][:140]}")
+        # Сообщение — целиком: длинное переносится под своё начало (в хвосте сообщения гейта — прогоны полосы).
+        first, *rest = textwrap.wrap(c["message"], MESSAGE_WIDTH, break_on_hyphens=False) or [""]
+        lines.append(f"  {c['kind']:<9} {c['name']:<22} {mark}{mass}: {first}")
+        lines += [" " * MESSAGE_INDENT + part for part in rest]
     rev = results.get("reverse_dcf")
     if rev:
         lines += ["", f"ЧТО В ЦЕНЕ (медиана = {_f(rev['target'])} ₽)"]

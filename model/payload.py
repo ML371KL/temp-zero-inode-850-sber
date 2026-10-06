@@ -1223,7 +1223,7 @@ def make_release(*, live: bool = True, fast: bool = False, today: date | None = 
         judg = U.judgements(book, facts, live_in, band, point=run.point)
         sens = sensitivities(book, facts, live_in, anchor, run)
     off_band = U.off_band_shift(book, facts, live_in, run.point, judg)
-    findings = check_invariants(run, band) + check_gates(run, today=today, off_band=off_band)
+    findings = check_invariants(run, band) + check_gates(run, today=today, off_band=off_band, band=band)
     expl = explanations if explanations is not None else load_gate_explanations(today=today)
     gates = gate_statuses(findings, expl, today=today)
     previous, history = read_data_repo(data_repo, state_dir)

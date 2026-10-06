@@ -186,6 +186,89 @@ def test_band_contributions_skip_dict_axes(small_band):
     assert all(r["judgement_key"] == r["axis"] for r in rows)
 
 
+@pytest.mark.tact
+def test_band_tail_counts_the_cells_that_need_capital(small_band):
+    """Хвост полосы (М§10): сводка прогона несёт массы клеток с капитальным разрывом, с ROE терминала не выше
+    роста и с отрицательной стоимостью и цену прогона при стоимости клетки не ниже нуля; `Band.tail` — число
+    таких прогонов, средняя масса и сдвиг квантилей."""
+    book, facts, live, band = small_band
+    masses = ("gap_mass", "need_capital_mass", "negative_mass")
+    negative = [i for i, r in enumerate(band.rows) if r["negative_mass"] > 0]
+    gap_only = [i for i, r in enumerate(band.rows) if r["gap_mass"] > 0 and not r["negative_mass"]]
+    calm = [i for i, r in enumerate(band.rows) if not any(r[k] > 0 for k in masses)]
+    assert negative and gap_only and calm                 # в выборке — все три случая: сверка ниже не пуста
+    for i in (negative[0], gap_only[0], calm[0]):
+        run = run_grid(U.draw_book(book, band.axes, band.s[i]), facts, live)
+        row, prob = band.rows[i], run.layers["analytical"].prob
+        assert row["gap_mass"] == pytest.approx(sum(prob[c.key] for c in run.cells if "capital_gap" in c.flags))
+        assert row["need_capital_mass"] == pytest.approx(sum(prob[c.key] for c in run.cells if c.roe_t <= c.g_t))
+        assert row["negative_mass"] == pytest.approx(sum(prob[c.key] for c in run.cells if c.v_ri < 0))
+        for name, layer in (("low_floor", "macro_neutral"), ("high_floor", "analytical")):
+            weights = run.layers[layer].prob
+            floor = run.price_of(sum(weights[c.key] * max(c.v_ri, 0.0) for c in run.cells))
+            assert row[name] == pytest.approx(floor, rel=1e-12)
+        if any(c.v_ri < 0 for c in run.cells):
+            assert i in negative and row["low_floor"] > row["low"] and row["high_floor"] > row["high"]
+        else:
+            assert (row["low_floor"], row["high_floor"]) == (row["low"], row["high"])       # бит в бит
+    worst = band.rows[negative[0]]
+    assert worst["need_capital_mass"] > 0 and worst["gap_mass"] > 0     # отрицательная стоимость — там, где нужен капитал
+    tail = band.tail(band.lam)
+    assert set(tail) == {"n", "capital_gap", "need_capital", "negative", "floor_shift"} and tail["n"] == 10
+    for key, name in (("capital_gap", "gap_mass"), ("need_capital", "need_capital_mass"),
+                      ("negative", "negative_mass")):
+        assert tail[key]["draws"] == sum(1 for r in band.rows if r[name] > 0) > 0
+        assert tail[key]["mass"] == pytest.approx(sum(r[name] for r in band.rows) / 10)        # по всем прогонам
+        assert 0 < tail[key]["mass"] < max(r[name] for r in band.rows)
+    assert tail["floor_shift"]["low"] > 0 and tail["floor_shift"]["median"] >= 0
+
+
+@pytest.mark.tact
+def test_band_tail_floor_shift_on_synthetic_draws():
+    """Сдвиг квантилей при нулевом поле стоимости клетки — разность квантилей центра прогонов с полом и без
+    него; сводки без полей хвоста (полоса прежнего формата) — хвоста нет."""
+    lam, levels = 0.5, (0.1, 0.25, 0.5, 0.75, 0.9)
+    data = ((100.0, 140.0, 30.0, 0.04, 0.03, 0.02), (200.0, 260.0, 0.0, 0.0, 0.0, 0.0),
+            (300.0, 380.0, 0.0, 0.01, 0.0, 0.0), (400.0, 500.0, 0.0, 0.0, 0.0, 0.0),
+            (150.0, 190.0, 10.0, 0.02, 0.02, 0.01))
+    rows = tuple({"low": lo, "high": hi, "low_floor": lo + up, "high_floor": hi + up, "gap_mass": gap,
+                  "need_capital_mass": need, "negative_mass": neg} for lo, hi, up, gap, need, neg in data)
+    band = U.Band(axes=(), s=(), low_draws=tuple(r["low"] for r in rows), high_draws=tuple(r["high"] for r in rows),
+                  draws=len(rows), quantiles=levels, rows=rows)
+    tail = band.tail(lam)
+    centre = sorted((lo + hi) / 2 for lo, hi, *_ in data)
+    floored = sorted((lo + hi) / 2 + up for lo, hi, up, *_ in data)
+    assert tail["floor_shift"]["low"] == pytest.approx(U.quantile(floored, 0.1) - U.quantile(centre, 0.1))
+    assert tail["floor_shift"]["median"] == pytest.approx(U.quantile(floored, 0.5) - U.quantile(centre, 0.5)) == 0.0
+    assert tail["capital_gap"] == {"draws": 3, "mass": pytest.approx(0.07 / 5)}
+    assert tail["need_capital"]["draws"] == 2 and tail["negative"] == {"draws": 2, "mass": pytest.approx(0.03 / 5)}
+    old = U.Band(axes=(), s=(), low_draws=(1.0, 2.0), high_draws=(2.0, 3.0), draws=2, quantiles=levels,
+                 rows=({"low": 1.0, "high": 2.0}, {"low": 2.0, "high": 3.0}))
+    assert old.tail(lam) is None and U.Band(axes=(), s=(), low_draws=(1.0,), high_draws=(2.0,)).tail(lam) is None
+
+
+@pytest.mark.tact
+def test_gate_messages_name_the_band_tail(small_band):
+    """Сообщения гейтов `capital_gap` и `roe_gt_g` называют и хвост прогонов полосы; условие, масса и список
+    клеток гейта — по-прежнему печатаемой сетки (М§14.2)."""
+    from model.checks import check_gates, grouped, pct
+    book, facts, live, band = small_band
+    run = run_grid(book, facts, live)
+    plain = {f.name: f for f in check_gates(run)}
+    told = {f.name: f for f in check_gates(run, band=band)}
+    tail = band.tail(run.lam)
+    for name, key in (("capital_gap", "capital_gap"), ("roe_gt_g", "need_capital")):
+        a, b = plain[name], told[name]
+        assert (a.fired, a.mass, a.cells) == (b.fired, b.mass, b.cells)
+        part = (f"в {grouped(tail[key]['draws'])} из {grouped(10)} прогонов (масса таких клеток в среднем по всем "
+                f"прогонам — {pct(tail[key]['mass'])})")
+        assert b.message.startswith(a.message + "; в полосе — " + part), b.message
+        assert "в полосе" not in a.message
+    assert "стоимость клетки ниже нуля — " in told["roe_gt_g"].message
+    for name in set(plain) - {"capital_gap", "roe_gt_g"}:
+        assert plain[name].message == told[name].message
+
+
 def test_median_anchor_sees_exactly_the_printed_median_at_book_values(small_band):
     book, facts, live, band = small_band
     anchor = U.MedianAnchor(book, facts, live, band, n=6)

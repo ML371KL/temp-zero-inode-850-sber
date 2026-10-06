@@ -23,9 +23,10 @@ BAND_HEADLINE = ("median", "printed_median", "band80", "printed_band80", "band50
                  "p10", "p25", "p75", "p90", "mean", "p_below_market", "p_below_by_ticker", "upside",
                  "draws", "seed", "contributions")
 TODAY_DEPENDENT = {"manual_input_overdue"}
-# Текст инварианта DDM = RI называет число прогонов полосы и максимум разности по ним (C4): быстрая полоса
-# сетки его меняет — сверяются имя, вид, срабатывание и масса, без текста.
-BAND_DEPENDENT_TEXT = {"ddm_equals_ri"}
+# Текст инварианта DDM = RI называет число прогонов полосы и максимум разности по ним (C4), тексты гейтов
+# `capital_gap` и `roe_gt_g` — хвост прогонов полосы (М§10): быстрая полоса сетки их меняет — сверяются имя,
+# вид, срабатывание и масса, без текста.
+BAND_DEPENDENT_TEXT = {"ddm_equals_ri", "capital_gap", "roe_gt_g"}
 
 
 def _diff(saved, fresh, path: str, bad: list[str]) -> None:

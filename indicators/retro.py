@@ -22,10 +22,21 @@ T−90 первого квартала ложится ≈ за 60 дней до 
 известных месяцах квартала (k = 0 — последний месяц прошлого квартала × профиль);
 σ_база — RMSE эталона `yoy_growth` на горизонте T−90 (приор без РСБУ квартала).
 
+**День знания σ_РСБУ(k)** (`known_date`) — день, когда стал известен k-й месяц квартала
+(k = 0 — дата горизонта T−90), но не раньше выхода МСФО прошлого квартала — как и дата
+горизонта: раньше журнал квартал не открывает, и мост фактов (отношения кварталов до
+оцениваемого) в этот день ещё не содержал бы прошлого квартала. Всё прочее, что входит в
+оценку, берётся таким, каким оно было известно в этот день, а не в день отчёта. Для
+прибыли разницы нет (месяцы и мост прошлых лет к этому дню уже вышли), для ЧПМ она есть:
+процентные активы конца квартала (форма 0409101) в день релиза месяца ещё не вышли и
+продлеваются ростом, как в живом прогнозе, — на знании дня отчёта σ была бы ниже ошибки
+живого прогноза.
+
 ЧПМ и CoR (T3/T4, `ratio_sigma_table`): абсолютные ошибки оценки «РСБУ × мост» против факта
-упр. базиса на дату отчёта; мост — среднее отношений `quarters[].ratio` фактов за окно их
-метода (`n`; нет — четыре квартала) раньше оцениваемого (вне выборки); σ_база — эталон
-«прошлый квартал» на T−90.
+упр. базиса; мост — среднее отношений `quarters[].ratio` фактов за окно их метода (`n`;
+нет — четыре квартала) раньше оцениваемого (вне выборки); σ_база — эталон «прошлый
+квартал» на T−90. Перевод ЧПМ в упр. базис — нынешним мостом ядра (одно число на всю
+историю): в σ он входит как постоянный сдвиг, а не как знание дня прогноза.
 """
 
 from __future__ import annotations
@@ -44,13 +55,30 @@ MAIN = {"T-30": "ras_bridge", "T-90": "ras_bridge"}
 CONSENSUS_HORIZON = "T-30"                       # консенсус снят у отчёта: эталон только ближнего горизонта
 CONSENSUS_TITLE = "консенсус у отчёта (за день до выхода)"
 FACTS_WINDOW = 4          # кварталов отношений фактов в мосте ретро, если у блока нет своего окна `n`
+MONTHLY = {"nim": "nii_m", "cor": "cor_m"}       # цель → месячная метрика релиза, по которой считается k
+
+
+def _not_before_opening(h: History, q: str, day: str) -> str:
+    """День не раньше выхода МСФО прошлого квартала: до него журнал квартал не открывает (`collect.open_period`)."""
+    opened = h.report_date(periods.shift_quarter(q, -1))
+    return max(day, opened) if opened else day
 
 
 def horizon_date(h: History, q: str, report: str, days: int) -> str:
     """Дата горизонта: отчёт − дни, но не раньше выхода МСФО прошлого квартала (как `collect.open_period`)."""
-    day = (date.fromisoformat(report) - timedelta(days=days)).isoformat()
-    opened = h.report_date(periods.shift_quarter(q, -1))
-    return max(day, opened) if opened else day
+    return _not_before_opening(h, q, (date.fromisoformat(report) - timedelta(days=days)).isoformat())
+
+
+def known_date(h: History, q: str, k: int, report: str,
+               month: Callable[[str, str | None], tuple[float, str, str] | None]) -> str | None:
+    """День, на знании которого меряется σ_РСБУ(k): k ≥ 1 — день, когда стал известен k-й месяц квартала
+    (`month` — чтение месяца: ЧП, ЧПД или CoR релиза; не позже отчёта и не раньше открытия квартала —
+    январь первого квартала выходит до МСФО за год); k = 0 — дата дальнего горизонта T−90, как у σ_база.
+    Месяц неизвестен — None (оценки с таким k у квартала нет)."""
+    if k == 0:
+        return horizon_date(h, q, report, HORIZON_DAYS["T-90"])
+    got = month(periods.quarter_months(q)[k - 1], None)
+    return None if got is None else _not_before_opening(h, q, min(got[2][:10], report))
 
 
 def benchmarks_at(h: History, store: Store, q: str, as_of: str) -> dict[str, float]:
@@ -124,12 +152,14 @@ def sigma_table(store: Store, *, today: date | None = None) -> dict[str, Any]:
         if report is None or report > today.isoformat():
             continue
         actual = h.ifrs[q][1]
-        bridge, _ = history_bridge(h, q, report)
-        if bridge is not None:
-            for k in range(4):
-                est = ras_estimate(h, q, report, known=k)
-                if est is not None and est["months_known"] == k:
-                    errs[k].append((est["estimate"] * bridge - actual) / actual)
+        for k in range(4):
+            day = known_date(h, q, k, report, h.month)
+            if day is None:
+                continue
+            bridge, _ = history_bridge(h, q, day)
+            est = ras_estimate(h, q, day, known=k)
+            if bridge is not None and est is not None and est["months_known"] == k:
+                errs[k].append((est["estimate"] * bridge - actual) / actual)
         marks = benchmarks_at(h, store, q, horizon_date(h, q, report, HORIZON_DAYS["T-90"]))
         if "yoy_growth" in marks:
             base.append((marks["yoy_growth"] - actual) / actual)
@@ -189,7 +219,11 @@ def ratio_sigma_table(store: Store, *, bridge: Mapping[str, Any] | None,
             if b is None or (key == "nim" and basis != "mgmt" and to_mgmt_nim is None):
                 continue
             for k in range(4):
-                est = nim_ras(h, q, report, known=k) if key == "nim" else cor_ras(h, q, report, known=k)
+                # знание дня, когда вышел k-й месяц: у ЧПМ невышедший конец квартала активов продлевается ростом
+                day = known_date(h, q, k, report, lambda m, a: h.release_month(MONTHLY[key], m, a))
+                if day is None:
+                    continue
+                est = nim_ras(h, q, day, known=k) if key == "nim" else cor_ras(h, q, day, known=k)
                 got = None if est is None else (est["nii"]["months_known"] if key == "nim" else est["months_known"])
                 if got != k:
                     continue

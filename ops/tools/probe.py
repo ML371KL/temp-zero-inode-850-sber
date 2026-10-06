@@ -147,9 +147,8 @@ def probe_cbr_forms(getter=None, *, company: dict) -> list[Row]:
 
         def dates(op=op, inner=inner):
             resp = http.soap(CREDIT_ORG_INFO, op, inner, getter=lambda url, **kw: _get(getter, url, **kw))
-            got = cbr_forms.parse_dates(resp.body)
-            return bool(got), str(resp.status), len(resp.body), (
-                f"дат {len(got)}, последняя {max(got)}" if got else "дат нет")
+            got = cbr_forms.parse_dates(resp.body)        # ответ без дат — отказ пробы (FormError)
+            return True, str(resp.status), len(resp.body), f"дат {len(got)}, последняя {max(got)}"
 
         rows.append(_timed("cbr_forms", f"{op} (регномер из книги)", CREDIT_ORG_INFO, dates))
     return rows

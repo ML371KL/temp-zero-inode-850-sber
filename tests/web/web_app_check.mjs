@@ -654,6 +654,8 @@ const press = (page, label, group) => {
     message: "разрыв между мирами 5,24 п.п. при пределе 5 п.п.", explanation: "Разрыв — цена раздельного сжатия спреда; объяснён до пересмотра книги." });
   d.checks.gates.find((g) => g.name === "capital_gap").fired = false;
   d.checks.gates.find((g) => g.name === "guidance_gap").fired = false;
+  // Несработавший гейт с сообщением: в нём хвост прогонов полосы, которого в печатаемой сетке нет (М§10).
+  d.checks.gates.find((g) => g.name === "roe_gt_g").message = "ROE терминала не выше роста в 0 клетках; в полосе — в 367 из 2 000 прогонов (масса таких клеток в среднем по всем прогонам — 0,64 %)";
   const noisy = d.checks.control_model.rows.find((r) => r.what.startsWith("кредитная маржа"));
   Object.assign(noisy, { control: noisy.core + 3e-6, diff: 3e-6, diff_rel: 3e-6 / noisy.core, ok: false });
   const number = d.checks.control_model.rows.find((r) => r.unit === "number");
@@ -670,6 +672,9 @@ const press = (page, label, group) => {
   let text = page.text();
   check("P7: счётчики на 1 и 2 — «1 нарушенный инвариант», «1 сработавший гейт», «2 поднятых флага»", text.includes("1 нарушенный инвариант из 14 1 сработавший гейт из 19 2 поднятых флага"), text.match(/.{0,20}нарушенн.{0,120}/));
   check("P7: гейт, сравнивающий миры целиком, — масса без счёта клеток", text.includes(`${worlds.title}100,0 % массы · ожидалось 100,0 %`) && !/0 клеток ·|\d кл\./.test(text), text.match(/.{0,60}100,0 % массы.{0,60}/));
+  const quietGates = squash(visibleText(cardOf(page, "Проверки")));
+  check("аудит 02.10: сообщение несработавшего гейта печатается у его коридора — предложением",
+    quietGates.includes("ROE'_T > g_T ROE терминала не выше роста в 0 клетках; в полосе — в 367 из 2 000 прогонов (масса таких клеток в среднем по всем прогонам — 0,64 %)."), quietGates.match(/.{0,40}ROE терминала не выше роста.{0,200}/));
   const cm = squash(visibleText(cardOf(page, "Сверка с контрольной моделью")));
   check("P7: сверка — строка вне допуска разность не прячет", cm.includes("+0,0003 п.п. 0,0001 п.п. вне допуска") && cm.includes("2·10⁻⁵ 1·10⁻⁶ вне допуска") && cm.includes("вне допуска — 2."), cm.slice(0, 900));
   check("P7: дробный срок на оси — «1,6 года»", /Срок подтягивания FVOCI 4 года 1,6 года … 6 лет/.test(text), text.match(/.{0,20}Срок подтягивания.{0,80}/));

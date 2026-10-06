@@ -1391,12 +1391,14 @@ def _c_capital(ctx: dict, s: str, y: int, h: int, bv: float, dpreg: float, R: fl
     if missing:
         raise ControlInputError(f"нет прибыли кварталов {missing} для E_q")
     e_un = sum(ni_q[yq] for yq in e_q)
-    k11 = bvreg - e_un - c_bnum(B, "capital.n11.deductions_anchor") * ratio
+    # из базового капитала исключается только прибыль неаудированного периода; убыток — уже в BV (М§4.11)
+    e_out = e_un if e_un > 0.0 else 0.0
+    k11 = bvreg - e_out - c_bnum(B, "capital.n11.deductions_anchor") * ratio
     dp20 = c_traj_at(c_bget(B, f"capital.reg_scenarios.{s}.deduction_pp.n20_0"), y, h)
     dp11 = c_traj_at(c_bget(B, f"capital.reg_scenarios.{s}.deduction_pp.n1_1"), y, h)
     n20 = k20 / rwa + c_bnum(B, "capital.n20.gap_pp") - dp20
     n11 = k11 / rwa + c_bnum(B, "capital.n11.gap_pp") - dp11
-    n11_star = (k11 + e_un) / rwa + c_bnum(B, "capital.n11.gap_pp") - dp11
+    n11_star = (k11 + e_out) / rwa + c_bnum(B, "capital.n11.gap_pp") - dp11
     fl20, fl11 = _c_floor(B, s, "n20_0", y, h), _c_floor(B, s, "n1_1", y, h)
     return {"k20": k20, "k11": k11, "n20": n20, "n11": n11, "n11_star": n11_star, "e_unaudited": e_un,
             "floor20": fl20, "floor11": fl11,

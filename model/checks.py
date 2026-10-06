@@ -146,23 +146,28 @@ def check_invariants(run: GridRun, band: Any = None) -> list[Finding]:
     """Инварианты М§14.1 уровня клетки и книги; `band` — полоса: DDM = RI и в её прогонах (М§6.4)."""
     ctx, book = run.ctx, run.ctx.book
     out: list[Finding] = []
-    # probabilities
-    bad = []
-    rp = book.get("joint.regime_prob")
-    if abs(sum(rp.values()) - 1) > PROB_TOL:
-        bad.append("вероятности режимов книги")
+    # probabilities: каждая таблица — неотрицательные числа в сумме 1 (сумма 1 при отрицательном весе —
+    # не распределение: клетка вошла бы в оценку с обратным знаком)
+    bad, negative = [], []
+
+    def table(name: str, values) -> None:
+        values = [float(v) for v in values]
+        if abs(sum(values) - 1) > PROB_TOL:
+            bad.append(name)
+        if min(values) < 0:
+            negative.append(name)
+
+    table("вероятности режимов книги", book.get("joint.regime_prob").values())
     for r, row in book.get("joint.reg_prob_given_regime").items():
-        if abs(sum(row.values()) - 1) > PROB_TOL:
-            bad.append(f"вероятности сценариев капитала режима {r}")
+        table(f"вероятности сценариев капитала режима {r}", row.values())
     for name, layer in run.layers.items():
-        if abs(sum(layer.world_weights.values()) - 1) > PROB_TOL:
-            bad.append(f"веса миров слоя {name}")
-        if abs(sum(layer.prob.values()) - 1) > PROB_TOL:
-            bad.append(f"вероятности клеток слоя {name}")
-    if abs(sum(ctx.posterior.values()) - 1) > PROB_TOL:
-        bad.append("вероятности режимов после наблюдений")
-    out.append(_inv("probabilities", bad, "все таблицы вероятностей в сумме 1",
-                    "суммы вероятностей ≠ 1: " + ", ".join(bad)))
+        table(f"веса миров слоя {name}", layer.world_weights.values())
+        table(f"вероятности клеток слоя {name}", layer.prob.values())
+    table("вероятности режимов после наблюдений", ctx.posterior.values())
+    broken = (["суммы вероятностей ≠ 1: " + ", ".join(bad)] if bad else []) + (
+        ["отрицательные вероятности: " + ", ".join(negative)] if negative else [])
+    out.append(_inv("probabilities", bad + negative, "все таблицы вероятностей неотрицательны и в сумме 1",
+                    "; ".join(broken)))
     # тождества по кварталам
     bv_bad, bal_bad, pnl_bad = [], [], []
     for c in run.cells:
@@ -225,7 +230,8 @@ def check_invariants(run: GridRun, band: Any = None) -> list[Finding]:
                     f"ЧПМ сквозь цикл мира {tr.reference_world} равен цели (отклонение {sci(e1)}), реализованная "
                     f"передача равна цели книги (отклонение {sci(e2)})",
                     "передача ставки не решена: " + ", ".join(bad), nss_error=e1, t_error=e2))
-    # dividend_bounds
+    # dividend_bounds: вся выплата года — базовая, догоняющая и доля избытка — не больше запаса капитала
+    # выбранной ступени (догоняющая и избыток — части Div_Y, а не добавка к границе; М§5.3 п. 4)
     bad = []
     for c in run.cells:
         for d in c.decisions:
@@ -233,7 +239,7 @@ def check_invariants(run: GridRun, band: Any = None) -> list[Finding]:
                 bad.append(f"{c.label} {d.year}")
             elif d.source == "model":
                 h = d.headroom[d.step]
-                if d.div > max(0.0, h) + d.catch + d.excess + REL_TOL * max(1.0, abs(d.div)):
+                if d.div > max(0.0, h) + REL_TOL * max(1.0, abs(d.div)):
                     bad.append(f"{c.label} {d.year}")
     out.append(_inv("dividend_bounds", bad, "дивиденд неотрицателен и не больше запаса капитала, отложенный пул "
                                             "неотрицателен",
@@ -325,13 +331,41 @@ def inside(band: Sequence[float | None], x: float) -> bool:
 RANGE_WORDS = {"roe": "ROE года", "cor": "CoR года (базис движка)", "cir": "CIR года (базис движка)"}
 
 
+def _band_share(part: Mapping[str, Any], n: int) -> str:
+    """«в 807 из 2 000 прогонов (масса таких клеток в среднем по всем прогонам — 0,77 %)» — строка хвоста
+    полосы (М§10). Масса усреднена по всем прогонам полосы, а не по тем, где такие клетки есть."""
+    return (f"в {grouped(part['draws'])} из {grouped(n)} прогонов (масса таких клеток в среднем по всем "
+            f"прогонам — {pct(part['mass'])})")
+
+
+def _band_gap_words(tail: Mapping[str, Any] | None) -> str:
+    """Добавка к сообщению гейта `capital_gap`: то же условие в прогонах полосы."""
+    return "" if tail is None else f"; в полосе — {_band_share(tail['capital_gap'], tail['n'])}"
+
+
+def _band_capital_words(tail: Mapping[str, Any] | None) -> str:
+    """Добавка к сообщению гейта `roe_gt_g`: в прогонах полосы — клетки, где нужна докапитализация, и клетки
+    с отрицательной стоимостью; сколько такие клетки весят в печатаемой полосе (М§7, §10)."""
+    if tail is None:
+        return ""
+    text = f"; в полосе — {_band_share(tail['need_capital'], tail['n'])}"
+    neg, shift = tail["negative"], tail["floor_shift"]
+    if not neg["draws"]:
+        return text + "; стоимость клетки ниже нуля — ни в одном прогоне"
+    return (text + f"; стоимость клетки ниже нуля — {_band_share(neg, tail['n'])}: с ограничением нулём снизу "
+            f"низ полосы был бы выше на {num(shift['low'], 1)} ₽, медиана — на {num(shift['median'], 1)} ₽")
+
+
 def check_gates(run: GridRun, *, today: _dt.date | None = None,
-                off_band: Mapping[str, Any] | None = None) -> list[Finding]:
+                off_band: Mapping[str, Any] | None = None, band: Any = None) -> list[Finding]:
     """Гейты М§14.2 и флаги ядра М§14.3. `off_band` — диагностика сдвига положения осей вне полосы
-    (`model.uncertainty.off_band_shift`: {rub, limit, axes}); нет — считается здесь, если такие оси есть."""
+    (`model.uncertainty.off_band_shift`: {rub, limit, axes}); нет — считается здесь, если такие оси есть.
+    `band` — полоса: сообщения гейтов `capital_gap` и `roe_gt_g` называют и хвост её прогонов (условие и
+    масса гейта — по-прежнему печатаемой сетки: прогоны полосы объяснения не требуют)."""
     ctx, book = run.ctx, run.ctx.book
     bridge = ctx.bridge
     today = today or ctx.clock.valuation_date
+    tail = band.tail(run.lam) if band is not None else None
     out: list[Finding] = []
     ch = lambda k: book.get(f"checks.{k}")
     # pb_by_world
@@ -383,12 +417,14 @@ def check_gates(run: GridRun, *, today: _dt.date | None = None,
     bad = [c.label for c in run.cells if "capital_gap" in c.flags]
     first = min((c.gap_period for c in run.cells if c.gap_period), default=None)
     out.append(_gate("capital_gap", run, bad, f"норматив ниже пола {in_cells(len(bad))}"
-                     + (f", первый квартал — {period_words(first)}" if first else ""), first_period=first))
+                     + (f", первый квартал — {period_words(first)}" if first else "") + _band_gap_words(tail),
+                     first_period=first, band=None if tail is None else tail["capital_gap"]))
     bad = [c.label for c in run.cells if c.g_capped]
     out.append(_gate("k_gt_g", run, bad, f"защита роста терминала (на 1 б.п. ниже стоимости капитала) "
                                          f"сработала {in_cells(len(bad))}"))
     bad = [c.label for c in run.cells if c.roe_t <= c.g_t]
-    out.append(_gate("roe_gt_g", run, bad, f"ROE терминала не выше роста {in_cells(len(bad))}"))
+    out.append(_gate("roe_gt_g", run, bad, f"ROE терминала не выше роста {in_cells(len(bad))}"
+                     + _band_capital_words(tail), band=tail))
     bad = [c.label for c in run.cells if _outside(c.terminal_share, ch("terminal_share"))]
     out.append(_gate("terminal_share", run, bad, f"доля терминала вне коридора {in_cells(len(bad))}"))
     bad = [c.label for c in run.cells if _outside(c.real_rate, ch("real_rate"))]

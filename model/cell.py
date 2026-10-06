@@ -31,7 +31,7 @@ from typing import TYPE_CHECKING, Any, Mapping
 from model.book import AnchorFacts, BookRoles, SECURITIES, LIQUIDITY, WHOLESALE, anchor_facts, book_roles
 from model.book_schema import BookError, FactsError
 from model.capital import (CapitalConst, RwaWeights, ScenarioPath, after_audit_start, capital_const,
-                           density_index, fx_index, ratios, rwa_anchor, rwa_weights, scenario_path)
+                           density_index, fx_index, n11_audited, ratios, rwa_anchor, rwa_weights, scenario_path)
 from model.credit import Bridge, fvc_amount, kappa_addon, regime_cor_engine
 from model.dividends import (Checkpoint, Decision, Policy, base_of_year, decide, make_policy, pool_policy,
                              register_dps)
@@ -820,7 +820,7 @@ def run_cell(ctx: "RunContext", world: str, regime: str, scenario: str) -> CellR
     last = rows[-1]
     L = tl.year(Q)
     pbt_l = sum(r["pbt"] for q, r in zip(range(1, Q + 1), rows) if tl.year(q) == L)
-    n11_star = (last["k11"] + last["e_unaudited"]) / last["rwa"] + p.cap.gap11 - cell.sc.ded_pp11[Q]
+    n11_star = n11_audited(last["k11"], last["e_unaudited"], last["rwa"], p.cap.gap11, cell.sc.ded_pp11[Q])
     y_bal = p.sec_share * last["_rate"][SECURITIES] + (1 - p.sec_share) * last["_rate"][LIQUIDITY]
     term = terminal(n20=last["n20"], req20=last["req20"], n11_star=n11_star, req11=last["req11"],
                     rwa=last["rwa"], bv_q=last["bv"], pbt_last_year=pbt_l, y_balancing=y_bal,

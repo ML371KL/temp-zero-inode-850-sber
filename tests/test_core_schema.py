@@ -168,6 +168,67 @@ def test_w1_semantic_rules():
            "только value и shift")
 
 
+def test_probabilities_and_shares_stay_in_the_unit_interval():
+    """Вероятности и доли книги — в [0; 1]: отрицательная вероятность при сумме 1, ε > 1 и λ вне [0; 1]
+    схему не проходят; то же — концам осей с таким путём (М§3.4, §5.3, §9)."""
+    data = fixture_dict()
+    joint = data["joint"]
+    a, b = list(joint["world_prob"])[:2]
+    moved = {**joint["world_prob"], a: -0.1, b: joint["world_prob"][a] + joint["world_prob"][b] + 0.1}
+    assert sum(moved.values()) == pytest.approx(1.0)                       # сумма по-прежнему 1
+    _fails(book_with({"joint.world_prob": moved}), f"joint.world_prob.{a} = -0.1", "вероятность")
+    _fails(book_with({"joint.world_prob_market_implied": moved}), f"joint.world_prob_market_implied.{a}")
+    r, r2 = list(joint["regime_prob"])[:2]
+    regimes = {**joint["regime_prob"], r: -0.05, r2: joint["regime_prob"][r] + joint["regime_prob"][r2] + 0.05}
+    _fails(book_with({"joint.regime_prob": regimes}), f"joint.regime_prob.{r} = -0.05")
+    s, s2 = list(joint["reg_prob_given_regime"][r])[:2]
+    row = joint["reg_prob_given_regime"][r]
+    _fails(book_with({f"joint.reg_prob_given_regime.{r}": {**row, s: 1.2, s2: row[s] + row[s2] - 1.2}}),
+           f"joint.reg_prob_given_regime.{r}.{s} = 1.2")
+    for value in (-0.01, 1.25):
+        _fails(book_with({"dividends.excess.epsilon": value}), "dividends.excess.epsilon", "от 0 до 1")
+        _fails(book_with({"joint.own_macro_confidence": value}), "joint.own_macro_confidence", "от 0 до 1")
+    for value in (0.0, 1.0):                                               # края отрезка — допустимы
+        book_from_dict(book_with({"dividends.excess.epsilon": value, "joint.own_macro_confidence": value}),
+                       facts=fixture_facts())
+    axes = copy.deepcopy(data["valuation"]["uncertainty"]["axes"])
+    i = next(i for i, ax in enumerate(axes) if ax["kind"] == "dict")
+    k, k2 = list(axes[i]["low"])[:2]
+    axes[i]["low"] = {**axes[i]["low"], k: -0.2, k2: axes[i]["low"][k] + axes[i]["low"][k2] + 0.2}
+    _fails(book_with({"valuation.uncertainty.axes": axes}), f"valuation.uncertainty.axes[{i}].low.{k} = -0.2",
+           "конец оси")
+    axes = copy.deepcopy(data["valuation"]["uncertainty"]["axes"])
+    j = next((j for j, ax in enumerate(axes) if ax["paths"] == ["dividends.excess.epsilon"]), None)
+    if j is None:
+        axes.append({"name": "выплата избытка", "kind": "value", "paths": ["dividends.excess.epsilon"],
+                     "low": 0.0, "high": 1.0, "dist": "triangular"})
+        j = len(axes) - 1
+    axes[j]["high"] = 1.5
+    _fails(book_with({"valuation.uncertainty.axes": axes}), f"valuation.uncertainty.axes[{j}].high = 1.5")
+    # Ось-сдвиг: концы — приращения. Долю сдвиг не выводит из [0; 1] (иначе книга прошла бы загрузку и не
+    # прошла прогон полосы), а вероятность таблицы сдвигом не водят.
+    axes = copy.deepcopy(data["valuation"]["uncertainty"]["axes"])
+    n, base = len(axes), data["dividends"]["excess"]["epsilon"]
+    shift = {"name": "сдвиг выплаты избытка", "kind": "shift", "paths": ["dividends.excess.epsilon"],
+             "low": -base, "high": 1.0 - base, "dist": "triangular"}
+    book_from_dict(book_with({"valuation.uncertainty.axes": axes + [shift]}), facts=fixture_facts())    # до краёв
+    _fails(book_with({"valuation.uncertainty.axes": axes + [{**shift, "high": 1.25 - base}]}),
+           f"valuation.uncertainty.axes[{n}].high", "со сдвигом")
+    _fails(book_with({"valuation.uncertainty.axes": axes + [{**shift, "low": -base - 0.25}]}),
+           f"valuation.uncertainty.axes[{n}].low", "со сдвигом")
+    _fails(book_with({"valuation.uncertainty.axes": axes + [{**shift, "paths": [f"joint.world_prob.{a}"],
+                                                             "low": -0.01, "high": 0.01}]}),
+           "ось-сдвиг по вероятности", f"joint.world_prob.{a}")
+    reverse = copy.deepcopy(data["valuation"]["reverse_dcf"]["axes"])
+    m = len(reverse)
+    back = {"name": "сдвиг доверия", "kind": "shift", "paths": ["joint.own_macro_confidence"],
+            "search": [-joint["own_macro_confidence"], 1.0 - joint["own_macro_confidence"]], "range": [-0.1, 0.1],
+            "unit": "п.п."}
+    book_from_dict(book_with({"valuation.reverse_dcf.axes": reverse + [back]}), facts=fixture_facts())
+    _fails(book_with({"valuation.reverse_dcf.axes": reverse + [{**back, "search": [-0.1, 1.5]}]}),
+           f"valuation.reverse_dcf.axes[{m}].search = 1.5", "со сдвигом")
+
+
 def test_w2_keys_are_in_the_closed_schema():
     """Ключи прил. A волны W2 (LEAD-DECISIONS-3) — в закрытой схеме и в KEYS; `shock_year` снят."""
     keys = set(KEYS)

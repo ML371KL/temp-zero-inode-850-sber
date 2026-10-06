@@ -76,6 +76,8 @@ CHUNKS_PER_WORKER = 4            # мелкие куски выравниваю�
 WINDOWS_POOL_LIMIT = 61          # предел процессов пула на Windows
 GOVERNANCE = "valuation.governance"
 QUANTILE_NAMES = ("p10", "p25", "median", "p75", "p90")   # поля выпуска по уровням книги (П§2 headline)
+# Поля сводки прогона для хвоста полосы (`run_summary`, `Band.tail`, М§10).
+TAIL_FIELDS = ("gap_mass", "need_capital_mass", "negative_mass", "low_floor", "high_floor")
 
 NAMED_LITERALS = {
     0.1: "DRAW_STEP: прогоны полосы с точностью 0,1 ₽ (М§10, П§0.3)",
@@ -267,12 +269,22 @@ def draw_points(n: int, n_axes: int, seed: int) -> list[list[float]]:
 
 def run_summary(run: GridRun) -> dict[str, float]:
     """Что полосе и диагностикам нужно от прогона сетки (малое, пересылается из пула);
-    `ddm_ri` — max |V_DDM − V_RI| / |V_RI| по клеткам прогона (инвариант в каждом прогоне, М§6.4)."""
+    `ddm_ri` — max |V_DDM − V_RI| / |V_RI| по клеткам прогона (инвариант в каждом прогоне, М§6.4).
+
+    Поля хвоста (`TAIL_FIELDS`, М§10) — массы клеток прогона под весами «свой взгляд»: с капитальным
+    разрывом, с ROE терминала не выше роста и с отрицательной стоимостью; `low_floor` и `high_floor` — низ и
+    верх прогона, если стоимость клетки ограничить нулём снизу (отображение V0 → цена то же)."""
     lo, hi = run.layers["macro_neutral"], run.layers["analytical"]
+    floor_lo, floor_hi = (run.price_of(sum(layer.prob[c.key] * max(c.v_ri, 0.0) for c in run.cells))
+                          for layer in (lo, hi))
     return {"low": run.low, "high": run.high, "v0_low": lo.v0, "v0_high": hi.v0, "bv_low": lo.bv_v,
             "bv_high": hi.bv_v, "roe_low": lo.roe_tc, "roe_high": hi.roe_tc, "k_low": lo.k_tc,
             "k_high": hi.k_tc, "bridge": run.bridge_amount, "governance": run.governance,
-            "ddm_ri": max(abs(c.v_ddm - c.v_ri) / abs(c.v_ri) for c in run.cells)}
+            "ddm_ri": max(abs(c.v_ddm - c.v_ri) / abs(c.v_ri) for c in run.cells),
+            "gap_mass": hi.capital_gap_mass,
+            "need_capital_mass": sum(hi.prob[c.key] for c in run.cells if c.roe_t <= c.g_t),
+            "negative_mass": sum(hi.prob[c.key] for c in run.cells if c.v_ri < 0),
+            "low_floor": floor_lo, "high_floor": floor_hi}
 
 
 def draw_book(book: Book, axes: Sequence[Mapping[str, Any]], s: Sequence[float]) -> Book:
@@ -470,6 +482,29 @@ class Band:
 
     def mean_of(self, field_: str) -> float:
         return sum(r[field_] for r in self.rows) / len(self.rows) if self.rows else float("nan")
+
+    def tail(self, lam: float) -> dict[str, Any] | None:
+        """Хвост полосы (М§10): в скольких прогонах есть клетки с капитальным разрывом (`capital_gap`), с ROE
+        терминала не выше роста (`need_capital`) и с отрицательной стоимостью (`negative`) — {`draws`, `mass`:
+        масса таких клеток под весами «свой взгляд» в среднем по ВСЕМ прогонам полосы (у прогона без таких
+        клеток она ноль)}; `floor_shift` — на сколько выше были
+        бы низ полосы и медиана центра при λ, если стоимость клетки ограничить нулём снизу (₽; не поправка
+        печатаемого числа, а мера того, сколько весят в нём такие клетки). Нет точных сводок — None."""
+        rows = self.rows
+        if not rows or any(k not in rows[0] for k in TAIL_FIELDS):
+            return None
+        n = len(rows)
+
+        def part(key: str) -> dict[str, float]:
+            return {"draws": sum(1 for r in rows if r[key] > 0), "mass": sum(r[key] for r in rows) / n}
+
+        base = sorted(r["low"] + lam * (r["high"] - r["low"]) for r in rows)
+        floor = sorted(r["low_floor"] + lam * (r["high_floor"] - r["low_floor"]) for r in rows)
+        levels = self.levels()
+        return {"n": n, "capital_gap": part("gap_mass"), "need_capital": part("need_capital_mass"),
+                "negative": part("negative_mass"),
+                "floor_shift": {"low": quantile(floor, levels[0]) - quantile(base, levels[0]),
+                                "median": quantile(floor, levels[2]) - quantile(base, levels[2])}}
 
 
 def band(book: Book, facts: Facts, live: LiveInputs, *, draws: int | None = None,
