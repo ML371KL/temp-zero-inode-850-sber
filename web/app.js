@@ -3298,21 +3298,56 @@ function banners(d) {
   say("dividend_recommended", "banner-event", rec ? ` DPS ${fmt.rub(rec.dps, 2)} за ${rec.year}; до собрания модель платит по формуле.` : "");
   say("ras_mismatch", "banner-degraded");
   if (m.book_first_period_closed) {
-    out.push(plain("banner-degraded", `Первый прогнозный ${modelUnit(d).one} книги (${periodLabel(m.first_period)}) закрыт по календарю, а факты и книга прежние: оценка на ${fmt.date(m.valuation_date)} считается на них.`));
+    // До отчёта — справка; тревога — флаг report_fact и отставание больше чем на период.
+    const nf = obj(obj(d.calendar).next_fact), head = `Первый прогнозный ${modelUnit(d).one} книги (${periodLabel(m.first_period)}) закрыт по календарю`;
+    if (m.periods_closed > 1) out.push(plain("banner-degraded", `${head}, а факты и книга прежние: оценка на ${fmt.date(m.valuation_date)} считается на них.`));
+    else if (!flag(d, "report_fact")) out.push(plain("banner-info", `${head}${nf.covers === m.first_period ? `, отчёт за него ожидается ${nf.confirmed ? "" : "≈" + NBSP}${fmt.date(nf.date)}` : ""}: до отчёта оценка считается на фактах ${periodLabel(m.anchor_period)} и прогнозе книги.`));
   }
   for (const r of list(obj(d.dividends).register)) {
     const left = daysBetween(m.valuation_date, r.last_buy_date);
     if ((r.status === "declared" || r.status === "recommended") && isNum(left) && left >= 0 && left <= 7) {
-      out.push(plain("banner-event", `Отсечка скоро: последний день покупки под дивиденд ${fmt.rub(r.dps, 2)} за ${r.year} — ${fmt.date(r.last_buy_date)}${left === 0 ? " (сегодня)" : `, через ${fmt.days(left)}`}.`));
+      // ключ без счёта дней: свёрнутая не разворачивается каждое утро, только в последний день
+      out.push(plain("banner-event", `Отсечка скоро: последний день покупки под дивиденд ${fmt.rub(r.dps, 2)} за ${r.year} — ${fmt.date(r.last_buy_date)}${left === 0 ? " (сегодня)" : `, через ${fmt.days(left)}`}.`, `buy${r.last_buy_date}${left ? "" : "!"}`));
     }
   }
   const week = list(obj(d.calendar).recent).filter((e) => ["ifrs", "agm", "record", "cbr_rate", "investor_day"].includes(e.kind));
   if (week.length) out.push(plain("banner-info", `События недели: ${week.map((e) => `${fmt.date(e.date)} — ${lowerFirst(ruText(e.title))}${e.note ? ` (${ruText(e.note)})` : ""}`).join("; ")}.`));
+  for (const k of [...folded()]) if (!out.some((n) => n.foldKey === k)) folded().delete(k);       // плашки нет — ключ не копится
   return out.length ? [el("div", { class: "belt" }, out)] : [];
 }
 
-function plain(kind, message) {
-  return el("div", { class: cls("banner", kind), role: "status" }, el("span", { class: "banner-icon", "aria-hidden": "true" }, "!"), el("div", { class: "banner-body" }, message));
+// Плашку сворачивают нажатием в строку-ярлык (кроме «выпуск устарел»); свёрнутое помнит браузер, пока
+// у плашки тот же ключ (по умолчанию — её текст): новая или изменившаяся приходит развёрнутой.
+const FOLD = "tzi-banners";
+let FOLDED = null;
+function folded() {
+  if (!FOLDED) {
+    try { FOLDED = new Set(list(JSON.parse(window.localStorage.getItem(FOLD)))); } catch (e) { FOLDED = new Set(); }
+  }
+  return FOLDED;
+}
+
+function plain(kind, message, key) {
+  const node = el("div", { class: cls("banner", kind), role: "status" }, el("span", { class: "banner-icon", "aria-hidden": "true" }, "!"), el("div", { class: "banner-body" }, message));
+  if (kind === "banner-stale") return node;
+  const id = key || node.textContent, set = folded();
+  const show = () => {
+    const off = set.has(id);
+    node.classList[off ? "add" : "remove"]("is-folded");
+    node.setAttribute("aria-expanded", String(!off));
+    node.title = off ? node.textContent.slice(1) : "Свернуть";
+  };
+  const flip = (e) => {
+    if (e.key ? e.key !== "Enter" && e.key !== " " : window.getSelection && String(window.getSelection())) return;
+    e.preventDefault();
+    if (!set.delete(id)) set.add(id);
+    try { window.localStorage.setItem(FOLD, JSON.stringify([...set])); } catch (err) { /* нет хранилища — до перезагрузки */ }
+    show();
+  };
+  setAttrs(node, { role: "button", tabindex: "0", on: { click: flip, keydown: flip } });
+  node.foldKey = id;
+  show();
+  return node;
 }
 
 /* ── экраны и переходы ── */
@@ -3417,7 +3452,7 @@ function releaseChip(d) {
   const m = obj(d.meta);
   const age = releaseAgeHours(d);
   const warn = obj(d.live).degraded_flag || ["price_fallback", "report_fact", "book_update"].some((n) => flag(d, n))
-    || list(obj(d.checks).gates).some((g) => g.name === "manual_input_overdue" && g.fired) || m.book_first_period_closed;
+    || list(obj(d.checks).gates).some((g) => g.name === "manual_input_overdue" && g.fired) || m.periods_closed > 1;
   chip.dataset.state = isNum(age) && age > STALE_HOURS ? "stale" : warn ? "warn" : "ok";
   const at = m.published_at || m.generated_at;
   $(".chip-text", chip).replaceChildren(el("span", {}, `Выпуск ${fmt.dateShort(mskDay(at))}, ${fmt.time(at)}`), el("span", { class: "chip-extra" }, ` · книга ${m.book_version || "—"}`));

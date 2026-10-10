@@ -87,7 +87,8 @@ export const squash = (s) => String(s).replace(/[  ]/g, " ").replace(/\s+/g, 
 
 /* ── окружение страницы ── */
 
-export function makePage({ href = "https://example.pages.dev/", payload = SAMPLE_TEXT, width = 640, status = 200, now = null } = {}) {
+// storage — хранилище браузера (общее для нескольких страниц — «перезагрузка»); без него localStorage у окна нет.
+export function makePage({ href = "https://example.pages.dev/", payload = SAMPLE_TEXT, width = 640, status = 200, now = null, storage = null } = {}) {
   const url = new URL(href);
   const errors = [];
   const observed = [];
@@ -125,6 +126,7 @@ export function makePage({ href = "https://example.pages.dev/", payload = SAMPLE
   const history = { pushState(s, t, hash) { url.hash = hash; }, replaceState(s, t, hash) { url.hash = hash; } };
   const location = { get hash() { return url.hash; }, get href() { return url.href; } };
   const window = { addEventListener(type, fn) { (windowListeners[type] ||= []).push(fn); }, scrollTo() {}, matchMedia: () => ({ matches: false }) };
+  if (storage) window.localStorage = storage;
   class ResizeObserver {
     constructor(fn) { this.fn = fn; }
     observe(host) { observed.push({ host, fn: this.fn }); }

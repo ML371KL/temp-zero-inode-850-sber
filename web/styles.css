@@ -236,9 +236,10 @@ main { outline: none; padding-bottom: 32px; }
 
 /* ── плашки ── */
 
-.belt { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-top: 20px; }
+/* Развёрнутая плашка — во всю ширину; свёрнутые нажатием — ярлыки в одну строку под ними. */
+.belt { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 20px; }
 .banner {
-  display: flex; gap: 12px; align-items: flex-start; min-width: 0;
+  display: flex; flex: 1 1 100%; gap: 12px; align-items: flex-start; min-width: 0;
   border: 1px solid var(--line); border-left: 3px solid var(--warn); border-radius: 12px;
   background: var(--surface); padding: 11px 16px; font-size: 14px; color: var(--ink-2);
 }
@@ -251,6 +252,11 @@ main { outline: none; padding-bottom: 32px; }
 .banner-info { border-left-color: var(--model); }
 .reasons { margin: 6px 0 0; padding-left: 18px; }
 .reasons li { overflow-wrap: break-word; }
+.banner[role="button"] { cursor: pointer; }
+.banner[aria-expanded="true"]::after { content: "–"; flex: none; color: var(--muted); line-height: 1.5; }
+.banner.is-folded { order: 1; flex: 0 1 auto; max-width: min(100%, 44ch); padding: 5px 12px; font-size: 13px; }
+.banner.is-folded .banner-body { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.banner.is-folded .reasons { display: none; }
 
 /* ── герой ── */
 
@@ -653,6 +659,8 @@ table.heat td:hover, table.heat td:focus-visible { outline: 2px solid var(--ink)
   body { background: #fff; }
   .card { box-shadow: none; break-inside: avoid; }
   .more > .more-body { display: block !important; }
+  .banner.is-folded { flex: 1 1 100%; max-width: none; }
+  .banner.is-folded .banner-body { white-space: normal; }
 }
 
 /* страница 404 */
