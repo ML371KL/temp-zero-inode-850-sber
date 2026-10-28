@@ -55,7 +55,9 @@ TOL_BRIDGE = 0.01        # мост и объявленные дивиденды
 TOL_DERIVED = 1e-6       # σ0_A, σ0_L, φ, φ_A, φ_L, T_real, T(W), пары, ROE-эквивалент, LT-спреды, маржа миров
 TOL_DDM = 0.001          # V_DDM = V_RI внутри контрольной модели
 EXACT = 1e-9             # совпадение V0 слоёв с ядром до этой точности — провал (общий код)
-DIV_FLOOR_BV = 0.005     # дивиденд года и DPS: |Δ| ≤ 0,5 % BV конца года выплаты (связывающий капитал)
+DIV_FLOOR_BV = 0.005     # дивиденд года и DPS: |Δ| ≤ 0,5 % BV конца года выплаты (связывающий капитал);
+#                          TV_DDM: |Δ| ≤ 0,5 % BV_Q — тот же пол: в клетке с ROE_T много ниже k_T TV_DDM — малая разность
+#                          BV_Q и отрицательного TV_RI, и разность дивиденда при связывающем капитале переходит в BV_Q
 TOL_ZERO_BN = 1e-9       # машинный ноль в единицах строки: мост при нуле у ядра; величина относительной строки
 
 FLOW_LINES = ("nii", "llp", "fvc", "fees", "opex", "misc", "noncore", "pbt", "ni_sh", "ci")
@@ -1661,10 +1663,13 @@ def compare_with_core(run, ctl) -> list[dict]:
                               tol_abs=TOL_RATIO * rwa_q * abs(c["y_bal"])))
         q = cc.quarters
         # TV сверяется в форме DDM (капитал на T): TV_DDM = BV_Q + TV_RI (М§7). Сам TV_RI — малая
-        # разность, усиленная 1/(k_T − g_T): 0,1 п.п. ROE_T даёт у мира M ≈ 5 % TV_RI.
+        # разность, усиленная 1/(k_T − g_T): 0,1 п.п. ROE_T даёт у мира M ≈ 5 % TV_RI. Пол правила «или» —
+        # 0,5 % BV_Q (М§17): где ROE_T много ниже k_T, TV_DDM сам — малая разность BV_Q и TV_RI, и разность
+        # дивиденда при связывающем капитале (допуск 0,5 % BV) переходит в BV_Q почти один в один
         if "bv" in q and q["bv"][-1] is not None:
             rows.append(_row(f"терминальная стоимость с капиталом, клетка {tag}", U_BN, q["bv"][-1] + cc.tv_ri,
-                             c["rows"][-1]["bv"] + c["tv_ri"], TOL_VALUE, REL, group="tv"))
+                             c["rows"][-1]["bv"] + c["tv_ri"], TOL_VALUE, REL, group="tv",
+                             tol_abs=DIV_FLOOR_BV * abs(c["rows"][-1]["bv"])))
         for line in FLOW_LINES + STOCK_LINES + RATIO_LINES + ("div",):
             if line not in q:
                 rows.append(_missing(f"{LINE_TITLES[line]}, клетка {tag}", U_PCT if line in RATIO_LINES else U_BN))

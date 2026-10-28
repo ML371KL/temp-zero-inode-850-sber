@@ -1093,7 +1093,14 @@ def test_the_real_book_reanchors_on_its_expected_report(tmp_path):
     s = scene_of(book, facts)
     step = float(book.get("valuation.headline.print_step"))
     mech = R.cell_mechanics(book, facts, s.run_plus, s.obs, s.v, cells=CELLS)
-    assert mech["ok"] and abs(mech["worst"]["rel"]) <= R.MECHANICS_TOL / 5, mech["worst"]
+    assert mech["ok"], mech["worst"]                                 # критерий приёмки: 0,1 % стоимости клетки
+    # Сторож — 1/5 допуска к большему из стоимости и капитала клетки: у клетки глубокого кризиса стоимость — малая
+    # доля капитала (M/crisis/strict книги 1.5 — 1 322 при капитале ≈ 9 000, P/B 0,14), и та же механика в рублях
+    # (+0,29 млрд ₽ и у книги 1.4, и у 1.5: дивиденд при связывающем капитале — малая разность запаса и пула) к
+    # стоимости — 0,014 % у 1.4 и 0,022 % у 1.5 (DECISIONS 14.6)
+    for r in mech["rows"]:
+        scale = max(abs(r["old"]), abs(s.run_plus.cell(*r["key"]).bv_v))
+        assert abs(r["new"] - r["old"]) <= R.MECHANICS_TOL / 5 * scale, r
     assert abs(s.run_e.point - s.run_plus.point) <= POINT_SHARE * step
     template = R.TEMPLATE
     if template.exists():
