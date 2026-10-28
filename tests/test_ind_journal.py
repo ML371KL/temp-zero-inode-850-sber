@@ -60,6 +60,27 @@ def test_one_record_per_horizon_and_frozen_benchmarks(tmp_path):
     assert j.freeze("ni_q", "2026Q3", "bridge", 1.5) == 1.003
 
 
+def test_the_nowcast_version_labels_a_record_and_is_not_a_key(tmp_path):
+    """DECISIONS 15.1: записи с 4К26 — `nowcast-3` (профиль ЧПД «год назад × рост г/г трёх месяцев»), прежние остаются
+    с `nowcast-2`; замороженные величины, зачёт и ошибки записи читаются без оглядки на версию, повтор её не меняет."""
+    from indicators import nowcast
+
+    assert nowcast.VERSION == "nowcast-3"
+    j = Journal(tmp_path / "j.sqlite")
+    j.freeze("nim_q", "2026Q3", "profile", {"2025M08": 256.0, "2025M09": 274.1})
+    old = j.record_forecast(target="nim_q", period="2026Q3", horizon="T-90", forecast=0.0678,
+                            benchmarks={"model": 0.0668}, release_sha="0" * 12, version="nowcast-2")
+    j.record_actual(target="nim_q", period="2026Q3", value=0.0665, source="тест")
+    new = j.record_forecast(target="nim_q", period="2026Q4", horizon="T-90", forecast=0.068,
+                            benchmarks={"model": 0.0675}, release_sha="0" * 12, version=nowcast.VERSION)
+    assert j.frozen("nim_q", "2026Q3", "profile") == {"2025M08": 256.0, "2025M09": 274.1}
+    assert [r["version"] for r in j.scored("nim_q")] == ["nowcast-2"] and j.admission("nim_q")["events_scored"] == 1
+    assert {e["id"]: e["errors"] for e in j.entries()}[old]["forecast"] == pytest.approx(0.0678 - 0.0665)
+    assert j.record_forecast(target="nim_q", period="2026Q4", horizon="T-90", forecast=0.07,
+                             benchmarks={"model": 0.0675}, release_sha="1" * 12, version="nowcast-4") == new
+    assert j.forecast("nim_q", "2026Q4", "T-90")["version"] == nowcast.VERSION
+
+
 def test_discipline_errors(tmp_path):
     j = Journal(tmp_path / "j.sqlite")
     with pytest.raises(JournalError):

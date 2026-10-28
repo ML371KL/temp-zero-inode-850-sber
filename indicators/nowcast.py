@@ -58,7 +58,9 @@ NO_BRIDGE = {
 }
 NO_MGMT = "ЧПМ РСБУ через мосты посчитан, но мост ЧПМ ядра (упр. ↔ движок) недоступен: прогноз = ожидание модели"
 NO_SIGMA = "σ ретро ещё не измерена (нет истории моста): w = 0, прогноз = ожидание модели"
-VERSION = "nowcast-2"
+# Версия — метка записи журнала: nowcast-3 — профиль ЧПД `yoy3` (DECISIONS 14.7, 15.1); записи до неё — nowcast-2.
+# Заморозка, зачёт и сопоставление факта с прогнозом её не читают.
+VERSION = "nowcast-3"
 TARGET_KEYS = ("ni_q", "nim_q", "cor_q")
 EXPECTATION_KEYS = {"ni_q": ("ni_q", "ni"), "nim_q": ("nim_q_mgmt", "nim_q", "nim_mgmt"),
                     "cor_q": ("cor_q_mgmt", "cor_q", "cor_mgmt")}
