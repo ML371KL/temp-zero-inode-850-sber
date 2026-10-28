@@ -2294,7 +2294,10 @@ def build_mgmt(c: Ctx) -> dict:
 
 # ------------------------------------------------------------------ guidance.json
 
-GUIDANCE_KEYS = {   # ключ факта → (метрика guidance.csv, вид: point | min | max | range, отношение к сектору)
+# ключ факта → (метрика guidance.csv, вид: point | min | max | range, отношение к сектору). Вид — по умолчанию:
+# граница в тексте строки листа («>6.2%», «<1.4%») задаёт вид сама (`guidance_kind`) — эмитент меняет точку
+# на границу при пересмотре (ЧПМ 2026: «~6.2%» → «>6.2%» 28.10.2026).
+GUIDANCE_KEYS = {
     "roe": ("roe", "point", None), "nim": ("nim", "point", None), "cor_max": ("cor", "max", None),
     "cir": ("cir", "range", None), "fee_growth": ("fee_growth", "point", None),
     "n20_0": ("n20_0", "min", None),     # Н20.0 — пол политики («>13,3 %»), не точка
@@ -2304,6 +2307,13 @@ GUIDANCE_KEYS = {   # ключ факта → (метрика guidance.csv, ви
 }
 SEGMENT_RU = {"corporate": "ЮЛ", "retail": "ФЛ"}
 NUMBER_RE = re.compile(r"\d+(?:[.,](\d+))?")
+BOUND_KINDS = {">": "min", "≥": "min", "<": "max", "≤": "max"}    # знак границы в начале текста строки листа
+
+
+def guidance_kind(text: str, default: str) -> str:
+    """Вид узла гайденса: граница — по тексту строки листа («>6.2%» → min, «<1.4%» → max), иначе вид из
+    `GUIDANCE_KEYS` (MODEL §14.2, прил. B: min — нижняя граница, max — верхняя, допуска у них нет)."""
+    return BOUND_KINDS.get(str(text or "").strip()[:1], default)
 
 
 def point_tol(text: str) -> float:
@@ -2360,12 +2370,13 @@ def build_guidance(c: Ctx) -> dict:
     history = []
     as_of = None
     sector = []
-    for key, (metric, kind, relation) in GUIDANCE_KEYS.items():
+    for key, (metric, default_kind, relation) in GUIDANCE_KEYS.items():
         rs = sorted((r for r in rows if r["metric"] == metric), key=lambda r: (r["as_of"], r["doc"]))
         if not rs:
             raise BuildError(f"нет гайденса {metric} на {c.a.year} г.")
         last = rs[-1]
         as_of = max(as_of or last["as_of"], last["as_of"])
+        kind = guidance_kind(last["text"], default_kind)
         extra = {"kind": kind, "text": last["text"], "date": last["as_of"], "event": last["event"]}
         if kind == "point":
             extra["tol"] = point_tol(last["text"])
@@ -2392,7 +2403,9 @@ def build_guidance(c: Ctx) -> dict:
             if sig in seen:
                 continue
             seen.add(sig)
-            history.append({"date": r["as_of"], "key": key, "value": node(val(r, kind), ref(r), calc=f"«{r['text']}» → доли"),
+            history.append({"date": r["as_of"], "key": key,
+                            "value": node(val(r, guidance_kind(r["text"], default_kind)), ref(r),
+                                          calc=f"«{r['text']}» → доли"),
                             "event": r["event"], "note": words(r)})
     history.sort(key=lambda h: (h["date"], h["key"]))
     return {

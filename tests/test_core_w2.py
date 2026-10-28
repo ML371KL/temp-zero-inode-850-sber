@@ -545,6 +545,34 @@ def test_guidance_gate_ignores_sector_nodes_and_speaks_words():
     assert period_words("2027Q1") == "1 кв. 2027" and period_words("2026M09") == "сентябрь 2026"
 
 
+def test_a_lower_bound_of_nim_guidance_takes_every_path_above_it(tmp_path):
+    """Гайденс ЧПМ границей («>6.2%», `kind: min` — эмитент сменил точку на границу 28.10.2026): путь года
+    выше границы — внутри гайденса; то же число точкой («~…%», половина единицы разряда) — снаружи. Вид узла
+    гейт берёт из фактов — ядро не правится."""
+    import json
+    import shutil
+    from model.book import load_facts
+    from model.checks import guidance_values
+    from tests.support_core import FIXTURE_FACTS
+    run = fixture_run()
+    year = int(run.ctx.facts.plain("guidance", "year"))
+    floor = round(min(guidance_values(run, c, year)["nim"] for c in run.cells) - 0.001, 4)
+    for kind, text, outside in (("min", f">{floor * 100:.2f}%", False), ("point", f"~{floor * 100:.2f}%", True)):
+        root = tmp_path / kind
+        shutil.copytree(FIXTURE_FACTS, root)
+        path = root / "guidance.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        node = data["items"]["nim"]
+        node.update(v=floor, kind=kind, text=text)
+        node.pop("tol", None)
+        path.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        facts = load_facts(root)
+        gate = next(x for x in check_gates(run_grid(book_from_dict(fixture_dict(), facts=facts), facts))
+                    if x.name == "guidance_gap")
+        assert (gate.detail["bands"]["nim"][1] is None) == (kind == "min"), gate.detail["bands"]["nim"]
+        assert ("nim" in gate.detail["outside"]) == outside, (kind, gate.message)
+
+
 # ------------------------------------------------------------------ В8: sigma0_split и гейт lt_spread_floor
 
 

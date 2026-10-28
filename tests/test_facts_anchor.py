@@ -174,6 +174,45 @@ def test_point_tolerance_from_the_text():
         B.point_tol("около нуля")
 
 
+class _GuidanceSheet:
+    """Лист гайденса в памяти: всё, что `build_guidance` читает из контекста сборки."""
+
+    def __init__(self, rows: list[dict], year: int):
+        self.rows, self.a = rows, type("A", (), {"year": year})()
+        ref = staticmethod(lambda doc, page, sha: f"{doc}, с. {page}, sha256 {sha[:16]}")
+        self.docs = type("D", (), {"ref": ref})()
+
+    def csv_rows(self, rel: str) -> list[dict]:
+        assert rel == "mgmt/guidance.csv", rel
+        return self.rows
+
+
+def test_a_bound_in_the_text_sets_the_kind_of_the_guidance_node():
+    """Вид узла — по тексту строки листа, если в нём граница: «>6.2%» — нижняя граница (`min`, без допуска),
+    хотя у ЧПМ по умолчанию точка; пересмотр «~6.2%» → «>6.2%» остаётся в истории тем же числом с прежним
+    текстом в calc; у ключа-границы «<1.4%» и у точек — как раньше."""
+    def row(metric, as_of, text, low, high, note=""):
+        return {"metric": metric, "target_year": "2030", "as_of": as_of, "event": f"отчёт {as_of}", "text": text,
+                "low": low, "high": high, "unit": "%", "doc": "p.pdf", "page": "24", "sha256": "ab" * 32, "note": note}
+    rows = [row("roe", "2030-04-29", "22%", "22", "22"),
+            row("nim", "2030-04-29", "~6.2%", "6.2", "6.2"), row("nim", "2030-07-29", ">6.2%", "6.2", ""),
+            row("cor", "2030-04-29", "<1.4%", "", "1.4"), row("cir", "2030-04-29", "~30-32%", "30", "32"),
+            row("fee_growth", "2030-04-29", "~0%", "0", "0"), row("n20_0", "2030-04-29", "13.3%", "13.3", "13.3"),
+            row("sector_corp_loans", "2030-04-29", "+8-10%", "8", "10", "Сбер — в соответствии с сектором"),
+            row("sector_retail_loans", "2030-04-29", "+5-8%", "5", "8", "Сбер — лучше сектора")]
+    g = B.build_guidance(_GuidanceSheet(rows, 2030))
+    items = g["items"]
+    assert items["nim"]["kind"] == "min" and items["nim"]["v"] == 0.062 and "tol" not in items["nim"]
+    assert items["nim"]["text"] == ">6.2%" and items["nim"]["date"] == "2030-07-29"
+    assert (items["roe"]["kind"], items["roe"]["tol"]) == ("point", 0.005)
+    assert (items["cor_max"]["kind"], items["cor_max"]["v"]) == ("max", 0.014) and "tol" not in items["cor_max"]
+    assert (items["n20_0"]["kind"], items["fee_growth"]["kind"], items["cir"]["kind"]) == ("min", "point", "range")
+    nim = [h["value"] for h in g["history"] if h["key"] == "nim"]
+    assert [(n["v"], n["calc"]) for n in nim] == [(0.062, "«~6.2%» → доли"), (0.062, "«>6.2%» → доли")]
+    assert B.guidance_kind("≤49%", "point") == "max" and B.guidance_kind("≥ 13.3%", "point") == "min"
+    assert B.guidance_kind("~6.2%", "point") == "point" and B.guidance_kind("+8-10%", "range") == "range"
+
+
 def test_policy_term_is_added_not_typed():
     assert B.add_years("2023-12-05", 3) == "2026-12-05"
     assert B.add_years("2024-02-29", 3) == "2027-02-28"

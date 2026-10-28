@@ -522,7 +522,9 @@ def test_guidance_point_tolerance():
         m = re.search(r"\d+(?:[.,](\d+))?", n["text"])
         digits = len(m.group(1) or "")
         assert abs(n["tol"] - 0.5 * 10 ** -digits / 100) < 1e-12, f"«{n['text']}»: tol {n['tol']}"
-    assert items["roe"]["tol"] == 0.005 and items["nim"]["tol"] == 0.0005 and items["fee_growth"]["tol"] == 0.005
+    assert items["roe"]["tol"] == 0.005 and items["fee_growth"]["tol"] == 0.005
+    # ЧПМ — точка («~6.2%», допуск 0,0005 — проверен циклом выше) или нижняя граница («>6.2%», без допуска)
+    assert items["nim"]["kind"] in ("point", "min"), items["nim"]
 
 
 # ------------------------------------------------------------------ календарь

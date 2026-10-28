@@ -7,7 +7,9 @@
 книги равны апостериорным прежней с тем же наблюдением; якорь воспроизводит отчёт; режим `keep`
 сохраняет четыре скаляра пути передачи ставки и пересчитывает обе доли, `resolve` — диагностика
 без кандидата; μ записей окна не пересчитываются; отчёт «без шока» — ожидание прочих режимов;
-внутри репозитория запись — только под `var/`; отказы называют причину. Полный набор (все клетки, медиана полосы, цепочка через смену года
+подмена наблюдения закрытого квартала (решение книги с причиной) идёт только в наблюдение кандидата
+на отчёте — факты остаются числами отчёта; внутри репозитория запись — только под `var/`; отказы
+называют причину. Полный набор (все клетки, медиана полосы, цепочка через смену года
 якоря, настоящая книга, запуск из командной строки) — `ci_only`.
 
 Даты тестов — от периодов книги фикстуры (конец закрываемого квартала + 2 дня), не от «сегодня».
@@ -651,6 +653,8 @@ def test_the_decomposition_has_its_rows_and_the_dry_run_has_no_surprise(tmp_path
     result = R.attribution(s.book, s.facts, s.expected, valuation_date=s.v, cells=False)
     steps = result["steps"]
     assert R.is_dry_run(result) and list(steps) == ["rolled", "learning", "expected", "candidate"]
+    # без подмены наблюдения: наблюдение F — ожидаемое, апостериорные прежней книги с отчётом не удваиваются
+    assert result["observation_override"] is None and "book_report" not in result["posterior"]
     assert steps["candidate"]["point"] == steps["expected"]["point"]
     assert steps["rolled"]["point"] == pytest.approx(s.run_a.point)
     assert steps["learning"]["point"] == pytest.approx(s.run_plus.point)
@@ -705,6 +709,121 @@ def test_a_surprise_goes_to_the_surprise_row_and_teaches_the_regimes():
     assert sum(run.ctx.posterior[r] for r in heavy) > sum(s.run_e.ctx.posterior[r] for r in heavy)
     assert cand.derived["anchor_row"]["n20"] == pytest.approx(rep["capital"]["n20_0"], abs=1e-8)
     assert cand.data["joint"]["regime_update"]["observations"][-1]["cor"] == pytest.approx(rep["mgmt"]["cor"])
+
+
+OVERRIDE_REASON = "разовый роспуск части резерва занизил стоимость риска квартала (тест)"
+
+
+def _override(**changes) -> dict:
+    """Подмена наблюдения фикстуры: CoR отчёта + 0,2 п.п. с se, ЧПМ отчёта с se 0; правки — поверх."""
+    mg = scene().expected["mgmt"]
+    out = {"cor": mg["cor"] + 0.002, "se_cor": 0.0012, "nim": mg["nim"], "se_nim": 0.0, "reason": OVERRIDE_REASON}
+    for key, value in changes.items():
+        if value == "нет":
+            out.pop(key)
+        else:
+            out[key] = value
+    return out
+
+
+@tact
+@pytest.mark.parametrize("changes,fragment", [
+    ({"reason": "нет"}, "нет причины"),
+    ({"reason": "   "}, "нет причины"),
+    ({"reason": None}, "нет причины"),
+    ({"se_cor": "нет"}, "нет se_cor"),
+    ({"nim": "нет", "se_nim": "нет"}, "нет nim, se_nim"),
+    ({"se_cor": None}, "se_cor"),
+    ({"se_nim": -0.0001}, "se_nim"),
+    ({"se_cor": 0.12}, "0,12 п.п. — это 0,0012"),
+    ({"cor": 1.3}, "а не проценты"),
+    ({"nim": 0.0}, "а не проценты"),
+    ({"nim": "6.65%"}, "а не проценты"),
+    ({"cor": None, "se_cor": 0.001}, "null или 0"),
+    ({"cor": None, "se_cor": None, "nim": None, "se_nim": None}, "обе величины null"),
+    ({"mu_cor": {}}, "незнакомые ключи mu_cor"),
+    ({"period": "1999Q1"}, "а отчёт — за"),
+])
+def test_an_override_of_the_observation_names_each_quantity_and_its_reason(changes, fragment):
+    """Подмена наблюдения — решение книги: значение и se каждой величины названы явно, причина записана,
+    доли — доли; иначе отказ с причиной (до расчёта)."""
+    period = scene().period
+    with pytest.raises(R.ReportError, match=re.escape(fragment)):
+        R.check_observation(_override(**changes), period)
+    good = R.check_observation(_override(period=period, cor=None, se_cor=None), period)
+    assert good["cor"] is None and good["se_cor"] is None and good["nim"] == _override()["nim"]
+    assert good["basis"] == "mgmt" and good["reason"] == OVERRIDE_REASON
+    with pytest.raises(R.ReportError, match="без наблюдения"):
+        R.attribution(scene().book, scene().facts, scene().expected, observe=False, observation=_override())
+
+
+@tact
+def test_an_override_goes_only_to_the_observation_of_the_candidate_on_the_report(tmp_path):
+    """Подмена идёт только в наблюдение кандидата на отчёте: запись окна несёт значения и se подмены с
+    замороженными μ, факты — опубликованные числа отчёта (история моста), апостериорные кандидата равны
+    апостериорным прежней книги с тем же наблюдением; разложение — не сухой прогон, причина — в
+    REANCHOR.md, в «что сдвинулось» и в копии подмены каталога."""
+    s = scene()
+    ov = _override()
+    result = R.attribution(s.book, s.facts, s.expected, valuation_date=s.v, cells=False, observation=ov)
+    cand, steps, post = result["candidate"], result["steps"], result["posterior"]
+    rec = cand.data["joint"]["regime_update"]["observations"][-1]
+    assert rec["period"] == s.period and rec["basis"] == "mgmt"
+    assert (rec["cor"], rec["se_cor"], rec["nim"], rec["se_nim"]) == (ov["cor"], ov["se_cor"], ov["nim"], 0.0)
+    assert list(rec["mu_cor"]) == list(s.book.get("regimes.ids")) and list(rec["mu_nim"]) == list(rec["mu_cor"])
+    # факты не знают подмены: кандидат на отчёте и на ожидании — одни и те же факты, CoR моста — отчёта
+    assert cand.facts.digest == result["candidate_expected"].facts.digest == s.cand.facts.digest
+    hist = cand.facts.file("bridge_mgmt_ifrs")["cor"]["history"]
+    assert hist[-1]["period"] == s.period and hist[-1]["mgmt"]["v"] == pytest.approx(s.expected["mgmt"]["cor"])
+    # критерий 5: апостериорные кандидата — прежней книги с тем же наблюдением; CoR выше — тяжелее режимы
+    for r in s.book.get("regimes.ids"):
+        assert post["candidate"][r] == pytest.approx(post["book_report"][r], abs=1e-9), r
+    heavy = list(s.book.get("regimes.ids"))[-2:]
+    assert sum(post["candidate"][r] for r in heavy) > sum(post["expected"][r] for r in heavy)
+    assert steps["candidate"]["point"] < steps["expected"]["point"], "CoR выше ожидания — оценка ниже"
+    assert not R.is_dry_run(result)
+    assert cand.derived["observation_override"] == {
+        "reason": OVERRIDE_REASON, "report": {"cor": s.expected["mgmt"]["cor"], "nim": s.expected["mgmt"]["nim"]},
+        "used": {k: ov[k] for k in R.OBS_FIELDS}}
+    out = tmp_path / "cand"
+    R.write_candidate(out, s.book, result)
+    text = (out / "REANCHOR.md").read_text(encoding="utf-8")
+    assert "сухой прогон" not in text and "Наблюдение закрытого квартала подменено решением книги" in text
+    assert "прежняя книга с тем же наблюдением, что у кандидата (с подменой)" in text
+    row = next(line for line in text.splitlines() if line.startswith(f"| `{R.OBS}` |"))
+    assert OVERRIDE_REASON in row and "вместо" in row
+    assert json.loads((out / "observation.json").read_text(encoding="utf-8")) == {
+        "period": s.period, **{k: ov[k] for k in R.OBS_FIELDS}, "basis": "mgmt", "reason": OVERRIDE_REASON}
+
+
+@tact
+def test_the_command_line_takes_the_override_from_a_file(tmp_path, capsys):
+    """`--observation ФАЙЛ` (YAML или JSON): подмена — в записи наблюдения кандидата и копией в каталоге;
+    негодная подмена — код 1 с причиной до расчёта, каталог не создан."""
+    s = scene()
+    common = ["--book", str(FIXTURE_BOOK), "--facts-dir", str(FIXTURE_FACTS), "--template", str(tmp_path / "нет")]
+    report = tmp_path / "report.json"
+    report.write_text(json.dumps(s.expected), encoding="utf-8")
+    ov = tmp_path / "observation.yaml"
+    ov.write_text(yaml.safe_dump(_override(period=s.period), allow_unicode=True), encoding="utf-8")
+    out = tmp_path / "out"
+    assert R.main(common + ["--facts", str(report), "--out", str(out), "--valuation-date", s.v.isoformat(),
+                            "--no-cells", "--observation", str(ov)]) == 0
+    printed = capsys.readouterr().out
+    assert "Наблюдение закрытого квартала подменено решением книги" in printed and OVERRIDE_REASON in printed
+    assert json.loads((out / "observation.json").read_text(encoding="utf-8"))["reason"] == OVERRIDE_REASON
+    rec = json.loads((out / "assumptions.json").read_text(encoding="utf-8"))["joint"]["regime_update"]["observations"]
+    assert (rec[-1]["cor"], rec[-1]["se_cor"]) == (_override()["cor"], _override()["se_cor"])
+    for name, body, why in (("no-reason.json", json.dumps(_override(reason="нет")), "нет причины"),
+                            ("list.yaml", "- 1\n- 2\n", "ожидается словарь"),
+                            ("missing.yaml", None, "файл подмены наблюдения")):
+        path = tmp_path / name
+        if body is not None:
+            path.write_text(body, encoding="utf-8")
+        bad = tmp_path / f"bad-{name}"
+        assert R.main(common + ["--facts", str(report), "--out", str(bad), "--observation", str(path)]) == 1
+        assert why in capsys.readouterr().err, name
+        assert not bad.exists(), name
 
 
 @tact
@@ -765,8 +884,10 @@ def test_the_procedure_document_names_every_field_and_every_switch():
         for field in required:
             assert named(field, day), f"день отчёта: {section}.{field}"
     for switch in ("--expected", "--facts", "--out", "--valuation-date", "--band", "--compare-facts",
-                   "--transmission", "--no-cells"):
+                   "--transmission", "--no-cells", "--observation"):
         assert switch in text, switch
+    for field in R.OBS_KEYS:                     # формат файла подмены наблюдения — в §3.1
+        assert named(field, text[text.index("### 3.1."):text.index("### 3.2.")]), f"подмена наблюдения: {field}"
     for phrase in ("Критерии приёмки", "Что скачать", "Какие числа внести", "Что записать", "data/facts/sheets/",
                    "docs/DECISIONS.md", "CHANGES.md", f"только под `{R.WRITABLE}/`"):
         assert phrase in text, phrase

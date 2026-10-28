@@ -14,7 +14,7 @@
       шаблон для настоящих чисел: в нём нет ни одного факта)
   python -B ops/tools/reanchor.py --facts ФАЙЛ.json --out КАТАЛОГ
       [--valuation-date ГГГГ-ММ-ДД] [--version В] [--band ПРОГОНОВ] [--no-cells]
-      [--transmission keep|resolve] [--compare-facts КАТАЛОГ]
+      [--transmission keep|resolve] [--compare-facts КАТАЛОГ] [--observation ФАЙЛ]
       [--book КНИГА] [--facts-dir КАТАЛОГ] [--template ШАБЛОН]
       кандидат книги и фактов на отчёте ФАЙЛ и разложение скачка на дате оценки
       (по умолчанию — `published` отчёта, иначе день после конца квартала)
@@ -31,6 +31,7 @@
                                        `calc: reanchor…`; канон фактов с источниками и сверками
                                        собирает `build_facts.py`, сверка — `--compare-facts`)
   expected.json                        ожидаемый отчёт того же квартала
+  observation.json                     подмена наблюдения с причиной — только при --observation
   REANCHOR.md                          производные величины, «что сдвинулось», разложение скачка
                                        точки и медианы (в квартале шока — ещё строка «обучение»
                                        отчёта без шока: ожидаемый отчёт там — среднее двугорбого
@@ -63,6 +64,15 @@
   mgmt         nim, cor — управленческие ЧПМ и стоимость риска квартала; cir — необязательно
   shares       issued_total, outstanding_total, outstanding_ordinary, outstanding_preferred — если
                изменились
+
+ПОДМЕНА НАБЛЮДЕНИЯ (--observation ФАЙЛ, YAML или JSON) — решение книги с записанной причиной, когда
+опубликованная упр. метрика квартала не годится наблюдением режима как есть (docs/REANCHOR.md §3.1):
+  cor, se_cor, nim, se_nim   значение и se каждой величины, доли единицы; все четыре обязательны;
+                             null — величина не наблюдается (её se — null или 0)
+  reason                     причина — обязательна; печатается в REANCHOR.md, идёт в журнал версии
+  period                     необязательно; если задан — квартал отчёта
+Подменяется только наблюдение A-P2u кандидата на отчёте (строка «сюрприз факта»); факты кандидата —
+числа отчёта. Без подмены наблюдение — упр. ЧПМ и CoR отчёта с se 0.
 
 ЧТО ПЕРЕНОСИТСЯ:
   meta         anchor_period, first_period, facts_date, valuation_date, version
@@ -167,6 +177,12 @@ NEAR_RANGE = 2e-4          # разброс внутри года больше 0
 SPREAD_RULE_TOL = 6e-6     # ключ спреда «от ставки якоря» в книге округлён до 5 знаков
 SOLVE_STEP = 0.001         # шаг пробы целей A-N2 и A-N3 (решение аффинно — шаг не важен)
 PASSES = 6                 # не больше стольких проходов калибровки по прогону кандидата
+# Подмена наблюдения закрытого квартала (решение книги, docs/REANCHOR.md §3.1): пределы ловят проценты
+# вместо долей, а не судят о величине.
+OBS_FIELDS = ("cor", "se_cor", "nim", "se_nim")            # значение и se каждой величины — все четыре обязательны
+OBS_KEYS = OBS_FIELDS + ("reason", "period")                # reason обязателен, period — если задан, квартал отчёта
+OBS_LIMITS = {"cor": (-0.05, 0.20), "nim": (0.0, 0.20)}     # открытые границы значения, доли единицы
+SE_LIMIT = 0.02                                             # se — доля единицы не больше 2 п.п. (0,12 п.п. — 0,0012)
 
 # Реальные суммы книги в ценах якоря: индекс цен клетки стартует с единицы на якоре (М§4.7).
 PRICE_INDEXED = ("noncore.result_real", "other.misc_net_real")
@@ -1112,6 +1128,17 @@ def with_observation(book: Book, obs: Mapping) -> Book:
     return base.with_overrides({OBS: list(base.get(OBS) or []) + [dict(obs)]})
 
 
+def _same_observation(a: Mapping, b: Mapping, tol: float = 1e-9) -> bool:
+    """Два наблюдения одного квартала совпадают по значениям и se (null — только с null; se null = 0)."""
+    for k in OBS_FIELDS:
+        x, y = a.get(k), b.get(k)
+        if k.startswith("se_"):
+            x, y = x or 0.0, y or 0.0
+        if (x is None) != (y is None) or (x is not None and abs(float(x) - float(y)) > tol):
+            return False
+    return True
+
+
 def frozen_expectations(book: Book, facts: Facts) -> dict[str, dict[str, float]]:
     """Ожидания режимов прежней книги на её первый прогнозный квартал, упр. базис (М§12)."""
     period = str(book.get("meta.first_period"))
@@ -1139,6 +1166,63 @@ def carry_observation(X: dict, book: Book, facts: Facts, obs: Mapping) -> dict:
     window = ru.get("window_obs")
     ru["observations"] = kept[-int(window):] if window else kept
     return record
+
+
+def check_observation(override: Mapping, period: str) -> dict:
+    """Подмена наблюдения A-P2u закрытого квартала — решение книги с записанной причиной (docs/REANCHOR.md
+    §3.1): значение и se каждой величины (`cor`, `se_cor`, `nim`, `se_nim` — все четыре обязательны; null —
+    величина не наблюдается, её se — null или 0) и `reason`; `period`, если задан, — квартал отчёта. Факты
+    подмена не трогает: она идёт только в наблюдение кандидата на отчёте. Возвращает запись наблюдения
+    (упр. базис) с причиной; негодная подмена — отказ с причиной."""
+    if not isinstance(override, Mapping):
+        raise ReportError("подмена наблюдения: ожидается словарь {cor, se_cor, nim, se_nim, reason}")
+    unknown = sorted(str(k) for k in set(override) - set(OBS_KEYS))
+    if unknown:
+        raise ReportError(f"подмена наблюдения: незнакомые ключи {', '.join(unknown)} (известны "
+                          f"{', '.join(OBS_KEYS)})")
+    missing = [k for k in OBS_FIELDS if k not in override]
+    if missing:
+        raise ReportError(f"подмена наблюдения: нет {', '.join(missing)} — значение и se каждой величины "
+                          "называются явно (null — величина не наблюдается)")
+    why = override.get("reason")
+    if not isinstance(why, str) or not why.strip():
+        raise ReportError("подмена наблюдения: нет причины (reason) — без записанной причины подмена не "
+                          "принимается")
+    if "period" in override and str(override["period"]) != period:
+        raise ReportError(f"подмена наблюдения на {override['period']}, а отчёт — за {period}")
+    record: dict[str, Any] = {"period": period}
+    for x in ("cor", "nim"):
+        value, se = override[x], override[f"se_{x}"]
+        if value is None:
+            if se is not None and not (_num(se) and float(se) == 0.0):
+                raise ReportError(f"подмена наблюдения: {x} = null (не наблюдается), а se_{x} = {se!r} — "
+                                  "должно быть null или 0")
+            record[x], record[f"se_{x}"] = None, None
+            continue
+        lo, hi = OBS_LIMITS[x]
+        if not _num(value) or not lo < float(value) < hi:
+            raise ReportError(f"подмена наблюдения: {x} = {value!r} — ожидается доля единицы в ({lo:g}; {hi:g}) "
+                              "(1,3 % — это 0,013), а не проценты")
+        if not _num(se) or not 0.0 <= float(se) <= SE_LIMIT:
+            raise ReportError(f"подмена наблюдения: se_{x} = {se!r} — ожидается число от 0 до {SE_LIMIT:g} "
+                              "(доля единицы: 0,12 п.п. — это 0,0012)")
+        record[x], record[f"se_{x}"] = float(value), float(se)
+    if record["cor"] is None and record["nim"] is None:
+        raise ReportError("подмена наблюдения: обе величины null — наблюдения нет, подменять нечего")
+    record["basis"] = "mgmt"
+    record["reason"] = " ".join(why.split())
+    return record
+
+
+def read_observation(path: Path) -> dict:
+    """Файл подмены наблюдения (YAML или JSON) → словарь; проверка — `check_observation`."""
+    try:
+        data = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError) as exc:
+        raise ReportError(f"файл подмены наблюдения {path}: {exc}") from exc
+    if not isinstance(data, dict):
+        raise ReportError(f"файл подмены наблюдения {path}: ожидается словарь {{cor, se_cor, nim, se_nim, reason}}")
+    return data
 
 
 # ------------------------------------------------------------------ перезаякоривание
@@ -1627,7 +1711,7 @@ def core_checks(run: GridRun, today: dt.date) -> dict[str, Any]:
 
 def attribution(book: Book, facts: Facts, report: Mapping, *, valuation_date: Any = None,
                 version: str | None = None, band_draws: int | None = None, cells: bool = True,
-                transmission: str = KEEP, observe: bool = True) -> dict:
+                transmission: str = KEEP, observe: bool = True, observation: Mapping | None = None) -> dict:
     """Кандидат на отчёте `report` и разложение скачка на одной дате оценки (М§15.2):
 
     обучение    A⁺ − A  прежняя книга с наблюдением, равным ожиданию модели, минус она же без него;
@@ -1637,8 +1721,19 @@ def attribution(book: Book, facts: Facts, report: Mapping, *, valuation_date: An
 
     Всегда — точка при значениях книги; медиана полосы — при `band_draws` (одни точки гиперкуба
     на каждой книге; у медианы механика и выпуклость — одной строкой E − A⁺). `checks` — инварианты
-    и гейты ядра на прежней книге и на кандидате (дата оценки — та же)."""
+    и гейты ядра на прежней книге и на кандидате (дата оценки — та же).
+
+    `observation` — подмена наблюдения A-P2u закрытого квартала решением книги (`check_observation`,
+    docs/REANCHOR.md §3.1): идёт только в кандидата на отчёте F — факты кандидата остаются числами
+    отчёта, а строка «сюрприз факта» несёт и отчёт, и подмену. Без неё наблюдение — упр. ЧПМ и CoR
+    отчёта с se 0. Апостериорные прежней книги с тем же наблюдением, что у F, — `posterior.book_report`
+    (критерий 5 §1.5; на сухом прогоне без подмены их нет — это `posterior.expected`)."""
     check_report(book, facts, report)
+    override = None
+    if observation is not None:
+        if not observe:
+            raise ReportError("подмена наблюдения без наблюдения (observe=False): подменять нечего")
+        override = check_observation(observation, str(report["period"]))
     vdate = valuation_day(valuation_date, report)
     live = live_at(book, facts, vdate)
     run_a = run_grid(book, facts, live)
@@ -1647,12 +1742,23 @@ def attribution(book: Book, facts: Facts, report: Mapping, *, valuation_date: An
     common = dict(valuation_date=vdate, version=version, base_run=run_plus, observe=observe,
                   transmission=transmission)
     cand_e = reanchor(book, facts, expected, **common)
-    cand_f = reanchor(book, facts, report, near=cand_e.near, **common)
+    obs_f = None if override is None else {k: override[k] for k in ("period", *OBS_FIELDS, "basis")}
+    cand_f = reanchor(book, facts, report, near=cand_e.near, observation=obs_f, **common)
+    if override is not None:
+        mg = report["mgmt"]
+        cand_f.derived["observation_override"] = {
+            "reason": override["reason"], "report": {"cor": float(mg["cor"]), "nim": float(mg["nim"])},
+            "used": {k: override[k] for k in OBS_FIELDS}}
+        cand_f.warnings.insert(0, "наблюдение A-P2u закрытого квартала подменено решением книги ("
+                               + _override_words(cand_f.derived["observation_override"]) + "): в журнал версии "
+                               "книги — строкой «суждения книги» с причиной; факты (упр. CoR и ЧПМ квартала, "
+                               "история моста, журнал прогнозов) — опубликованные числа отчёта")
     live_e, live_f = live_at(cand_e.book, cand_e.facts, vdate), live_at(cand_f.book, cand_f.facts, vdate)
     run_e, run_f = run_grid(cand_e.book, cand_e.facts, live_e), run_grid(cand_f.book, cand_f.facts, live_f)
     out: dict[str, Any] = {
         "valuation_date": vdate, "observation": obs, "expected": expected, "candidate": cand_f,
         "candidate_expected": cand_e, "transmission": transmission, "band_draws": band_draws,
+        "observation_override": override,
         "posterior": {"book": dict(run_a.ctx.posterior), "expected": dict(run_plus.ctx.posterior),
                       "candidate": dict(run_f.ctx.posterior)},
         "steps": {"rolled": headline(run_a), "learning": headline(run_plus),
@@ -1660,6 +1766,10 @@ def attribution(book: Book, facts: Facts, report: Mapping, *, valuation_date: An
         "print_step": float(book.get("valuation.headline.print_step")),
         "checks": {"book": core_checks(run_a, vdate), "candidate": core_checks(run_f, vdate)},
     }
+    seen = cand_f.derived.get("observation")
+    if obs is not None and seen is not None and not _same_observation(seen, obs):
+        plain = {k: seen[k] for k in ("period", *OBS_FIELDS, "basis")}
+        out["posterior"]["book_report"] = dict(run_grid(with_observation(book, plain), facts, live).ctx.posterior)
     shocked = shock_regimes(run_a) if observe else []
     if shocked:                              # квартал шока: ожидаемый отчёт — среднее двугорбого прогноза (М§12)
         calm = expected_observation(book, facts, live, without=shocked)
@@ -1688,8 +1798,9 @@ def _regime_rows(book: Book, facts: Facts, live: LiveInputs) -> list[dict]:
 
 
 def is_dry_run(result: Mapping) -> bool:
-    """Отчёт — сам ожидаемый отчёт (сухой прогон): факты обоих кандидатов совпадают."""
-    return result["candidate"].facts.digest == result["candidate_expected"].facts.digest
+    """Отчёт — сам ожидаемый отчёт (сухой прогон): факты обоих кандидатов совпадают, наблюдение не подменено."""
+    return (result["candidate"].facts.digest == result["candidate_expected"].facts.digest
+            and not result.get("observation_override"))
 
 
 # ------------------------------------------------------------------ REANCHOR.md
@@ -1718,6 +1829,21 @@ def _mass(gate: tuple | None) -> str:
 
 def _pct(x: float, digits: int = 2) -> str:
     return f"{x * 100:.{digits}f} %".replace(".", ",")
+
+
+def _override_words(ov: Mapping) -> str:
+    """Подмена наблюдения словами: «CoR 1,300 % (se 0,120 п.п.) вместо 1,100 % отчёта; ЧПМ 6,650 % (se
+    0,000 п.п.) — как в отчёте»."""
+    parts = []
+    for x, word in (("cor", "CoR"), ("nim", "ЧПМ")):
+        value, se, rep = ov["used"][x], ov["used"][f"se_{x}"], ov["report"][x]
+        if value is None:
+            parts.append(f"{word} не наблюдается (в отчёте {_pct(rep, 3)})")
+            continue
+        se_words = "se " + f"{float(se) * 100:.3f}".replace(".", ",") + " п.п."
+        parts.append(f"{word} {_pct(value, 3)} ({se_words}) "
+                     + ("— как в отчёте" if abs(value - rep) < 5e-7 else f"вместо {_pct(rep, 3)} отчёта"))
+    return "; ".join(parts)
 
 
 STEP_TITLES = (
@@ -1760,6 +1886,12 @@ def report_text(book: Book, result: Mapping) -> str:
               f"Передача ставки: `{result['transmission']}`.", ""]
     if is_dry_run(result):
         lines += ["Отчёт — ожидаемый (сухой прогон): фактов в нём нет, строка «сюрприз факта» — ноль.", ""]
+    ov = d.get("observation_override")
+    if ov:
+        lines += ["**Наблюдение закрытого квартала подменено решением книги** (`--observation`, копия — "
+                  f"`observation.json` каталога): {_override_words(ov)}. Причина: {ov['reason'].rstrip('.')}. "
+                  "Факты кандидата — опубликованные числа отчёта; подмена — только в наблюдении A-P2u, её эффект — "
+                  "в строке «сюрприз факта». В журнал версии книги — строкой «суждения книги» с причиной.", ""]
 
     eng, mg = d["engine"], d["mgmt"]
     lines += ["## Производные величины", "",
@@ -1772,8 +1904,14 @@ def report_text(book: Book, result: Mapping) -> str:
         obs, post = d["observation"], result["posterior"]
         lines.append("- наблюдение A-P2u с замороженными ожиданиями режимов: CoR " + _fmt(obs.get("mu_cor"))
                      + "; ЧПМ " + _fmt(obs.get("mu_nim")))
+        if ov:
+            lines.append(f"- подмена наблюдения (решение книги): {_override_words(ov)}; в записи окна — CoR "
+                         f"{_fmt(obs.get('cor'))} (se {_fmt(obs.get('se_cor'))}), ЧПМ {_fmt(obs.get('nim'))} (se "
+                         f"{_fmt(obs.get('se_nim'))}); причина — {ov['reason']}")
         lines.append("- вероятности режимов: книга " + _fmt(post["book"]) + " → после ожидаемого наблюдения "
-                     + _fmt(post["expected"]) + " → кандидат " + _fmt(post["candidate"]))
+                     + _fmt(post["expected"]) + " → кандидат " + _fmt(post["candidate"])
+                     + ("; прежняя книга с тем же наблюдением, что у кандидата" + (" (с подменой)" if ov else "")
+                        + ": " + _fmt(post["book_report"]) if post.get("book_report") else ""))
         fl = d["regime_floor"]
         lines.append(f"- пол вероятности режима ({fl['share']:g} × базовая): " + _fmt(fl["floors"]) + "; на полу у "
                      "кандидата: " + (", ".join(fl["on_floor"]) or "нет")
@@ -1811,8 +1949,14 @@ def report_text(book: Book, result: Mapping) -> str:
                      f"пути ЧПМ с прежней книгой {path['residual'] * 1e4:.2f} б.п. "
                      f"(кварталы {path['periods'][0]}…{path['periods'][-1]})")
 
+    def why(path: str) -> str:
+        text = reason(path)
+        if ov and path.startswith(OBS):
+            text += f"; наблюдение подменено решением книги ({_override_words(ov)}): {ov['reason']}"
+        return text.replace("|", "/")
+
     lines += ["", "## Что сдвинулось в книге", "", "| путь | было | стало | почему |", "|---|---|---|---|"]
-    lines += [f"| `{dotted(p)}` | {_fmt(a)} | {_fmt(b)} | {reason(dotted(p))} |" for p, a, b in cand.changes]
+    lines += [f"| `{dotted(p)}` | {_fmt(a)} | {_fmt(b)} | {why(dotted(p))} |" for p, a, b in cand.changes]
 
     steps = result["steps"]
     lines += ["", f"## Разложение скачка на {result['valuation_date']}: точка при значениях книги", "",
@@ -1837,6 +1981,9 @@ def report_text(book: Book, result: Mapping) -> str:
     if "mechanics" not in steps:
         lines += ["", "Клетки на своём пути не считались (`--no-cells`): механика и выпуклость — одной строкой, "
                   "допуск механики не проверен."]
+    if ov:
+        lines += ["", "Строка «сюрприз факта» несёт и отчёт, и подмену наблюдения закрытого квартала (шапка); "
+                  "прочие строки подмены не видят."]
     calm = result.get("no_shock")
     if calm:
         exp, a, plus, h = result["observation"], steps["rolled"], steps["learning"], calm["headline"]
@@ -2064,8 +2211,9 @@ def _json(tree: Any) -> str:
 
 
 def write_candidate(out: Path, book: Book, result: Mapping, template: Path | None = None) -> None:
-    """Кандидат книги и фактов, ожидаемый отчёт и REANCHOR.md — в каталог `out`. В режиме `resolve`
-    (диагностика) — только ожидаемый отчёт и REANCHOR.md: такого кандидата в канон не переносят."""
+    """Кандидат книги и фактов, ожидаемый отчёт, подмена наблюдения (если была) и REANCHOR.md — в каталог
+    `out`. В режиме `resolve` (диагностика) — только ожидаемый отчёт и REANCHOR.md: такого кандидата в канон
+    не переносят."""
     check_out(out)
     cand: Reanchored = result["candidate"]
     if result["transmission"] == RESOLVE:
@@ -2091,6 +2239,8 @@ def write_candidate(out: Path, book: Book, result: Mapping, template: Path | Non
     for name, content in cand.facts.files.items():
         _write(out / "facts" / f"{name}.json", _json(content))
     _write(out / "expected.json", _json(result["expected"]))
+    if result.get("observation_override"):
+        _write(out / "observation.json", _json(result["observation_override"]))
     _write(out / "REANCHOR.md", report_text(book, result))
 
 
@@ -2115,6 +2265,11 @@ def main(argv: Sequence[str] | None = None) -> int:
                          "диагностика: цели прежние, скаляры решаются заново, кандидат не пишется")
     ap.add_argument("--compare-facts", type=Path, metavar="КАТАЛОГ",
                     help="сверить факты кандидата с пересобранными фактами нового якоря")
+    ap.add_argument("--observation", type=Path, metavar="ФАЙЛ",
+                    help="подмена наблюдения A-P2u закрытого квартала решением книги (YAML или JSON): cor, se_cor, "
+                         "nim, se_nim — доли единицы, все четыре обязательны (null — величина не наблюдается); "
+                         "reason — причина, обязательна; period — необязательно. Идёт только в кандидата на "
+                         "отчёте (строка «сюрприз факта»); факты остаются числами отчёта (docs/REANCHOR.md §3.1)")
     args = ap.parse_args(argv)
     for stream in (sys.stdout, sys.stderr):
         if hasattr(stream, "reconfigure"):
@@ -2134,8 +2289,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         report = read_report(args.facts)
         out = args.out or DEFAULT_OUT / str(report.get("period", "report"))
         check_out(out)
+        override = None
+        if args.observation:
+            override = read_observation(args.observation)
+            check_observation(override, str(report.get("period")))      # отказ до расчёта
         result = attribution(book, facts, report, valuation_date=args.valuation_date, version=args.version,
-                             band_draws=args.band, cells=not args.no_cells, transmission=args.transmission)
+                             band_draws=args.band, cells=not args.no_cells, transmission=args.transmission,
+                             observation=override)
         if args.compare_facts:
             result["facts_check"] = compare_facts(book, result["candidate"].facts, load_facts(args.compare_facts))
         write_candidate(out, book, result, args.template)
