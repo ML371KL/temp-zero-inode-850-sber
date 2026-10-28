@@ -16,9 +16,11 @@
 * **Поток одного вида принимается тождеством** (`accept_by_identity`): если нарастающее и месячное
   потока (ЧП, ЧПД, ЧКД, резервы, расходы, прибыль до налога) называет один вид источника (или пара
   уже принята двумя видами), а «НМ месяца − НМ прошлого месяца в ряду = месяц» сходится в допуске
-  `identity`, оба числа принимаются с видами `[<вид>, identity]`. Январь так не принимается: там НМ
-  и месяц — одно число, и тождество ничего не подтверждает.
-* **Тождество «НМ = НМ прошлого месяца + месяц»**: поток, не прошедший его, в ряд не пишется.
+  `identity_accept` (0,15 млрд ₽ — наибольшая ошибка округления трёх чисел с точностью 0,1), оба числа
+  принимаются с видами `[<вид>, identity]`. Январь так не принимается: там НМ и месяц — одно число, и
+  тождество ничего не подтверждает.
+* **Тождество «НМ = НМ прошлого месяца + месяц»** (допуск `identity`, 0,35 млрд ₽): поток, не прошедший
+  его, в ряд не пишется.
 * **Принятое автоматически другое автоматическое не переписывает**: иное число — расхождение,
   меняет его только ручной ввод.
 
@@ -75,6 +77,18 @@ def series_id(metric: str) -> str:
 def tolerance(metric: str, cfg: dict[str, Any]) -> float:
     tol = cfg.get("tolerance") or {}
     return float(tol.get("share" if metric in SHARE_METRICS else "money", 0.0005 if metric in SHARE_METRICS else 0.15))
+
+
+IDENTITY_TOLERANCE = 0.35          # млрд ₽: общая проверка «НМ = НМ прошлого месяца + месяц» (`identity`)
+IDENTITY_ACCEPT_TOLERANCE = 0.15   # млрд ₽: приём одного вида тождеством — ошибка округления трёх чисел до 0,1
+
+
+def identity_tolerance(cfg: dict[str, Any], *, accept: bool = False) -> float:
+    """Допуск тождества: общей проверки (`tolerance.identity`) или приёма одного вида (`tolerance.identity_accept`)."""
+    tol = cfg.get("tolerance") or {}
+    if accept:
+        return float(tol.get("identity_accept", IDENTITY_ACCEPT_TOLERANCE))
+    return float(tol.get("identity", IDENTITY_TOLERANCE))
 
 
 def release_days(month: str) -> tuple[date, date]:
@@ -169,13 +183,14 @@ def accept_by_identity(store: Store, month: str, cands: dict[str, list[dict[str,
 
     Для потока P&L пара «нарастающее — месяц» берётся из принятого двумя видами или, если его нет, из
     единственного вида (`single_kind`); оба числа есть, НМ прошлого месяца лежит в ряду и
-    |НМ прошлого месяца + месяц − НМ| ≤ `tolerance.identity` — непринятые числа пары принимаются с видами
-    `[<вид>, identity]`. Январь не принимается (НМ и месяц там одно число), расхождение — тоже.
-    Возвращает принятые так метрики; `accepted` дополняется на месте."""
+    |НМ прошлого месяца + месяц − НМ| ≤ `tolerance.identity_accept` (0,15 млрд ₽: три числа с точностью 0,1 —
+    ошибка округления не больше 3 × 0,05; общая проверка тождества `identity` шире) — непринятые числа пары
+    принимаются с видами `[<вид>, identity]`. Январь не принимается (НМ и месяц там одно число), расхождение —
+    тоже. Возвращает принятые так метрики; `accepted` дополняется на месте."""
     _, number = periods.parse_month(month)
     if number == 1:
         return []
-    tol = float((cfg.get("tolerance") or {}).get("identity", 0.35))
+    tol = identity_tolerance(cfg, accept=True)
     prev_month = periods.shift_month(month, -1)
     done: list[str] = []
     for flow in FLOWS:
@@ -235,7 +250,7 @@ def derive_month(store: Store, month: str, accepted: dict[str, dict]) -> None:
 
 def identity_failures(store: Store, month: str, accepted: dict[str, dict], cfg: dict[str, Any]) -> dict[str, str]:
     """Тождество «НМ = НМ прошлого месяца + месяц» для потоков P&L (январь: НМ = месяц) → {поток: что не сошлось}."""
-    tol = float((cfg.get("tolerance") or {}).get("identity", 0.35))
+    tol = identity_tolerance(cfg)
     out: dict[str, str] = {}
     _, m = periods.parse_month(month)
     for flow in FLOWS:

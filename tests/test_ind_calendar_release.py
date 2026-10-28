@@ -305,7 +305,8 @@ def _one_kind_ctx(monkeypatch, tmp_path, texts: dict[str, str], today=date(2026,
 
 def test_a_flow_of_one_kind_is_accepted_when_the_running_total_adds_up(monkeypatch, tmp_path):
     """Релиз 9М26 — только Интерфакс (как 09.10.2026): нарастающее и месяц каждого потока сходятся с августом ряда
-    (2 441,3 + 327,3 = 2 768,6 ≈ 2 768,5 в допуске 0,35) — поток принят видами [interfax, identity] и записан в ряд."""
+    (2 441,3 + 327,3 = 2 768,6 ≈ 2 768,5 в допуске приёма 0,15) — поток принят видами [interfax, identity] и записан в
+    ряд."""
     ctx = _one_kind_ctx(monkeypatch, tmp_path, {"u9": NINE_ONE_KIND})
     out = release_watch.watch(ctx, "2026M09")
     acc = ctx.store.read_state("release_watch/2026M09.json")["accepted"]
@@ -336,3 +337,29 @@ def test_one_kind_is_not_enough_without_the_identity(monkeypatch, tmp_path):
     accepted: dict = {}
     assert release_watch.accept_by_identity(Store(tmp_path / "jan"), "2027M01", jan, accepted, {}, {}) == []
     assert accepted == {}
+
+
+def test_one_kind_identity_tolerance_is_the_rounding_of_three_numbers(tmp_path):
+    """DECISIONS 14.7: приём одного вида тождеством — в допуске `identity_accept` 0,15 млрд ₽ (три числа с точностью
+    0,1 — ошибка округления не больше 0,15): невязка 0,1 — приём, 0,3 (число без десятых: «542» вместо 542,3) — нет.
+    Общая проверка тождества принятых чисел — прежняя, `identity` 0,35."""
+    cfg = config.sources()["release_watch"]
+    assert cfg["tolerance"]["identity_accept"] == 0.15 and cfg["tolerance"]["identity"] == 0.35
+    store = Store(tmp_path)
+    store.upsert("ras.release.nii_ytd", [Point("2026M08", 2441.3, "2026-09-09T07:00:00+00:00")], basis="ras",
+                 unit="RUB bn")
+
+    def one_kind(month_value: float, conf: dict) -> list[str]:
+        cands = {"nii_ytd": [{"kind": "interfax", "value": 2768.5}],
+                 "nii_m": [{"kind": "interfax", "value": month_value}]}
+        return release_watch.accept_by_identity(store, "2026M09", cands, {}, {}, conf)
+
+    assert one_kind(327.3, cfg) == ["nii_ytd", "nii_m"]                       # 2 441,3 + 327,3 − 2 768,5 = 0,1
+    assert one_kind(327.5, cfg) == [] and one_kind(327.5, {}) == []           # 0,3: в прежнем допуске 0,35 прошло бы
+    assert one_kind(327.5, {"tolerance": {"identity_accept": 0.35}}) == ["nii_ytd", "nii_m"]
+    assert one_kind(327.5, {"tolerance": {"identity": 0.15, "identity_accept": 0.35}}) == ["nii_ytd", "nii_m"]
+    both = {"nii_ytd": {"value": 2768.5, "kinds": ["interfax", "pdf"]},
+            "nii_m": {"value": 327.5, "kinds": ["interfax", "pdf"]}}
+    assert release_watch.identity_failures(store, "2026M09", both, cfg) == {}  # два вида: общая проверка — 0,35
+    both["nii_m"]["value"] = 327.7
+    assert list(release_watch.identity_failures(store, "2026M09", both, cfg)) == ["nii"]

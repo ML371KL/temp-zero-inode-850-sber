@@ -14,7 +14,8 @@ w = σ²_база / (σ²_база + σ²_РСБУ(k)),   k — известны
   (`facts/bridge_ras_ifrs.json → by_quarter`; без файла — среднее прошлых лет по истории).
   σ — относительные ошибки ретро (`indicators/retro.py → sigma_table`).
 * **T3 `nim_q`** — ЧПМ, упр. базис. ЧПМ РСБУ = ЧПД квартала (релиз `ras.release.nii_m`,
-  неизвестные месяцы — профилем) × 365/d ÷ средние процентные активы банка (форма 0409101,
+  неизвестные месяцы — профилем «тот же месяц год назад × рост г/г трёх последних известных месяцев»,
+  DECISIONS 14.7) × 365/d ÷ средние процентные активы банка (форма 0409101,
   `cbr.f101.iea` по кодам фактов `bridge_ras_ifrs.iea.codes`: (конец прошлого квартала + конец
   квартала) / 2, как у стороны РСБУ моста; невышедший конец квартала — последний известный
   конец месяца × средний месячный рост за три месяца). Мост ЧПМ = мост ЧПД ÷ мост активов (`bridge_ras_ifrs.json → nii`, `iea`: по кварталу
@@ -67,6 +68,11 @@ DAYS_IN_YEAR = 365
 IEA_GROWTH_MONTHS = 3     # рост процентных активов для невышедших концов месяцев — за столько месяцев
 IEA_STALE_MONTHS = 3      # последний известный конец месяца старше начала квартала больше чем на столько — нет оценки
 COR_LOOKBACK_MONTHS = 3   # CoR РСБУ до первого месяца квартала — последний известный месяц не старше этого
+# Профиль недостающего месяца M (`ras_estimate`, INDICATORS §7). Одно правило на живой нау-каст цели и её ретро.
+PROFILE_LAST = "last_month"   # последний известный месяц × (M год назад / тот месяц год назад) — T1, ЧП
+PROFILE_YOY = "yoy3"          # M год назад × рост г/г трёх последних известных месяцев — T3, ЧПД (DECISIONS 14.7)
+PROFILE_YOY_MONTHS = 3        # месяцев в росте г/г правила `yoy3`
+PROFILE_RULES = {"ni_q": PROFILE_LAST, "nim_q": PROFILE_YOY}
 
 Row = tuple[str, float, str]      # (момент известности, значение, источник)
 
@@ -287,13 +293,20 @@ def facts_ratio_before(block: Any, q: str, window: int) -> float | None:
 def ras_estimate(h: History, q: str, as_of: str | None, *, known: int | None = None,
                  profile: Mapping[str, float] | None = None,
                  getter: Callable[[str, str | None], tuple[float, str, str] | None] | None = None,
-                 key: str = "ni") -> dict[str, Any] | None:
+                 key: str = "ni", rule: str = PROFILE_LAST) -> dict[str, Any] | None:
     """Оценка РСБУ квартала: известные месяцы + профиль. `known` — принудительно k первых месяцев (ретро).
 
-    Профиль — значения тех же месяцев год назад (`profile` — замороженные при первой записи
-    {месяц год назад: значение}); оценка месяца = последний известный × (месяц год назад / база
-    год назад). `getter` — чтение месяца (по умолчанию ЧП: релиз, затем форма 102), `key` — имя
-    значения в строках месяцев.
+    Профиль — значения месяцев год назад (`profile` — замороженные при первой записи {месяц год назад:
+    значение}, иначе — история на дату). База — последний известный месяц квартала, без них — прошлого
+    квартала (не дальше трёх месяцев). Оценка недостающего месяца M по правилу `rule`:
+
+    * `last_month` (ЧП, T1) — база × (M год назад / база год назад);
+    * `yoy3` (ЧПД, T3) — M год назад × рост г/г трёх последних известных месяцев (база и два месяца до неё:
+      их сумма ÷ сумма тех же месяцев год назад); нет какого-то из шести чисел или сумма год назад — ноль —
+      по правилу `last_month`.
+
+    `getter` — чтение месяца (по умолчанию ЧП: релиз, затем форма 102), `key` — имя значения в строках
+    месяцев; `profile_rule` выхода — правило, которым оценены месяцы (None — оценивать было нечего).
     """
     get = getter or h.month
     months = periods.quarter_months(q)
@@ -318,6 +331,14 @@ def ras_estimate(h: History, q: str, as_of: str | None, *, known: int | None = N
     if last_known is None:
         return None
     frozen = dict(profile or {})
+    unknown = {r["month"] for r in rows if r["status"] == "estimated"}
+
+    def value(m: str) -> float | None:
+        """Значение месяца на дату; месяц квартала, которого ещё нет (и скрытый `known`), — None."""
+        if m in unknown:
+            return None
+        got = get(m, as_of)
+        return None if got is None else got[0]
 
     def year_ago_value(m: str) -> float | None:
         ly = periods.year_ago(m)
@@ -328,11 +349,22 @@ def ras_estimate(h: History, q: str, as_of: str | None, *, known: int | None = N
 
     base = get(last_known, as_of)[0]
     used: dict[str, float] = {}
-    if any(r["status"] == "estimated" for r in rows):
-        base_ly = year_ago_value(last_known)
-        if not base_ly:
-            return None
-        used[periods.year_ago(last_known)] = base_ly
+    applied = None
+    if unknown:
+        yoy: tuple[float, float] | None = None      # (сумма трёх месяцев, сумма тех же месяцев год назад)
+        if rule == PROFILE_YOY:
+            window = [periods.shift_month(last_known, -i) for i in range(PROFILE_YOY_MONTHS)]
+            now, ago = [value(m) for m in window], [year_ago_value(m) for m in window]
+            if all(v is not None for v in now + ago) and sum(ago):
+                yoy = sum(now), sum(ago)
+                used.update({periods.year_ago(m): v for m, v in zip(window, ago)})
+        base_ly = None
+        if yoy is None:                             # правило последнего месяца (и `yoy3` без шести чисел)
+            base_ly = year_ago_value(last_known)
+            if not base_ly:
+                return None
+            used[periods.year_ago(last_known)] = base_ly
+        applied = PROFILE_LAST if yoy is None else PROFILE_YOY
         for r in rows:
             if r["status"] != "estimated":
                 continue
@@ -340,10 +372,10 @@ def ras_estimate(h: History, q: str, as_of: str | None, *, known: int | None = N
             if ly is None:
                 return None
             used[periods.year_ago(r["month"])] = ly
-            r[key] = base * ly / base_ly
+            r[key] = base * ly / base_ly if yoy is None else ly * yoy[0] / yoy[1]
     k = sum(1 for r in rows if r["status"] == "known")
     return {"months": rows, "months_known": k, "estimate": sum(r[key] for r in rows),
-            "profile": used, "profile_base": last_known}
+            "profile": used, "profile_base": last_known, "profile_rule": applied}
 
 
 def iea_months(q: str) -> list[str]:
@@ -409,8 +441,9 @@ def _months_between(a: str, b: str):
 
 def nim_ras(h: History, q: str, as_of: str | None, *, known: int | None = None,
             profile: Mapping[str, float] | None = None) -> dict[str, Any] | None:
-    """ЧПМ РСБУ квартала: ЧПД (известные месяцы + профиль) × 365/d ÷ средние процентные активы."""
-    nii = ras_estimate(h, q, as_of, known=known, profile=profile, key="value",
+    """ЧПМ РСБУ квартала: ЧПД (известные месяцы + профиль `yoy3`) × 365/d ÷ средние процентные активы.
+    Одна функция на живой нау-каст и ретро (`retro.ratio_sigma_table`): σ и w меряются тем же профилем."""
+    nii = ras_estimate(h, q, as_of, known=known, profile=profile, key="value", rule=PROFILE_RULES["nim_q"],
                        getter=lambda m, a: h.release_month("nii_m", m, a))
     iea = iea_average(h, q, as_of)
     if nii is None or iea is None or not iea["average"]:
@@ -496,6 +529,7 @@ def _nim_target(h: History, q: str, as_of: str, bridge: Mapping[str, Any], sig: 
             "months_known": k, "nii_ras": est["nii"]["estimate"] if est else None,
             "iea_ras": est["iea"]["average"] if est else None, "iea_months": est["iea"]["months"] if est else [],
             "days": periods.quarter_days(q), "profile": est["nii"]["profile"] if est else {},
+            "profile_rule": est["nii"]["profile_rule"] if est else None,
             "basis": "mgmt", "equation": equation}
 
 

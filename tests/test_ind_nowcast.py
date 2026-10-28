@@ -8,7 +8,7 @@ from datetime import date, timedelta
 import pytest
 
 from indicators import config, nowcast, retro
-from indicators.periods import shift_quarter
+from indicators.periods import quarter_months, shift_month, shift_quarter, year_ago
 from indicators.store import Point, Store
 from tests.support_ind import FIX, seeded_store
 
@@ -230,9 +230,16 @@ def test_nim_nowcast_through_the_nii_and_asset_bridges(tmp_path):
                              to_mgmt_nim=_to_mgmt)
     t = out["targets"]["nim_q"]
     h = nowcast.History.load(store)
-    jul, aug = h.release_month("nii_m", "2026M07", None)[0], h.release_month("nii_m", "2026M08", None)[0]
-    sep = aug * h.release_month("nii_m", "2025M09", None)[0] / h.release_month("nii_m", "2025M08", None)[0]
-    assert t["nii_ras"] == pytest.approx(jul + aug + sep) and t["months_known"] == 2
+
+    def nii(m):
+        return h.release_month("nii_m", m, None)[0]
+
+    # профиль ЧПД (DECISIONS 14.7): сентябрь год назад × рост г/г июня–августа
+    sep = nii("2025M09") * sum(map(nii, ("2026M06", "2026M07", "2026M08"))) / sum(
+        map(nii, ("2025M06", "2025M07", "2025M08")))
+    assert t["nii_ras"] == pytest.approx(nii("2026M07") + nii("2026M08") + sep) and t["months_known"] == 2
+    assert t["profile_rule"] == nowcast.PROFILE_YOY and set(t["profile"]) == {"2025M06", "2025M07", "2025M08",
+                                                                              "2025M09"}
     # средние активы: конец июня известен, конец сентября — конец августа × рост трёх месяцев
     months = {m["month"]: m for m in t["iea_months"]}
     jun, may, aug_a = (h.iea_month(m, None)[0] for m in ("2026M06", "2026M05", "2026M08"))
@@ -338,7 +345,7 @@ def test_nim_sigma_is_measured_on_the_day_the_month_came_out(tmp_path):
     assert [m["status"] for m in late["iea"]["months"]] == ["known", "known"]
     assert abs(live["value"] - late["value"]) > 1e-4                               # расхождение — не округление
     table = retro.ratio_sigma_table(store, bridge=bridge, to_mgmt_nim=_to_mgmt, today=date(2026, 10, 1))["nim"]
-    errors = []
+    errors, yoy = [], []
     for period in table["quarters"]:
         moment, actual = h.mgmt["nim"][period]
         when = retro.known_date(h, period, 1, moment[:10], nii_month)
@@ -348,10 +355,65 @@ def test_nim_sigma_is_measured_on_the_day_the_month_came_out(tmp_path):
         b = (nowcast.facts_ratio_before(bridge["nii"], period, table["bridge_window"]["nii"])
              / nowcast.facts_ratio_before(bridge["iea"], period, table["bridge_window"]["iea"]))
         errors.append(_to_mgmt(est["value"] * b) - actual)
-    assert len(errors) == table["n"]["ras"]["1"] >= 8
+        # профиль ретро — правило живого нау-каста: месяц год назад × рост г/г трёх последних известных месяцев
+        if est["nii"]["profile_rule"] == nowcast.PROFILE_YOY:
+            months, window = quarter_months(period), [shift_month(quarter_months(period)[0], -i) for i in range(3)]
+            growth = sum(nii_month(m, when)[0] for m in window) / sum(nii_month(year_ago(m), when)[0] for m in window)
+            got = {r["month"]: r["value"] for r in est["nii"]["months"]}
+            assert [got[m] for m in months[1:]] == pytest.approx(
+                [nii_month(year_ago(m), when)[0] * growth for m in months[1:]], rel=1e-12), period
+            yoy.append(period)
+    # у 2024К1 трёх месяцев год назад (ноябрь 2022 — январь 2023) в истории нет — правило последнего месяца
+    assert len(errors) == table["n"]["ras"]["1"] >= 8 and len(yoy) >= len(errors) - 1
     assert table["ras"]["1"] == pytest.approx(math.sqrt(sum(e * e for e in errors) / len(errors)), rel=1e-12)
     profit = retro.sigma_table(store, today=date(2026, 10, 1))                    # у прибыли день знания тот же ответ
     assert profit["n"]["ras"]["1"] >= 8 and 0.0 < profit["ras"]["1"] < profit["ras"]["0"]
+
+
+def _nii_history(values: dict[str, float]) -> nowcast.History:
+    """История ЧПД релиза без хранилища: месяц выходит 9-го числа следующего месяца."""
+    h = nowcast.History(store=Store.__new__(Store))
+    h.release = {"nii_m": {m: [(f"{shift_month(m, 1)[:4]}-{shift_month(m, 1)[5:]}-09T07:00:00+00:00", v, "release")]
+                           for m, v in values.items()}}
+    h.iea = {m: [(f"{shift_month(m, 1)[:4]}-{shift_month(m, 1)[5:]}-26T07:00:00+00:00", 60000.0 + 100 * i, "form101")]
+             for i, m in enumerate(("2026M05", "2026M06", "2026M07", "2026M08"))}
+    return h
+
+
+NII = {"2025M04": 240.0, "2025M05": 245.0, "2025M06": 250.0, "2025M07": 260.0, "2025M08": 255.0, "2025M09": 275.0,
+       "2026M04": 300.0, "2026M05": 310.0, "2026M06": 320.0, "2026M07": 315.0, "2026M08": 325.0}
+
+
+def test_nii_profile_is_the_year_ago_month_times_the_three_month_growth():
+    """DECISIONS 14.7: недостающий месяц ЧПД (T3) — тот же месяц год назад × рост г/г трёх последних известных
+    месяцев; нет какого-то из шести чисел — правило прибыли (последний месяц × отношение год назад). Прибыль (T1) —
+    прежнее правило; замороженный профиль важнее истории."""
+    h, day, q = _nii_history(NII), "2026-09-20", "2026Q3"
+
+    def nii(m, as_of):
+        return h.release_month("nii_m", m, as_of)
+
+    est = nowcast.nim_ras(h, q, day)["nii"]                                       # известны июль и август
+    sep = 275.0 * (320.0 + 315.0 + 325.0) / (250.0 + 260.0 + 255.0)
+    assert est["months"][2]["value"] == pytest.approx(sep) and est["estimate"] == pytest.approx(315.0 + 325.0 + sep)
+    assert (est["profile_rule"], est["profile_base"]) == (nowcast.PROFILE_YOY, "2026M08")
+    assert est["profile"] == {"2025M06": 250.0, "2025M07": 260.0, "2025M08": 255.0, "2025M09": 275.0}
+    assert nowcast.PROFILE_RULES == {"ni_q": nowcast.PROFILE_LAST, "nim_q": nowcast.PROFILE_YOY}
+    profit = nowcast.ras_estimate(h, q, day, getter=nii, key="value")              # правило T1 — прежнее
+    assert profit["months"][2]["value"] == pytest.approx(325.0 * 275.0 / 255.0) and 325.0 * 275.0 / 255.0 - sep > 5
+    assert profit["profile_rule"] == nowcast.PROFILE_LAST and set(profit["profile"]) == {"2025M08", "2025M09"}
+    none = nowcast.nim_ras(h, q, day, known=0)["nii"]                             # k = 0: база — июнь
+    growth = (320.0 + 310.0 + 300.0) / (250.0 + 245.0 + 240.0)
+    assert [r["value"] for r in none["months"]] == pytest.approx([260.0 * growth, 255.0 * growth, 275.0 * growth])
+    assert none["months_known"] == 0 and none["profile_base"] == "2026M06"
+    frozen = nowcast.nim_ras(h, q, day, profile={"2025M09": 280.0, "2025M06": 251.0})["nii"]
+    assert frozen["months"][2]["value"] == pytest.approx(280.0 * 960.0 / (251.0 + 260.0 + 255.0))
+    gap = _nii_history({m: v for m, v in NII.items() if m != "2025M06"})          # июня год назад нет
+    fallback = nowcast.nim_ras(gap, q, day)["nii"]
+    assert fallback["profile_rule"] == nowcast.PROFILE_LAST
+    assert fallback["months"][2]["value"] == pytest.approx(325.0 * 275.0 / 255.0)
+    full = nowcast.nim_ras(_nii_history({**NII, "2026M09": 330.0}), q, "2026-10-10")["nii"]
+    assert full["profile_rule"] is None and full["profile"] == {} and full["months_known"] == 3   # профиль не нужен
 
 
 def test_iea_average_from_an_older_form():
