@@ -13,6 +13,11 @@
   периода называет M (`news.period_months`); числа — только из фраз, называющих этот месяц.
 * **Число принимается, если его подтверждают два разных вида** в пределах допуска
   (`sources.yaml → release_watch.tolerance`). Две группы по два вида и больше — расхождение.
+* **Поток одного вида принимается тождеством** (`accept_by_identity`): если нарастающее и месячное
+  потока (ЧП, ЧПД, ЧКД, резервы, расходы, прибыль до налога) называет один вид источника (или пара
+  уже принята двумя видами), а «НМ месяца − НМ прошлого месяца в ряду = месяц» сходится в допуске
+  `identity`, оба числа принимаются с видами `[<вид>, identity]`. Январь так не принимается: там НМ
+  и месяц — одно число, и тождество ничего не подтверждает.
 * **Тождество «НМ = НМ прошлого месяца + месяц»**: поток, не прошедший его, в ряд не пишется.
 * **Принятое автоматически другое автоматическое не переписывает**: иное число — расхождение,
   меняет его только ручной ввод.
@@ -41,6 +46,7 @@ SHARE_METRICS = frozenset({"roe_ytd", "roe_m", "cor_ytd", "cor_m", "cir_ytd", "n
 FLOWS = ("np", "nii", "fee", "prov", "opex", "pretax")
 STATE_DIR = "release_watch"
 MANUAL, CALC, HELD = "manual", "calc", "accepted"
+IDENTITY = "identity"     # метка приёма: число одного вида подтверждено тождеством нарастающего итога
 # Ведущее значение группы — вид, повторяющий релиз (таблица, текст); форма 0409102 — подтверждение.
 LEAD_ORDER = ("pdf", "interfax", "smartlab", "outlet")
 # Метрики словами — для строк, которые печатает витрина (причины деградации, плашка `ras_mismatch`; П§0.2).
@@ -146,6 +152,57 @@ def decide(cands: dict[str, list[dict[str, Any]]], cfg: dict[str, Any]) -> tuple
     return accepted, mismatches
 
 
+def single_kind(rows: list[dict[str, Any]], tol: float) -> tuple[float, str] | None:
+    """(значение, вид), если метрику называет ровно один вид источника и все его числа — в допуске; иначе None."""
+    kinds = _kinds(rows)
+    if len(kinds) != 1:
+        return None
+    vals = sorted(r["value"] for r in rows)
+    if vals[-1] - vals[0] > tol:
+        return None
+    return vals[len(vals) // 2], next(iter(kinds))
+
+
+def accept_by_identity(store: Store, month: str, cands: dict[str, list[dict[str, Any]]], accepted: dict,
+                       mismatches: dict, cfg: dict[str, Any]) -> list[str]:
+    """Приём потока, который называет один вид источника, по тождеству нарастающего итога (INDICATORS §5).
+
+    Для потока P&L пара «нарастающее — месяц» берётся из принятого двумя видами или, если его нет, из
+    единственного вида (`single_kind`); оба числа есть, НМ прошлого месяца лежит в ряду и
+    |НМ прошлого месяца + месяц − НМ| ≤ `tolerance.identity` — непринятые числа пары принимаются с видами
+    `[<вид>, identity]`. Январь не принимается (НМ и месяц там одно число), расхождение — тоже.
+    Возвращает принятые так метрики; `accepted` дополняется на месте."""
+    _, number = periods.parse_month(month)
+    if number == 1:
+        return []
+    tol = float((cfg.get("tolerance") or {}).get("identity", 0.35))
+    prev_month = periods.shift_month(month, -1)
+    done: list[str] = []
+    for flow in FLOWS:
+        pair = (f"{flow}_ytd", f"{flow}_m")
+        if all(k in accepted for k in pair) or any(k in mismatches for k in pair):
+            continue
+        got: dict[str, tuple[float, str | None]] = {}
+        for key in pair:
+            if key in accepted:
+                got[key] = (accepted[key]["value"], None)
+            else:
+                one = single_kind(cands.get(key) or [], tolerance(key, cfg))
+                if one is not None:
+                    got[key] = one
+        if len(got) < 2:
+            continue
+        prev = _held(store, pair[0], prev_month)
+        ytd, mon = got[pair[0]][0], got[pair[1]][0]
+        if prev is None or abs(prev + mon - ytd) > tol:
+            continue
+        for key, (value, kind) in got.items():
+            if kind is not None:
+                accepted[key] = {"value": value, "kinds": [kind, IDENTITY]}
+                done.append(key)
+    return done
+
+
 def _held(store: Store, metric: str, month: str) -> float | None:
     s = store.load(series_id(metric))
     return None if s is None else s.value_as_of(month)
@@ -202,6 +259,7 @@ def watch(ctx: Context, month: str) -> dict[str, Any]:
     for metric, value in manual.items():
         cands.setdefault(metric, []).append({"kind": MANUAL, "value": value["value"], "ref": value.get("source")})
     accepted, mismatches = decide(cands, cfg)
+    by_identity = accept_by_identity(ctx.store, month, cands, accepted, mismatches, cfg)
     derive_month(ctx.store, month, accepted)
     failures = identity_failures(ctx.store, month, accepted, cfg)
     now = ctx.moment()
@@ -234,10 +292,10 @@ def watch(ctx: Context, month: str) -> dict[str, Any]:
     if cands and not state.get("first_candidate"):
         state["first_candidate"] = now
     state.update({"checked_at": now, "candidates": cands, "mismatches": mismatches,
-                  "identity_failures": list(failures.values())})
+                  "identity_failures": list(failures.values()), "accepted_by_identity": sorted(by_identity)})
     ctx.store.write_state(name, state)
     return {"month": month, "new": new, "mismatches": sorted(mismatches),
-            "identity_failures": list(failures.values()),
+            "identity_failures": list(failures.values()), "accepted_by_identity": sorted(by_identity),
             "complete": "np_ytd" in state["accepted"],
             "month_accepted": "np_ytd" in new and not known_before}
 

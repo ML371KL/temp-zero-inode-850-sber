@@ -293,6 +293,106 @@ def test_base_and_main_capital_in_the_long_and_the_short_phrase():
     assert "cap_base" not in ratios and "cap_main" not in ratios        # доли рядом с «трлн» — не капитал
 
 
+# Релиз 9М в общих оборотах месяца потока (текст сочинён; числа — схема релиза за сентябрь 2026 года): нарастающее и
+# месяц в одной фразе, «Z млрд рублей за <месяц>», процент без «на», скобка после процента.
+NINE_COMMON = ("INTERFAX.RU - За девять месяцев 2026 года банк по РСБУ увеличил чистую прибыль на 18,2% (в годовом "
+               "выражении) — до 1 трлн 501,8 млрд рублей, в сентябре — на 7,3% — до 169,1 млрд. "
+               "Чистые процентные доходы по итогам девяти месяцев прибавили 24,1% и дошли до 2 трлн 768,5 млрд "
+               "рублей; в сентябре — плюс 19,4%, до 327,3 млрд. "
+               "Чистый комиссионный доход за девять месяцев составил 534,6 млрд рублей (+1,2% г/г), в сентябре — "
+               "58,7 млрд. Расходы на резервы с начала года, за девять месяцев, составили 580,7 млрд рублей и "
+               "48,4 млрд рублей за сентябрь. Операционные расходы банка за девять месяцев выросли до 915,1 млрд "
+               "рублей, в сентябре — до 108,4 млрд (+4,2% г/г).")
+NINE_EXPECTED = {"np_ytd": 1501.8, "np_m": 169.1, "nii_ytd": 2768.5, "nii_m": 327.3, "fee_ytd": 534.6, "fee_m": 58.7,
+                 "prov_ytd": -580.7, "prov_m": -48.4, "opex_ytd": -915.1, "opex_m": -108.4}
+
+
+def test_monthly_values_of_the_flows_in_the_common_phrasings():
+    """Месяц потока — и из общих оборотов «за N месяцев … — до X, в <месяце> — на Y% — до Z», «Z млрд рублей за
+    <месяц>», «в <месяце> — Z млрд»; «2 трлн 768,5 млрд» — одно число. Только для своего месяца релиза."""
+    got = news.extract_release_numbers(NINE_COMMON, month="2026M09")
+    assert {k: got[k][0] for k in NINE_EXPECTED} == pytest.approx(NINE_EXPECTED)
+    assert news.extract_release_numbers(NINE_COMMON, month="2026M08") == {}
+    last_year = news.extract_release_numbers(NINE_COMMON.replace("2026 года", "2025 года"), month="2026M09")
+    assert "np_ytd" not in last_year and "np_m" not in last_year            # год фразы — не год релиза
+
+
+def test_a_number_of_another_flow_or_another_year_is_not_the_month():
+    """Число месяца принадлежит потоку, названному перед ним; сравнение («против …», месяц прошлого года) — не
+    месяц релиза; «этот показатель» — поток прошлого предложения, а не всегда ЧКД (тексты сочинены)."""
+    two = "В сентябре банк заработал 169,1 млрд рублей прибыли, а чистый процентный доход банка вырос на 19,4%."
+    got = news.extract_release_numbers(two, month="2026M09")
+    assert got["np_m"][0] == pytest.approx(169.1) and "nii_m" not in got
+    years = ("В сентябре 2025 года чистые процентные доходы банка — 274,1 млрд рублей, в сентябре 2026 года — "
+             "327,3 млрд рублей.")
+    assert news.extract_release_numbers(years, month="2026M09")["nii_m"][0] == pytest.approx(327.3)
+    nine = "Чистая прибыль банка за сентябрь составила 169,1 млрд рублей против 160,0 млрд рублей в августе."
+    assert news.extract_release_numbers(nine, month="2026M08") == {}
+    this = ("Расходы на резервы за восемь месяцев дошли до 532,3 млрд руб. (годом ранее — 329,1). "
+            "В августе показатель вырос в 1,7 раза — до 107,8 млрд руб. против 63,0 млрд руб. годом ранее.")
+    got = news.extract_release_numbers(this, month="2026M08")
+    assert got["prov_m"][0] == pytest.approx(-107.8) and "fee_m" not in got
+
+
+# Посты канала эмитента о консенсусе (тексты сочинены): ожидание раньше прибыли; прогноз — подлежащее.
+CONSENSUS_FUTURE = ("По прогнозу аналитиков, чистая прибыль Группы за III квартал 2026 г. достигнет 511 млрд ₽ "
+                    "(ROE около 22%).")
+CONSENSUS_STATED = "Консенсус-прогноз аналитиков по чистой прибыли за 3 квартал 2026 года — 511 млрд ₽ (МСФО)."
+
+
+def test_the_consensus_of_the_quarter_from_a_post_of_the_issuer():
+    """Консенсус ЧП квартала из поста канала эмитента: ожидание раньше прибыли, квартал с годом, число после глагола
+    будущего или связки; «консенсус-прогноз … по чистой прибыли … составил X» — тоже консенсус. Пост о результате
+    отчёта («составила», «как и ожидали») консенсусом не считается."""
+    for text in (CONSENSUS_FUTURE, CONSENSUS_STATED,
+                 CONSENSUS_STATED.replace("— 511 млрд ₽ (МСФО)", "по МСФО составил 511 млрд ₽")):
+        got = news.extract_consensus(text)
+        assert got is not None and (got["period"], got["value"]) == ("2026Q3", 511.0), text
+    assert news.extract_consensus("Чистая прибыль Группы по МСФО за III квартал 2026 г. составила 511,2 млрд ₽ — "
+                                  "немного выше консенсуса.") is None
+    assert news.extract_consensus("Как и ожидали аналитики, чистая прибыль Группы за III квартал 2026 г. составила "
+                                  "511,2 млрд ₽.") is None
+    assert news.extract_consensus("Аналитики ожидают роста кредитования в 2026 году.") is None
+
+
+def _channel_page(text: str, post: str, moment: str) -> bytes:
+    """Превью канала из одного сочинённого поста (разметка `t.me/s/<канал>`)."""
+    return ('<div class="tgme_widget_message_wrap js-widget_message_wrap"><div class="tgme_widget_message" '
+            f'data-post="{post}"><div class="tgme_widget_message_text js-message_text" dir="auto">{text}</div>'
+            f'<time datetime="{moment}" class="time">10:15</time></div></div>').encode("utf-8")
+
+
+def test_the_consensus_post_goes_to_the_consensus_series_and_the_manual_record_wins(monkeypatch, tmp_path):
+    """Сборщик новостей пишет консенсус поста канала с `consensus: true` в ряд `consensus.ni_q` (момент — публикация
+    поста): эталон «консенсус» журнала и ретро. Повтор такта то же число второй раз не пишет; квартал с ручной
+    записью (`record-consensus`) автомат не трогает."""
+    from indicators import record
+
+    cfg = dict(config.sources())
+    channel = next(c for c in cfg["news"]["telegram_channels"] if isinstance(c, dict) and c.get("consensus"))
+    cfg["news"] = {**cfg["news"], "interfax_day": None, "outlets": [], "smartlab_news": None,
+                   "telegram_channels": [channel]}
+    page = _channel_page(CONSENSUS_FUTURE, f"{channel['name']}/900021", "2026-10-26T07:15:00+00:00")
+    for manual in (False, True):
+        state = use_fixtures(monkeypatch, tmp_path / str(manual))
+        store = Store(state)
+        if manual:
+            record.record_consensus(store, period="2026Q3", value="509", source="консенсус банка, ввод вручную")
+        ctx = Context(store=store, today=date(2026, 10, 26), company=config.company(), cfg=cfg,
+                      getter=FakeGetter(overrides={f"t.me/s/{channel['name']}": page}))
+        for _ in range(2):
+            res = news.collect(ctx)
+        series = store.load("consensus.ni_q")
+        points = [p for p in series.points if p.period == "2026Q3"]
+        if manual:
+            assert series.value_as_of("2026Q3") == 509.0 and len(points) == 1 and points[0].status == "manual"
+            assert "consensus.ni_q" not in res.series
+        else:
+            assert series.value_as_of("2026Q3") == 511.0 and len(points) == 1
+            assert points[0].fetched_at == "2026-10-26T07:15:00+00:00" and points[0].source.endswith("/900021")
+            assert series.value_as_of("2026Q3", "2026-10-25") is None              # до поста консенсуса не знали
+
+
 NEWS_FIXTURES = sorted(p.name for p in (FIX / "news").iterdir())
 
 
