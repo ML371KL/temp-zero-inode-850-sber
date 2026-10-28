@@ -202,7 +202,9 @@ def compute() -> dict:
 
 
 def compare(res: dict, book: dict) -> list[str]:
-    """Расхождения с книгой (пусто — книга воспроизводится): округлённые ключи шаблона против листа."""
+    """Расхождения с книгой (пусто — книга воспроизводится): округлённые ключи шаблона против листа. Квартальный
+    профиль «прочего» (A-O3) с книги 1.5 сверяет лист evidence/misc (средние кварталы 2024К1–2026К3); здесь — профиль
+    2024–2025 годов книг 1.1–1.4, справочно."""
     p = res["pnl"]
     pairs = [
         ("nii.dia_rate", book["nii"]["dia_rate"], round(p["dia_rate_6M2026"], 4), 0.00005),
@@ -210,8 +212,7 @@ def compare(res: dict, book: dict) -> list[str]:
         ("pnl.nci_share (≈0)", book["pnl"]["nci_share"], p["nci_share_2025"], 0.001),
         ("checks.bridge_drift_pp.cor ≈ 2,5σ моста CoR", book["checks"]["bridge_drift_pp"]["cor"],
          round(2.5 * res["cor_bridge"]["sd_pp"] / 100, 3), 0.0005),
-    ] + [(f"other.misc_quarter_shares.{k}", book["other"]["misc_quarter_shares"][k], v, 1e-9)
-         for k, v in res["misc_profile"]["shares"].items()]
+    ]
     return [f"{k}: книга {b} против листа {v}" for k, b, v, tol in pairs if abs(b - v) > tol]
 
 

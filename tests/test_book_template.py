@@ -7,6 +7,7 @@
 `docs` такт не гоняет. Суждения, которые проверяются прогоном сетки ядра, — `tests/test_book_core.py`."""
 from __future__ import annotations
 
+import csv
 import json
 import re
 
@@ -21,15 +22,18 @@ except ImportError:                      # прогон без pytest.ini (pytho
 pytestmark = pytest.mark.tact
 
 MARKS = ("  #{{WORLDS}}", "#{{WORLDS_BANK}}", "#{{OVERLAY_SHA256}}")
-VERSION = "1.4"
+VERSION = "1.5"
 # Книга 1.4 перенесена на якорь 2026Q3 (ops/tools/reanchor.py, режим keep, MODEL §15.2): решения, которые перенос
 # записывает на структуре нового якоря и в его ценах, — числами журнала V1.4-CHANGES.md (суждения те же): цели A-N2
 # и A-N3 и доля σ0 — при прежних скалярах пути (цель A-N2 — на мосте ЧПМ канона фактов), вычеты — формулой книги на
 # фактах 30.09.2026, реальные суммы — × индекс цен 3К26. В книгах 1.0–1.3 (якорь 2К26): 0,060; 0,06; 0,09; 936,7;
-# 1 173,8; −200.
+# 1 173,8.
 MOVED = {"nii.nim_lt_target_mgmt": 0.057238, "nii.transmission.target": 0.047867, "nii.sigma0_split": 0.089584,
-         "capital.n20.deductions_anchor": 963.7, "capital.n11.deductions_anchor": 1192.927,
-         "other.misc_net_real.LT": -203.195111}
+         "capital.n20.deductions_anchor": 963.7, "capital.n11.deductions_anchor": 1192.927}
+# Суждения книги 1.5 по фактам 2024К1–2026К3 (V1.5-CHANGES.md, лист evidence/misc): уровень «прочего» — год из
+# средних кварталов в ценах якоря (у 1.0–1.3 — −200 в ценах 2026, у 1.4 — −203,195111), непрофильный результат 2026
+# года — факт 9М26 и оценка 4К26 (у 1.4 — −181,474544).
+JUDGED_1_5 = {"other.misc_net_real.LT": -300.0, "noncore.result_real.2026": -166.6}
 RESULTS = S.BOOK_DIR / "results.json"
 # Оси, которые из полосы не выводятся никогда (MODEL §10): односторонние рисковые — по путям ключей
 NEVER_OFF_BAND = ("tax.statutory", "tax.one_off.prob", "regimes.crisis.one_off_loss.amount")
@@ -183,7 +187,8 @@ def test_lead_decisions_are_in_the_book(book):
     assert book["fees"]["growth_override"] == {"2026": 0.0}
     assert book["volumes"]["guidance_growth"] == {"corporate": 0.09, "retail": 0.10}
     assert book["opex"]["real_growth"]["2026"] == 0.05
-    assert book["other"]["misc_net_real"]["LT"] == MOVED["other.misc_net_real.LT"]         # −200 в ценах 2К26
+    assert book["other"]["misc_net_real"]["LT"] == JUDGED_1_5["other.misc_net_real.LT"]    # −200 в ценах 2К26 у 1.0–1.3
+    assert book["noncore"]["result_real"]["2026"] == JUDGED_1_5["noncore.result_real.2026"]
     assert book["valuation"]["headline"]["print_step"] == 5
     assert book["valuation"]["headline"]["jump_guard"] == {"median_pct": 0.08, "v0_pct": 0.08}
     assert book["valuation"]["headline"]["ceiling_x_market"] == 3.0
@@ -233,7 +238,7 @@ def test_lead_decisions_3_are_in_the_book(book):
     assert (obs["cor"], obs["se_cor"], obs["nim"], obs["se_nim"]) == (0.013, 0.0012, 0.0665, 0.0)
     crisis = book["regimes"]["crisis"]
     assert crisis["shock_year_offset"] == 1 and "shock_year" not in crisis
-    assert book["other"]["misc_net_real"] == {"LT": MOVED["other.misc_net_real.LT"]}  # В3: правило, а не ключ года якоря
+    assert book["other"]["misc_net_real"] == {"LT": JUDGED_1_5["other.misc_net_real.LT"]}  # В3: правило, а не ключ года якоря
     assert book["credit"]["fv_loans_factor"] == 1.0                                 # В4: FVC режима, опора — норма
     assert book["credit"]["fv_loans_ref"] == "norm" and "norm" in book["regimes"]["ids"]
     nii = book["nii"]                                                               # В8: распределение σ0 и полы
@@ -515,19 +520,26 @@ def test_near_spread_keys_follow_the_anchor_rates(book):
     assert got == [0.0067, 0.0067, -0.028]          # якорь 3К26 (книга 1.4); на 2К26 — 0,0054 / 0,0054 / −0,0279 (sanity-val S1 п. 3)
 
 
-def test_misc_quarter_shares_are_the_2024_2025_profile_of_the_facts(book):
-    """Доли кварталов «прочего» (решение A9, MODEL §4.7): Σ = 1, неотрицательны, 4К — крупнейшая; повтор по фактам
-    `pnl_quarterly.misc_net` полных лет 2024–2025 (квартал с обратным знаком — 0) — те же доли до округления."""
+def test_misc_quarter_shares_are_the_profile_of_the_facts(book):
+    """Доли кварталов «прочего» (решение A9, MODEL §4.7; с книги 1.5 — на всей истории с раскрытыми строками): Σ = 1,
+    неотрицательны, 4К — крупнейшая; повтор по фактам `pnl_quarterly.misc_net` 2024К1–2026К3 в ценах якоря (множители
+    цен — таблица листа `evidence/misc`): доли средних кварталов (квартал с обратным знаком — 0) — те же до округления;
+    уровень книги — сумма тех же средних к шагу 10 млрд ₽."""
     shares = book["other"]["misc_quarter_shares"]
     assert list(shares) == ["1", "2", "3", "4"]
     assert abs(sum(shares.values()) - 1.0) < 1e-9 and min(shares.values()) >= 0.0
     assert max(shares, key=shares.get) == "4"
-    pnl = json.loads((S.FACTS_DIR / "pnl_quarterly.json").read_text(encoding="utf-8"))
-    sums = {str(k): sum(pnl["quarters"][f"{y}Q{k}"]["misc_net"]["v"] for y in (2024, 2025)) for k in (1, 2, 3, 4)}
-    total = sum(sums.values())
-    kept = {k: max(0.0, v / total) for k, v in sums.items()}
+    pnl = json.loads((S.FACTS_DIR / "pnl_quarterly.json").read_text(encoding="utf-8"))["quarters"]
+    table = list(csv.DictReader((S.EVIDENCE / "misc" / "out" / "misc_quarterly.csv").open(encoding="utf-8")))
+    deflator = {r["quarter"]: float(r["deflator"]) for r in table}
+    assert sorted(deflator) == sorted(q for q in pnl if "2024Q1" <= q <= book["meta"]["anchor_period"])
+    means = {str(k): sum(pnl[q]["misc_net"]["v"] * d for q, d in deflator.items() if q.endswith(f"Q{k}"))
+             / sum(1 for q in deflator if q.endswith(f"Q{k}")) for k in (1, 2, 3, 4)}
+    total = sum(means.values())
+    kept = {k: max(0.0, v / total) for k, v in means.items()}
     for k, v in kept.items():
         assert shares[k] == pytest.approx(v / sum(kept.values()), abs=1e-3), k
+    assert book["other"]["misc_net_real"]["LT"] == round(total / 10) * 10
 
 
 def test_opex_real_growth_ends_and_its_axis_leaves_the_end_alone(book):

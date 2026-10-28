@@ -1,0 +1,387 @@
+{
+ "anchor": "2026Q3",
+ "quarters": [
+  "2024Q1",
+  "2024Q2",
+  "2024Q3",
+  "2024Q4",
+  "2025Q1",
+  "2025Q2",
+  "2025Q3",
+  "2025Q4",
+  "2026Q1",
+  "2026Q2",
+  "2026Q3"
+ ],
+ "groups": {
+  "stable": {
+   "ins_finance": "финансовые расходы по страхованию",
+   "gl_initial_recognition": "первоначальное признание и модификация (АС)",
+   "other_op_net": "прочие операционные",
+   "gl_fvoci": "ФИ по СС через ПСД",
+   "assoc_share": "доля ассоциированных"
+  },
+  "volatile": {
+   "gl_fvtpl_nonderiv": "непроизводные ФИ по СС через ОПУ",
+   "gl_deriv_fx": "производные, валюта, драгметаллы",
+   "impairment": "обесценение активов",
+   "other_provisions": "прочие резервы",
+   "office_revaluation": "переоценка офисной недвижимости (годовая строка)"
+  }
+ },
+ "years": {
+  "2024": {
+   "misc": -161.4,
+   "ins_finance": -129.3,
+   "gl_initial_recognition": -25.0,
+   "other_op_net": 40.0,
+   "gl_fvoci": 2.4,
+   "assoc_share": 7.5,
+   "gl_fvtpl_nonderiv": -59.6,
+   "gl_deriv_fx": 33.7,
+   "impairment": -30.1,
+   "other_provisions": -1.0,
+   "office_revaluation": 0.0,
+   "stable": -104.4,
+   "volatile": -57.0,
+   "fv_loans_credit": 35.5,
+   "noncore": -284.1,
+   "insurance_net": 143.0,
+   "pbt": 2034.6,
+   "tax": -454.3,
+   "misc_real": -186.9,
+   "tax_rate": 0.2233
+  },
+  "2025": {
+   "misc": -246.5,
+   "ins_finance": -347.3,
+   "gl_initial_recognition": -13.2,
+   "other_op_net": 60.0,
+   "gl_fvoci": 4.8,
+   "assoc_share": -0.1,
+   "gl_fvtpl_nonderiv": 114.4,
+   "gl_deriv_fx": 27.1,
+   "impairment": -117.8,
+   "other_provisions": 23.1,
+   "office_revaluation": 2.5,
+   "stable": -295.8,
+   "volatile": 49.3,
+   "fv_loans_credit": 34.1,
+   "noncore": -156.3,
+   "insurance_net": 147.1,
+   "pbt": 2250.0,
+   "tax": -544.1,
+   "misc_real": -260.2,
+   "tax_rate": 0.2418
+  },
+  "9M2026": {
+   "misc": -299.4,
+   "ins_finance": -136.8,
+   "gl_initial_recognition": -22.7,
+   "other_op_net": 20.6,
+   "gl_fvoci": 3.1,
+   "assoc_share": 0.1,
+   "gl_fvtpl_nonderiv": -94.7,
+   "gl_deriv_fx": 40.5,
+   "impairment": -77.8,
+   "other_provisions": -31.7,
+   "office_revaluation": 0.0,
+   "stable": -135.7,
+   "volatile": -163.7,
+   "fv_loans_credit": 22.0,
+   "noncore": -116.4,
+   "insurance_net": 118.0,
+   "pbt": 2036.0,
+   "tax": -506.1,
+   "misc_real": -302.3,
+   "tax_rate": 0.2486
+  },
+  "9M2025": {
+   "misc": -68.6,
+   "ins_finance": -246.7,
+   "gl_initial_recognition": -5.5,
+   "other_op_net": 27.5,
+   "gl_fvoci": 4.4,
+   "assoc_share": 0.1,
+   "gl_fvtpl_nonderiv": 91.9,
+   "gl_deriv_fx": 35.6,
+   "impairment": -1.7,
+   "other_provisions": 25.8,
+   "office_revaluation": 0.0,
+   "stable": -220.2,
+   "volatile": 151.6,
+   "fv_loans_credit": 30.4,
+   "noncore": -112.4,
+   "insurance_net": 109.8,
+   "pbt": 1712.4,
+   "tax": -405.1
+  }
+ },
+ "level": {
+  "rule": "сумма средних кварталов 2024К1–2026К3 в ценах якоря (1К–3К — три года, 4К — два), к шагу 10 млрд ₽",
+  "quarters": 11,
+  "balanced_year": -298.4,
+  "center": -300.0,
+  "axis": {
+   "low": -400.0,
+   "high": -200.0
+  },
+  "by_group": {
+   "stable": -225.0,
+   "volatile": -73.5,
+   "fv_loans_credit": 38.8,
+   "ins_finance": -255.2,
+   "gl_initial_recognition": -27.3,
+   "other_op_net": 49.5,
+   "gl_fvoci": 3.8,
+   "assoc_share": 4.2,
+   "gl_fvtpl_nonderiv": -1.8,
+   "gl_deriv_fx": 34.7,
+   "impairment": -103.7,
+   "other_provisions": -4.0,
+   "office_revaluation": 1.3
+  },
+  "check": {
+   "mean_quarter_x4": -272.5,
+   "stable_last_4q": -217.0,
+   "stable_last_4q_plus_volatile": -290.5
+  },
+  "book_1_4_basis_2024_2025_mean": -223.6,
+  "annual_real": {
+   "2024": -186.9,
+   "2025": -260.2,
+   "9M2026": -302.3
+  }
+ },
+ "profile": {
+  "rule": "средние кварталы 2024К1–2026К3 в ценах якоря; квартал с обратным знаком → 0; Σ = 1",
+  "by_quarter": {
+   "1": {
+    "mean": -50.06,
+    "n": 3,
+    "values": [
+     -54.63,
+     -40.89,
+     -54.65
+    ]
+   },
+   "2": {
+    "mean": -26.88,
+    "n": 3,
+    "values": [
+     7.46,
+     2.06,
+     -90.15
+    ]
+   },
+   "3": {
+    "mean": -75.67,
+    "n": 3,
+    "values": [
+     -33.86,
+     -35.65,
+     -157.5
+    ]
+   },
+   "4": {
+    "mean": -145.82,
+    "n": 2,
+    "values": [
+     -105.9,
+     -185.75
+    ]
+   }
+  },
+  "total_mean_year": -298.4,
+  "shares_raw": {
+   "1": 0.1677,
+   "2": 0.0901,
+   "3": 0.2536,
+   "4": 0.4886
+  },
+  "shares": {
+   "1": 0.168,
+   "2": 0.09,
+   "3": 0.254,
+   "4": 0.488
+  }
+ },
+ "q4_2026": {
+  "rule_level_x_share": -146.4,
+  "by_lines_mean_q4": -145.8,
+  "by_lines": {
+   "ins_finance": -104.8,
+   "gl_initial_recognition": -16.2,
+   "other_op_net": 17.3,
+   "gl_fvoci": 0.3,
+   "assoc_share": 4.2,
+   "gl_fvtpl_nonderiv": 36.7,
+   "gl_deriv_fx": -5.3,
+   "impairment": -75.7,
+   "other_provisions": -3.6,
+   "office_revaluation": 1.3
+  },
+  "q4_history_real": [
+   -105.9,
+   -185.75
+  ]
+ },
+ "fv_loans_credit": {
+  "quarterly": {
+   "2024Q1": -6.5,
+   "2024Q2": 30.3,
+   "2024Q3": -13.0,
+   "2024Q4": 24.7,
+   "2025Q1": 13.7,
+   "2025Q2": 15.0,
+   "2025Q3": 1.7,
+   "2025Q4": 3.7,
+   "2026Q1": -1.5,
+   "2026Q2": 36.2,
+   "2026Q3": -12.7
+  },
+  "check_3m_disclosed": "ок",
+  "by_year": {
+   "2024": 35.5,
+   "2025": 34.1,
+   "9M2026": 22.0
+  },
+  "sources": [
+   {
+    "period": "3M2024",
+    "value": -6.5,
+    "doc": "research/primary/2025Q1_ifrs_interim_statements.pdf",
+    "pdf_page": 29,
+    "sha256_16": "1f25a2344d65ea90"
+   },
+   {
+    "period": "6M2024",
+    "value": 23.8,
+    "doc": "primary/ifrs_6M2025_statements.pdf",
+    "pdf_page": 33,
+    "sha256_16": "8cf65023cc411f57"
+   },
+   {
+    "period": "9M2024",
+    "value": 10.8,
+    "doc": "primary/ifrs_9M2025_statements.pdf",
+    "pdf_page": 34,
+    "sha256_16": "059ab2d344263b84"
+   },
+   {
+    "period": "12M2024",
+    "value": 35.5,
+    "doc": "primary/ifrs_FY2024_statements.pdf",
+    "pdf_page": 41,
+    "sha256_16": "fbd4d739ce58c597"
+   },
+   {
+    "period": "3M2025",
+    "value": 13.7,
+    "doc": "research/primary/2025Q1_ifrs_interim_statements.pdf",
+    "pdf_page": 29,
+    "sha256_16": "1f25a2344d65ea90"
+   },
+   {
+    "period": "6M2025",
+    "value": 28.7,
+    "doc": "primary/ifrs_6M2025_statements.pdf",
+    "pdf_page": 33,
+    "sha256_16": "8cf65023cc411f57"
+   },
+   {
+    "period": "9M2025",
+    "value": 30.4,
+    "doc": "primary/ifrs_9M2025_statements.pdf",
+    "pdf_page": 34,
+    "sha256_16": "059ab2d344263b84"
+   },
+   {
+    "period": "12M2025",
+    "value": 34.1,
+    "doc": "primary/ifrs_FY2025_statements.pdf",
+    "pdf_page": 43,
+    "sha256_16": "eb4e9c7919500f3d"
+   },
+   {
+    "period": "3M2026",
+    "value": -1.5,
+    "doc": "primary/ifrs_3M2026_statements.pdf",
+    "pdf_page": 27,
+    "sha256_16": "4b1449f839cf0826"
+   },
+   {
+    "period": "6M2026",
+    "value": 34.7,
+    "doc": "research/primary/2026H1_ifrs_interim_statements.pdf",
+    "pdf_page": 32,
+    "sha256_16": "5b3a3de88ae6c96b"
+   },
+   {
+    "period": "9M2026",
+    "value": 22.0,
+    "doc": "research/primary/2026Q3_ifrs_interim_statements.pdf",
+    "pdf_page": 37,
+    "sha256_16": "bfb59dab3fe2cea9"
+   }
+  ]
+ },
+ "noncore": {
+  "quarterly": {
+   "2024Q1": -86.8,
+   "2024Q2": -63.8,
+   "2024Q3": -42.4,
+   "2024Q4": -91.1,
+   "2025Q1": -45.0,
+   "2025Q2": -31.1,
+   "2025Q3": -36.3,
+   "2025Q4": -43.9,
+   "2026Q1": -41.3,
+   "2026Q2": -46.4,
+   "2026Q3": -28.7
+  },
+  "q4_to_q1q3_mean": {
+   "2024": 1.416,
+   "2025": 1.172
+  },
+  "q1q3_2026_mean": -38.8,
+  "q4_2026_estimate": -50.2,
+  "fact_9m2026": -116.4,
+  "rule_2026": -166.6,
+  "rule": "факт 9М26 + оценка 4К26 (среднее 1К–3К26 × среднее отношение 4К к среднему 1К–3К 2024–2025)"
+ },
+ "tax": {
+  "quarterly": {
+   "2024Q1": 0.2188,
+   "2024Q2": 0.1965,
+   "2024Q3": 0.2679,
+   "2024Q4": 0.2035,
+   "2025Q1": 0.2418,
+   "2025Q2": 0.2187,
+   "2025Q3": 0.2477,
+   "2025Q4": 0.2586,
+   "2026Q1": 0.2413,
+   "2026Q2": 0.2472,
+   "2026Q3": 0.257
+  },
+  "2025": 0.2418,
+  "9M2026": 0.2486,
+  "9M2025": 0.2366,
+  "reconciliation_2025_pp": {
+   "securities_other_rates": -2.48,
+   "unrecognised_tax_assets": 1.56,
+   "other_permanent": 0.11
+  },
+  "reconciliation_2025": {
+   "pbt": 2250.0,
+   "theoretical_25pct": 562.5,
+   "securities_other_rates": -55.9,
+   "unrecognised_tax_assets": 35.1,
+   "other_permanent": 2.4,
+   "tax": 544.1
+  },
+  "interim_rule": "МСФО 9М26, прим. 2 (PDF-с. 13): налог промежуточной отчётности — по средневзвешенной годовой ставке, ожидаемой за полный год, — ставка 9М26 есть оценка банка на 2026 год"
+ },
+ "unexplained_max_abs": 0.0,
+ "book_mismatches": []
+}

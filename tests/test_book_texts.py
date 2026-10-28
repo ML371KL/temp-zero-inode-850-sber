@@ -78,7 +78,7 @@ def test_readme_names_the_version_order_and_tags():
     for s in ("book-<версия>", "build_assumptions.py", "worlds_recipe.py --check", "model.book_results", "tests/test_book_"):
         assert s in readme, s
     ev = (S.EVIDENCE / "README.md").read_text(encoding="utf-8")
-    for area in ("worlds_bank", "nii", "capital", "bridges", "regimes", "beta", "dividends", "regulation", "governance"):
+    for area in ("worlds_bank", "nii", "capital", "bridges", "misc", "regimes", "beta", "dividends", "regulation", "governance"):
         assert f"`{area}/`" in ev, area
         assert (S.EVIDENCE / area / "README.md").exists(), area
 

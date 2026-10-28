@@ -67,6 +67,9 @@ AREAS: dict[str, tuple[tuple[str, ...], dict[str, tuple[str, ...] | None]]] = {
         "stage1/mgmt/mgmt_kpi.csv": by("metric"),
         "stage1/ras/ras_release_monthly_wide.csv": ALL,
     }),
+    "misc": (("misc_book.py",), {
+        "stage1/ifrs/ifrs_quarterly.csv": by("metric"),
+    }),
     "regimes": (("regimes_calc.py",), {
         "stage1/regimes/episodes.csv": by("metric"),
     }),

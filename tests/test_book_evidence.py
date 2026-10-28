@@ -26,6 +26,7 @@ AREAS = {                                 # область → скрипты п
     "dividends": ("dps_history.py",),
     "regulation": ("floors.py",),
     "bridges": ("bridges.py",),
+    "misc": ("misc_book.py",),
     "governance": ("governance_channels.py",),
     "regimes": ("regimes_calc.py",),
     "capital": ("capital_calib.py", "gap_additive.py", "capital_book.py"),
@@ -115,8 +116,12 @@ def test_evidence_outputs_carry_the_book_numbers():
     br = json.loads((S.EVIDENCE / "bridges" / "out" / "bridges_out.json").read_text(encoding="utf-8"))
     assert br["cor_bridge"]["additive_mean_pp"] == 0.17 and br["nim_bridge"]["mgmt_minus_engine_pp"] == 0.412
     assert br["pnl"]["misc"]["2025"] == -246.5 and br["book_mismatches"] == []
-    assert br["misc_profile"]["shares"] == book["other"]["misc_quarter_shares"]          # A9: профиль «прочего»
-    assert br["misc_profile"]["sum_by_quarter"] == {"1": -82.1, "2": 8.2, "3": -62.8, "4": -271.2}
+    assert br["misc_profile"]["sum_by_quarter"] == {"1": -82.1, "2": 8.2, "3": -62.8, "4": -271.2}   # A9, книги 1.1–1.4
+    misc = json.loads((S.EVIDENCE / "misc" / "out" / "misc_book_out.json").read_text(encoding="utf-8"))
+    assert misc["book_mismatches"] == [] and misc["unexplained_max_abs"] <= 0.15                 # книга 1.5: «прочее»
+    assert book["other"]["misc_net_real"] == {"LT": misc["level"]["center"]} == {"LT": -300.0}
+    assert misc["profile"]["shares"] == book["other"]["misc_quarter_shares"]                     # A-O3 с книги 1.5
+    assert book["noncore"]["result_real"]["2026"] == misc["noncore"]["rule_2026"] == -166.6
     beta = json.loads((S.EVIDENCE / "beta" / "out" / "beta_summary.json").read_text(encoding="utf-8"))
     assert beta["beta_E_center_book"] == book["valuation"]["beta_e"]
     ax = next(a for a in book["valuation"]["uncertainty"]["axes"] if a["paths"] == ["valuation.beta_e"])
@@ -146,6 +151,34 @@ def test_evidence_outputs_carry_the_book_numbers():
         == [0.00672, 0.00672, -0.02803]                     # якорь 3К26 (книга 1.4; на 2К26 — 0,00541 и −0,02795)
     fl = json.loads((S.EVIDENCE / "regulation" / "out" / "floors_out.json").read_text(encoding="utf-8"))
     assert fl["mismatches"] == [] and fl["book"]["strict"]["2031"]["floor20"] == 0.14
+
+
+@pytest.mark.tact
+def test_the_misc_sheet_reads_the_facts_of_the_quarters():
+    """Лист «прочего» (книга 1.5, `evidence/misc`, без запуска) раскладывает ту же величину, что в фактах ядра: остаток
+    ОПУ квартала, непрофильный результат и налог 2024К1–2026К3 равны `facts/pnl_quarterly.json`; строки «прочего»
+    сходятся с остатком; уровень книги — год из средних кварталов к шагу 10 млрд ₽, ось — центр ± 100; доли кварталов
+    в сумме 1; 4К26 по правилу книги — средний 4К истории (MODEL §0.3, В3)."""
+    book = S.template()
+    out = _out("misc", "misc_book_out.json")
+    facts = json.loads((S.FACTS_DIR / "pnl_quarterly.json").read_text(encoding="utf-8"))["quarters"]
+    rows = list(csv.DictReader((S.EVIDENCE / "misc" / "out" / "misc_quarterly.csv").open(encoding="utf-8")))
+    assert [r["quarter"] for r in rows] == out["quarters"] and out["quarters"][-1] == book["meta"]["anchor_period"]
+    for r in rows:
+        f = facts[r["quarter"]]
+        assert float(r["misc"]) == pytest.approx(f["misc_net"]["v"], abs=0.051), r["quarter"]
+        assert float(r["noncore"]) == pytest.approx(f["noncore_net"]["v"], abs=0.051), r["quarter"]
+        assert float(r["tax_rate"]) == pytest.approx(-f["tax"]["v"] / f["pbt"]["v"], abs=1e-4), r["quarter"]
+        assert abs(float(r["unexplained"])) <= 0.15, r["quarter"]
+    lvl = out["level"]
+    assert lvl["center"] == round(lvl["balanced_year"] / 10) * 10
+    assert [lvl["axis"]["low"], lvl["axis"]["high"]] == [lvl["center"] - 100, lvl["center"] + 100]
+    assert sum(out["profile"]["shares"].values()) == pytest.approx(1.0, abs=1e-12)
+    assert out["q4_2026"]["rule_level_x_share"] == pytest.approx(lvl["center"] * out["profile"]["shares"]["4"], abs=0.05)
+    assert abs(out["q4_2026"]["rule_level_x_share"] - out["profile"]["by_quarter"]["4"]["mean"]) < 1.0
+    nc = out["noncore"]
+    assert nc["fact_9m2026"] == pytest.approx(sum(facts[f"2026Q{k}"]["noncore_net"]["v"] for k in (1, 2, 3)), abs=0.05)
+    assert out["fv_loans_credit"]["check_3m_disclosed"] == "ок"
 
 
 def _out(area: str, name: str) -> dict:
@@ -409,8 +442,19 @@ def test_small_inputs_are_the_stage1_sheets_filtered():
     moved = _handoff_moved(os.environ["BANK_HANDOFF_DIR"])
     if moved:
         pytest.skip(f"листы этапа 1 продлены якорем {moved}, листы обоснований книги — снимок на якоре прежней книги: "
-                    "малые входы сверяются после пересчёта листов на новом якоре")
+                    "малые входы сверяются после пересчёта листов на новом якоре (на 3К26 листы требуют сменить "
+                    "ключи книги — решение ведущего, DECISIONS 14.4)")
     done = S.run_script(S.EVIDENCE / "extract_inputs.py", "--check")
+    assert done.returncode == 0, done.stdout + done.stderr
+
+
+@pytest.mark.archive
+def test_the_misc_sheet_reads_the_current_stage1_sheet():
+    """Лист «прочего» (книга 1.5) посчитан на нынешних листах этапа 1 (якорь 3К26), а не на снимке прежнего якоря:
+    его малый вход сверяется с листом папки передачи и тогда, когда прочие области — снимок (DECISIONS 14.4)."""
+    if not os.environ.get("BANK_HANDOFF_DIR"):
+        pytest.skip("нет BANK_HANDOFF_DIR")
+    done = S.run_script(S.EVIDENCE / "extract_inputs.py", "misc", "--check")
     assert done.returncode == 0, done.stdout + done.stderr
 
 
@@ -432,7 +476,7 @@ def test_moved_sheets_give_the_stage1_numbers(area, pairs):
     moved = _handoff_moved(root) if area == "nii" else None
     if moved:
         pytest.skip(f"калибровка книг ЧПД этапа 1 пересчитана на якорь {moved}, лист книги — на якоре прежней книги: "
-                    "сверка — после пересчёта листа на новом якоре")
+                    "сверка — после пересчёта листа на новом якоре (DECISIONS 14.4)")
     for mine, theirs in pairs:
         a, b = S.EVIDENCE / area / mine, Path(root, theirs)
         if mine.endswith("results.json"):                       # переезд меняет только происхождение входов и

@@ -54,7 +54,9 @@ def test_the_no_news_chain_stops_at_the_floor(book):
     soft = [round(p["soft"], 4) for p in with_floor]
     crisis = [round(p["crisis"], 4) for p in with_floor]
     assert soft[:5] == [0.1591, 0.1364, 0.1086, 0.0751, 0.0538] and soft[5:] == [0.0495] * 3   # на полу с шестого
-    assert crisis[:5] == [0.1259, 0.101, 0.0719, 0.0615, 0.0607] and crisis[5:] == [0.0495] * 3  # тоже с шестого
+    # тоже с шестого; пятый — 0,0606 с книги 1.5 (у 1.4 — 0,0607, на границе округления: уровень «прочего» меняет
+    # прибыль и капитал клеток, а с ними — ожидания ЧПМ режимов в тысячных долях п.п.)
+    assert crisis[:5] == [0.1259, 0.101, 0.0719, 0.0615, 0.0606] and crisis[5:] == [0.0495] * 3
     for r in ("soft", "crisis"):                                                     # без пола хвосты — ниже пола
         assert without[-1][r] < share * prior[r], (r, without[-1][r])
 

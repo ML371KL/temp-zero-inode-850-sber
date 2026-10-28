@@ -1,0 +1,14 @@
+{
+ "area": "misc",
+ "root": "$BANK_HANDOFF_DIR",
+ "files": [
+  {
+   "path": "stage1/ifrs/ifrs_quarterly.csv",
+   "sha256_full": "28ba992bf77d1f7df3e1de4a059406fc6974b28b4e42d4266339f9edac1f906c",
+   "sha256_input": "5d1fc1045b19627edd73fc6e0e16f684a22a91670fabd1e7cee7547ae324a6ca",
+   "filter": "строки, где metric — литерал кода области",
+   "rows_kept": 252,
+   "rows_total": 1376
+  }
+ ]
+}
