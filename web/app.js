@@ -436,6 +436,7 @@ function empty(message) { return el("p", { class: "empty" }, message); }
 // Подпись блока внутри карточки и строка-подвал карточки.
 function tileLabel(...kids) { return el("span", { class: "tile-label" }, ...kids); }
 function foot(...kids) { return el("p", { class: "card-foot" }, ...kids); }
+function hint(...kids) { return el("span", { class: "hint" }, ...kids); }
 function missing(what) { return empty(`В этом выпуске нет блока «${what}».`); }
 function badge(t, kind) { return el("span", { class: cls("badge", kind && `badge-${kind}`) }, t); }
 function detailsBlock(summary, body) { return el("details", {}, el("summary", {}, summary), el("div", { class: "detail-text" }, body)); }
@@ -1053,7 +1054,7 @@ function waterfall(steps, wide = false) {
   const lo = Math.min(0, ...steps.map((s) => Math.min(s.from, s.to)));
   const hi = Math.max(...steps.map((s) => Math.max(s.from, s.to)));
   return el("div", { class: cls("wf", wide && "wide") }, steps.map((s) => el("div", { class: cls("wf-row", s.total && "is-total") },
-    el("span", { class: "wf-name" }, s.title, s.hint ? el("span", { class: "hint" }, s.hint) : null),
+    el("span", { class: "wf-name" }, s.title, s.hint ? hint(s.hint) : null),
     el("span", { class: "wf-bar" }, barTrack([{ from: s.from, to: s.to, cls: s.total ? "is-total" : s.to < s.from ? "is-down" : "is-up",
       tip: { title: s.title, rows: [["значение", s.text]] } }], [lo, hi])),
     el("span", { class: "wf-val" }, s.text))));
@@ -1546,7 +1547,7 @@ function nextDpsLabel(next) {
     : { declared: "объявленный DPS", recommended: "рекомендованный DPS (до собрания)" }[next.status] || "DPS реестра";
 }
 function nextDpsMean(next) {
-  return isNum(next.dps_mean) ? el("span", { class: "hint" }, `в среднем по клеткам ${fmt.rub(next.dps_mean, 2)}, P10–P90 ${fmt.num(next.dps_p10, 1)}–${fmt.num(next.dps_p90, 1)}${THIN}₽`) : null;
+  return isNum(next.dps_mean) ? hint(`в среднем по клеткам ${fmt.rub(next.dps_mean, 2)}, P10–P90 ${fmt.num(next.dps_p10, 1)}–${fmt.num(next.dps_p90, 1)}${THIN}₽`) : null;
 }
 // Источники записи реестра: `declared` — при двух (М§15).
 function registerSources(r) {
@@ -1660,7 +1661,7 @@ function reverseDcfCard(d) {
     Tc("", reverseBadge),
   ], rows);
   const box = el("div", { class: "rows" }, rows.map((r) => el("div", { class: "rrow" },
-    el("div", { class: "rrow-name" }, r.name, el("span", { class: "hint" }, `книга ${reverseValue(r, r.book, true)}${reverseRange(r) === "—" ? " · оси с диапазоном в книге нет" : ` · диапазон ${reverseRange(r)}`}`)),
+    el("div", { class: "rrow-name" }, r.name, hint(`книга ${reverseValue(r, r.book, true)}${reverseRange(r) === "—" ? " · оси с диапазоном в книге нет" : ` · диапазон ${reverseRange(r)}`}`)),
     rangeRowChart(r),
     el("div", { class: "rrow-need" }, need(r) ? el("span", { class: "v" }, need(r)) : null, " ", reverseBadge(r),
       isNum(r.gap) && Math.abs(r.gap) >= 0.5 ? el("span", { class: "b" }, `невязка ${fmt.rub(r.gap, 1)}`) : null))));
@@ -1776,7 +1777,7 @@ function peersCard(d) {
   const day = obj(rows.find((r) => r.ticker === subject) || rows[0]).bv_date;
   return card({ title: "Банки-аналоги на одной базе", span: 6, sub: `отчётность на ${fmt.date(day)}; снимок аналогов ${fmt.date(p.as_of)}; цены — день оценки` },
     dataTable([
-      Tc("Банк", (r) => el("span", {}, r.name, el("span", { class: "hint" },
+      Tc("Банк", (r) => el("span", {}, r.name, hint(
         [r.ticker, obj(r.capital_ratio).name, r.bv_date && r.bv_date !== day ? `отчётность на ${fmt.date(r.bv_date)}` : null].filter(Boolean).join(" · "))), "name"),
       Nc("P/B", (r) => (isNum(r.pb) ? fmt.x(r.pb, 2) : "—")),
       Nc("P/E", (r) => (isNum(r.pe) ? fmt.x(r.pe, 1) : "—")),
@@ -1806,7 +1807,7 @@ function spreadCard(d) {
         { at: j.price_low, cls: "end", tip: { title: `${j.name}: нижний край`, rows: [["значение", formatByUnit(j.low, j.unit, d)], ["точка", fmt.rub(j.price_low, 1)]] } },
         { at: j.price_high, cls: "end", tip: { title: `${j.name}: верхний край`, rows: [["значение", formatByUnit(j.high, j.unit, d)], ["точка", fmt.rub(j.price_high, 1)]] } },
       ] })),
-      el("div", { class: "tn-vals" }, `${fmt.num(j.price_low)} … ${fmt.num(j.price_high)}${THIN}₽`, el("span", { class: "hint" }, rangeText(d, j, true))));
+      el("div", { class: "tn-vals" }, `${fmt.num(j.price_low)} … ${fmt.num(j.price_high)}${THIN}₽`, hint(rangeText(d, j, true))));
   }));
   return card({ title: "Цена по одному суждению",
     sub: `Главные суждения книги по одному, каждое на краях своего диапазона; вертикаль — точка при значениях книги ${fmt.rub(center, 1)}. Это не полоса: полоса двигает все суждения сразу.` },
@@ -1865,7 +1866,7 @@ function layersCard(d) {
   return card({ title: "Слои: капитал, избыточная доходность и цена",
     sub: `Цена слоя — [V0·(1 − g) + дивиденд до отсечки] на акцию; V0 — оценка капитала; PV терминала — остаточного дохода (RI), доля терминала — в дивидендной модели (DDM); P(…) — масса клеток под весами слоя. Цена ${ticker(d)} — ${fmt.rub(d.market.price, 2)}.` },
   dataTable([
-    Tc("Слой", (k) => el("span", {}, layerTitle(d, k), el("span", { class: "hint" }, dictText(d, L[k].world_weights))), "name"),
+    Tc("Слой", (k) => el("span", {}, layerTitle(d, k), hint(dictText(d, L[k].world_weights))), "name"),
     Nc("V0, млрд ₽", (k) => fmt.num(L[k].v0, 0)),
     Nc("Капитал", (k) => fmt.num(L[k].bv_v, 0)),
     Nc("P/B", (k) => fmt.x(L[k].pb, 2)),
@@ -1957,7 +1958,7 @@ function guidanceCard(d) {
       + (sector ? " Строки сектора — прогноз сектора, а не гайденс банка: гейт их не берёт." : "") },
   dataTable([
     Tc("Показатель", (r) => el("span", { tip: r.scope_note ? ruText(r.scope_note) : null }, r.title,
-      el("span", { class: "hint" }, [basisName(r.basis), GUIDE_RELATION[r.relation]].filter(Boolean).join("; "))), "name"),
+      hint([basisName(r.basis), GUIDE_RELATION[r.relation]].filter(Boolean).join("; "))), "name"),
     Nc("Гайденс", (r) => guideValue(r.kind, r.key, r.guidance)),
     Nc("Факт с начала года", (r) => (isNum(r.fact_ytd) ? fmt.pct(r.fact_ytd, 2) : "—")),
     Nc("Модель года", (r) => el("strong", {}, isNum(r.model_year) ? fmt.pct(r.model_year, 2) : "—")),
@@ -2039,13 +2040,16 @@ function regimesCard(d) {
       Nc("ЧПМ LT", (k) => fmt.pp(obj(rows[k]).nim_shift_lt, 1)),
     ], order, { cls: "compact" })),
   near.length ? foot(`Ближний сдвиг ЧПМ, общий для режимов и миров (${basisName(R.basis || "engine")}, п.п.): `
-    + near.map((q) => `${periodShort(q.period)} ${fmt.num(q.value * 100, exactDigits(q.value * 100, 3))}`).join(" · ") + ".") : null,
-  obs.length ? el("div", { class: "card-foot" }, detailsBlock(`Наблюдения кварталов · ${obs.length}`,
-    obs.map((o) => `${periodLabel(o.period)}: CoR ${fmt.pct(o.cor, 2)}, ЧПМ ${fmt.pct(o.nim, 2)} (${basisName(o.basis)})`).join("; ")
+    + (near.length > 6 ? [...near.slice(0, 5), 0, near[near.length - 1]] : near).map((q) => (q ? `${periodShort(q.period)} ${fmt.num(q.value * 100, exactDigits(q.value * 100, 3))}` : "…")).join(" · ")
+    + (near.length > 6 ? ` (${near.length}${NBSP}кв.)` : "") + ".") : null,
+  obs.length ? el("div", { class: "card-foot" }, detailsBlock(`Наблюдения кварталов · ${obs.length}${obs.some((o) => o.published) ? " · с подменой" : ""}`,
+    obs.map((o) => `${periodLabel(o.period)}: CoR ${obsValue(o, "cor")}, ЧПМ ${obsValue(o, "nim")} (${basisName(o.basis)})${o.published ? ` — ${ruText(o.published.reason)}` : ""}`).join("; ")
       + (isNum(obj(R.update).window_obs) ? `. Фильтр читает не больше ${fmt.num(R.update.window_obs)} последних; априорные вероятности — книги` : "")
       + (R.update.floor_share > 0 ? `; вероятность режима после наблюдений — не ниже ${fmt.pct(R.update.floor_share, 0)} книжной` : "") + ".")) : null,
   regimeHistory(d), referenceClass(d));
 }
+
+function obsValue(o, k) { const p = obj(o.published)[k]; return fmt.pct(o[k], 2) + (isNum(p) ? ` (опубликовано ${fmt.pct(p, 2)})` : ""); }
 
 function regimeHistory(d) {
   const h = list(obj(d.regimes).history);
@@ -2139,7 +2143,7 @@ function worldsCard(d) {
   el("div", { class: "split" },
     el("div", {}, legend(series.map((s, i) => [i < keys.length ? WORLD_KEYS[i % 3] : "key-line key-ink", s.name])), fig.box),
     dataTable([
-      Tc("Мир", (k) => el("span", {}, W_[k].name, el("span", { class: "hint" }, k)), "name"),
+      Tc("Мир", (k) => el("span", {}, W_[k].name, hint(k)), "name"),
       Nc("Свой вес", (k) => fmt.pct(obj(W_[k].weights).analytical, 0)),
       Nc("Вменённый", (k) => fmt.pct(obj(W_[k].weights).market_implied, 0)),
       Nc("k_T", (k) => fmt.pct(W_[k].k_t, 1)),
@@ -2188,7 +2192,7 @@ function transmissionCard(d) {
     tileLabel(`Передача по парам соседних миров${range.length === 2 ? `: коридор ${fmt.num(range[0], 2)} … ${fmt.num(range[1], 2)}` : ""}`),
     dataTable([
       Tc("Пара миров", (p) => el("span", {}, p.total ? `${p.to} − ${p.from}` : `${p.from} → ${p.to}`,
-        el("span", { class: "hint" }, p.total ? "реализованная передача — ось книги (A-N3)" : `${worldName(d, p.from)} → ${worldName(d, p.to)}`)), "name"),
+        hint(p.total ? "реализованная передача — ось книги (A-N3)" : `${worldName(d, p.from)} → ${worldName(d, p.to)}`)), "name"),
       Nc("Ключевая LT", (p) => `${fmt.num(p.key_from * 100, 1)} → ${fmt.pct(p.key_to, 1)}`),
       Nc("Передача", (p) => el("strong", {}, fmt.num(p.value, 3))),
       Nc("ROE на 1 п.п. ключевой", (p) => roe(p.roe_equiv)),
@@ -2206,7 +2210,7 @@ function transmissionCard(d) {
     keys.some((k) => margin[k] < 0) ? el("p", { class: "muted small", style: "margin-top:6px" }, "Кредитная маржа — доходность кредитов минус CoR и ставка балансирующих активов; где она отрицательна, рост кредита стоимость разрушает.") : null,
     el("p", { class: "muted small", style: "margin-top:6px" }, `Передача по клеткам (M, норм., по графику) − (N, …): ${fmt.num(t.realized_cells, 3)}. Доля текущих счетов: якорь ${fmt.pct(cs.c_ref, 1)}, ψ ${fmt.num(cs.psi, 2)}, границы ${list(cs.bounds).map((b) => fmt.pct(b, 0)).join("–")}.`))),
   el("div", { style: "margin-top:14px" }, dataTable([
-    Tc("Книга", (b) => el("span", {}, b.title, el("span", { class: "hint" }, `${b.side === "asset" ? "актив" : "пассив"} · опора — ${refText(b.ref)}${b.balancing ? " · балансирующая" : ""}${isNum(b.spread_floor) ? ` · пол спреда ${fmt.num(b.spread_floor * 100, 2)}${NBSP}п.п.` : ""}`)), "name"),
+    Tc("Книга", (b) => el("span", {}, b.title, hint(`${b.side === "asset" ? "актив" : "пассив"} · опора — ${refText(b.ref)}${b.balancing ? " · балансирующая" : ""}${isNum(b.spread_floor) ? ` · пол спреда ${fmt.num(b.spread_floor * 100, 2)}${NBSP}п.п.` : ""}`)), "name"),
     Nc("Остаток, млрд ₽", (b) => fmt.num(b.balance_anchor, 0)),
     Nc("Ставка якоря", (b) => fmt.pct(b.rate_anchor, 2)),
     Nc(el("span", { tip: "ρ — доля разрыва ставки книги к цели, закрываемая за квартал" }, "ρ"), (b) => fmt.num(b.rho, 2)),
@@ -2590,7 +2594,7 @@ function retroBenchmarksCard(d) {
     fill(body,
       legend([["key-line key-ink", "факт"], ["key-dot key-third", `главный эталон: ${name(r.main)}`]]), plot,
       el("div", { style: "margin-top:12px" }, dataTable([
-        Tc("Эталон", (k) => el("span", {}, upperFirst(name(k)), k === r.main ? el("span", { class: "hint" }, "главный — по нему зачёт") : null), "name"),
+        Tc("Эталон", (k) => el("span", {}, upperFirst(name(k)), k === r.main ? hint("главный — по нему зачёт") : null), "name"),
         Nc("RMSE", (k) => fmt.pct(obj(r.rmse)[k], 1)),
         Nc("Смещение", (k) => fmt.signedBn(obj(r.bias)[k], 1)),
         Nc(`${upperFirst(modelUnit(d).pgen)}`, (k) => fmt.num(obj(r.n)[k])),
@@ -2680,7 +2684,7 @@ function journalCard(d) {
   const names = benchNames(d);
   return card({ title: "Журнал прогнозов", span: 6, sub: `неизменяемые записи 4 последних событий МСФО; всего записей — ${fmt.num(j.total_entries || 0)}` },
     rows.length ? dataTable([
-      Tc("Цель", (r) => el("span", {}, targetTitle(d, r.target), el("span", { class: "hint" }, `${periodLabel(r.period)} · ${r.horizon}`)), "name"),
+      Tc("Цель", (r) => el("span", {}, targetTitle(d, r.target), hint(`${periodLabel(r.period)} · ${r.horizon}`)), "name"),
       Nc("Прогноз", (r) => el("strong", {}, targetValue(d, r.target, r.forecast))),
       Nc("Факт", (r) => targetValue(d, r.target, r.actual)),
       Nc("Записан", (r) => fmt.date(mskDay(r.recorded_at))),
@@ -2946,7 +2950,7 @@ function annualCard(d) {
   const A = list(p.annual);
   if (!A.length) return card({ title: "По годам" }, missing("путь по годам"));
   const u = modelUnit(d);
-  const year = (r) => el("span", {}, String(r.year), r.fact_quarters ? el("span", { class: "hint" }, `${fmt.num(r.fact_quarters)}${NBSP}кв. факт + модель`) : null);
+  const year = (r) => el("span", {}, String(r.year), r.fact_quarters ? hint(`${fmt.num(r.fact_quarters)}${NBSP}кв. факт + модель`) : null);
   const mini = (title, key, f, color) => el("div", { class: "mini" }, tileLabel(title),
     linesChart([{ name: title, color, dots: true, r: 3, points: A.map((r) => [r.year, r[key]]) }],
       { xType: "band", categories: A.map((r) => r.year), height: 150, left: 44, yFmt: f, tipFmt: f, xFmt: (y) => `’${String(y).slice(2)}` }));
@@ -3183,7 +3187,7 @@ function valuationHistoryCard(d) {
     yFmt: (v) => fmt.num(v), tipFmt: (v) => fmt.rub(v, 1),
     vlines: marks, label: "История оценки по выпускам" });
   const fig = withTable(plot, () => dataTable([
-    Tc("Выпуск", (r) => el("span", {}, fmt.date(r.date), r.current ? el("span", { class: "hint" }, "текущий") : r.rollback ? el("span", { class: "hint" }, "откат") : null), "name"),
+    Tc("Выпуск", (r) => el("span", {}, fmt.date(r.date), r.current ? hint("текущий") : r.rollback ? hint("откат") : null), "name"),
     Nc("Медиана", (r) => fmt.num(r.median, 1)),
     Nc("P10–P90", (r) => `${fmt.num(r.p10)}–${fmt.num(r.p90)}`),
     Nc("Точка", (r) => fmt.num(r.point, 1)),

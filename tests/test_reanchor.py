@@ -712,12 +712,15 @@ def test_a_surprise_goes_to_the_surprise_row_and_teaches_the_regimes():
 
 
 OVERRIDE_REASON = "разовый роспуск части резерва занизил стоимость риска квартала (тест)"
+OVERRIDE_NOTE = "разовый роспуск резерва занизил CoR квартала (тест)"
 
 
 def _override(**changes) -> dict:
-    """Подмена наблюдения фикстуры: CoR отчёта + 0,2 п.п. с se, ЧПМ отчёта с se 0; правки — поверх."""
+    """Подмена наблюдения фикстуры: CoR отчёта + 0,2 п.п. с se, ЧПМ отчёта с se 0, подпись для витрины;
+    правки — поверх."""
     mg = scene().expected["mgmt"]
-    out = {"cor": mg["cor"] + 0.002, "se_cor": 0.0012, "nim": mg["nim"], "se_nim": 0.0, "reason": OVERRIDE_REASON}
+    out = {"cor": mg["cor"] + 0.002, "se_cor": 0.0012, "nim": mg["nim"], "se_nim": 0.0, "reason": OVERRIDE_REASON,
+           "note": OVERRIDE_NOTE}
     for key, value in changes.items():
         if value == "нет":
             out.pop(key)
@@ -743,6 +746,8 @@ def _override(**changes) -> dict:
     ({"cor": None, "se_cor": None, "nim": None, "se_nim": None}, "обе величины null"),
     ({"mu_cor": {}}, "незнакомые ключи mu_cor"),
     ({"period": "1999Q1"}, "а отчёт — за"),
+    ({"note": "   "}, "подпись для витрины (note) пуста"),
+    ({"note": "длинная подпись " * 6}, "не длиннее 80"),
 ])
 def test_an_override_of_the_observation_names_each_quantity_and_its_reason(changes, fragment):
     """Подмена наблюдения — решение книги: значение и se каждой величины названы явно, причина записана,
@@ -752,9 +757,32 @@ def test_an_override_of_the_observation_names_each_quantity_and_its_reason(chang
         R.check_observation(_override(**changes), period)
     good = R.check_observation(_override(period=period, cor=None, se_cor=None), period)
     assert good["cor"] is None and good["se_cor"] is None and good["nim"] == _override()["nim"]
-    assert good["basis"] == "mgmt" and good["reason"] == OVERRIDE_REASON
+    assert good["basis"] == "mgmt" and good["reason"] == OVERRIDE_REASON and good["note"] == OVERRIDE_NOTE
+    assert "published" not in good                                       # чисел отчёта не дали — пометки нет
     with pytest.raises(R.ReportError, match="без наблюдения"):
         R.attribution(scene().book, scene().facts, scene().expected, observe=False, observation=_override())
+
+
+@tact
+def test_an_override_that_changes_a_published_number_carries_the_mark_for_the_dashboard():
+    """Подмена, которая меняет опубликованное число отчёта или не берёт его (null), несёт пометку: опубликованные
+    числа подменённых величин и подпись для витрины `note` (обязательна, не длиннее 80 знаков — та же мера, что у
+    причины в книге); величина, взятая как в отчёте, в пометку не идёт; подмена одного se — не подмена числа."""
+    period, mg = scene().period, scene().expected["mgmt"]
+    with pytest.raises(R.ReportError, match="нужна подпись для витрины note"):
+        R.check_observation(_override(note="нет"), period, mg)
+    with pytest.raises(R.ReportError, match=r"\(CoR\)"):
+        R.check_observation(_override(note="нет", cor=None, se_cor=None), period, mg)
+    rec = R.check_observation(_override(), period, mg)
+    assert rec["published"] == {"cor": mg["cor"]} and rec["note"] == OVERRIDE_NOTE
+    both = R.check_observation(_override(nim=mg["nim"] - 0.001), period, mg)
+    assert both["published"] == {"cor": mg["cor"], "nim": mg["nim"]}
+    gone = R.check_observation(_override(cor=None, se_cor=None), period, mg)
+    assert gone["published"] == {"cor": mg["cor"]} and gone["cor"] is None
+    se_only = R.check_observation(_override(cor=mg["cor"], note="нет"), period, mg)   # только se — не подмена числа
+    assert "published" not in se_only and "note" not in se_only
+    assert R.check_observation(_override(note="  " + OVERRIDE_NOTE + "  "), period, mg)["note"] == OVERRIDE_NOTE
+    assert len(OVERRIDE_NOTE) <= R.REASON_MAX == 80
 
 
 @tact
@@ -770,6 +798,11 @@ def test_an_override_goes_only_to_the_observation_of_the_candidate_on_the_report
     rec = cand.data["joint"]["regime_update"]["observations"][-1]
     assert rec["period"] == s.period and rec["basis"] == "mgmt"
     assert (rec["cor"], rec["se_cor"], rec["nim"], rec["se_nim"]) == (ov["cor"], ov["se_cor"], ov["nim"], 0.0)
+    # пометка подмены (М§12): опубликованный CoR отчёта и подпись для витрины; ЧПМ взят как в отчёте — его в ней нет
+    assert rec["published"] == {"cor": s.expected["mgmt"]["cor"]} and rec["reason"] == OVERRIDE_NOTE
+    plain = {k: v for k, v in rec.items() if k not in R.MARK_KEYS}
+    assert R.book_from_dict(cand.data, facts=cand.facts).get(R.OBS)[-1] == rec          # схема её принимает
+    assert set(rec) - set(plain) == {"published", "reason"}
     assert list(rec["mu_cor"]) == list(s.book.get("regimes.ids")) and list(rec["mu_nim"]) == list(rec["mu_cor"])
     # факты не знают подмены: кандидат на отчёте и на ожидании — одни и те же факты, CoR моста — отчёта
     assert cand.facts.digest == result["candidate_expected"].facts.digest == s.cand.facts.digest
@@ -784,16 +817,18 @@ def test_an_override_goes_only_to_the_observation_of_the_candidate_on_the_report
     assert not R.is_dry_run(result)
     assert cand.derived["observation_override"] == {
         "reason": OVERRIDE_REASON, "report": {"cor": s.expected["mgmt"]["cor"], "nim": s.expected["mgmt"]["nim"]},
-        "used": {k: ov[k] for k in R.OBS_FIELDS}}
+        "used": {k: ov[k] for k in R.OBS_FIELDS}, "note": OVERRIDE_NOTE}
     out = tmp_path / "cand"
     R.write_candidate(out, s.book, result)
     text = (out / "REANCHOR.md").read_text(encoding="utf-8")
     assert "сухой прогон" not in text and "Наблюдение закрытого квартала подменено решением книги" in text
+    assert f"Пометка подмены в записи наблюдения (её печатает витрина): «{OVERRIDE_NOTE}»" in text
     assert "прежняя книга с тем же наблюдением, что у кандидата (с подменой)" in text
     row = next(line for line in text.splitlines() if line.startswith(f"| `{R.OBS}` |"))
     assert OVERRIDE_REASON in row and "вместо" in row
     assert json.loads((out / "observation.json").read_text(encoding="utf-8")) == {
-        "period": s.period, **{k: ov[k] for k in R.OBS_FIELDS}, "basis": "mgmt", "reason": OVERRIDE_REASON}
+        "period": s.period, **{k: ov[k] for k in R.OBS_FIELDS}, "basis": "mgmt", "reason": OVERRIDE_REASON,
+        "note": OVERRIDE_NOTE, "published": {"cor": s.expected["mgmt"]["cor"]}}
 
 
 @tact
@@ -814,7 +849,9 @@ def test_the_command_line_takes_the_override_from_a_file(tmp_path, capsys):
     assert json.loads((out / "observation.json").read_text(encoding="utf-8"))["reason"] == OVERRIDE_REASON
     rec = json.loads((out / "assumptions.json").read_text(encoding="utf-8"))["joint"]["regime_update"]["observations"]
     assert (rec[-1]["cor"], rec[-1]["se_cor"]) == (_override()["cor"], _override()["se_cor"])
+    assert rec[-1]["published"] == {"cor": s.expected["mgmt"]["cor"]} and rec[-1]["reason"] == OVERRIDE_NOTE
     for name, body, why in (("no-reason.json", json.dumps(_override(reason="нет")), "нет причины"),
+                            ("no-note.json", json.dumps(_override(note="нет")), "нужна подпись для витрины"),
                             ("list.yaml", "- 1\n- 2\n", "ожидается словарь"),
                             ("missing.yaml", None, "файл подмены наблюдения")):
         path = tmp_path / name

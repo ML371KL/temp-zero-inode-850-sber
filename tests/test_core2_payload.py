@@ -77,6 +77,24 @@ def test_w1_fields_of_the_release(built):
                            "data/checks", "requirements.txt")
 
 
+def test_a_substituted_observation_carries_the_published_number_and_the_reason(built):
+    """М§12, П§2: у наблюдения с пометкой подмены книги выпуск несёт опубликованные числа подменённых величин
+    (у неподменённой — null) и причину словами без служебного текста; у прочих наблюдений узла нет."""
+    rel, d = built
+    marks = {str(o["period"]): o for o in rel.book.get("joint.regime_update.observations") or [] if o.get("published")}
+    rows = d["regimes"]["update"]["observations"]
+    assert {r["period"] for r in rows if "published" in r} == set(marks) & {r["period"] for r in rows}
+    for row in rows:
+        mark = marks.get(row["period"])
+        if mark is None:
+            continue
+        assert row["published"] == {"cor": mark["published"].get("cor"), "nim": mark["published"].get("nim"),
+                                    "reason": mark["reason"]}
+        assert not U.service_text(row["published"]["reason"]) and len(row["published"]["reason"]) <= 80
+        for x in ("cor", "nim"):                                  # опубликованное — у величины, которую книга подменила
+            assert row["published"][x] is None or row["published"][x] != row[x]
+
+
 def test_dividend_register_flag_is_an_alarm(built):
     rel, d = built
     d2 = copy.deepcopy(d)

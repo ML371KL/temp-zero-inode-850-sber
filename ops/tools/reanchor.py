@@ -70,9 +70,14 @@
   cor, se_cor, nim, se_nim   значение и se каждой величины, доли единицы; все четыре обязательны;
                              null — величина не наблюдается (её se — null или 0)
   reason                     причина — обязательна; печатается в REANCHOR.md, идёт в журнал версии
+  note                       подпись для витрины: причина коротко, словами для владельца (одна строка
+                             не длиннее 80 знаков); обязательна, если подмена меняет опубликованное
+                             число отчёта (или не берёт его — null)
   period                     необязательно; если задан — квартал отчёта
 Подменяется только наблюдение A-P2u кандидата на отчёте (строка «сюрприз факта»); факты кандидата —
-числа отчёта. Без подмены наблюдение — упр. ЧПМ и CoR отчёта с se 0.
+числа отчёта. Запись наблюдения несёт пометку подмены: `published` — опубликованные числа отчёта у
+подменённых величин, `reason` — подпись `note` (М§12); витрина печатает их рядом с наблюдением. Без
+подмены наблюдение — упр. ЧПМ и CoR отчёта с se 0.
 
 ЧТО ПЕРЕНОСИТСЯ:
   meta         anchor_period, first_period, facts_date, valuation_date, version
@@ -127,6 +132,7 @@ from model.book import (BOOK_BALANCE_FIELDS, BOOK_PATH, FACTS_DIR, FVOCI_FIELDS,
                         FVTPL_BOND_FIELD, FV_LOANS_FIELD, LIQUIDITY, SECURITIES, Book, BookError,
                         Facts, FactsError, anchor_facts, book_from_dict, book_roles,
                         canonical_json, load_book, load_facts)
+from model.book_schema import REASON_MAX  # noqa: E402
 from model.capital import rwa_anchor, rwa_weights  # noqa: E402
 from model.checks import check_gates, check_invariants  # noqa: E402
 from model.credit import bridge_from_facts  # noqa: E402
@@ -180,7 +186,9 @@ PASSES = 6                 # не больше стольких проходов
 # Подмена наблюдения закрытого квартала (решение книги, docs/REANCHOR.md §3.1): пределы ловят проценты
 # вместо долей, а не судят о величине.
 OBS_FIELDS = ("cor", "se_cor", "nim", "se_nim")            # значение и se каждой величины — все четыре обязательны
-OBS_KEYS = OBS_FIELDS + ("reason", "period")                # reason обязателен, period — если задан, квартал отчёта
+OBS_KEYS = OBS_FIELDS + ("reason", "note", "period")        # reason обязателен, note — подпись витрины, period — квартал отчёта
+MARK_KEYS = ("published", "reason")                        # пометка подмены в записи наблюдения книги (М§12)
+SAME_AS_REPORT = 5e-7                                      # подмена с числом отчёта до 0,00005 п.п. — не подмена
 OBS_LIMITS = {"cor": (-0.05, 0.20), "nim": (0.0, 0.20)}     # открытые границы значения, доли единицы
 SE_LIMIT = 0.02                                             # se — доля единицы не больше 2 п.п. (0,12 п.п. — 0,0012)
 
@@ -1123,9 +1131,11 @@ def shock_regimes(run: GridRun) -> list[str]:
 
 
 def with_observation(book: Book, obs: Mapping) -> Book:
-    """Прежняя книга с наблюдением её первого прогнозного квартала (A⁺, М§15.2)."""
+    """Прежняя книга с наблюдением её первого прогнозного квартала (A⁺, М§15.2). Пометка подмены
+    (`published`, `reason`) — только у записи кандидата: в прежней книге квартал прогнозный."""
     base = _drop_observation(book, str(obs["period"]))
-    return base.with_overrides({OBS: list(base.get(OBS) or []) + [dict(obs)]})
+    plain = {k: v for k, v in obs.items() if k not in MARK_KEYS}
+    return base.with_overrides({OBS: list(base.get(OBS) or []) + [plain]})
 
 
 def _same_observation(a: Mapping, b: Mapping, tol: float = 1e-9) -> bool:
@@ -1161,6 +1171,8 @@ def carry_observation(X: dict, book: Book, facts: Facts, obs: Mapping) -> dict:
     for x in ("cor", "nim"):
         if record[x] is None:
             record.pop(f"mu_{x}")
+    if obs.get("published"):                     # пометка подмены (М§12): опубликованные числа и подпись
+        record.update(published=dict(obs["published"]), reason=obs["reason"])
     kept.append(record)
     kept.sort(key=lambda o: pindex(str(o["period"])))
     window = ru.get("window_obs")
@@ -1168,12 +1180,14 @@ def carry_observation(X: dict, book: Book, facts: Facts, obs: Mapping) -> dict:
     return record
 
 
-def check_observation(override: Mapping, period: str) -> dict:
+def check_observation(override: Mapping, period: str, report_mgmt: Mapping | None = None) -> dict:
     """Подмена наблюдения A-P2u закрытого квартала — решение книги с записанной причиной (docs/REANCHOR.md
     §3.1): значение и se каждой величины (`cor`, `se_cor`, `nim`, `se_nim` — все четыре обязательны; null —
     величина не наблюдается, её se — null или 0) и `reason`; `period`, если задан, — квартал отчёта. Факты
-    подмена не трогает: она идёт только в наблюдение кандидата на отчёте. Возвращает запись наблюдения
-    (упр. базис) с причиной; негодная подмена — отказ с причиной."""
+    подмена не трогает: она идёт только в наблюдение кандидата на отчёте. С упр. числами отчёта
+    (`report_mgmt`) — ещё `published`: опубликованные числа величин, которые подмена меняет или не берёт;
+    тогда обязательна подпись для витрины `note` (одна строка не длиннее 80 знаков). Возвращает запись
+    наблюдения (упр. базис) с причиной; негодная подмена — отказ с причиной."""
     if not isinstance(override, Mapping):
         raise ReportError("подмена наблюдения: ожидается словарь {cor, se_cor, nim, se_nim, reason}")
     unknown = sorted(str(k) for k in set(override) - set(OBS_KEYS))
@@ -1211,6 +1225,25 @@ def check_observation(override: Mapping, period: str) -> dict:
         raise ReportError("подмена наблюдения: обе величины null — наблюдения нет, подменять нечего")
     record["basis"] = "mgmt"
     record["reason"] = " ".join(why.split())
+    note = override.get("note")
+    if note is not None:
+        if not isinstance(note, str) or not note.strip():
+            raise ReportError("подмена наблюдения: подпись для витрины (note) пуста — уберите ключ или напишите причину")
+        note = " ".join(note.split())
+        if len(note) > REASON_MAX:
+            raise ReportError(f"подмена наблюдения: подпись для витрины (note) — {len(note)} знаков, не длиннее "
+                              f"{REASON_MAX}: её печатает витрина рядом с наблюдением")
+        record["note"] = note
+    if report_mgmt is not None:
+        published = {x: float(report_mgmt[x]) for x in ("cor", "nim") if _num(report_mgmt.get(x))
+                     and (record[x] is None or abs(record[x] - float(report_mgmt[x])) > SAME_AS_REPORT)}
+        if published and "note" not in record:
+            raise ReportError("подмена наблюдения меняет опубликованное число отчёта ("
+                              + ", ".join({"cor": "CoR", "nim": "ЧПМ"}[x] for x in published)
+                              + f") — нужна подпись для витрины note: причина коротко, словами для владельца, не "
+                              f"длиннее {REASON_MAX} знаков (витрина печатает её рядом с опубликованным числом)")
+        if published:
+            record["published"] = published
     return record
 
 
@@ -1733,7 +1766,7 @@ def attribution(book: Book, facts: Facts, report: Mapping, *, valuation_date: An
     if observation is not None:
         if not observe:
             raise ReportError("подмена наблюдения без наблюдения (observe=False): подменять нечего")
-        override = check_observation(observation, str(report["period"]))
+        override = check_observation(observation, str(report["period"]), report["mgmt"])
     vdate = valuation_day(valuation_date, report)
     live = live_at(book, facts, vdate)
     run_a = run_grid(book, facts, live)
@@ -1743,12 +1776,16 @@ def attribution(book: Book, facts: Facts, report: Mapping, *, valuation_date: An
                   transmission=transmission)
     cand_e = reanchor(book, facts, expected, **common)
     obs_f = None if override is None else {k: override[k] for k in ("period", *OBS_FIELDS, "basis")}
+    if override is not None and override.get("published"):
+        obs_f.update(published=override["published"], reason=override["note"])
     cand_f = reanchor(book, facts, report, near=cand_e.near, observation=obs_f, **common)
     if override is not None:
         mg = report["mgmt"]
         cand_f.derived["observation_override"] = {
             "reason": override["reason"], "report": {"cor": float(mg["cor"]), "nim": float(mg["nim"])},
             "used": {k: override[k] for k in OBS_FIELDS}}
+        if override.get("note"):
+            cand_f.derived["observation_override"]["note"] = override["note"]
         cand_f.warnings.insert(0, "наблюдение A-P2u закрытого квартала подменено решением книги ("
                                + _override_words(cand_f.derived["observation_override"]) + "): в журнал версии "
                                "книги — строкой «суждения книги» с причиной; факты (упр. CoR и ЧПМ квартала, "
@@ -1890,7 +1927,9 @@ def report_text(book: Book, result: Mapping) -> str:
     if ov:
         lines += ["**Наблюдение закрытого квартала подменено решением книги** (`--observation`, копия — "
                   f"`observation.json` каталога): {_override_words(ov)}. Причина: {ov['reason'].rstrip('.')}. "
-                  "Факты кандидата — опубликованные числа отчёта; подмена — только в наблюдении A-P2u, её эффект — "
+                  + (f"Пометка подмены в записи наблюдения (её печатает витрина): «{ov['note']}». "
+                     if ov.get("note") else "")
+                  + "Факты кандидата — опубликованные числа отчёта; подмена — только в наблюдении A-P2u, её эффект — "
                   "в строке «сюрприз факта». В журнал версии книги — строкой «суждения книги» с причиной.", ""]
 
     eng, mg = d["engine"], d["mgmt"]
@@ -2292,7 +2331,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         override = None
         if args.observation:
             override = read_observation(args.observation)
-            check_observation(override, str(report.get("period")))      # отказ до расчёта
+            check_observation(override, str(report.get("period")),       # отказ до расчёта
+                              report.get("mgmt") if isinstance(report.get("mgmt"), dict) else None)
         result = attribution(book, facts, report, valuation_date=args.valuation_date, version=args.version,
                              band_draws=args.band, cells=not args.no_cells, transmission=args.transmission,
                              observation=override)

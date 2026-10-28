@@ -421,6 +421,36 @@ def test_observation_at_the_anchor_uses_the_frozen_regime_expectations():
     assert open_period(book.with_overrides({"joint.regime_update.observations": [ob]}), facts) == tl.period(1)
 
 
+def test_a_substituted_observation_carries_the_published_number_and_the_reason():
+    """М§12, прил. A: пометка подмены — опубликованные упр. числа подменённых величин и причина словами для
+    владельца (не длиннее 80 знаков); только вместе, только у отчётного квартала (не позже якоря) в упр. базисе,
+    опубликованное число не равно записи; фильтр её не читает — апостериорные те же, что без неё."""
+    book, facts = fixture_book(), fixture_facts()
+    tl = make_timeline(book)
+    mu = {"soft": 0.011, "norm": 0.013, "downturn": 0.016, "crisis": 0.0165}
+    why = "разовый роспуск резерва занизил CoR квартала (тест)"
+    ob = _obs(tl.anchor, 0.0125, mu_cor=mu, published={"cor": 0.0105}, reason=why)
+    marked = make_context(book.with_overrides({"joint.regime_update.observations": [ob]}), facts)
+    plain = {k: v for k, v in ob.items() if k not in ("published", "reason")}
+    assert marked.posterior == make_context(book.with_overrides({"joint.regime_update.observations": [plain]}),
+                                            facts).posterior
+    gone = _obs(tl.anchor, None, mu_cor=mu, published={"cor": 0.0105}, reason=why)   # опубликованное не взято
+    make_context(book.with_overrides({"joint.regime_update.observations": [gone, _obs(tl.period(-1), 0.012, mu_cor=mu)]}),
+                 facts)
+    obs = lambda **kw: book_with({"joint.regime_update.observations": [{**ob, **kw}]})  # noqa: E731
+    _fails(book_with({"joint.regime_update.observations": [plain | {"published": {"cor": 0.0105}}]}),
+           "published и reason — только вместе")
+    _fails(book_with({"joint.regime_update.observations": [plain | {"reason": why}]}), "только вместе")
+    _fails(obs(published={"cor": 0.0125}), "равно записи")
+    _fails(obs(published={}), "пустая пометка")
+    _fails(obs(published={"cor": 0.0105, "roe": 0.2}), "published.roe", "незнакомый ключ")
+    _fails(obs(reason="причина " * 12), "не длиннее 80")
+    _fails(obs(reason="две\nстроки"), "одна строка")
+    _fails(obs(basis="engine"), "только при basis: mgmt")
+    later = {k: v for k, v in ob.items() if k != "mu_cor"} | {"period": tl.period(1)}
+    _fails(book_with({"joint.regime_update.observations": [later]}), "только у наблюдения отчётного квартала")
+
+
 # ------------------------------------------------------------------ № 21, № 19: обучение при смеси режимов
 
 

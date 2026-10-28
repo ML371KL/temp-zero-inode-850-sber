@@ -552,7 +552,10 @@ def make_regimes():
                      "nim_shift_lt": r(sum(post[g] * rows[g]["nim_shift_lt"] for g in REGIMES), 5)},
         "update": {"cor": {"sigma_pp": 0.0035, "rho_q": 0.5}, "nim": {"sigma_pp": 0.002, "rho_q": 0.7}, "max_shift_pp": 0.05, "window_obs": 4, "floor_share": 0.33,
                    "observations": [{"period": "2026Q2", "basis": "mgmt", "cor": 0.012, "nim": 0.062, "se_cor": 0.0, "se_nim": 0.0,
-                                     "cor_engine": 0.0137, "nim_engine": 0.0579, "posterior_after": post}]},
+                                     "cor_engine": 0.0137, "nim_engine": 0.0579, "posterior_after": post,
+                                     # пометка подмены книги (М§12): опубликованное число и причина — выдуманы
+                                     "published": {"cor": 0.0105, "nim": None,
+                                                   "reason": "разовый роспуск резерва занизил CoR квартала (пример)"}}]},
         "history": hist,
         "reference_class": {"episodes": [
             {"id": "2008", "name": "Кризис 2008–2009", "period": "2008Q4–2010Q1", "cor_peak": 0.0725, "quarters": 6, "nim_drop": -0.004, "src": "МСФО 2009"},

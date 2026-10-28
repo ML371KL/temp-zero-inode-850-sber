@@ -197,7 +197,9 @@ REQUIRED_FIELDS: dict[str, tuple[str, ...]] = {
     "regimes.update": _F("cor nim max_shift_pp window_obs floor_share observations"),
     "regimes.update.cor": _F("sigma_pp rho_q"),
     "regimes.update.nim": _F("sigma_pp rho_q"),
-    "regimes.update.observations[]": _F("period basis cor nim se_cor se_nim cor_engine nim_engine posterior_after"),
+    "regimes.update.observations[]": _F("period basis cor nim se_cor se_nim cor_engine nim_engine posterior_after "
+                                       "published?"),
+    "regimes.update.observations[].published": _F("cor nim reason"),
     "regimes.history[]": _F("period cor_mgmt cor_engine nim_mgmt nim_engine"),
     "regimes.reference_class": _F("episodes shares"),
     "regimes.reference_class.episodes[]": _F("id name period cor_peak quarters nim_drop src"),
@@ -2024,10 +2026,17 @@ def _regimes(x: _Ctx) -> dict:
     exp_lt = sum(post[r] * rows[r]["cor_lt"] for r in x.regimes)
     ru = "joint.regime_update"
     obs = []
+    # Пометка подмены (М§12): опубликованные числа отчёта и причина — у наблюдения, которое книга взяла не как есть.
+    marked = {str(o["period"]): o for o in b.get(f"{ru}.observations") or [] if o.get("published")}
     for u in x.run.ctx.updates:
-        obs.append({"period": u["period"], "basis": u["basis"], "cor": u["cor_raw"], "nim": u["nim_raw"],
-                    "se_cor": u["se_cor"], "se_nim": u["se_nim"], "cor_engine": R_SHARE(u["cor"]),
-                    "nim_engine": R_SHARE(u["nim"]), "posterior_after": {k: R_PROB(v) for k, v in u["posterior_after"].items()}})
+        row = {"period": u["period"], "basis": u["basis"], "cor": u["cor_raw"], "nim": u["nim_raw"],
+               "se_cor": u["se_cor"], "se_nim": u["se_nim"], "cor_engine": R_SHARE(u["cor"]),
+               "nim_engine": R_SHARE(u["nim"]), "posterior_after": {k: R_PROB(v) for k, v in u["posterior_after"].items()}}
+        mark = marked.get(u["period"])
+        if mark:
+            row["published"] = {"cor": mark["published"].get("cor"), "nim": mark["published"].get("nim"),
+                                "reason": mark["reason"]}
+        obs.append(row)
     hist = _regime_history(x)
     return {"order": x.regimes, "basis": "engine", "cor_basis": str(b.get("regimes.cor_basis")),
             "cor_bridge": {"method": br.cor_method, "value": br.cor_value}, "rows": rows,

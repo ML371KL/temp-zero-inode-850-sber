@@ -783,6 +783,52 @@ const press = (page, label, group) => {
   check("P7: частные случаи без ошибок", !page.errors.length && !wide.errors.length && !/не отрисовал/.test(page.text() + wide.text()), page.errors.concat(wide.errors).slice(0, 2));
 }
 
+/* ── 8в. прозрачность карточки режимов: подмена наблюдения и длинный ближний сдвиг ЧПМ ── */
+
+{
+  const page = makePage({ now: FRESH });
+  await page.boot();
+  await settle();
+  page.hashchange("#model");
+  let text = squash(visibleText(cardOf(page, "Режимы доходности и кредитного цикла")));
+  check("подмена наблюдения: опубликованное число и причина — рядом с подменённым, отметка в заголовке",
+    text.includes("Наблюдения кварталов · 1 · с подменой")
+    && text.includes("2 кв. 2026: CoR 1,20 % (опубликовано 1,05 %), ЧПМ 6,20 % (упр.) — разовый роспуск резерва занизил CoR квартала (пример)."),
+    text.match(/.{0,40}Наблюдения кварталов.{0,260}/));
+  check("короткий ближний сдвиг (до нуля за 6 кварталов) — весь ряд, как прежде",
+    text.includes("(движок, п.п.): 3К’26 −0,5 · 4К’26 −0,5 · 1К’27 −0,375 · 2К’27 −0,25 · 3К’27 −0,125 · 4К’27 0.") && !text.includes("…"),
+    text.match(/.{0,20}Ближний сдвиг.{0,200}/));
+
+  const long = sample();
+  const quarters = [];
+  for (let y = 2026; y <= 2036; y++) for (let k = 1; k <= 4; k++) if (y > 2026 || k === 4) quarters.push(`${y}Q${k}`);
+  long.regimes.near_nim_shift = quarters.map((period, i) => ({ period, value: i === 0 ? -0.000155 : Math.round(3203 / i) / 1e7 }));
+  delete long.regimes.update.observations[0].published;
+  const plain = makePage({ payload: JSON.stringify(long), now: FRESH });
+  await plain.boot();
+  await settle();
+  plain.hashchange("#model");
+  text = squash(visibleText(cardOf(plain, "Режимы доходности и кредитного цикла")));
+  check("длинный ближний сдвиг (41 квартал до конца явного участка) — пять первых кварталов, многоточие, последний и число",
+    text.includes("(движок, п.п.): 4К’26 −0,015 · 1К’27 0,032 · 2К’27 0,016 · 3К’27 0,011 · 4К’27 0,008 · … · 4К’36 0,001 (41 кв.).")
+    && !text.includes("1К’28"), text.match(/.{0,20}Ближний сдвиг.{0,300}/));
+  check("наблюдение без подмены — без опубликованного числа и без отметки",
+    text.includes("Наблюдения кварталов · 1 Режим") || (text.includes("Наблюдения кварталов · 1") && !text.includes("с подменой") && !text.includes("опубликовано")),
+    text.match(/.{0,40}Наблюдения кварталов.{0,200}/));
+
+  const gone = sample();
+  Object.assign(gone.regimes.update.observations[0], { cor: null, se_cor: null });
+  const missing = makePage({ payload: JSON.stringify(gone), now: FRESH });
+  await missing.boot();
+  await settle();
+  missing.hashchange("#model");
+  text = squash(visibleText(cardOf(missing, "Режимы доходности и кредитного цикла")));
+  check("опубликованное число, которое книга не взяла (null), — прочерк и опубликованное", text.includes("2 кв. 2026: CoR — (опубликовано 1,05 %), ЧПМ 6,20 %"),
+    text.match(/.{0,40}2 кв\. 2026: CoR.{0,120}/));
+  check("карточка режимов: частные случаи без ошибок", !page.errors.length && !plain.errors.length && !missing.errors.length
+    && !BAD_TEXT.test(page.text() + plain.text() + missing.text()), page.errors.concat(plain.errors, missing.errors).slice(0, 2));
+}
+
 /* ── 9. отказы двери ── */
 
 for (const [status, body, title] of [[503, '{"error":"not published yet"}', "Выпуск ещё не опубликован"], [503, '{"error":"upstream unavailable"}', "Источник данных временно недоступен"],

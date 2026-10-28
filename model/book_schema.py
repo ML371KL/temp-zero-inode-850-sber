@@ -24,7 +24,9 @@
 ≥ 1 и `floor_share` ∈ [0; 1] (М§12); окно рангов `valuation.sensitivities.rank_window` —
 0 ≤ нижний < верхний ≤ 1 (М§10); `valuation.next_report.value_tol` > 0 (М§13); единица оси
 `unit` — код П§0.2; наблюдение квартала не позже якоря несёт замороженные `mu_cor`, `mu_nim`
-наблюдённых величин, наблюдение прогнозного квартала — нет (М§12).
+наблюдённых величин, наблюдение прогнозного квартала — нет (М§12); пометка подмены наблюдения
+(`published` — опубликованные числа, `reason` — причина, не длиннее 80 знаков) — только вместе, у
+отчётного квартала в упр. базисе, опубликованное число не равно записи (М§12).
 
 Модуль — низ графа зависимостей ядра: здесь же живут `BookError` и
 `FactsError` (их реэкспортирует `model.book`).
@@ -416,7 +418,8 @@ SPEC = Obj({
                 "period": PERIOD_S, "cor": NUM_OR_NULL, "nim": NUM_OR_NULL,
                 "se_cor": NUM_OR_NULL, "se_nim": NUM_OR_NULL, "basis": Enum("mgmt", "engine"),
                 "mu_cor": MapOf("<r>", NUM), "mu_nim": MapOf("<r>", NUM),
-            }, optional=("mu_cor", "mu_nim"))),
+                "published": Obj({"cor": NUM, "nim": NUM}, optional=("cor", "nim")), "reason": STR,
+            }, optional=("mu_cor", "mu_nim", "published", "reason"))),
         }),
     }),
     "regimes": MapOf("<r>", REGIME, fixed={"ids": ListOf(STR, min_len=1),
@@ -858,7 +861,8 @@ def _period_index(period: Any) -> int | None:
 
 def _observation_rules(data: Mapping, anchor: Any, last: Any) -> list[str]:
     """Наблюдения A-P2u (М§12): погрешность у наблюдённой величины; квартал не позже якоря несёт
-    замороженные ожидания режимов `mu_<x>` наблюдённых величин, прогнозный квартал — нет."""
+    замороженные ожидания режимов `mu_<x>` наблюдённых величин, прогнозный квартал — нет; пометка
+    подмены (`published`, `reason`) — `_published_rules`."""
     out: list[str] = []
     a, z = _period_index(anchor), _period_index(last)
     seen: set[str] = set()
@@ -871,6 +875,7 @@ def _observation_rules(data: Mapping, anchor: Any, last: Any) -> list[str]:
                 out.append(f"{where}.se_{x}: null при наблюдённом {x}")
         per = obs.get("period")
         q = _period_index(per)
+        out.extend(_published_rules(obs, where, q is not None and a is not None and q <= a))
         if q is None or a is None:
             continue
         if per in seen:
@@ -886,6 +891,39 @@ def _observation_rules(data: Mapping, anchor: Any, last: Any) -> list[str]:
             if q > a and key in obs:
                 out.append(f"{where}.{key}: у наблюдения прогнозного квартала ожидания режимов считает "
                            "ядро — ключа быть не должно (М§12)")
+    return out
+
+
+# Причина подмены наблюдения печатается на витрине как есть — та же мера, что у источника суждения (П§2).
+REASON_MAX = 80
+
+
+def _published_rules(obs: Mapping, where: str, reported: bool) -> list[str]:
+    """Пометка подмены наблюдения (М§12): решение книги взять наблюдением режима не опубликованное число
+    отчёта. `published` — опубликованные упр. числа подменённых величин, `reason` — причина словами для
+    владельца (одна строка, не длиннее `REASON_MAX`); только вместе, только у отчётного квартала (не позже
+    якоря) в упр. базисе; опубликованное число — у величины, которую запись подменила или не взяла (null)."""
+    pub, why = obs.get("published"), obs.get("reason")
+    if pub is None and why is None:
+        return []
+    out: list[str] = []
+    if pub is None or why is None:
+        out.append(f"{where}: published и reason — только вместе (опубликованное число и причина подмены)")
+    if not reported:
+        out.append(f"{where}.published: пометка подмены — только у наблюдения отчётного квартала (не позже якоря); "
+                   "у прогнозного опубликованного числа нет")
+    if obs.get("basis") != "mgmt":
+        out.append(f"{where}.published: опубликованные числа отчёта — упр., пометка подмены — только при basis: mgmt")
+    if isinstance(pub, Mapping):
+        if not pub:
+            out.append(f"{where}.published: пустая пометка — назовите опубликованное число подменённой величины")
+        for x, v in pub.items():
+            mine = obs.get(x)
+            if is_number(v) and is_number(mine) and abs(float(mine) - float(v)) < 1e-12:
+                out.append(f"{where}.published.{x} = {v}: равно записи — подмены нет, пометка лишняя")
+    if isinstance(why, str) and (why != " ".join(why.split()) or len(why) > REASON_MAX):
+        out.append(f"{where}.reason: одна строка не длиннее {REASON_MAX} знаков, без лишних пробелов "
+                   "(её печатает витрина)")
     return out
 
 
