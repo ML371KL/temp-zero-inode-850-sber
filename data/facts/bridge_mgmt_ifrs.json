@@ -1,24 +1,24 @@
 {
  "basis": "mgmt↔IFRS",
- "as_of": "2026-06-30",
+ "as_of": "2026-09-30",
  "unit": "доли, годовые",
  "window": [
   "2024Q1",
-  "2026Q2"
+  "2026Q3"
  ],
  "direction": "to_engine(v) = v + value (additive); value = среднее по окну (engine − mgmt)",
  "cor": {
   "method": "additive",
   "value": {
-   "v": 0.001703,
-   "calc": "среднее gap по окну 2024Q1–2026Q2 (n = 10)"
+   "v": 0.001521,
+   "calc": "среднее gap по окну 2024Q1–2026Q3 (n = 11)"
   },
   "sd": {
-   "v": 0.001593,
+   "v": 0.001628,
    "calc": "выборочное стандартное отклонение gap по окну"
   },
   "n": {
-   "v": 10,
+   "v": 11,
    "calc": "кварталов в окне"
   },
   "definition": "CoR движка = −llp_debt_fa / средние валовые кредиты АС × 365/d (резервы по долговым ФА; MODEL §4.6); упр. — совокупная стоимость риска презентаций",
@@ -192,7 +192,7 @@
     },
     "engine": {
      "v": 0.015444,
-     "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1; ifrs_9M2025_statements_sber.pdf, с. 15, sha256 cf3ac9548d5ca9a1; ifrs_6M2025_statements_sber.pdf, с. 14, sha256 090e4b47f88773b3",
+     "src": "2026Q3_ifrs_interim_statements.pdf, с. 6, sha256 bfb59dab3fe2cea9; ifrs_9M2025_statements_sber.pdf, с. 15, sha256 cf3ac9548d5ca9a1; ifrs_6M2025_statements_sber.pdf, с. 14, sha256 090e4b47f88773b3",
      "calc": "−llp_debt_fa −170,5 / средние валовые кредиты АС (42752,4 + 44845,1)/2 × 365/92"
     },
     "gap": {
@@ -204,11 +204,11 @@
     "period": "2025Q4",
     "mgmt": {
      "v": 0.009,
-     "src": "2026Q2_ifrs_presentation.pdf, с. 12, sha256 d17d36167137507e"
+     "src": "2026Q3_ifrs_presentation.pdf, с. 12, sha256 a0429c1af753efc3"
     },
     "engine": {
      "v": 0.009646,
-     "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1; 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b; ifrs_9M2025_statements_sber.pdf, с. 15, sha256 cf3ac9548d5ca9a1",
+     "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; 2026Q3_ifrs_interim_statements.pdf, с. 6, sha256 bfb59dab3fe2cea9; 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9; ifrs_9M2025_statements_sber.pdf, с. 15, sha256 cf3ac9548d5ca9a1",
      "calc": "−llp_debt_fa −111,3 / средние валовые кредиты АС (44845,1 + 46710,0)/2 × 365/92"
     },
     "gap": {
@@ -224,7 +224,7 @@
     },
     "engine": {
      "v": 0.013841,
-     "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826; ifrs_3M2026_statements.pdf, с. 15, sha256 4b1449f839cf0826; 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+     "src": "ifrs_3M2026_statements.pdf, с. 6, sha256 4b1449f839cf0826; ifrs_3M2026_statements.pdf, с. 15, sha256 4b1449f839cf0826; 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9",
      "calc": "−llp_debt_fa −161,2 / средние валовые кредиты АС (46710,0 + 47754,2)/2 × 365/90"
     },
     "gap": {
@@ -236,7 +236,7 @@
     "period": "2026Q2",
     "mgmt": {
      "v": 0.01,
-     "src": "2026Q2_ifrs_presentation.pdf, с. 12, sha256 d17d36167137507e"
+     "src": "2026Q3_ifrs_presentation.pdf, с. 12, sha256 a0429c1af753efc3"
     },
     "engine": {
      "v": 0.014297,
@@ -247,21 +247,37 @@
      "v": 0.004297,
      "calc": "engine − mgmt"
     }
+   },
+   {
+    "period": "2026Q3",
+    "mgmt": {
+     "v": 0.011,
+     "src": "2026Q3_ifrs_presentation.pdf, с. 12, sha256 a0429c1af753efc3"
+    },
+    "engine": {
+     "v": 0.010699,
+     "src": "2026Q3_ifrs_interim_statements.pdf, с. 6, sha256 bfb59dab3fe2cea9; 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9; 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+     "calc": "−llp_debt_fa −133,8 / средние валовые кредиты АС (48473,1 + 50755,3)/2 × 365/92"
+    },
+    "gap": {
+     "v": -0.000301,
+     "calc": "engine − mgmt"
+    }
    }
   ]
  },
  "nim": {
   "method": "additive",
   "value": {
-   "v": -0.00384,
-   "calc": "среднее gap по окну 2024Q1–2026Q2 (n = 10)"
+   "v": -0.003746,
+   "calc": "среднее gap по окну 2024Q1–2026Q3 (n = 11)"
   },
   "sd": {
-   "v": 0.000235,
+   "v": 0.00025,
    "calc": "выборочное стандартное отклонение gap по окну"
   },
   "n": {
-   "v": 10,
+   "v": 11,
    "calc": "кварталов в окне"
   },
   "definition": "ЧПМ движка = ЧПД квартала × 365/d / средние процентные активы движка (кредиты АС валовые + по СС + долговые бумаги с репо, без акций и фондов + ликвидность; MODEL §4.4); упр. — ЧПМ презентаций",
@@ -400,8 +416,7 @@
     "period": "2025Q1",
     "mgmt": {
      "v": 0.0611,
-     "src": "2026Q1_ifrs_presentation.pdf, с. 6, sha256 6002b43d7cbea77f",
-     "calc": "выведено: 6,34 − 0,23 = 6,11 (подпись «+0,23 пп г/г») — на странице напечатаны значение сравнимого периода и изменение к нему, самого числа нет"
+     "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
     },
     "engine": {
      "v": 0.057392,
@@ -416,8 +431,8 @@
    {
     "period": "2025Q2",
     "mgmt": {
-     "v": 0.061,
-     "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+     "v": 0.0609,
+     "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
     },
     "engine": {
      "v": 0.057073,
@@ -425,23 +440,23 @@
      "calc": "nii 841,8 × 365/91 / средние процентные активы (58492,5 + 59828,2)/2; на 2025-03-31: кредиты АС валовые + по СС 45409,2 + долговые бумаги 8248,3 + ликвидность 4835,0; бумаги: бумаги 7946,6 + заложенные по репо 595,9 − акции и фонды 294,2 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»); на 2025-06-30: кредиты АС валовые + по СС 46065,3 + долговые бумаги 9089,1 + ликвидность 4673,8; бумаги: бумаги 8663,6 + заложенные по репо 724,3 − акции и фонды 298,8 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
     },
     "gap": {
-     "v": -0.003927,
+     "v": -0.003827,
      "calc": "engine − mgmt"
     }
    },
    {
     "period": "2025Q3",
     "mgmt": {
-     "v": 0.062,
-     "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+     "v": 0.0617,
+     "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
     },
     "engine": {
      "v": 0.057773,
-     "src": "ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+     "src": "2026Q3_ifrs_interim_statements.pdf, с. 6, sha256 bfb59dab3fe2cea9",
      "calc": "nii 893,6 × 365/92 / средние процентные активы (59828,2 + 62902,8)/2; на 2025-06-30: кредиты АС валовые + по СС 46065,3 + долговые бумаги 9089,1 + ликвидность 4673,8; бумаги: бумаги 8663,6 + заложенные по репо 724,3 − акции и фонды 298,8 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»); на 2025-09-30: кредиты АС валовые + по СС 48431,9 + долговые бумаги 9513,5 + ликвидность 4957,4; бумаги: бумаги 8641,3 + заложенные по репо 1173,5 − акции и фонды 301,3 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
     },
     "gap": {
-     "v": -0.004227,
+     "v": -0.003927,
      "calc": "engine − mgmt"
     }
    },
@@ -449,11 +464,11 @@
     "period": "2025Q4",
     "mgmt": {
      "v": 0.0646,
-     "src": "2025Q4_ifrs_press_release.pdf, с. 3, sha256 9fcc844f65e099c2"
+     "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
     },
     "engine": {
      "v": 0.060405,
-     "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; ifrs_9M2025_statements_sber.pdf, с. 6, sha256 cf3ac9548d5ca9a1",
+     "src": "ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e; 2026Q3_ifrs_interim_statements.pdf, с. 6, sha256 bfb59dab3fe2cea9",
      "calc": "nii 988,2 × 365/92 / средние процентные активы (62902,8 + 66907,7)/2; на 2025-09-30: кредиты АС валовые + по СС 48431,9 + долговые бумаги 9513,5 + ликвидность 4957,4; бумаги: бумаги 8641,3 + заложенные по репо 1173,5 − акции и фонды 301,3 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»); на 2025-12-31: кредиты АС валовые + по СС 50371,1 + долговые бумаги 10553,6 + ликвидность 5983,0; бумаги: бумаги 6864,5 + заложенные по репо 4079,4 − акции и фонды 390,3 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
     },
     "gap": {
@@ -465,7 +480,7 @@
     "period": "2026Q1",
     "mgmt": {
      "v": 0.0634,
-     "src": "2026Q1_ifrs_presentation.pdf, с. 6, sha256 6002b43d7cbea77f"
+     "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
     },
     "engine": {
      "v": 0.059495,
@@ -480,8 +495,8 @@
    {
     "period": "2026Q2",
     "mgmt": {
-     "v": 0.067,
-     "src": "2026Q2_ifrs_presentation.pdf, с. 6, sha256 d17d36167137507e"
+     "v": 0.0669,
+     "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
     },
     "engine": {
      "v": 0.063548,
@@ -489,7 +504,23 @@
      "calc": "nii 1066,8 × 365/91 / средние процентные активы (67283,7 + 67384,4)/2; на 2026-03-31: кредиты АС валовые + по СС 51566,0 + долговые бумаги 10981,8 + ликвидность 4735,9; бумаги: бумаги 9699,8 + заложенные по репо 1614,3 − акции и фонды 332,3 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»); на 2026-06-30: кредиты АС валовые + по СС 52580,1 + долговые бумаги 11246,1 + ликвидность 3558,2; бумаги: бумаги 9787,6 + заложенные по репо 1701,3 − акции и фонды 242,8 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
     },
     "gap": {
-     "v": -0.003452,
+     "v": -0.003352,
+     "calc": "engine − mgmt"
+    }
+   },
+   {
+    "period": "2026Q3",
+    "mgmt": {
+     "v": 0.0665,
+     "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
+    },
+    "engine": {
+     "v": 0.063195,
+     "src": "2026Q3_ifrs_interim_statements.pdf, с. 6, sha256 bfb59dab3fe2cea9",
+     "calc": "nii 1107,7 × 365/92 / средние процентные активы (67384,4 + 71699,2)/2; на 2026-06-30: кредиты АС валовые + по СС 52580,1 + долговые бумаги 11246,1 + ликвидность 3558,2; бумаги: бумаги 9787,6 + заложенные по репо 1701,3 − акции и фонды 242,8 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»); на 2026-09-30: кредиты АС валовые + по СС 55007,1 + долговые бумаги 12022,1 + ликвидность 4670,0; бумаги: бумаги 9508,6 + заложенные по репо 2718,3 − акции и фонды 204,8 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
+    },
+    "gap": {
+     "v": -0.003305,
      "calc": "engine − mgmt"
     }
    }
@@ -498,15 +529,15 @@
  "cir": {
   "method": "additive",
   "value": {
-   "v": -0.018628,
-   "calc": "среднее gap по окну 2024Q1–2026Q2 (n = 10)"
+   "v": -0.017093,
+   "calc": "среднее gap по окну 2024Q1–2026Q3 (n = 11)"
   },
   "sd": {
-   "v": 0.01091,
+   "v": 0.011534,
    "calc": "выборочное стандартное отклонение gap по окну"
   },
   "n": {
-   "v": 10,
+   "v": 11,
    "calc": "кварталов в окне"
   },
   "definition": "CIR движка = −opex / (nii + fees_net + insurance_net + misc_net) квартала МСФО (переоценка облигаций по СС — внутри misc_net; непрофильная деятельность — вне; MODEL §4.6, §14.2); упр. — CIR презентаций. Мост служит гайденсу и печати (paths.annual[].cir_mgmt), не гейту bridge_drift",
@@ -671,7 +702,8 @@
     "period": "2025Q3",
     "mgmt": {
      "v": 0.287,
-     "src": "2025Q3_ifrs_presentation.pdf, с. 19, sha256 00d0fc066a3a630c"
+     "src": "2026Q3_ifrs_presentation.pdf, с. 18, sha256 a0429c1af753efc3",
+     "calc": "выведено: 29,4 − 0,7 = 28,7 — на странице напечатаны значение сравнимого периода и изменение к нему, самого числа нет"
     },
     "engine": {
      "v": 0.277693,
@@ -724,6 +756,21 @@
     },
     "gap": {
      "v": -0.018435,
+     "calc": "engine − mgmt"
+    }
+   },
+   {
+    "period": "2026Q3",
+    "mgmt": {
+     "v": 0.294,
+     "src": "2026Q3_ifrs_presentation.pdf, с. 18, sha256 a0429c1af753efc3"
+    },
+    "engine": {
+     "v": 0.292256,
+     "calc": "−opex −351,0 / (nii + fees_net + insurance_net + misc_net) 1201,0 (pnl_quarterly 2026Q3)"
+    },
+    "gap": {
+     "v": -0.001744,
      "calc": "engine − mgmt"
     }
    }

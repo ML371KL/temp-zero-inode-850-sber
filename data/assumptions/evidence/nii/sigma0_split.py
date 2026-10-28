@@ -18,7 +18,10 @@
 Правило центров (отправная точка — (1; 1): сдвиг и сжатие целиком в кредитных ставках):
   1. `nii.sigma0_split` — наибольшая доля, при которой гейт проходит в мире H (сжатия там нет); вниз до 0,01;
   2. `nii.phi_split` — наибольшая доля, при которой гейт проходит в остальных мирах (лист `phi_split.py`).
-Этот лист считает шаг 1 и показывает исход гейта по мирам при долях книги.
+Этот лист считает шаг 1 и показывает исход гейта по мирам при долях книги. После переноса книги на новый якорь
+(режим keep, MODEL §15.2 п. 8: скаляры σ0_A, σ0_L прежней книги сохраняются, доля пересчитывается на новую
+структуру) центр — эта доля: лист принимает её, если гейт при ней проходит и она не дальше шага ниже наибольшей
+доли (книга 1.4: 0,089584 при наибольшей 0,0912).
 
 Ось полосы — в области гейта: от нуля (весь сдвиг на средствах клиентов) до центра. Выше центра спред корпоративной
 книги в мире H ниже пола, такую долю полоса не разыгрывает: пол обязан держаться на всей оси доли (при прочих осях
@@ -80,7 +83,11 @@ class Stationary:
         self.real = {w: round(rows[w][REAL_FIELD] / 100.0, 5) for w in self.worlds}
         self.s_lt = {b: _lt(s["spread"]) for b, s in self.books.items()}
         rcs = book["nii"]["retail_current_share"]
-        self.c_ref, self.key_ref = nb["current_share_anchor"]["v"], nb["key_avg_anchor_q"]["v"]
+        # линия доли текущих счетов: `anchor` — доля и средняя ключевая якоря из фактов; число — линия, замороженная
+        # перезаякориванием числами прежней книги (MODEL §15.2 п. 2) — как читает ядро
+        c_ref, key_ref = rcs["c_ref"], rcs["key_ref"]
+        self.c_ref = nb["current_share_anchor"]["v"] if c_ref == "anchor" else float(c_ref)
+        self.key_ref = nb["key_avg_anchor_q"]["v"] if key_ref == "anchor" else float(key_ref)
         self.psi, self.bounds = float(rcs["psi"]), tuple(rcs["bounds"])
         self.dia = float(book["nii"]["dia_rate"])
         self.h = book["nii"]["transmission"]["reference_world"]
@@ -230,7 +237,13 @@ def compute() -> dict:
     split_book, p_book = float(book["nii"]["sigma0_split"]), stn.p_book
     worlds, weights = stn.worlds, book["joint"]["world_prob"]
     exact, binding = max_split(stn, floors, stn.h)
-    center = None if exact is None else floor_step(exact)
+    rule_center = None if exact is None else floor_step(exact)
+    # Книга, перенесённая на новый якорь (режим keep, MODEL §15.2 п. 8), несёт долю прежней книги на новой
+    # структуре: при прежних σ0_A и σ0_L доля не обязана стоять на шаге 0,01. Она остаётся центром, пока гейт при
+    # ней проходит и она не дальше шага ниже наибольшей доли.
+    keep = (evlib.moved(book) and exact is not None and abs(split_book - rule_center) > 1e-12
+            and 0.0 <= exact - split_book < STEP)
+    center = split_book if keep else rule_center
     per_world = {}
     for w in worlds:
         m, b = max_split(stn, floors, w)
@@ -267,9 +280,12 @@ def compute() -> dict:
             bad.append(f"nii.books.retail_current / retail_term: {flag} обязан совпадать (MODEL §4.5)")
     return {
         "rule": {"definition": "шаг 1 правила центров: наибольший split, при котором гейт lt_spread_floor проходит в мире "
-                               "отсчёта (сжатия φ там нет); округление вниз до 0,01",
+                               "отсчёта (сжатия φ там нет); округление вниз до 0,01; после переноса книги на новый якорь "
+                               "(keep) — доля прежней книги на новой структуре, если гейт при ней проходит и она не дальше "
+                               "шага ниже наибольшей доли",
                  "reference_world": stn.h, "max_split_exact": None if exact is None else round(exact, 5),
-                 "binding_book": binding, "center": center, "book": split_book, "phi_split_book": p_book,
+                 "binding_book": binding, "center": center, "center_by_step": rule_center,
+                 "center_from": "keep" if keep else "step", "book": split_book, "phi_split_book": p_book,
                  "worlds_violating_at_book": [w for w in worlds if at_book[w]],
                  "mass_at_book": round(sum(weights[w] for w in worlds if at_book[w]), 6)},
         "stationary": {"reference_world": stn.h, "target_eng": stn.target_eng,

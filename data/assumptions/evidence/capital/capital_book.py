@@ -79,9 +79,39 @@ def compute() -> dict:
     }
 
 
-def compare(res: dict, book: dict) -> list[str]:
-    """Расхождения чисел листа с шаблоном книги (пусто — книга воспроизводится)."""
+MOVED = ("capital.n20.deductions_anchor", "capital.n20.gap_pp", "capital.n11.deductions_anchor", "capital.n11.gap_pp")
+DENSITY_COMMON_TOL = 1e-5            # плотности книги на новом якоре — плотности листа × один множитель (6 знаков книги)
+
+
+def moved_check(res: dict, book: dict) -> list[str]:
+    """Книга на якоре позже листа (перезаякоривание, MODEL §15.2): вычеты и поправки на новом якоре выводит перенос
+    (вычеты — формулой книги на фактах якоря, поправки — чтобы якорь воспроизводил нормативы отчёта), плотности —
+    общим множителем к RWA якоря. Лист сверяет Ded20_0 = BV − CET1 по фактам якоря книги и общий множитель плотностей;
+    поправки и Ded11_0 сверяет сам перенос (критерий 4 docs/REANCHOR.md §1.5)."""
+    facts = evlib.BOOK_DIR.parent / "facts"
+    bal = json.loads((facts / "balance.json").read_text(encoding="utf-8"))
+    cap = json.loads((facts / "capital.json").read_text(encoding="utf-8"))
+    bv, cet1 = bal["equity"]["bv_common"]["v"], cap["basel"]["cet1"]["v"]
     c = book["capital"]
+    ded20 = round(bv - cet1, 1)
+    res["book_anchor"] = {"anchor_period": book["meta"]["anchor_period"], "bv_common": bv, "basel_cet1": cet1,
+                          "ded20_anchor": ded20, "moved_keys": {p: evlib.get(book, p) for p in MOVED}}
+    ratios = {k: c["rwa"]["density"][k] / v for k, v in res["density"].items()}
+    k = sum(ratios.values()) / len(ratios)
+    res["book_anchor"]["density_factor"] = round(k, 6)
+    bad = []
+    if abs(c["n20"]["deductions_anchor"] - ded20) > 0.05:
+        bad.append(f"capital.n20.deductions_anchor: книга {c['n20']['deductions_anchor']} против BV − CET1 якоря {ded20}")
+    bad += [f"capital.rwa.density.{b}: множитель {r:.6f} против общего {k:.6f}" for b, r in ratios.items()
+            if abs(r - k) > DENSITY_COMMON_TOL]
+    return bad
+
+
+def compare(res: dict, book: dict) -> list[str]:
+    """Расхождения чисел листа с шаблоном книги (пусто — книга воспроизводится). Книга на якоре позже листа —
+    `moved_check`: ключи переноса сверяет правило переноса, остальные — лист."""
+    c = book["capital"]
+    moved = evlib.moved(book)
     pairs = [
         ("capital.n20.deductions_anchor", c["n20"]["deductions_anchor"], res["ded20_anchor"], 0.05),
         ("capital.n20.gap_pp", c["n20"]["gap_pp"], res["n20_gap_pp"], 0.00005),
@@ -90,7 +120,10 @@ def compare(res: dict, book: dict) -> list[str]:
         ("capital.n20.fvoci_recognition", c["n20"]["fvoci_recognition"], res["fvoci_ofz_share_2025"], 0.005),
         ("oci.fvoci_duration", book["oci"]["fvoci_duration"], res["fvoci_duration"]["D"], 0.05),
     ] + [(f"capital.rwa.density.{k}", c["rwa"]["density"][k], v, 0.0005) for k, v in res["density"].items()]
-    return [f"{p}: книга {b} против листа {v}" for p, b, v, tol in pairs if abs(b - v) > tol]
+    if moved:
+        pairs = [p for p in pairs if p[0] not in MOVED and not p[0].startswith("capital.rwa.density.")]
+    bad = [f"{p}: книга {b} против листа {v}" for p, b, v, tol in pairs if abs(b - v) > tol]
+    return bad + (moved_check(res, book) if moved else [])
 
 
 def main() -> int:

@@ -498,6 +498,7 @@ def test_regime_update_fact_equal_to_expectation_moves_nothing(inputs):
     клеткам режима), не меняет ни вероятностей, ни отклонений, ни V0 слоёв."""
     book, facts = inputs
     b1 = cm.copy.deepcopy(book)
+    b1["joint"]["regime_update"]["observations"] = []        # окно — только наблюдение теста
     regimes = list(b1["regimes"]["ids"])
     only = regimes[1] if len(regimes) > 1 else regimes[0]
     b1["joint"]["regime_prob"] = {r: (1.0 if r == only else 0.0) for r in regimes}
@@ -622,8 +623,13 @@ def test_fvc_is_the_regime_deviation_on_fair_value_loans(inputs, control):
     ref = ctx["fv_ref"]
     assert ref == cm.c_bget(ctx["B"], "credit.fv_loans_ref")
     scen = list(cm.c_bget(ctx["B"], "capital.reg_scenarios.ids"))
+    quiet = control
+    if book["joint"]["regime_update"].get("observations"):   # окно книги не пусто — опора без отклонений A-P2u
+        b0 = cm.copy.deepcopy(book)
+        b0["joint"]["regime_update"]["observations"] = []
+        quiet = cm.c_control_run(b0, facts)
     for s in scen:
-        assert all(r["fvc"] == 0.0 for r in cm.c_cell_of(control, cm.W_LOW, ref, s)["rows"]), s
+        assert all(r["fvc"] == 0.0 for r in cm.c_cell_of(quiet, cm.W_LOW, ref, s)["rows"]), s
     if cm.c_bnum(ctx["B"], "credit.fv_loans_factor") <= 0.0:
         pytest.skip("книга держит строку FVC выключенной")
     total = {r: sum(x["fvc"] for x in cm.c_cell_of(control, cm.W_LOW, r, scen[0])["rows"])
@@ -839,7 +845,9 @@ def test_observation_of_a_closed_quarter_uses_frozen_expectations(inputs):
     # отклонение входит в CoR первого прогнозного квартала клетки
     r0 = regimes[0]
     with_obs = cm.c_cell_annual(ctx, cm.W_LOW, r0, "schedule")["rows"][0]["cor_q"][0]
-    without = cm.c_cell_annual(cm.c_control_context(book, facts), cm.W_LOW, r0, "schedule")["rows"][0]["cor_q"][0]
+    b0 = cm.copy.deepcopy(book)
+    b0["joint"]["regime_update"].update(observations=[], floor_share=0.0)
+    without = cm.c_cell_annual(cm.c_control_context(b0, facts), cm.W_LOW, r0, "schedule")["rows"][0]["cor_q"][0]
     assert with_obs - without == pytest.approx(rho * ctx["dev"][r0]["cor"]["m"], rel=1e-9)
     bad = cm.copy.deepcopy(book)
     bad["joint"]["regime_update"]["observations"] = [_obs(anchor, obs_cor, None)]
@@ -855,16 +863,20 @@ def test_observation_of_a_closed_quarter_uses_frozen_expectations(inputs):
 def test_fact_equal_to_expectation_is_learning_on_four_regimes(inputs, control):
     """В2, № 21 (М§12, §18): при смеси режимов наблюдение, равное ожиданию квартала (среднему смеси),
     перевзвешивает режимы — это обучение, а не ноль: сдвиг V0 слоя равен Σ_r ΔP(r) × V_r (V_r — оценка
-    при P(r) = 1), вклад отклонений клеток мал против него."""
+    при P(r) = 1), вклад отклонений клеток мал против него. У книги с наблюдениями в окне (с 1.4) база — та же
+    книга без наблюдений: ожидание квартала — априорное."""
     book, facts = inputs
-    if control["ctx"]["mu"]:
-        pytest.skip("в книге уже есть наблюдения: базовое ожидание квартала — не априорное")
+    base = control
+    if control["ctx"]["mu"]:                      # окно книги не пусто — база без наблюдений
+        book = cm.copy.deepcopy(book)
+        book["joint"]["regime_update"]["observations"] = []
+        base = cm.c_control_run(book, facts)
     per = book["meta"]["first_period"]
     y, q = cm.c_per_parse(per)
-    ctx = control["ctx"]
+    ctx = base["ctx"]
     A, B = ctx["A"], ctx["B"]
     regimes = list(B["regimes"]["ids"])
-    prior = control["posterior"]
+    prior = base["posterior"]
     mu = cm.c_expectations_ctl(ctx, [(y, q)])
     e_cor = sum(prior[r] * mu[("cor", r, y, q)] for r in regimes)
     if max(mu[("cor", r, y, q)] for r in regimes) == min(mu[("cor", r, y, q)] for r in regimes):
@@ -879,9 +891,9 @@ def test_fact_equal_to_expectation_is_learning_on_four_regimes(inputs, control):
     prs = cm.c_bget(B, "joint.reg_prob_given_regime")
     for name in cm.LAYERS:
         v_r = {r: sum(weights[name].get(c["world"], 0.0) * float(prs[r][c["scenario"]]) * c["v_ri"]
-                      for c in control["cells"] if c["regime"] == r) for r in regimes}
+                      for c in base["cells"] if c["regime"] == r) for r in regimes}
         reweight = sum((post[r] - prior[r]) * v_r[r] for r in regimes)
-        shift = obs["layers"][name]["v0"] - control["layers"][name]["v0"]
+        shift = obs["layers"][name]["v0"] - base["layers"][name]["v0"]
         assert abs(reweight) > 0.0
         assert abs(shift - reweight) <= 0.05 * abs(reweight), (name, shift, reweight)
 
@@ -1386,20 +1398,24 @@ def test_average_balances_of_the_year(inputs, control):
     loans = [b for b, sp in ctx["B"]["nii"]["books"].items() if sp.get("sector")]
     fvs = cm.c_bnum(ctx["B"], f"nii.books.{cm.CORP_LOANS}.fv_share")
     ssl = cm.c_bnum(ctx["B"], "volumes.securities_share_of_liquid")
+    wtf = cm.c_bnum(ctx["B"], "volumes.wholesale_to_funds")
+    funds0 = sum(A["E0"][b] for b in ("retail_current", "retail_term", cm.CORP_FUNDS))
+    extra0 = max(0.0, A["E0"][cm.WHOLESALE] - wtf * funds0)   # добор опта якоря (книга 1.4: отношение заморожено)
     for c in control["cells"][::7]:
         ac_prev = sum(A["E0"][b] for b in loans) - A["fv_loans"]
         la_prev = A["E0"][cm.SECURITIES] + A["E0"][cm.LIQUIDITY]
+        extra_prev = extra0
         for p, r in zip(ctx["periods"], c["rows"]):
             n = p["n"]
             assert r["loans_ac_avg"] < (ac_prev + r["loans_ac"]) / 2.0 or r["loans_ac"] <= ac_prev
             timing = sum(((n - (j + 1)) / n - 0.5) * x for j, x in enumerate(r["ci_q"]))
             assert r["shift_la"] == pytest.approx(timing - r["paid_shift"] + r["curve_la"], rel=1e-6, abs=1e-6)
             la_end = r["securities"] + r["liquidity"]
-            if r["wholesale_extra"] == 0.0:                                         # минимум не связывает
+            if r["wholesale_extra"] == 0.0 and extra_prev == 0.0:                   # минимум не связывает
                 assert r["la_avg"] == pytest.approx((la_prev + la_end) / 2.0 + r["shift_la"], rel=1e-12)
                 assert r["wholesale_avg"] == pytest.approx(
                     cm.c_bnum(ctx["B"], "volumes.wholesale_to_funds") * r["funds_avg"], rel=1e-12)
-            ac_prev, la_prev = r["loans_ac"], la_end
+            ac_prev, la_prev, extra_prev = r["loans_ac"], la_end, r["wholesale_extra"]
     # связанный минимум ликвидности: доля минимума — вход теста, выше доли LA в активах якоря
     book, facts = inputs
     b2 = cm.copy.deepcopy(book)
@@ -1826,13 +1842,17 @@ def _core_with_register(book: dict, facts: dict, register: list, v: str):
 @pytest.mark.ci_only
 def test_control_matches_core_bridge_before_ex_date(inputs):
     """Мост М§8.1: объявленный дивиденд последнего года истории в реестре, дата оценки — за пять дней
-    до экс-даты. B(v) ≤ 1 %, цена ≤ 3 % (М§17)."""
+    до экс-даты. B(v) ≤ 1 %, цена ≤ 3 % (М§17). Если этот дивиденд выплачен до якоря (якорь после квартала
+    выплаты), запись — дивиденд года прибыли якоря с отсечкой после квартала ГОСА (сценарий теста)."""
     book, facts = inputs
     hist = facts["dividends"]["history"][-1]
     rec = {"year": hist["year"], "dps": cm._c_nodeval(hist["dps_ordinary"]), "status": "declared",
            "record_date": hist["record_date"], "last_buy_date": hist["last_buy_date"],
            "ex_date": hist["ex_date"], "pay_date": hist["pay_date"], "sources": ["сверка М§17"]}
-    v = (dt.date.fromisoformat(hist["ex_date"]) - dt.timedelta(days=5)).isoformat()
+    if hist["ex_date"] <= str(book["meta"]["facts_date"]):
+        y0, e_qa = _agm_end(book)
+        rec = _declared(y0, _history_dps(facts), e_qa)
+    v = (dt.date.fromisoformat(rec["ex_date"]) - dt.timedelta(days=5)).isoformat()
     try:
         ctl, run = _core_with_register(book, facts, [rec], v)
     except ImportError as exc:

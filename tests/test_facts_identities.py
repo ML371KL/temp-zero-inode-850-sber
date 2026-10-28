@@ -66,10 +66,15 @@ def test_balance_identity_by_books():
 
 
 def test_dividends_payable_matches_declared_pool():
+    """Дивиденды к выплате на якоре — объявленный пул за вычетом части на собственные акции, пока срок выплаты позже
+    якоря (якорь 2К26: 841,0); выплаченный до якоря дивиденд обязательства не оставляет (якорь 3К26: 0)."""
     b, d = load("balance"), load("dividends")
     y = b["dividends_payable_year"]
     rec = next(r for r in d["history"] if r["year"] == y)
     pool = v(rec["pool_declared"])
+    if rec["pay_date"] <= b["as_of"]:
+        assert v(b["dividends_payable"]) == 0.0, "дивиденд выплачен до якоря — к выплате 0"
+        return
     assert 0 < pool - v(b["dividends_payable"]) < 0.02 * pool, "DP = пул − часть на собственные акции"
 
 
@@ -302,7 +307,9 @@ def test_capital_anchor_consistency():
     assert abs(v(c["at1"]["amount"]) - v(b["equity"]["at1"])) < TOL
     ratio = v(c["basel"]["cet1"]) / v(c["basel"]["rwa"])
     assert abs(ratio - v(c["basel"]["cet1_ratio"])) < 0.0006, "CET1 / RWA ≠ коэффициент (округление 0,1 п.п.)"
-    assert c["n20_0"]["pre_dividend"] is True
+    # Н20.0 «до вычета» объявленного дивиденда, пока отсечка позже якоря (вычет — в месяце отсечки)
+    rec = next(r for r in load("dividends")["history"] if r["year"] == b["dividends_payable_year"])
+    assert c["n20_0"]["pre_dividend"] is (rec["record_date"] > b["as_of"])
     for k in ("1", "3", "5", "10"):
         assert 0.0 < v(c["ofz_curve_anchor"][k]) < 0.4
     # вычеты якоря (книга: Ded20_0 = BV − CET1 по Базелю)
@@ -440,8 +447,9 @@ def test_mgmt_derived_metrics_carry_calc():
     вывод в `calc`; где число напечатано в другом документе — источник указывает на него (AUDIT-1 № 36).
     Узлы окна мостов упр. ↔ движок — в их числе."""
     q = load("mgmt_quarterly")["quarters"]
+    # ЧПМ 1К25 с якоря 3К26 напечатана (презентация 3К26, с. 8), CIR 3К25 — выведена из подписей той же презентации
     derived = [("2024Q1", "cir"), ("2024Q2", "cir"), ("2024Q3", "cir"), ("2025Q1", "cir"), ("2025Q2", "cir"),
-               ("2025Q1", "nim"), ("2025Q1", "cor"), ("2023Q4", "roe"), ("2023Q4", "n20_0"), ("2024Q4", "n20_0")]
+               ("2025Q3", "cir"), ("2025Q1", "cor"), ("2023Q4", "roe"), ("2023Q4", "n20_0"), ("2024Q4", "n20_0")]
     for p, k in derived:
         n = q[p][k]
         assert n.get("src") and "выведено:" in (n.get("calc") or ""), f"{p}.{k}: нет вывода в calc"

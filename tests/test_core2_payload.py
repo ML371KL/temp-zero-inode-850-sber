@@ -50,7 +50,9 @@ def test_w1_fields_of_the_release(built):
     assert [(p["from"], p["to"]) for p in tr["pairs"]] == [tuple(k.split("_")) for k in rel.run.ctx.transmission.pairs]
     assert tr["pairs_range"] == list(rel.book.get("checks.transmission_pairs"))
     near = d["regimes"]["near_nim_shift"]
-    assert near[0]["period"] == rel.book.get("meta.first_period") and near[-1]["value"] == 0.0
+    # ряд — до первого квартала с нулём; у ближней калибровки перенесённой книги нуля до конца явного участка нет
+    assert near[0]["period"] == rel.book.get("meta.first_period")
+    assert near[-1]["value"] == 0.0 or near[-1]["period"] == rel.book.get("meta.last_period")
     assert all(r["value"] != 0.0 for r in near[:-1])
     assert d["dividends"]["policy"]["excess"]["ramp_years"] == rel.book.get("dividends.excess.ramp_years")
     assert {"n1_0", "n1_2"} <= set(d["capital"]["titles"])

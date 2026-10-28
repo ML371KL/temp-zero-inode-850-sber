@@ -18,7 +18,14 @@
   "nss_H_sigma0_0_engine_pct": 6.8415,
   "nss_H_sigma0_0_mgmt_pct": 7.25,
   "bridge_nim_mgmt_minus_engine_pp": 0.412,
-  "book_center_mgmt": 0.06
+  "book_center_mgmt": 0.057238
+ },
+ "moved_by_reanchor": {
+  "anchor_period": "2026Q3",
+  "sheet_anchor": "2026Q2",
+  "nii.transmission.target": 0.047867,
+  "nii.nim_lt_target_mgmt": 0.057238,
+  "note": "цели — запись суждения листа на структуре нового якоря при прежних скалярах пути (режим keep)"
  },
  "a_n3": {
   "target": 0.06,

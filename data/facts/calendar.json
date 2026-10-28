@@ -1,5 +1,5 @@
 {
- "as_of": "2026-10-01",
+ "as_of": "2026-10-28",
  "horizon": "не меньше 12 месяцев от as_of: отчёты — по октябрь 2027 г., заседания ЦБ — весь 2027 г.; МСФО, закрывающее открытый квартал книги, не удаляется, пока книга его не закроет",
  "note": "confirmed: true — дата объявлена (календарь ЦБ, календарь эмитента в T-Invest, решение ГОСА); false — оценка по прецеденту с окном earliest–latest (прецедент — в note: только даты не позже as_of; объявленная, но ещё не наступившая дата — отдельно, с источником). Файл ведётся вручную (ops/tools/build_facts.py его не пишет); источники — sources (sha256 файлов в папке передачи; src — первые 16 знаков).",
  "sources": [
@@ -30,11 +30,11 @@
   },
   {
    "key": "ras_releases",
-   "title": "Этап 1: даты месячных релизов РСБУ Сбера 2023-01…2026-08 (лист ras_release_monthly_wide)",
+   "title": "Этап 1: даты месячных релизов РСБУ Сбера 2023-01…2026-09 (лист ras_release_monthly_wide)",
    "url": null,
-   "accessed": "2026-09-30",
+   "accessed": "2026-10-28",
    "file": "stage1/ras/ras_release_monthly_wide.csv",
-   "sha256": "1e14ee0726e33198813713ba3816e3463eee5cbe3ee58911d5a56d0f861ac946"
+   "sha256": "fa06c62a02bffb0702212874c24cef3c220840c489ba6a5ffc85024b64ba2206"
   },
   {
    "key": "ifx_strategy",
@@ -67,6 +67,22 @@
    "accessed": "2026-10-01",
    "file": "stage1/market/shares_dividends/dividends_public.csv",
    "sha256": "fda92ec5df2d3ac42197dee34bed5270969ac858a1a5700c45dd686f916e5292"
+  },
+  {
+   "key": "ifx_investor_day",
+   "title": "Интерфакс 22.10.2026: «Сбербанк представит на дне инвестора 12 ноября стратегию на 2027-29 гг.»",
+   "url": "https://www.interfax.ru/business/1124284",
+   "accessed": "2026-10-28",
+   "file": "stage2/reports/facts-sources/interfax_1124284_20261022.html",
+   "sha256": "84ca7daf2515a843346e04a6c25633e031d15c2729d5b1d293259acbe3e4e8f8"
+  },
+  {
+   "key": "ifx_div_policy_board",
+   "title": "Интерфакс 28.10.2026: «Набсовет Сбера рассмотрит 10 ноября вопрос о дивидендной политике на 2027-29 гг.»",
+   "url": "https://www.interfax.ru/business/1125464",
+   "accessed": "2026-10-28",
+   "file": "stage2/reports/facts-sources/interfax_1125464_20261028.html",
+   "sha256": "af8b83b67cbdafcc80ba6768666017237a01424fc8caa8308f50d6c1ae04e82b"
   }
  ],
  "events": [
@@ -78,7 +94,7 @@
    "covers": "2026M09",
    "confirmed": true,
    "precision": "day",
-   "src": "календарь отчётов эмитента у брокера (доступ 2026-09-30), sha256 e6980ad6bb0f82fa; stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "календарь отчётов эмитента у брокера (доступ 2026-09-30), sha256 e6980ad6bb0f82fa; stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "дата из календаря эмитента в T-Invest (отчёт за 3-й квартал 2026 г.; около 10-го числа месяца выходит релиз РСБУ); прецедент: 10.10.2023, 09.10.2024, 09.10.2025"
   },
   {
@@ -113,21 +129,19 @@
    "precision": "window",
    "earliest": "2026-11-10",
    "latest": "2026-11-13",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "оценка по прецеденту: 10.11.2023, 11.11.2024, 12.11.2025"
   },
   {
    "id": "investor-day-2026",
    "kind": "investor_day",
-   "date": "2026-11-25",
+   "date": "2026-11-12",
    "title": "День инвестора: стратегия 2027–2029 и новая дивидендная политика",
    "covers": null,
-   "confirmed": false,
-   "precision": "window",
-   "earliest": "2026-11-01",
-   "latest": "2026-11-30",
-   "src": "https://www.interfax.ru/business/1086714 (доступ 2026-10-01), sha256 9292752894a3e295; https://www.interfax.ru/business/1106408 (доступ 2026-10-01), sha256 65e3ea9142a19f50",
-   "note": "объявлен месяц — ноябрь 2026 г. (финансовый директор на звонке 29.04.2026), день на 01.10.2026 не объявлен; прецеденты Дня инвестора: 06.12.2023, 10.12.2025; дата — оценка; новая дивидендная политика войдёт новым фактом и новой версией книги"
+   "confirmed": true,
+   "precision": "day",
+   "src": "https://www.interfax.ru/business/1124284 (доступ 2026-10-28), sha256 84ca7daf2515a843; https://www.interfax.ru/business/1125464 (доступ 2026-10-28), sha256 af8b83b67cbdafcc",
+   "note": "дата объявлена банком 22.10.2026; Наблюдательный совет рассмотрит дивидендную политику на 2027–2029 годы 10.11.2026, банк представит её на Дне инвестора (финансовый директор на звонке 28.10.2026); новая дивидендная политика войдёт новым фактом и новой версией книги"
   },
   {
    "id": "ras-2026M11",
@@ -139,7 +153,7 @@
    "precision": "window",
    "earliest": "2026-12-08",
    "latest": "2026-12-11",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "оценка по прецеденту: 11.12.2023, 10.12.2024, 09.12.2025"
   },
   {
@@ -163,7 +177,7 @@
    "precision": "window",
    "earliest": "2027-01-15",
    "latest": "2027-01-21",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "оценка по прецеденту: 17.01.2024, 17.01.2025, 20.01.2026 (декабрь — после праздников)"
   },
   {
@@ -176,7 +190,7 @@
    "precision": "window",
    "earliest": "2027-02-09",
    "latest": "2027-02-12",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "оценка по прецеденту: 09.02.2024, 11.02.2025, 10.02.2026"
   },
   {
@@ -213,7 +227,7 @@
    "precision": "window",
    "earliest": "2027-03-09",
    "latest": "2027-03-12",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "оценка по прецеденту: 12.03.2024, 11.03.2025, 11.03.2026"
   },
   {
@@ -237,7 +251,7 @@
    "precision": "window",
    "earliest": "2027-04-08",
    "latest": "2027-04-13",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "оценка по прецеденту: 09.04.2024, 09.04.2025, 09.04.2026"
   },
   {
@@ -274,7 +288,7 @@
    "precision": "window",
    "earliest": "2027-05-12",
    "latest": "2027-05-17",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "оценка по прецеденту: 14.05.2024, 15.05.2025, 13.05.2026 (после майских праздников)"
   },
   {
@@ -287,7 +301,7 @@
    "precision": "window",
    "earliest": "2027-06-08",
    "latest": "2027-06-11",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "оценка по прецеденту: 11.06.2024, 10.06.2025, 09.06.2026"
   },
   {
@@ -324,7 +338,7 @@
    "precision": "window",
    "earliest": "2027-07-08",
    "latest": "2027-07-13",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "оценка по прецеденту: 09.07.2024, 09.07.2025, 09.07.2026"
   },
   {
@@ -374,7 +388,7 @@
    "precision": "window",
    "earliest": "2027-08-09",
    "latest": "2027-08-12",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "оценка по прецеденту: 09.08.2024, 11.08.2025, 11.08.2026"
   },
   {
@@ -387,7 +401,7 @@
    "precision": "window",
    "earliest": "2027-09-08",
    "latest": "2027-09-10",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
    "note": "оценка по прецеденту: 10.09.2024, 09.09.2025, 09.09.2026"
   },
   {
@@ -411,8 +425,8 @@
    "precision": "window",
    "earliest": "2027-10-07",
    "latest": "2027-10-12",
-   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-09-30), sha256 1e14ee0726e33198",
-   "note": "оценка по прецеденту: 09.10.2024, 09.10.2025; 09.10.2026 — дата из календаря эмитента (T-Invest), прецедентом станет после выхода релиза"
+   "src": "stage1/ras/ras_release_monthly_wide.csv (доступ 2026-10-28), sha256 fa06c62a02bffb07",
+   "note": "оценка по прецеденту: 09.10.2024, 09.10.2025, 09.10.2026"
   },
   {
    "id": "cbr-2027-10-22",
@@ -436,7 +450,7 @@
    "earliest": "2027-10-26",
    "latest": "2027-10-29",
    "src": "календарь отчётов эмитента у брокера (доступ 2026-09-30), sha256 e6980ad6bb0f82fa",
-   "note": "оценка по прецеденту: 28.10.2025; 28.10.2026 — дата из календаря эмитента (T-Invest), прецедентом станет после выхода отчёта"
+   "note": "оценка по прецеденту: 28.10.2025, 28.10.2026"
   },
   {
    "id": "cbr-2027-12-17",

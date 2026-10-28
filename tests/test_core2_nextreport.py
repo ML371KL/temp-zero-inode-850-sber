@@ -91,7 +91,12 @@ def test_local_slope_at_the_neutral_value_and_the_reaction_span(report):
         local, edge = nr["slope"][f"rub_per_01pp_{kind}"], edge_slope(nr[f"{kind}_table"], kind)
         assert nr["slope"][f"at_{kind}"] == "neutral" and nr["neutral"][kind]["value"] is not None
         # прогоны полосы хранятся с точностью 0,1 ₽ — на столько разность двух медиан и может «дрожать»
-        assert local * edge > 0 and abs(local) >= abs(edge) - U.DRAW_STEP, (kind, local, edge)
+        assert local * edge > 0, (kind, local, edge)
+        same = {round(r[f"{kind}_mgmt"], 12) for r in nr["expectation"]["by_regime"]}
+        if len(same) > 1:        # наблюдение различает режимы: реакция — ступень, на хвостах упирается в предел
+            assert abs(local) >= abs(edge) - U.DRAW_STEP, (kind, local, edge)
+        else:                    # ожидания режимов на квартал одни (ЧПМ 4К26 книги 1.4): режимы наблюдение не учит,
+            assert abs(local - edge) <= 0.1 * abs(edge) + U.DRAW_STEP, (kind, local, edge)   # реакция почти линейна
         d = [r["d_median"] for r in nr[f"{kind}_table"]]
         assert nr["reaction"][kind] == {"d_median_min": min(d), "d_median_max": max(d)}
         step = float(book.get(f"valuation.sensitivities.{kind}_pp"))

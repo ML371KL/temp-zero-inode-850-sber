@@ -1,19 +1,19 @@
 {
  "rule": {
   "definition": "шаг 2 правила центров: наибольший phi_split, при котором при sigma0_split книги гейт lt_spread_floor проходит во всех мирах и кредитная маржа стационара неотрицательна; округление вниз до 0,01",
-  "sigma0_split_book": 0.09,
+  "sigma0_split_book": 0.089584,
   "max_phi_split_by_world": {
    "N": 1.0,
    "H": 1.0,
-   "M": 0.0012
+   "M": 0.00119
   },
-  "max_phi_split_exact": 0.0012,
+  "max_phi_split_exact": 0.00119,
   "center": 0.0,
   "book": 0.0,
   "max_phi_split_with_margin_only": {
    "N": 1.0,
    "H": 1.0,
-   "M": 0.9155
+   "M": 0.9899
   }
  },
  "joint_region": {
@@ -32,11 +32,11 @@
  },
  "stationary": {
   "reference_world": "H",
-  "phi": 0.4791784877784801,
+  "phi": 0.4816217584689862,
   "phi_assets": 0.0,
-  "phi_liab": 0.4431850958489491,
-  "weight_assets_phi": 0.6743727034743947,
-  "weight_liabilities_phi": 0.7291420566184459,
+  "phi_liab": 0.4431851871983127,
+  "weight_assets_phi": 0.66369917655985,
+  "weight_liabilities_phi": 0.7212604882620727,
   "assets_phi": [
    "corp_loans",
    "mortgage",
@@ -48,21 +48,21 @@
    "corp_funds"
   ],
   "x_pp": {
-   "N": -2.853,
+   "N": -2.849,
    "H": 0.0,
-   "M": 5.808
+   "M": 5.817
   },
   "volume_residual_max": 3.469446951953614e-17,
-  "t_real": 0.06000000000000002,
-  "t_star": 0.06,
-  "cor_lt_engine": 0.015703,
+  "t_real": 0.047866999999999736,
+  "t_star": 0.047867,
+  "cor_lt_engine": 0.015521,
   "kappa": 0.05,
   "real_rate_lt": {
    "N": 0.0385,
    "H": 0.0474,
    "M": 0.0656
   },
-  "securities_share_of_liquid": 0.7597
+  "securities_share_of_liquid": 0.7202
  },
  "floors": {
   "corp_loans": 0.005,
@@ -72,28 +72,28 @@
  },
  "table": {
   "all_on_loans": {
-   "split": 0.09,
+   "split": 0.089584,
    "phi_split": 1.0,
-   "sigma0_assets": -0.0016244762488949482,
-   "sigma0_liab": -0.015191479890273788,
-   "phi": 0.4791784877784801,
-   "phi_assets": 0.4791784877784801,
+   "sigma0_assets": -0.0016244760778172614,
+   "sigma0_liab": -0.015191543060477871,
+   "phi": 0.4816217584689862,
+   "phi_assets": 0.4816217584689862,
    "phi_liab": 0.0,
    "nss": {
-    "N": 0.05084989956860826,
-    "H": 0.05616,
-    "M": 0.05624989956860824
+    "N": 0.048553552204653065,
+    "H": 0.053492000000000005,
+    "M": 0.05286158220465306
    },
    "lt_spread": {
     "corp_loans": {
-     "N": 0.017878,
+     "N": 0.017943,
      "H": 0.005036,
-     "M": -0.024626
+     "M": -0.024777
     },
     "mortgage": {
-     "N": 0.048173,
+     "N": 0.048253,
      "H": 0.032456,
-     "M": 0.00912
+     "M": 0.009001
     },
     "mortgage_sub": {
      "N": 0.025,
@@ -101,21 +101,21 @@
      "M": 0.025
     },
     "retail_loans": {
-     "N": 0.048173,
+     "N": 0.048253,
      "H": 0.032456,
-     "M": 0.00912
+     "M": 0.009001
     }
    },
    "loan_rate_lt_pct": {
     "corp_loans": {
      "N": 9.5,
      "H": 10.89,
-     "M": 14.12
+     "M": 14.1
     },
     "mortgage": {
-     "N": 13.28,
+     "N": 13.29,
      "H": 14.99,
-     "M": 17.52
+     "M": 17.51
     },
     "mortgage_sub": {
      "N": 10.5,
@@ -123,9 +123,9 @@
      "M": 19.5
     },
     "retail_loans": {
-     "N": 13.28,
+     "N": 13.29,
      "H": 14.99,
-     "M": 17.52
+     "M": 17.51
     }
    },
    "liability_cost_lt_pct": {
@@ -156,9 +156,9 @@
     "M": 0.0
    },
    "loan_margin_pp": {
-    "N": 3.166,
-    "H": 1.653,
-    "M": -0.203
+    "N": 3.398,
+    "H": 1.907,
+    "M": -0.024
    },
    "violations": {
     "N": [],
@@ -171,28 +171,28 @@
    }
   },
   "history_share": {
-   "split": 0.09,
+   "split": 0.089584,
    "phi_split": 0.32,
-   "sigma0_assets": -0.0016244762488949482,
-   "sigma0_liab": -0.015191479890273788,
-   "phi": 0.4791784877784801,
-   "phi_assets": 0.15333711608911363,
-   "phi_liab": 0.30136586517728536,
+   "sigma0_assets": -0.0016244760778172614,
+   "sigma0_liab": -0.015191543060477871,
+   "phi": 0.4816217584689862,
+   "phi_assets": 0.15411896271007558,
+   "phi_liab": 0.3013659272948526,
    "nss": {
-    "N": 0.050849899568608255,
-    "H": 0.05616,
-    "M": 0.056249899568608264
+    "N": 0.04855355220465307,
+    "H": 0.053492000000000005,
+    "M": 0.05286158220465302
    },
    "lt_spread": {
     "corp_loans": {
-     "N": 0.009145,
+     "N": 0.009166,
      "H": 0.005036,
-     "M": -0.004456
+     "M": -0.004504
     },
     "mortgage": {
-     "N": 0.037485,
+     "N": 0.037511,
      "H": 0.032456,
-     "M": 0.024988
+     "M": 0.02495
     },
     "mortgage_sub": {
      "N": 0.025,
@@ -200,21 +200,21 @@
      "M": 0.025
     },
     "retail_loans": {
-     "N": 0.037485,
+     "N": 0.037511,
      "H": 0.032456,
-     "M": 0.024988
+     "M": 0.02495
     }
    },
    "loan_rate_lt_pct": {
     "corp_loans": {
-     "N": 8.62,
+     "N": 8.63,
      "H": 10.89,
      "M": 16.13
     },
     "mortgage": {
      "N": 12.21,
      "H": 14.99,
-     "M": 19.11
+     "M": 19.1
     },
     "mortgage_sub": {
      "N": 10.5,
@@ -224,14 +224,14 @@
     "retail_loans": {
      "N": 12.21,
      "H": 14.99,
-     "M": 19.11
+     "M": 19.1
     }
    },
    "liability_cost_lt_pct": {
     "retail_current": {
      "N": 1.91,
      "H": 3.45,
-     "M": 6.96
+     "M": 6.97
     },
     "retail_term": {
      "N": 5.52,
@@ -250,14 +250,14 @@
     }
    },
    "liability_addon_pp": {
-    "N": -0.86,
+    "N": -0.859,
     "H": 0.0,
-    "M": 1.75
+    "M": 1.753
    },
    "loan_margin_pp": {
-    "N": 2.362,
-    "H": 1.653,
-    "M": 1.433
+    "N": 2.591,
+    "H": 1.907,
+    "M": 1.624
    },
    "violations": {
     "N": [],
@@ -268,17 +268,17 @@
    }
   },
   "axis_high": {
-   "split": 0.09,
+   "split": 0.089584,
    "phi_split": 0.001,
-   "sigma0_assets": -0.0016244762488949482,
-   "sigma0_liab": -0.015191479890273788,
-   "phi": 0.4791784877784801,
-   "phi_assets": 0.0004791784877784801,
-   "phi_liab": 0.4427419107531002,
+   "sigma0_assets": -0.0016244760778172614,
+   "sigma0_liab": -0.015191543060477871,
+   "phi": 0.4816217584689862,
+   "phi_assets": 0.0004816217584689862,
+   "phi_liab": 0.4427420020111144,
    "nss": {
-    "N": 0.05084989956860827,
-    "H": 0.05616,
-    "M": 0.05624989956860825
+    "N": 0.04855355220465306,
+    "H": 0.053492000000000005,
+    "M": 0.052861582204653035
    },
    "lt_spread": {
     "corp_loans": {
@@ -333,7 +333,7 @@
     "retail_term": {
      "N": 5.11,
      "H": 8.51,
-     "M": 16.64
+     "M": 16.65
     },
     "corp_funds": {
      "N": 4.43,
@@ -347,14 +347,14 @@
     }
    },
    "liability_addon_pp": {
-    "N": -1.263,
+    "N": -1.262,
     "H": 0.0,
-    "M": 2.572
+    "M": 2.576
    },
    "loan_margin_pp": {
-    "N": 1.986,
-    "H": 1.653,
-    "M": 2.2
+    "N": 2.212,
+    "H": 1.907,
+    "M": 2.397
    },
    "violations": {
     "N": [],
@@ -363,17 +363,17 @@
    }
   },
   "book": {
-   "split": 0.09,
+   "split": 0.089584,
    "phi_split": 0.0,
-   "sigma0_assets": -0.0016244762488949482,
-   "sigma0_liab": -0.015191479890273788,
-   "phi": 0.4791784877784801,
+   "sigma0_assets": -0.0016244760778172614,
+   "sigma0_liab": -0.015191543060477871,
+   "phi": 0.4816217584689862,
    "phi_assets": 0.0,
-   "phi_liab": 0.4431850958489491,
+   "phi_liab": 0.4431851871983127,
    "nss": {
-    "N": 0.05084989956860826,
-    "H": 0.05616,
-    "M": 0.056249899568608264
+    "N": 0.04855355220465307,
+    "H": 0.053492000000000005,
+    "M": 0.05286158220465305
    },
    "lt_spread": {
     "corp_loans": {
@@ -442,14 +442,14 @@
     }
    },
    "liability_addon_pp": {
-    "N": -1.265,
+    "N": -1.263,
     "H": 0.0,
-    "M": 2.574
+    "M": 2.578
    },
    "loan_margin_pp": {
-    "N": 1.984,
-    "H": 1.653,
-    "M": 2.202
+    "N": 2.211,
+    "H": 1.907,
+    "M": 2.399
    },
    "violations": {
     "N": [],
@@ -461,8 +461,8 @@
  "funds_cost_at_book": {
   "N": {
    "key_pct": 8.0,
-   "funds_cost_pct": 3.67,
-   "to_key": 0.459,
+   "funds_cost_pct": 3.7,
+   "to_key": 0.462,
    "by_book_pct": {
     "retail_current": 1.5,
     "retail_term": 5.11,
@@ -472,8 +472,8 @@
   },
   "H": {
    "key_pct": 10.5,
-   "funds_cost_pct": 6.56,
-   "to_key": 0.625,
+   "funds_cost_pct": 6.59,
+   "to_key": 0.628,
    "by_book_pct": {
     "retail_current": 3.45,
     "retail_term": 8.51,
@@ -483,8 +483,8 @@
   },
   "M": {
    "key_pct": 17.0,
-   "funds_cost_pct": 13.64,
-   "to_key": 0.802,
+   "funds_cost_pct": 13.68,
+   "to_key": 0.805,
    "by_book_pct": {
     "retail_current": 7.79,
     "retail_term": 16.65,
@@ -496,8 +496,8 @@
  "funds_cost_all_on_loans": {
   "N": {
    "key_pct": 8.0,
-   "funds_cost_pct": 4.93,
-   "to_key": 0.617,
+   "funds_cost_pct": 4.96,
+   "to_key": 0.62,
    "by_book_pct": {
     "retail_current": 2.77,
     "retail_term": 6.38,
@@ -507,8 +507,8 @@
   },
   "H": {
    "key_pct": 10.5,
-   "funds_cost_pct": 6.56,
-   "to_key": 0.625,
+   "funds_cost_pct": 6.59,
+   "to_key": 0.628,
    "by_book_pct": {
     "retail_current": 3.45,
     "retail_term": 8.51,
@@ -518,8 +518,8 @@
   },
   "M": {
    "key_pct": 17.0,
-   "funds_cost_pct": 11.06,
-   "to_key": 0.651,
+   "funds_cost_pct": 11.1,
+   "to_key": 0.653,
    "by_book_pct": {
     "retail_current": 5.21,
     "retail_term": 14.07,
@@ -532,103 +532,103 @@
   "quarters": 14,
   "from": "2023Q1",
   "to": "2026Q2",
-  "max_to_key": 0.589,
+  "max_to_key": 0.591,
   "max_at": "2026Q1",
   "anchor": {
    "quarter": "2026Q2",
    "key_pct": 14.618,
-   "funds_cost_pct": 8.43,
-   "to_key": 0.576
+   "funds_cost_pct": 8.44,
+   "to_key": 0.577
   },
   "key_16_plus": {
    "n": 8,
-   "to_key_min": 0.427,
-   "to_key_max": 0.582
+   "to_key_min": 0.434,
+   "to_key_max": 0.585
   },
   "rows": [
    {
     "quarter": "2023Q1",
     "key_pct": 7.5,
-    "funds_cost_pct": 3.15,
-    "to_key": 0.42
+    "funds_cost_pct": 3.17,
+    "to_key": 0.423
    },
    {
     "quarter": "2023Q2",
     "key_pct": 7.5,
-    "funds_cost_pct": 3.25,
-    "to_key": 0.433
+    "funds_cost_pct": 3.28,
+    "to_key": 0.437
    },
    {
     "quarter": "2023Q3",
     "key_pct": 10.179,
-    "funds_cost_pct": 3.82,
-    "to_key": 0.375
+    "funds_cost_pct": 3.88,
+    "to_key": 0.381
    },
    {
     "quarter": "2023Q4",
     "key_pct": 14.522,
-    "funds_cost_pct": 5.3,
-    "to_key": 0.365
+    "funds_cost_pct": 5.42,
+    "to_key": 0.373
    },
    {
     "quarter": "2024Q1",
     "key_pct": 16.0,
-    "funds_cost_pct": 6.83,
-    "to_key": 0.427
+    "funds_cost_pct": 6.94,
+    "to_key": 0.434
    },
    {
     "quarter": "2024Q2",
     "key_pct": 16.0,
-    "funds_cost_pct": 7.33,
-    "to_key": 0.458
+    "funds_cost_pct": 7.4,
+    "to_key": 0.463
    },
    {
     "quarter": "2024Q3",
     "key_pct": 17.554,
-    "funds_cost_pct": 8.38,
-    "to_key": 0.478
+    "funds_cost_pct": 8.45,
+    "to_key": 0.481
    },
    {
     "quarter": "2024Q4",
     "key_pct": 20.413,
-    "funds_cost_pct": 10.4,
-    "to_key": 0.51
+    "funds_cost_pct": 10.52,
+    "to_key": 0.516
    },
    {
     "quarter": "2025Q1",
     "key_pct": 21.0,
-    "funds_cost_pct": 11.7,
-    "to_key": 0.557
+    "funds_cost_pct": 11.79,
+    "to_key": 0.561
    },
    {
     "quarter": "2025Q2",
     "key_pct": 20.758,
-    "funds_cost_pct": 11.91,
-    "to_key": 0.574
+    "funds_cost_pct": 11.96,
+    "to_key": 0.576
    },
    {
     "quarter": "2025Q3",
     "key_pct": 18.413,
-    "funds_cost_pct": 10.64,
-    "to_key": 0.578
+    "funds_cost_pct": 10.67,
+    "to_key": 0.579
    },
    {
     "quarter": "2025Q4",
     "key_pct": 16.587,
-    "funds_cost_pct": 9.65,
-    "to_key": 0.582
+    "funds_cost_pct": 9.71,
+    "to_key": 0.585
    },
    {
     "quarter": "2026Q1",
     "key_pct": 15.706,
-    "funds_cost_pct": 9.26,
-    "to_key": 0.589
+    "funds_cost_pct": 9.28,
+    "to_key": 0.591
    },
    {
     "quarter": "2026Q2",
     "key_pct": 14.618,
-    "funds_cost_pct": 8.43,
-    "to_key": 0.576
+    "funds_cost_pct": 8.44,
+    "to_key": 0.577
    }
   ]
  },
@@ -648,20 +648,20 @@
    }
   },
   "omega": {
-   "corp_loans": 0.7109,
-   "mortgage": 0.1353,
-   "retail_loans": 0.1538
+   "corp_loans": 0.7177,
+   "mortgage": 0.1306,
+   "retail_loans": 0.1517
   },
-  "phi_assets_history": 0.1578,
-  "share": 0.3293,
+  "phi_assets_history": 0.1566,
+  "share": 0.3251,
   "share_2se": [
-   0.231,
-   0.428
+   0.228,
+   0.422
   ],
   "by_book": {
-   "corp_loans": 0.222,
-   "mortgage": 0.593,
-   "retail_loans": 0.593
+   "corp_loans": 0.221,
+   "mortgage": 0.59,
+   "retail_loans": 0.59
   }
  },
  "axis": {
@@ -678,11 +678,11 @@
     0.001
    ],
    [
-    0.09,
+    0.089584,
     0.0
    ],
    [
-    0.09,
+    0.089584,
     0.001
    ]
   ],
@@ -704,7 +704,7 @@
  },
  "center_at_sigma0_split_0_by_corporate_floor": {
   "0.0000": 0.22,
-  "0.0025": 0.14,
+  "0.0025": 0.13,
   "0.0050": 0.05
  },
  "book_mismatches": []

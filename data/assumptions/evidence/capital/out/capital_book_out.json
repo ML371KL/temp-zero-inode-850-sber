@@ -37,5 +37,18 @@
   "r2": 0.91,
   "n": 7
  },
+ "book_anchor": {
+  "anchor_period": "2026Q3",
+  "bv_common": 8854.6,
+  "basel_cet1": 7890.9,
+  "ded20_anchor": 963.7,
+  "moved_keys": {
+   "capital.n20.deductions_anchor": 963.7,
+   "capital.n20.gap_pp": -0.004664352502,
+   "capital.n11.deductions_anchor": 1192.927,
+   "capital.n11.gap_pp": -0.001650605403
+  },
+  "density_factor": 0.98004
+ },
  "book_mismatches": []
 }

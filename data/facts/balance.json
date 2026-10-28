@@ -1,156 +1,156 @@
 {
  "basis": "IFRS",
- "as_of": "2026-06-30",
+ "as_of": "2026-09-30",
  "unit": "млрд ₽",
  "sign": "остатки — величины (резерв — положительной величиной, в активах вычитается); капитал и фонды — со знаком отчёта",
  "loans_ac_gross": {
   "commercial": {
-   "v": 16266.3,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+   "v": 17051.7,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
   },
   "project": {
-   "v": 11931.7,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+   "v": 12848.6,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
   },
   "mortgage_market": {
-   "v": 6147.0,
-   "calc": "loans_ac_gross.mortgage − mortgage_subsidized = 13284,9 − 7137,9; разбиение ипотеки в отчётности не раскрыто"
+   "v": 6213.4,
+   "calc": "loans_ac_gross.mortgage − mortgage_subsidized = 13633,8 − 7420,4; разбиение ипотеки в отчётности не раскрыто"
   },
   "mortgage_subsidized": {
-   "v": 7137.9,
-   "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c",
-   "calc": "оценка calib-nii на 30.06.2026 (накопление поколений: выдачи ≈ прирост портфеля + погашения; доля льготной в выдачах — ЦБ, «Обзор финансовой стабильности», за квартал якоря — раскрытие банка; параметры — REPORT-nii этапа 1): 53,7 % ипотеки; при других темпах погашения — 51,8–61,1 %; расчётная оценка — в отчётности не раскрыто"
+   "v": 7420.4,
+   "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0",
+   "calc": "оценка calib-nii на 30.09.2026 (накопление поколений: выдачи ≈ прирост портфеля + погашения; доля льготной в выдачах — ЦБ, «Обзор финансовой стабильности», за квартал якоря — раскрытие банка; параметры — REPORT-nii этапа 1): 54,4 % ипотеки; при других темпах погашения — 52,4–61,9 %; расчётная оценка — в отчётности не раскрыто"
   },
   "consumer": {
-   "v": 3593.3,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+   "v": 3713.3,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
   },
   "cards": {
-   "v": 2567.7,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+   "v": 2610.8,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
   },
   "auto": {
-   "v": 829.2,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+   "v": 897.1,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
   },
   "mortgage": {
-   "v": 13284.9,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+   "v": 13633.8,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
   },
   "total": {
-   "v": 48473.1,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+   "v": 50755.3,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
   }
  },
  "loans_fvtpl": {
-  "v": 4107.0,
-  "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+  "v": 4251.8,
+  "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
  },
  "allowance_ac": {
-  "v": 2605.1,
-  "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
-  "calc": "величина резерва под ОКУ по кредитам АС: −(−2605,1); в отчёте — со знаком минус"
+  "v": 2643.6,
+  "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9",
+  "calc": "величина резерва под ОКУ по кредитам АС: −(−2643,6); в отчёте — со знаком минус"
  },
  "securities": {
   "fvoci_debt": {
-   "v": 5311.2,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b"
+   "v": 4832.2,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 41, sha256 bfb59dab3fe2cea9"
   },
   "fvoci_repo": {
-   "v": 1022.1,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 39, sha256 5b3a3de88ae6c96b"
+   "v": 1726.2,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 44, sha256 bfb59dab3fe2cea9"
   },
   "ac": {
-   "v": 2417.4,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b"
+   "v": 2434.7,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 41, sha256 bfb59dab3fe2cea9"
   },
   "ac_repo": {
-   "v": 664.7,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 39, sha256 5b3a3de88ae6c96b"
+   "v": 976.8,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 44, sha256 bfb59dab3fe2cea9"
   },
   "fvtpl_bonds": {
-   "v": 1830.7,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b; 2026H1_ifrs_interim_statements.pdf, с. 39, sha256 5b3a3de88ae6c96b",
-   "calc": "отнесённые к СС 890,9 + обязательно по СС 1167,9 − акции 227,6 − фонды 15,0 + заложенные по репо 14,5"
+   "v": 2052.2,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 41, sha256 bfb59dab3fe2cea9; 2026Q3_ifrs_interim_statements.pdf, с. 44, sha256 bfb59dab3fe2cea9",
+   "calc": "отнесённые к СС 1143,6 + обязательно по СС 1097,9 − акции 188,6 − фонды 16,0 + заложенные по репо 15,3"
   },
   "fvtpl_equity": {
-   "v": 242.6,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 37, sha256 5b3a3de88ae6c96b",
+   "v": 204.6,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 43, sha256 bfb59dab3fe2cea9",
    "calc": "акции + паи фондов по СС (в книгу securities не входят — в other_assets)"
   },
   "fvoci_equity": {
    "v": 0.2,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b"
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 41, sha256 bfb59dab3fe2cea9"
   },
   "debt_total": {
-   "v": 11246.1,
+   "v": 12022.1,
    "calc": "fvoci_debt + fvoci_repo + ac + ac_repo + fvtpl_bonds"
   }
  },
  "liquidity": {
   "cash": {
-   "v": 1698.6,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+   "v": 2787.9,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9"
   },
   "cbr": {
-   "v": 193.7,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b",
+   "v": 194.0,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9",
    "calc": "обязательные резервы на счетах в ЦБ (строка баланса)"
   },
   "due_from_banks": {
-   "v": 1665.9,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+   "v": 1688.1,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9"
   },
   "reverse_repo": {
    "v": null,
    "calc": "не раскрыто: обратное репо отдельно не раскрыто — внутри средств в банках (due_from_banks)"
   },
   "total": {
-   "v": 3558.2,
+   "v": 4670.0,
    "calc": "cash + cbr + due_from_banks"
   }
  },
  "other_assets": {
-  "v": 4362.2,
-  "calc": "total_assets − (кредиты АС валовые − резерв + кредиты по СС) − долговые бумаги − ликвидность = 69141,5 − 49975,0 − 11246,1 − 3558,2; = ОС 1395,6 + НМА 716,5 + прочие 1609,6 + ПФИ 191,4 + ОНА 114,4 + ассоциированные 91,9 + акции и фонды 242,8"
+  "v": 4478.2,
+  "calc": "total_assets − (кредиты АС валовые − резерв + кредиты по СС) − долговые бумаги − ликвидность = 73533,8 − 52363,5 − 12022,1 − 4670,0; = ОС 1400,7 + НМА 741,3 + прочие 1736,2 + ПФИ 166,4 + ОНА 127,0 + ассоциированные 101,8 + акции и фонды 204,8"
  },
  "total_assets": {
-  "v": 69141.5,
-  "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+  "v": 73533.8,
+  "src": "2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9"
  },
  "funds": {
   "retail_current": {
-   "v": 14309.0,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b"
+   "v": 14845.9,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 45, sha256 bfb59dab3fe2cea9"
   },
   "retail_term": {
-   "v": 20169.5,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b",
-   "calc": "срочные ФЛ 20160,6 + репо ФЛ 8,9"
+   "v": 20119.6,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 45, sha256 bfb59dab3fe2cea9",
+   "calc": "срочные ФЛ 20109,9 + репо ФЛ 9,7"
   },
   "corp_current": {
-   "v": 3139.8,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b",
-   "calc": "расчётные счета прочих ЮЛ 2855,1 + госорганизаций 284,7"
+   "v": 3378.8,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 45, sha256 bfb59dab3fe2cea9",
+   "calc": "расчётные счета прочих ЮЛ 3041,2 + госорганизаций 337,6"
   },
   "corp_term": {
-   "v": 11514.5,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b",
-   "calc": "срочные прочих ЮЛ 8501,9 + госорганизаций 2796,3 + репо 154,8 + 61,5"
+   "v": 13369.5,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 45, sha256 bfb59dab3fe2cea9",
+   "calc": "срочные прочих ЮЛ 9743,9 + госорганизаций 3424,5 + репо 165,9 + 35,2"
   }
  },
  "wholesale": {
   "banks": {
-   "v": 4803.6,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+   "v": 6546.0,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9"
   },
   "issued_debt": {
-   "v": 836.3,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+   "v": 964.5,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9"
   },
   "subordinated": {
-   "v": 518.0,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+   "v": 521.4,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9"
   },
   "repo_cbr": {
    "v": null,
@@ -158,76 +158,76 @@
   }
  },
  "other_liabilities": {
-  "v": 4478.0,
-  "calc": "total_liabilities − средства клиентов − опт − дивиденды к выплате = 60609,7 − 49132,8 − 6157,9 − 841,0; = ПФИ 275,5 + страховые 2511,1 + ОНО 48,1 + прочие 2484,3 − дивиденды 841,0"
+  "v": 4787.3,
+  "calc": "total_liabilities − средства клиентов − опт − дивиденды к выплате = 64533,0 − 51713,8 − 8031,9 − 0,0; = ПФИ 290,4 + страховые 2814,7 + ОНО 83,3 + прочие 1598,9 − дивиденды 0,0"
  },
  "dividends_payable": {
-  "v": 841.0,
-  "src": "2026H1_ifrs_interim_statements.pdf, с. 43, sha256 5b3a3de88ae6c96b",
-  "calc": "дивиденды за 2025 г., объявленные ГОСА 30.06.2026, 850,2 − на собственные акции 9,2 (обыкн. 7,9 + прив. 1,3); в составе прочих обязательств суммой не раскрыты; = списание из капитала 6М26 (−841,0); срок выплаты — 03.08.2026"
+  "v": 0.0,
+  "src": "2026Q3_ifrs_interim_statements.pdf, с. 48, sha256 bfb59dab3fe2cea9",
+  "calc": "дивиденды за 2025 г., объявленные ГОСА 30.06.2026, 850,2 − на собственные акции 9,2 (обыкн. 7,9 + прив. 1,3) = 841,0: срок выплаты 03.08.2026 — до даты якоря; обязательства на 30.09.2026 нет"
  },
  "dividends_payable_year": 2025,
  "total_liabilities": {
-  "v": 60609.7,
-  "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+  "v": 64533.0,
+  "src": "2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9"
  },
  "equity": {
   "total": {
-   "v": 8531.8,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   "v": 9000.8,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
   },
   "shareholders": {
-   "v": 8537.2,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   "v": 9004.6,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
   },
   "at1": {
    "v": 150.0,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
   },
   "nci": {
-   "v": -5.4,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   "v": -3.8,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
   },
   "bv_common": {
-   "v": 8387.2,
-   "calc": "equity.total − at1 − nci = 8531,8 − 150,0 − (−5,4)"
+   "v": 8854.6,
+   "calc": "equity.total − at1 − nci = 9000,8 − 150,0 − (−3,8)"
   },
   "share_capital": {
    "v": 87.7,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
   },
   "share_premium": {
    "v": 232.6,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
   },
   "treasury_cost": {
-   "v": -47.8,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   "v": -42.1,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
   },
   "fvoci_reserve": {
-   "v": -374.9,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 44, sha256 5b3a3de88ae6c96b",
+   "v": -424.8,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 49, sha256 bfb59dab3fe2cea9",
    "calc": "фонд переоценки FVOCI после налога (компонент прочих резервов)"
   },
   "other_reserves": {
-   "v": -228.5,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   "v": -281.5,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
   },
   "retained_earnings": {
-   "v": 8343.2,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+   "v": 8857.9,
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
   }
  },
  "prev_year_end": {
   "as_of": "2025-12-31",
   "loans_corporate": {
    "v": 31167.0,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9",
    "calc": "коммерческие 16518,4 + проектные 10987,5 + кредиты по СС 3661,1 — тот же состав, что книга corp_loans"
   },
   "loans_retail": {
    "v": 19204.1,
-   "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+   "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9",
    "calc": "ипотека + потребительские + карты + авто (валовые, АС) — книги mortgage + mortgage_sub + retail_loans"
   }
  },
@@ -505,7 +505,7 @@
    },
    "equity_shareholders": {
     "v": 7175.7,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
    },
    "bv_common": {
     "v": 7025.7,
@@ -601,7 +601,7 @@
    },
    "equity_shareholders": {
     "v": 7872.4,
-    "src": "ifrs_9M2025_statements_sber.pdf, с. 8, sha256 cf3ac9548d5ca9a1"
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
    },
    "bv_common": {
     "v": 7722.4,
@@ -620,20 +620,20 @@
    "date": "2025-12-31",
    "loans_ac_gross": {
     "v": 46710.0,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
    },
    "allowance_ac": {
     "v": 2398.4,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9",
     "calc": "величина резерва (в отчёте со знаком минус)"
    },
    "loans_fvtpl": {
     "v": 3661.1,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b"
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
    },
    "equity_shareholders": {
     "v": 8351.6,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b"
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
    },
    "bv_common": {
     "v": 8201.6,
@@ -641,7 +641,7 @@
    },
    "total_assets": {
     "v": 68814.5,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b"
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9"
    },
    "iea": {
     "v": 66907.7,
@@ -711,10 +711,42 @@
     "v": 67384.4,
     "calc": "кредиты АС валовые + по СС 52580,1 + долговые бумаги 11246,1 + ликвидность 3558,2; бумаги: бумаги 9787,6 + заложенные по репо 1701,3 − акции и фонды 242,8 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
    }
+  },
+  "2026Q3": {
+   "date": "2026-09-30",
+   "loans_ac_gross": {
+    "v": 50755.3,
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
+   },
+   "allowance_ac": {
+    "v": 2643.6,
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9",
+    "calc": "величина резерва (в отчёте со знаком минус)"
+   },
+   "loans_fvtpl": {
+    "v": 4251.8,
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9"
+   },
+   "equity_shareholders": {
+    "v": 9004.6,
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9"
+   },
+   "bv_common": {
+    "v": 8854.6,
+    "calc": "капитал акционеров 9004,6 − AT1 150,0"
+   },
+   "total_assets": {
+    "v": 73533.8,
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9"
+   },
+   "iea": {
+    "v": 71699.2,
+    "calc": "кредиты АС валовые + по СС 55007,1 + долговые бумаги 12022,1 + ликвидность 4670,0; бумаги: бумаги 9508,6 + заложенные по репо 2718,3 − акции и фонды 204,8 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
+   }
   }
  },
  "iea": {
-  "v": 67384.4,
+  "v": 71699.2,
   "calc": "loans_ac_gross.total + loans_fvtpl + securities.debt_total + liquidity.total (процентные активы движка)"
  }
 }

@@ -1,6 +1,6 @@
 {
  "basis": "mgmt",
- "as_of": "2026-06-30",
+ "as_of": "2026-09-30",
  "unit": "доли (проценты презентаций / 100), годовые за квартал; кредиты и резервы — млрд ₽",
  "note": "управленческий базис презентаций МСФО; в движок — только через bridge_mgmt_ifrs (MODEL §4.6)",
  "quarters": {
@@ -1507,8 +1507,7 @@
   "2025Q1": {
    "nim": {
     "v": 0.0611,
-    "src": "2026Q1_ifrs_presentation.pdf, с. 6, sha256 6002b43d7cbea77f",
-    "calc": "выведено: 6,34 − 0,23 = 6,11 (подпись «+0,23 пп г/г») — на странице напечатаны значение сравнимого периода и изменение к нему, самого числа нет"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cor": {
     "v": 0.0124,
@@ -1533,12 +1532,12 @@
     "src": "2025Q1_ifrs_presentation.pdf, с. 4, sha256 22f8cca1c7e27538"
    },
    "cost_of_funding": {
-    "v": 0.13,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.1295,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "asset_yield": {
-    "v": 0.173,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.1727,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cost_retail_funds": {
     "v": 0.11,
@@ -1571,8 +1570,8 @@
   },
   "2025Q2": {
    "nim": {
-    "v": 0.061,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.0609,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cor": {
     "v": 0.0171,
@@ -1597,11 +1596,11 @@
    },
    "cost_of_funding": {
     "v": 0.129,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "asset_yield": {
-    "v": 0.171,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.1708,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cost_retail_funds": {
     "v": 0.118,
@@ -1634,8 +1633,8 @@
   },
   "2025Q3": {
    "nim": {
-    "v": 0.062,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.0617,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cor": {
     "v": 0.0142,
@@ -1643,35 +1642,36 @@
    },
    "cor_corporate": {
     "v": 0.01,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 9, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 9, sha256 a0429c1af753efc3"
    },
    "cor_retail": {
     "v": 0.021,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 11, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 11, sha256 a0429c1af753efc3"
    },
    "cir": {
     "v": 0.287,
-    "src": "2025Q3_ifrs_presentation.pdf, с. 19, sha256 00d0fc066a3a630c"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 18, sha256 a0429c1af753efc3",
+    "calc": "выведено: 29,4 − 0,7 = 28,7 — на странице напечатаны значение сравнимого периода и изменение к нему, самого числа нет"
    },
    "roe": {
     "v": 0.237,
     "src": "2025Q3_ifrs_presentation.pdf, с. 4, sha256 00d0fc066a3a630c"
    },
    "cost_of_funding": {
-    "v": 0.117,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.1166,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "asset_yield": {
-    "v": 0.161,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.1609,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cost_retail_funds": {
     "v": 0.108,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 14, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 14, sha256 a0429c1af753efc3"
    },
    "cost_corp_funds": {
     "v": 0.115,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 15, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 15, sha256 a0429c1af753efc3"
    },
    "n20_0": {
     "v": 0.134,
@@ -1697,19 +1697,19 @@
   "2025Q4": {
    "nim": {
     "v": 0.0646,
-    "src": "2025Q4_ifrs_press_release.pdf, с. 3, sha256 9fcc844f65e099c2"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cor": {
     "v": 0.009,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 12, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 12, sha256 a0429c1af753efc3"
    },
    "cor_corporate": {
     "v": 0.003,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 9, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 9, sha256 a0429c1af753efc3"
    },
    "cor_retail": {
     "v": 0.018,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 11, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 11, sha256 a0429c1af753efc3"
    },
    "cir": {
     "v": 0.37,
@@ -1720,20 +1720,20 @@
     "src": "2025Q4_ifrs_press_release.pdf, с. 3, sha256 9fcc844f65e099c2"
    },
    "cost_of_funding": {
-    "v": 0.105,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.1054,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "asset_yield": {
-    "v": 0.155,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.1551,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cost_retail_funds": {
     "v": 0.095,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 14, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 14, sha256 a0429c1af753efc3"
    },
    "cost_corp_funds": {
     "v": 0.115,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 15, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 15, sha256 a0429c1af753efc3"
    },
    "n20_0": {
     "v": 0.137,
@@ -1741,11 +1741,11 @@
    },
    "loans_corporate": {
     "v": 31164.0,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 9, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 9, sha256 a0429c1af753efc3"
    },
    "loans_retail": {
     "v": 19207.0,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 11, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 11, sha256 a0429c1af753efc3"
    },
    "provisions_credit": {
     "v": 106.9,
@@ -1759,7 +1759,7 @@
   "2026Q1": {
    "nim": {
     "v": 0.0634,
-    "src": "2026Q1_ifrs_presentation.pdf, с. 6, sha256 6002b43d7cbea77f"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cor": {
     "v": 0.0129,
@@ -1767,11 +1767,11 @@
    },
    "cor_corporate": {
     "v": 0.003,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 9, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 9, sha256 a0429c1af753efc3"
    },
    "cor_retail": {
     "v": 0.029,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 11, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 11, sha256 a0429c1af753efc3"
    },
    "cir": {
     "v": 0.267,
@@ -1782,20 +1782,20 @@
     "src": "2026Q1_ifrs_presentation.pdf, с. 6, sha256 6002b43d7cbea77f"
    },
    "cost_of_funding": {
-    "v": 0.102,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.1016,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "asset_yield": {
-    "v": 0.15,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.1498,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cost_retail_funds": {
     "v": 0.093,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 14, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 14, sha256 a0429c1af753efc3"
    },
    "cost_corp_funds": {
     "v": 0.102,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 15, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 15, sha256 a0429c1af753efc3"
    },
    "n20_0": {
     "v": 0.144,
@@ -1803,15 +1803,15 @@
    },
    "loans_corporate": {
     "v": 31879.0,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 9, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 9, sha256 a0429c1af753efc3"
    },
    "loans_retail": {
     "v": 19687.0,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 11, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 11, sha256 a0429c1af753efc3"
    },
    "provisions_credit": {
     "v": 162.0,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 12, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 12, sha256 a0429c1af753efc3"
    },
    "loans_mgmt": {
     "v": 51566.0,
@@ -1820,20 +1820,20 @@
   },
   "2026Q2": {
    "nim": {
-    "v": 0.067,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 6, sha256 d17d36167137507e"
+    "v": 0.0669,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cor": {
     "v": 0.01,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 12, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 12, sha256 a0429c1af753efc3"
    },
    "cor_corporate": {
     "v": 0.009,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 9, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 9, sha256 a0429c1af753efc3"
    },
    "cor_retail": {
     "v": 0.013,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 11, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 11, sha256 a0429c1af753efc3"
    },
    "cir": {
     "v": 0.291,
@@ -1844,20 +1844,20 @@
     "src": "2026Q2_ifrs_presentation.pdf, с. 6, sha256 d17d36167137507e"
    },
    "cost_of_funding": {
-    "v": 0.097,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.0971,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "asset_yield": {
-    "v": 0.147,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 8, sha256 d17d36167137507e"
+    "v": 0.1473,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
    },
    "cost_retail_funds": {
     "v": 0.088,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 14, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 14, sha256 a0429c1af753efc3"
    },
    "cost_corp_funds": {
     "v": 0.09,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 15, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 15, sha256 a0429c1af753efc3"
    },
    "n20_0": {
     "v": 0.151,
@@ -1865,18 +1865,80 @@
    },
    "loans_corporate": {
     "v": 32304.0,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 9, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 9, sha256 a0429c1af753efc3"
    },
    "loans_retail": {
     "v": 20276.0,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 11, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 11, sha256 a0429c1af753efc3"
    },
    "provisions_credit": {
     "v": 136.0,
-    "src": "2026Q2_ifrs_presentation.pdf, с. 12, sha256 d17d36167137507e"
+    "src": "2026Q3_ifrs_presentation.pdf, с. 12, sha256 a0429c1af753efc3"
    },
    "loans_mgmt": {
     "v": 52580.0,
+    "calc": "loans_corporate + loans_retail"
+   }
+  },
+  "2026Q3": {
+   "nim": {
+    "v": 0.0665,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
+   },
+   "cor": {
+    "v": 0.011,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 12, sha256 a0429c1af753efc3"
+   },
+   "cor_corporate": {
+    "v": 0.007,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 9, sha256 a0429c1af753efc3"
+   },
+   "cor_retail": {
+    "v": 0.017,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 11, sha256 a0429c1af753efc3"
+   },
+   "cir": {
+    "v": 0.294,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 18, sha256 a0429c1af753efc3"
+   },
+   "roe": {
+    "v": 0.235,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 6, sha256 a0429c1af753efc3"
+   },
+   "cost_of_funding": {
+    "v": 0.095,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
+   },
+   "asset_yield": {
+    "v": 0.1452,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 8, sha256 a0429c1af753efc3"
+   },
+   "cost_retail_funds": {
+    "v": 0.082,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 14, sha256 a0429c1af753efc3"
+   },
+   "cost_corp_funds": {
+    "v": 0.092,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 15, sha256 a0429c1af753efc3"
+   },
+   "n20_0": {
+    "v": 0.137,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 21, sha256 a0429c1af753efc3"
+   },
+   "loans_corporate": {
+    "v": 34151.0,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 9, sha256 a0429c1af753efc3"
+   },
+   "loans_retail": {
+    "v": 20856.0,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 11, sha256 a0429c1af753efc3"
+   },
+   "provisions_credit": {
+    "v": 145.0,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 12, sha256 a0429c1af753efc3"
+   },
+   "loans_mgmt": {
+    "v": 55007.0,
     "calc": "loans_corporate + loans_retail"
    }
   }

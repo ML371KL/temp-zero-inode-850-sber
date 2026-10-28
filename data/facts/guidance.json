@@ -1,40 +1,39 @@
 {
  "basis": "mgmt",
  "year": 2026,
- "as_of": "2026-07-29",
+ "as_of": "2026-10-28",
  "unit": "доли; диапазон — [мин, макс]; cor_max — верхняя граница; tol — допуск точечного значения (половина единицы последнего разряда числа в презентации)",
  "note": "гайденс дан в управленческих метриках; scope: group — цель банка, sector — прогноз сектора (рост кредитов; relation — отношение банка к нему: ЮЛ «в соответствии с сектором», ФЛ «лучше сектора»)",
  "items": {
   "roe": {
    "v": 0.22,
-   "src": "2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e",
+   "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
    "calc": "«22%» → доли",
    "kind": "point",
    "text": "22%",
-   "date": "2026-07-29",
-   "event": "МСФО 2К26",
+   "date": "2026-10-28",
+   "event": "МСФО 3К26",
    "tol": 0.005,
    "scope": "group"
   },
   "nim": {
    "v": 0.062,
-   "src": "2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e",
-   "calc": "«~6.2%» → доли",
-   "kind": "point",
-   "text": "~6.2%",
-   "date": "2026-07-29",
-   "event": "МСФО 2К26",
-   "tol": 0.0005,
+   "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
+   "calc": "«>6.2%» → доли",
+   "kind": "min",
+   "text": ">6.2%",
+   "date": "2026-10-28",
+   "event": "МСФО 3К26",
    "scope": "group"
   },
   "cor_max": {
    "v": 0.014,
-   "src": "2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e",
+   "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
    "calc": "«<1.4%» → доли",
    "kind": "max",
    "text": "<1.4%",
-   "date": "2026-07-29",
-   "event": "МСФО 2К26",
+   "date": "2026-10-28",
+   "event": "МСФО 3К26",
    "scope": "group"
   },
   "cir": {
@@ -42,33 +41,33 @@
     0.3,
     0.32
    ],
-   "src": "2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e",
+   "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
    "calc": "«~30-32%» → доли",
    "kind": "range",
    "text": "~30-32%",
-   "date": "2026-07-29",
-   "event": "МСФО 2К26",
+   "date": "2026-10-28",
+   "event": "МСФО 3К26",
    "scope": "group"
   },
   "fee_growth": {
    "v": 0.0,
-   "src": "2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e",
+   "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
    "calc": "«~0%» → доли",
    "kind": "point",
    "text": "~0%",
-   "date": "2026-07-29",
-   "event": "МСФО 2К26",
+   "date": "2026-10-28",
+   "event": "МСФО 3К26",
    "tol": 0.005,
    "scope": "group"
   },
   "n20_0": {
    "v": 0.133,
-   "src": "2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e",
+   "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
    "calc": "«13.3%» → доли",
    "kind": "min",
    "text": "13.3%",
-   "date": "2026-07-29",
-   "event": "МСФО 2К26",
+   "date": "2026-10-28",
+   "event": "МСФО 3К26",
    "scope": "group"
   },
   "loan_growth": {
@@ -77,30 +76,30 @@
      0.08,
      0.1
     ],
-    "src": "2026Q2_ifrs_presentation.pdf, с. 23, sha256 d17d36167137507e",
+    "src": "2026Q3_ifrs_presentation.pdf, с. 23, sha256 a0429c1af753efc3",
     "calc": "«+8-10%» → доли",
     "kind": "range",
     "text": "+8-10%",
-    "date": "2026-07-29",
-    "event": "МСФО 2К26",
+    "date": "2026-10-28",
+    "event": "МСФО 3К26",
     "scope": "sector",
     "relation": "in_line",
-    "scope_note": "сектор; Сбер — в соответствии с сектором (без изменений)"
+    "scope_note": "сектор без изменений; Сбер — в соответствии с сектором (без изменений)"
    },
    "retail": {
     "v": [
      0.05,
      0.08
     ],
-    "src": "2026Q2_ifrs_presentation.pdf, с. 23, sha256 d17d36167137507e",
+    "src": "2026Q3_ifrs_presentation.pdf, с. 23, sha256 a0429c1af753efc3",
     "calc": "«+5-8%» → доли",
     "kind": "range",
     "text": "+5-8%",
-    "date": "2026-07-29",
-    "event": "МСФО 2К26",
+    "date": "2026-10-28",
+    "event": "МСФО 3К26",
     "scope": "sector",
     "relation": "above",
-    "scope_note": "сектор без изменений к 29.04.2026; Сбер — лучше сектора"
+    "scope_note": "сектор без изменений; Сбер — лучше сектора (без изменений)"
    }
   }
  },
@@ -500,6 +499,103 @@
     "calc": "«22%» → доли"
    },
    "event": "МСФО 2К26",
+   "note": "без изменений"
+  },
+  {
+   "date": "2026-10-28",
+   "key": "cir",
+   "value": {
+    "v": [
+     0.3,
+     0.32
+    ],
+    "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
+    "calc": "«~30-32%» → доли"
+   },
+   "event": "МСФО 3К26",
+   "note": "без изменений"
+  },
+  {
+   "date": "2026-10-28",
+   "key": "cor_max",
+   "value": {
+    "v": 0.014,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
+    "calc": "«<1.4%» → доли"
+   },
+   "event": "МСФО 3К26",
+   "note": "без изменений"
+  },
+  {
+   "date": "2026-10-28",
+   "key": "fee_growth",
+   "value": {
+    "v": 0.0,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
+    "calc": "«~0%» → доли"
+   },
+   "event": "МСФО 3К26",
+   "note": "без изменений"
+  },
+  {
+   "date": "2026-10-28",
+   "key": "loan_growth.corporate",
+   "value": {
+    "v": [
+     0.08,
+     0.1
+    ],
+    "src": "2026Q3_ifrs_presentation.pdf, с. 23, sha256 a0429c1af753efc3",
+    "calc": "«+8-10%» → доли"
+   },
+   "event": "МСФО 3К26",
+   "note": "сектор без изменений; Сбер — в соответствии с сектором (без изменений)"
+  },
+  {
+   "date": "2026-10-28",
+   "key": "loan_growth.retail",
+   "value": {
+    "v": [
+     0.05,
+     0.08
+    ],
+    "src": "2026Q3_ifrs_presentation.pdf, с. 23, sha256 a0429c1af753efc3",
+    "calc": "«+5-8%» → доли"
+   },
+   "event": "МСФО 3К26",
+   "note": "сектор без изменений; Сбер — лучше сектора (без изменений)"
+  },
+  {
+   "date": "2026-10-28",
+   "key": "n20_0",
+   "value": {
+    "v": 0.133,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
+    "calc": "«13.3%» → доли"
+   },
+   "event": "МСФО 3К26",
+   "note": "без изменений"
+  },
+  {
+   "date": "2026-10-28",
+   "key": "nim",
+   "value": {
+    "v": 0.062,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
+    "calc": "«>6.2%» → доли"
+   },
+   "event": "МСФО 3К26",
+   "note": "пересмотр вверх: нижняя граница"
+  },
+  {
+   "date": "2026-10-28",
+   "key": "roe",
+   "value": {
+    "v": 0.22,
+    "src": "2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3",
+    "calc": "«22%» → доли"
+   },
+   "event": "МСФО 3К26",
    "note": "без изменений"
   }
  ]

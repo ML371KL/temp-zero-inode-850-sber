@@ -1,8 +1,8 @@
 {
  "basis": "IFRS",
- "as_of": "2026-06-30",
- "period": "2026Q2",
- "note": "якорь — последний отчётный квартал МСФО группы (промежуточная отчётность 6М26); documents — реестр всех документов, на которые ссылаются узлы фактов (sha256 полностью; в src — первые 16 знаков); file — путь в папке передачи (BANK_HANDOFF_DIR)",
+ "as_of": "2026-09-30",
+ "period": "2026Q3",
+ "note": "якорь — последний отчётный квартал МСФО группы (промежуточная отчётность 9М26); documents — реестр всех документов, на которые ссылаются узлы фактов (sha256 полностью; в src — первые 16 знаков); file — путь в папке передачи (BANK_HANDOFF_DIR)",
  "documents": [
   {
    "key": "2019Q4_ifrs_presentation",
@@ -166,6 +166,13 @@
    "title": "Пресс-релиз РПБУ 3М2026"
   },
   {
+   "key": "2026M09_ras_press_release",
+   "file": "research/primary/2026M09_ras_press_release.pdf",
+   "sha256": "3a10a6fe90a6ea4484ee28e81f7dff74e57115fda97b053a62816347e1ba133e",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/2026_rsbu/year/ras_for_9months2026_sz8ylceq_ru.pdf",
+   "title": "Пресс-релиз РПБУ 9М2026 (октябрь 2026)"
+  },
+  {
    "key": "2026Q1_ifrs_presentation",
    "file": "research/primary/2026Q1_ifrs_presentation.pdf",
    "sha256": "6002b43d7cbea77f4841cc63ffee346f4f9ff6d0e60d44cfa9a802b942277261",
@@ -178,6 +185,20 @@
    "sha256": "d17d36167137507e2583a9e0b6268b03133fca6399feb2b576e4960bff0ffc1a",
    "url": "https://www.sberbank.com/common/img/uploaded/files/info/presentation_q2_9lwfjy1s_2026.pdf",
    "title": "Презентация МСФО 2К26/6М26 (29.07.2026)"
+  },
+  {
+   "key": "2026Q3_ifrs_interim_statements",
+   "file": "research/primary/2026Q3_ifrs_interim_statements.pdf",
+   "sha256": "bfb59dab3fe2cea96c2c4a6a91395f8f9686e4b91c7bea70e809b4e43be0fc2f",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/reporting_3q_lpwrfi14_2026.pdf",
+   "title": "Промежуточная сокращённая консолидированная отчётность МСФО 9М26 (с примечаниями)"
+  },
+  {
+   "key": "2026Q3_ifrs_presentation",
+   "file": "research/primary/2026Q3_ifrs_presentation.pdf",
+   "sha256": "a0429c1af753efc3ec076ebebdb2ea56b204d975d8d07d11e9e5c7b38c039bec",
+   "url": "https://www.sberbank.com/common/img/uploaded/files/info/presentation_q3_1qac7onv_2026.pdf",
+   "title": "Презентация МСФО 3К26/9М26 (28.10.2026)"
   },
   {
    "key": "FY2022_ifrs_presentation",
@@ -217,7 +238,7 @@
   {
    "key": "calib_nii_anchor_proposal",
    "file": "stage1/calib/nii/data/nii_books_anchor_proposal.json",
-   "sha256": "1351a13f2c5bf83c80e432e38487a0794c3c6ce9d966bc942e5bac156431ab84",
+   "sha256": "77890d79129ad4f0813a75e3b71a23c960a050bfb060bff8e9f7dae1db95326a",
    "url": null,
    "title": "calib-nii: книги ЧПД на якоре (предложение этапа 1)"
   },
@@ -313,6 +334,13 @@
    "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2026-07-01 (ответ SOAP)"
   },
   {
+   "key": "cbr_f101_2026-10-01",
+   "file": "stage1/ras/raw/101/2026-10-01.xml",
+   "sha256": "1ef014e559dd7e1a3bdff3189ca756a7ba42ae6c16708cc104c70aac3a732324",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data101FNewXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409101 банка на 2026-10-01 (ответ SOAP)"
+  },
+  {
    "key": "cbr_f102_2023-07-01",
    "file": "stage1/ras/raw/102/2023-07-01.xml",
    "sha256": "df118a18be9e15b1fc844829c1d6aa5d56032e88d376d88d25e4efbc023cbddf",
@@ -404,11 +432,18 @@
    "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2026-07-01 (ответ SOAP)"
   },
   {
-   "key": "cbr_f123_2026-07-01",
-   "file": "stage1/ras/raw/123/2026-07-01.xml",
-   "sha256": "245c5ea95f6de88065bf724279e1a54a0aeefd5f0e3c0cc4fb39cf003b4109a5",
+   "key": "cbr_f102_2026-10-01",
+   "file": "stage1/ras/raw/102/2026-10-01.xml",
+   "sha256": "569824fd5677432667e5f81362d3bccabad9b6061d656442d638d2cfc79eae42",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data102FXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409102 банка на 2026-10-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f123_2026-10-01",
+   "file": "stage1/ras/raw/123/2026-10-01.xml",
+   "sha256": "39b64c4b2fa68c7266202c5a12dbf40cc14b4bae1b3b485816ccc5f0852d79a7",
    "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data123FormFullXML)",
-   "title": "Банк России, CreditOrgInfo: форма 0409123 банка на 2026-07-01 (ответ SOAP)"
+   "title": "Банк России, CreditOrgInfo: форма 0409123 банка на 2026-10-01 (ответ SOAP)"
   },
   {
    "key": "cbr_f135_2023-07-01",
@@ -500,6 +535,13 @@
    "sha256": "5f7eccf6222b6cd73fc14a74e64aab0d34493b20124e619ac44e1c7c663166f5",
    "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
    "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2026-07-01 (ответ SOAP)"
+  },
+  {
+   "key": "cbr_f135_2026-10-01",
+   "file": "stage1/ras/raw/135/2026-10-01.xml",
+   "sha256": "fa5c852a5f11d990f1f4796024a6fbfc8648a1522f55fc7cdce27bed03861550",
+   "url": "https://www.cbr.ru/CreditInfoWebServ/CreditOrgInfo.asmx (Data135FormFullXML)",
+   "title": "Банк России, CreditOrgInfo: форма 0409135 банка на 2026-10-01 (ответ SOAP)"
   },
   {
    "key": "cbr_key_rate_changes",
@@ -642,11 +684,11 @@
    "title": "MOEX ISS: описание бумаги SBERP (снимок 30.09.2026)"
   },
   {
-   "key": "moex_zcyc_2026-06-30",
+   "key": "moex_zcyc_2026-09-30",
    "file": null,
-   "sha256": "90b297f62e10f888ba8d91f85b56ae7d21365e660a1794331315a5b47a12113a",
-   "url": "https://iss.moex.com/iss/engines/stock/zcyc.json?iss.meta=off&iss.only=params,yearyields&date=2026-06-30",
-   "title": "MOEX ISS zcyc: бескупонная кривая ОФЗ на 2026-06-30 18:49:58 (ответ JSON не сохранён; значения — лист stage1/calib/capital/data/zcyc_quarter_ends.csv)"
+   "sha256": "f48097ea5bbcd494b7274128bab93c984105df100c148a2014dc9a078766c685",
+   "url": "https://iss.moex.com/iss/engines/stock/zcyc.json?iss.meta=off&iss.only=params,yearyields&date=2026-09-30",
+   "title": "MOEX ISS zcyc: бескупонная кривая ОФЗ на 2026-09-30 18:12:28 (ответ JSON не сохранён; значения — лист stage1/calib/capital/data/zcyc_quarter_ends.csv)"
   },
   {
    "key": "ras_2023M03_press_release",
@@ -700,7 +742,7 @@
   {
    "key": "ras_release_monthly",
    "file": "stage1/ras/ras_release_monthly.csv",
-   "sha256": "cc7e47203d02983dbef9b729a3729e9a38fc3f0e4c8b20297e51d7c539f80961",
+   "sha256": "667bb1f6ed60693b81d99b38b7797e957fa0544fb2d6f26bdf16e40e6b4a7a07",
    "url": null,
    "title": "Этап 1: месячные релизы РСБУ банка 2023–2026 (лист с источником каждой ячейки)"
   }

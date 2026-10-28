@@ -1,293 +1,293 @@
 {
  "basis": "IFRS",
- "as_of": "2026-06-30",
- "period": "2026Q2",
+ "as_of": "2026-09-30",
+ "period": "2026Q3",
  "days": {
-  "v": 91,
-  "calc": "дней в квартале 2026Q2 (act/365)"
+  "v": 92,
+  "calc": "дней в квартале 2026Q3 (act/365)"
  },
  "unit": "остатки и проценты — млрд ₽; ставки — доли, годовые, act/365",
- "rates_carry_residual": false,
+ "rates_carry_residual": true,
  "books": {
   "corp_loans": {
    "balance_open": {
-    "v": 31882.3,
-    "src": "ifrs_3M2026_statements.pdf, с. 15, sha256 4b1449f839cf0826",
-    "calc": "коммерческие + проектные (АС, валовые) + кредиты по СС на 31.03.2026"
+    "v": 32305.0,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+    "calc": "коммерческие + проектные (АС, валовые) + кредиты по СС на 30.06.2026"
    },
    "balance_close": {
-    "v": 32305.0,
-    "calc": "balance.json на 2026-06-30 (состав книги — MODEL §4.1)"
+    "v": 34152.1,
+    "calc": "balance.json на 2026-09-30 (состав книги — MODEL §4.1)"
    },
    "balance_avg": {
-    "v": 32093.65,
+    "v": 33228.55,
     "calc": "(balance_open + balance_close) / 2"
    },
    "interest_q": {
-    "v": 1137.323338,
-    "calc": "rate_anchor × balance_avg × 91/365; процентный доход по кредитам 2К (АС + по СС = 1970,0) по книгам не раскрыт — разбиение calib-nii"
+    "v": 1148.29457,
+    "calc": "rate_anchor × balance_avg × 92/365; процентный доход по кредитам 3К (АС + по СС = 2014,6) по книгам не раскрыт — разбиение calib-nii"
    },
    "rate_anchor": {
-    "v": 0.14214,
-    "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c",
-    "calc": "упр. доходность ЮЛ 2К26 14,2 % × 1.0010 (масштаб к доходности кредитов МСФО 2К26)"
+    "v": 0.135806,
+    "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0",
+    "calc": "упр. доходность ЮЛ 3К26 13,7 % × 1.0008 (масштаб к доходности кредитов МСФО 3К26); × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)"
    }
   },
   "mortgage": {
    "balance_open": {
-    "v": 6075.6,
-    "src": "ifrs_3M2026_statements.pdf, с. 15, sha256 4b1449f839cf0826; stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c",
-    "calc": "ипотека АС на 31.03.2026 12892,1 − льготная (оценка calib-nii) 6816,5"
+    "v": 6147.0,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b; stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0",
+    "calc": "ипотека АС на 30.06.2026 13284,9 − льготная (оценка calib-nii) 7137,9"
    },
    "balance_close": {
-    "v": 6147.0,
-    "calc": "balance.json на 2026-06-30 (состав книги — MODEL §4.1)"
+    "v": 6213.4,
+    "calc": "balance.json на 2026-09-30 (состав книги — MODEL §4.1)"
    },
    "balance_avg": {
-    "v": 6111.3,
+    "v": 6180.2,
     "calc": "(balance_open + balance_close) / 2"
    },
    "interest_q": {
-    "v": 251.415701,
-    "calc": "rate_anchor × balance_avg × 91/365; процентный доход по кредитам 2К (АС + по СС = 1970,0) по книгам не раскрыт — разбиение calib-nii"
+    "v": 261.552295,
+    "calc": "rate_anchor × balance_avg × 92/365; процентный доход по кредитам 3К (АС + по СС = 2014,6) по книгам не раскрыт — разбиение calib-nii"
    },
    "rate_anchor": {
-    "v": 0.16501,
-    "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c",
-    "calc": "одна ставка с retail_loans (история не различает рыночную ипотеку и прочую розницу): упр. доходность ФЛ 2К26 16,7 % × масштаб, за вычетом льготной (ключевая 2К26 + 2,5 п.п.) по средней доле"
+    "v": 0.166316,
+    "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0",
+    "calc": "одна ставка с retail_loans (история не различает рыночную ипотеку и прочую розницу): упр. доходность ФЛ 3К26 16,7 % × масштаб, за вычетом льготной (ключевая 3К26 + 2,5 п.п.) по средней доле; × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)"
    }
   },
   "mortgage_sub": {
    "balance_open": {
-    "v": 6816.5,
-    "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c",
-    "calc": "оценка calib-nii на 31.03.2026 (накопление поколений); расчётная оценка — в отчётности не раскрыто"
+    "v": 7137.9,
+    "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0",
+    "calc": "оценка calib-nii на 30.06.2026 (накопление поколений); расчётная оценка — в отчётности не раскрыто"
    },
    "balance_close": {
-    "v": 7137.9,
-    "calc": "balance.json на 2026-06-30 (состав книги — MODEL §4.1)"
+    "v": 7420.4,
+    "calc": "balance.json на 2026-09-30 (состав книги — MODEL §4.1)"
    },
    "balance_avg": {
-    "v": 6977.2,
+    "v": 7279.15,
     "calc": "(balance_open + balance_close) / 2"
    },
    "interest_q": {
-    "v": 297.772961,
-    "calc": "rate_anchor × balance_avg × 91/365; процентный доход по кредитам 2К (АС + по СС = 1970,0) по книгам не раскрыт — разбиение calib-nii"
+    "v": 304.030033,
+    "calc": "rate_anchor × balance_avg × 92/365; процентный доход по кредитам 3К (АС + по СС = 2014,6) по книгам не раскрыт — разбиение calib-nii"
    },
    "rate_anchor": {
-    "v": 0.171181,
-    "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c; research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
-    "calc": "calib-nii: key_avg_anchor_q 14,618 % + компенсация 2,5 п.п. (вторичный источник rg.ru 31.12.2025, по первичному документу не проверено)"
+    "v": 0.16414,
+    "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0; research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
+    "calc": "calib-nii: key_avg_anchor_q 14,071 % + компенсация 2,5 п.п. (вторичный источник rg.ru 31.12.2025, по первичному документу не проверено); × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)"
    }
   },
   "retail_loans": {
    "balance_open": {
-    "v": 6791.6,
-    "src": "ifrs_3M2026_statements.pdf, с. 15, sha256 4b1449f839cf0826",
-    "calc": "потребительские + карты + авто (АС, валовые) на 31.03.2026"
+    "v": 6990.2,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b",
+    "calc": "потребительские + карты + авто (АС, валовые) на 30.06.2026"
    },
    "balance_close": {
-    "v": 6990.2,
-    "calc": "balance.json на 2026-06-30 (состав книги — MODEL §4.1)"
+    "v": 7221.2,
+    "calc": "balance.json на 2026-09-30 (состав книги — MODEL §4.1)"
    },
    "balance_avg": {
-    "v": 6890.9,
+    "v": 7105.7,
     "calc": "(balance_open + balance_close) / 2"
    },
    "interest_q": {
-    "v": 283.488039,
-    "calc": "rate_anchor × balance_avg × 91/365; процентный доход по кредитам 2К (АС + по СС = 1970,0) по книгам не раскрыт — разбиение calib-nii"
+    "v": 300.720388,
+    "calc": "rate_anchor × balance_avg × 92/365; процентный доход по кредитам 3К (АС + по СС = 2014,6) по книгам не раскрыт — разбиение calib-nii"
    },
    "rate_anchor": {
-    "v": 0.16501,
-    "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c",
-    "calc": "упр. доходность ФЛ 2К26 16,7 % × масштаб, за вычетом льготной (ключевая 2К26 + 2,5 п.п.) по средней доле"
+    "v": 0.166316,
+    "src": "stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0",
+    "calc": "упр. доходность ФЛ 3К26 16,7 % × масштаб, за вычетом льготной (ключевая 3К26 + 2,5 п.п.) по средней доле; × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)"
    }
   },
   "securities": {
    "balance_open": {
-    "v": 10981.8,
-    "src": "ifrs_3M2026_statements.pdf, с. 5, sha256 4b1449f839cf0826; ifrs_3M2026_statements.pdf, с. 32, sha256 4b1449f839cf0826; ifrs_3M2026_statements.pdf, с. 31, sha256 4b1449f839cf0826",
-    "calc": "долговые бумаги с заложенными по репо на 31.03.2026: бумаги 9699,8 + заложенные по репо 1614,3 − акции и фонды 332,3 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
+    "v": 11246.1,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b; 2026H1_ifrs_interim_statements.pdf, с. 37, sha256 5b3a3de88ae6c96b; 2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b",
+    "calc": "долговые бумаги с заложенными по репо на 30.06.2026: бумаги 9787,6 + заложенные по репо 1701,3 − акции и фонды 242,8 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)"
    },
    "balance_close": {
-    "v": 11246.1,
-    "calc": "balance.json на 2026-06-30 (состав книги — MODEL §4.1)"
+    "v": 12022.1,
+    "calc": "balance.json на 2026-09-30 (состав книги — MODEL §4.1)"
    },
    "balance_avg": {
-    "v": 11113.95,
+    "v": 11634.1,
     "calc": "(balance_open + balance_close) / 2"
    },
    "interest_q": {
-    "v": 364.8,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b",
-    "calc": "бумаги АС + FVOCI + по СС, 2К (процентные доходы/расходы по инструментам; расходы — величиной)"
+    "v": 389.5,
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9",
+    "calc": "бумаги АС + FVOCI + по СС, 3К (процентные доходы/расходы по инструментам; расходы — величиной)"
    },
    "rate_anchor": {
-    "v": 0.131655,
-    "calc": "interest_q / balance_avg × 365/91 (act/365)"
+    "v": 0.131569,
+    "calc": "interest_q / balance_avg × 365/92 (act/365); × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)"
    }
   },
   "liquidity": {
    "balance_open": {
-    "v": 4735.9,
-    "src": "ifrs_3M2026_statements.pdf, с. 5, sha256 4b1449f839cf0826",
-    "calc": "денежные средства + обязательные резервы + средства в банках на 31.03.2026"
+    "v": 3558.2,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b",
+    "calc": "денежные средства + обязательные резервы + средства в банках на 30.06.2026"
    },
    "balance_close": {
-    "v": 3558.2,
-    "calc": "balance.json на 2026-06-30 (состав книги — MODEL §4.1)"
+    "v": 4670.0,
+    "calc": "balance.json на 2026-09-30 (состав книги — MODEL §4.1)"
    },
    "balance_avg": {
-    "v": 4147.05,
+    "v": 4114.1,
     "calc": "(balance_open + balance_close) / 2"
    },
    "interest_q": {
-    "v": 76.5,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b",
-    "calc": "средства в банках (АС и по СС) + прочие процентные доходы АС, 2К (процентные доходы/расходы по инструментам; расходы — величиной)"
+    "v": 80.7,
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9",
+    "calc": "средства в банках (АС и по СС) + прочие процентные доходы АС, 3К (процентные доходы/расходы по инструментам; расходы — величиной)"
    },
    "rate_anchor": {
-    "v": 0.07399,
-    "calc": "interest_q / balance_avg × 365/91 (act/365)"
+    "v": 0.077086,
+    "calc": "interest_q / balance_avg × 365/92 (act/365); × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)"
    }
   },
   "retail_current": {
    "balance_open": {
-    "v": 13583.9,
-    "src": "ifrs_3M2026_statements.pdf, с. 35, sha256 4b1449f839cf0826",
-    "calc": "текущие счета ФЛ на 31.03.2026"
+    "v": 14309.0,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b",
+    "calc": "текущие счета ФЛ на 30.06.2026"
    },
    "balance_close": {
-    "v": 14309.0,
-    "calc": "balance.json на 2026-06-30 (состав книги — MODEL §4.1)"
+    "v": 14845.9,
+    "calc": "balance.json на 2026-09-30 (состав книги — MODEL §4.1)"
    },
    "balance_avg": {
-    "v": 13946.45,
+    "v": 14577.45,
     "calc": "(balance_open + balance_close) / 2"
    },
    "interest_q": {
-    "v": 119.3,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b",
-    "calc": "текущие счета ФЛ, 2К (процентные доходы/расходы по инструментам; расходы — величиной)"
+    "v": 126.7,
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9",
+    "calc": "текущие счета ФЛ, 3К (процентные доходы/расходы по инструментам; расходы — величиной)"
    },
    "rate_anchor": {
-    "v": 0.034311,
-    "calc": "interest_q / balance_avg × 365/91 (act/365)"
+    "v": 0.034483,
+    "calc": "interest_q / balance_avg × 365/92 (act/365)"
    }
   },
   "retail_term": {
    "balance_open": {
-    "v": 20357.4,
-    "src": "ifrs_3M2026_statements.pdf, с. 5, sha256 4b1449f839cf0826; ifrs_3M2026_statements.pdf, с. 35, sha256 4b1449f839cf0826",
-    "calc": "средства ФЛ − текущие (срочные + репо) на 31.03.2026"
+    "v": 20169.5,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b; 2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b",
+    "calc": "средства ФЛ − текущие (срочные + репо) на 30.06.2026"
    },
    "balance_close": {
-    "v": 20169.5,
-    "calc": "balance.json на 2026-06-30 (состав книги — MODEL §4.1)"
+    "v": 20119.6,
+    "calc": "balance.json на 2026-09-30 (состав книги — MODEL §4.1)"
    },
    "balance_avg": {
-    "v": 20263.45,
+    "v": 20144.55,
     "calc": "(balance_open + balance_close) / 2"
    },
    "interest_q": {
-    "v": 591.4,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b",
-    "calc": "срочные ФЛ, 2К (процентные доходы/расходы по инструментам; расходы — величиной)"
+    "v": 553.9,
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9",
+    "calc": "срочные ФЛ, 3К (процентные доходы/расходы по инструментам; расходы — величиной)"
    },
    "rate_anchor": {
-    "v": 0.117063,
-    "calc": "interest_q / balance_avg × 365/91 (act/365)"
+    "v": 0.109088,
+    "calc": "interest_q / balance_avg × 365/92 (act/365)"
    }
   },
   "corp_funds": {
    "balance_open": {
-    "v": 15905.0,
-    "src": "ifrs_3M2026_statements.pdf, с. 5, sha256 4b1449f839cf0826",
-    "calc": "средства ЮЛ на 31.03.2026"
+    "v": 14654.3,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b",
+    "calc": "средства ЮЛ на 30.06.2026"
    },
    "balance_close": {
-    "v": 14654.3,
-    "calc": "balance.json на 2026-06-30 (состав книги — MODEL §4.1)"
+    "v": 16748.3,
+    "calc": "balance.json на 2026-09-30 (состав книги — MODEL §4.1)"
    },
    "balance_avg": {
-    "v": 15279.65,
+    "v": 15701.3,
     "calc": "(balance_open + balance_close) / 2"
    },
    "interest_q": {
-    "v": 334.7,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b",
-    "calc": "срочные + расчётные ЮЛ, 2К (процентные доходы/расходы по инструментам; расходы — величиной)"
+    "v": 353.2,
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9",
+    "calc": "срочные + расчётные ЮЛ, 3К (процентные доходы/расходы по инструментам; расходы — величиной)"
    },
    "rate_anchor": {
-    "v": 0.087861,
-    "calc": "interest_q / balance_avg × 365/91 (act/365)"
+    "v": 0.089246,
+    "calc": "interest_q / balance_avg × 365/92 (act/365)"
    }
   },
   "wholesale": {
    "balance_open": {
-    "v": 5929.7,
-    "src": "ifrs_3M2026_statements.pdf, с. 5, sha256 4b1449f839cf0826",
-    "calc": "средства банков + выпущенные облигации + субординированные на 31.03.2026"
+    "v": 6157.9,
+    "src": "2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b",
+    "calc": "средства банков + выпущенные облигации + субординированные на 30.06.2026"
    },
    "balance_close": {
-    "v": 6157.9,
-    "calc": "balance.json на 2026-06-30 (состав книги — MODEL §4.1)"
+    "v": 8031.9,
+    "calc": "balance.json на 2026-09-30 (состав книги — MODEL §4.1)"
    },
    "balance_avg": {
-    "v": 6043.8,
+    "v": 7094.9,
     "calc": "(balance_open + balance_close) / 2"
    },
    "interest_q": {
-    "v": 235.4,
-    "src": "2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b",
-    "calc": "средства банков (АС и по СС) + выпущенные облигации + субординированные, 2К (процентные доходы/расходы по инструментам; расходы — величиной)"
+    "v": 274.7,
+    "src": "2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9",
+    "calc": "средства банков (АС и по СС) + выпущенные облигации + субординированные, 3К (процентные доходы/расходы по инструментам; расходы — величиной)"
    },
    "rate_anchor": {
-    "v": 0.156224,
-    "calc": "interest_q / balance_avg × 365/91 (act/365)"
+    "v": 0.153609,
+    "calc": "interest_q / balance_avg × 365/92 (act/365)"
    }
   }
  },
  "interest_loans_q": {
-  "v": 1970.0,
-  "src": "2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b",
-  "calc": "процентный доход по кредитам АС + по СС, 2К"
+  "v": 2014.6,
+  "src": "2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9",
+  "calc": "процентный доход по кредитам АС + по СС, 3К"
  },
  "other_interest_net_q": {
-  "v": -19.6,
-  "src": "2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b",
+  "v": -23.5,
+  "src": "2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9",
   "calc": "ПФИ (доход) − аренда − ПФИ (расход) − срочные по СС − короткие позиции: вне книг"
  },
  "dia_q": {
-  "v": 44.1,
-  "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b",
-  "calc": "взносы в АСВ, 2К (величиной; в отчёте со знаком минус)"
+  "v": 45.1,
+  "src": "2026Q3_ifrs_interim_statements.pdf, с. 6, sha256 bfb59dab3fe2cea9",
+  "calc": "взносы в АСВ, 3К (величиной; в отчёте со знаком минус)"
  },
  "dia_rate": {
-  "v": 0.005171,
-  "calc": "dia_q / средние средства ФЛ × 365/91"
+  "v": 0.005153,
+  "calc": "dia_q / средние средства ФЛ × 365/92"
  },
  "nii_q": {
-  "v": 1066.8,
-  "src": "2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b"
+  "v": 1107.7,
+  "src": "2026Q3_ifrs_interim_statements.pdf, с. 6, sha256 bfb59dab3fe2cea9"
  },
  "iea_avg": {
-  "v": 67334.05,
+  "v": 69541.8,
   "calc": "Σ balance_avg активных книг (кредиты, бумаги, ликвидность)"
  },
  "nim_eng_q": {
-  "v": 0.063548,
-  "calc": "nii_q × 365/91 / iea_avg (ЧПМ базиса движка)"
+  "v": 0.063195,
+  "calc": "nii_q × 365/92 / iea_avg (ЧПМ базиса движка)"
  },
  "current_share_anchor": {
-  "v": 0.415012,
+  "v": 0.424587,
   "calc": "balance.funds.retail_current / (retail_current + retail_term) на якоре"
  },
  "key_avg_anchor_q": {
-  "v": 0.146181,
+  "v": 0.140707,
   "src": "research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda",
-  "calc": "средняя ключевая ставка 2026Q2 по календарным дням"
+  "calc": "средняя ключевая ставка 2026Q3 по календарным дням"
  }
 }

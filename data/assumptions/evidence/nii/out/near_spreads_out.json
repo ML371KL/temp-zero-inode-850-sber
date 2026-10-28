@@ -1,6 +1,6 @@
 {
  "anchor_year": 2026,
- "first_period": "2026Q3",
+ "first_period": "2026Q4",
  "reference_half": "2026H2",
  "facts": "data/facts/nii_books.json (rate_anchor)",
  "books": {
@@ -8,109 +8,109 @@
    "side": "asset",
    "ref": "ofz_1y",
    "rho": 0.33,
-   "rate_anchor": 0.14214,
+   "rate_anchor": 0.135806,
    "ref_H_first_quarter": 0.1396,
    "beta": 1.0,
    "calibration_Y0_plus_2": 0.00428,
    "rule": {
-    "2026": 0.00254,
-    "2027": 0.00341
+    "2026": -0.00379,
+    "2027": 0.00025
    },
    "book": {
-    "2026": 0.00254,
-    "2027": 0.00341
+    "2026": -0.003794,
+    "2027": 0.000243
    },
-   "rate_first_quarter_H": 0.14214
+   "rate_first_quarter_H": 0.13581
   },
   "mortgage": {
    "side": "asset",
    "ref": "ofz_3y",
    "rho": 0.12,
-   "rate_anchor": 0.16501,
+   "rate_anchor": 0.166316,
    "ref_H_first_quarter": 0.1596,
    "beta": 1.0,
    "calibration_Y0_plus_2": 0.02785,
    "rule": {
-    "2026": 0.00541,
-    "2027": 0.01663
+    "2026": 0.00672,
+    "2027": 0.01729
    },
    "book": {
-    "2026": 0.00541,
-    "2027": 0.01663
+    "2026": 0.006716,
+    "2027": 0.017283
    },
-   "rate_first_quarter_H": 0.16501
+   "rate_first_quarter_H": 0.16632
   },
   "retail_loans": {
    "side": "asset",
    "ref": "ofz_3y",
    "rho": 0.12,
-   "rate_anchor": 0.16501,
+   "rate_anchor": 0.166316,
    "ref_H_first_quarter": 0.1596,
    "beta": 1.0,
    "calibration_Y0_plus_2": 0.02785,
    "rule": {
-    "2026": 0.00541,
-    "2027": 0.01663
+    "2026": 0.00672,
+    "2027": 0.01729
    },
    "book": {
-    "2026": 0.00541,
-    "2027": 0.01663
+    "2026": 0.006716,
+    "2027": 0.017283
    },
-   "rate_first_quarter_H": 0.16501
+   "rate_first_quarter_H": 0.16632
   },
   "securities": {
    "side": "asset",
    "ref": "ofz_3y",
    "rho": 0.33,
-   "rate_anchor": 0.131655,
+   "rate_anchor": 0.131569,
    "ref_H_first_quarter": 0.1596,
    "beta": 1.0,
    "calibration_Y0_plus_2": -0.01604,
    "rule": {
-    "2026": -0.02795,
-    "2027": -0.022
+    "2026": -0.02803,
+    "2027": -0.02204
    },
    "book": {
-    "2026": -0.02795,
-    "2027": -0.022
+    "2026": -0.028031,
+    "2027": -0.022035
    },
-   "rate_first_quarter_H": 0.13165
+   "rate_first_quarter_H": 0.13157
   },
   "liquidity": {
    "side": "asset",
    "ref": "key",
    "rho": 1.0,
-   "rate_anchor": 0.07399,
+   "rate_anchor": 0.077086,
    "ref_H_first_quarter": 0.14,
    "beta": 1.0,
    "calibration_Y0_plus_2": -0.07954,
    "rule": {
-    "2026": -0.06601,
-    "2027": -0.07278
+    "2026": -0.06291,
+    "2027": -0.07123
    },
    "book": {
-    "2026": -0.06601,
-    "2027": -0.07278
+    "2026": -0.062914,
+    "2027": -0.071227
    },
-   "rate_first_quarter_H": 0.07399
+   "rate_first_quarter_H": 0.07709
   },
   "wholesale": {
    "side": "liability",
    "ref": "key",
    "rho": 1.0,
-   "rate_anchor": 0.156224,
+   "rate_anchor": 0.153609,
    "ref_H_first_quarter": 0.14,
    "beta": 1.0,
    "calibration_Y0_plus_2": -0.01555,
    "rule": {
-    "2026": 0.01622,
-    "2027": 0.00034
+    "2026": 0.01361,
+    "2027": -0.00097
    },
    "book": {
-    "2026": 0.01622,
-    "2027": 0.00034
+    "2026": 0.013609,
+    "2027": -0.000971
    },
-   "rate_first_quarter_H": 0.15622
+   "rate_first_quarter_H": 0.15361
   }
  },
  "book_mismatches": []

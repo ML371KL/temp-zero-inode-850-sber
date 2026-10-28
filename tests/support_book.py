@@ -221,6 +221,10 @@ def copy_area(tmp: Path, area: str) -> Path:
         (tmp / "facts").mkdir(exist_ok=True)        # распределение σ0 и сжатия φ — ещё и мосты (sigma0_split.py, phi_split.py)
         for f in ("nii_books.json", "bridge_mgmt_ifrs.json"):
             shutil.copy2(FACTS_DIR / f, tmp / "facts" / f)
+    if area == "capital":                           # книга на якоре позже листа: Ded20_0 — по фактам якоря книги
+        (tmp / "facts").mkdir(exist_ok=True)        # (capital_book.py, evlib.moved)
+        for f in ("balance.json", "capital.json"):
+            shutil.copy2(FACTS_DIR / f, tmp / "facts" / f)
     return dst_book / "evidence" / area
 
 

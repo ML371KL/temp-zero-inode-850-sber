@@ -21,7 +21,15 @@ except ImportError:                      # прогон без pytest.ini (pytho
 pytestmark = pytest.mark.tact
 
 MARKS = ("  #{{WORLDS}}", "#{{WORLDS_BANK}}", "#{{OVERLAY_SHA256}}")
-VERSION = "1.3"
+VERSION = "1.4"
+# Книга 1.4 перенесена на якорь 2026Q3 (ops/tools/reanchor.py, режим keep, MODEL §15.2): решения, которые перенос
+# записывает на структуре нового якоря и в его ценах, — числами журнала V1.4-CHANGES.md (суждения те же): цели A-N2
+# и A-N3 и доля σ0 — при прежних скалярах пути (цель A-N2 — на мосте ЧПМ канона фактов), вычеты — формулой книги на
+# фактах 30.09.2026, реальные суммы — × индекс цен 3К26. В книгах 1.0–1.3 (якорь 2К26): 0,060; 0,06; 0,09; 936,7;
+# 1 173,8; −200.
+MOVED = {"nii.nim_lt_target_mgmt": 0.057238, "nii.transmission.target": 0.047867, "nii.sigma0_split": 0.089584,
+         "capital.n20.deductions_anchor": 963.7, "capital.n11.deductions_anchor": 1192.927,
+         "other.misc_net_real.LT": -203.195111}
 RESULTS = S.BOOK_DIR / "results.json"
 # Оси, которые из полосы не выводятся никогда (MODEL §10): односторонние рисковые — по путям ключей
 NEVER_OFF_BAND = ("tax.statutory", "tax.one_off.prob", "regimes.crisis.one_off_loss.amount")
@@ -161,20 +169,21 @@ def test_meta_company_and_prices(book):
 def test_lead_decisions_are_in_the_book(book):
     """Решения ведущего к книге 1.0 (LEAD-DECISIONS §1–§2), не изменённые книгой 1.1, — числами книги."""
     assert book["regimes"]["cor_basis"] == "mgmt"
-    assert book["nii"]["nim_lt_target_mgmt"] == 0.060
-    assert book["nii"]["transmission"]["target"] == 0.06
+    assert book["nii"]["nim_lt_target_mgmt"] == MOVED["nii.nim_lt_target_mgmt"]           # 0,060 на якоре 2К26
+    assert book["nii"]["transmission"]["target"] == MOVED["nii.transmission.target"]       # 0,06 на якоре 2К26
     assert book["valuation"]["beta_e"] == 0.83
     assert book["joint"]["regime_prob"] == {"soft": 0.15, "norm": 0.40, "downturn": 0.30, "crisis": 0.15}
     assert book["credit"]["kappa"] == 0.05 and book["credit"]["real_rate_lag_q"] == 4
     assert book["regimes"]["crisis"]["one_off_loss"] == {"period": "2027Q1", "amount": -400.0}
     assert {k: book["dividends"]["excess"][k] for k in ("from_profit_year", "epsilon")} == {"from_profit_year": 2030, "epsilon": 0.5}
-    assert book["capital"]["n20"]["deductions_anchor"] == 936.7 and book["capital"]["n11"]["deductions_anchor"] == 1173.8
+    assert book["capital"]["n20"]["deductions_anchor"] == MOVED["capital.n20.deductions_anchor"]
+    assert book["capital"]["n11"]["deductions_anchor"] == MOVED["capital.n11.deductions_anchor"]
     assert book["capital"]["n11"]["audit_cutoffs"] == [3, 4]
     assert book["capital"]["mgmt_buffer"]["n20_0"] == 0.013
     assert book["fees"]["growth_override"] == {"2026": 0.0}
     assert book["volumes"]["guidance_growth"] == {"corporate": 0.09, "retail": 0.10}
     assert book["opex"]["real_growth"]["2026"] == 0.05
-    assert book["other"]["misc_net_real"]["LT"] == -200.0
+    assert book["other"]["misc_net_real"]["LT"] == MOVED["other.misc_net_real.LT"]         # −200 в ценах 2К26
     assert book["valuation"]["headline"]["print_step"] == 5
     assert book["valuation"]["headline"]["jump_guard"] == {"median_pct": 0.08, "v0_pct": 0.08}
     assert book["valuation"]["headline"]["ceiling_x_market"] == 3.0
@@ -189,7 +198,9 @@ def test_lead_decisions_2_are_in_the_book(book):
     y0 = int(book["meta"]["first_period"][:4])
     assert book["nii"]["sigma0_from"] == y0 + 1                                    # A1 F1: σ0 со второго года
     near = book["regimes"]["near_nim_shift"]                                        # A1 F2: ближний сдвиг — общий
-    assert near[str(y0)] == -0.005 and near["LT"] == 0.0 and "LT_from" not in near
+    assert near["LT"] == 0.0 and "LT_from" not in near
+    # книги 1.0–1.3: −0,005 в году якоря; с 1.4 — ближняя калибровка переноса с первого прогнозного квартала (М§15.2)
+    assert near[str(y0)] == -0.005 if str(y0) in near else book["meta"]["first_period"] in near
     assert all(book["regimes"][r]["nim_shift"][str(y0)] == 0.0 for r in book["regimes"]["ids"])
     assert book["dividends"]["excess"]["ramp_years"] == 3                           # A4: ввод ε за 3 года
     og = book["opex"]["real_growth"]                                                # A8: +0,5 п.п. до 2030, с 2031 — 0
@@ -213,26 +224,33 @@ def test_lead_decisions_3_are_in_the_book(book):
     assert unc["off_band_axes"] == [] and len(unc["axes"]) >= 33
     assert sum(1 for a in unc["axes"] if a["kind"] == "dict") == 2
     ru = book["joint"]["regime_update"]                                             # В2: окно, стационарные режимы
-    assert ru["window_obs"] == 4 and ru["max_shift_pp"] == 0.05 and ru["observations"] == []
+    assert ru["window_obs"] == 4 and ru["max_shift_pp"] == 0.05
+    # окно A-P2u: факты закрытых кварталов, перенесённые с замороженными ожиданиями режимов (с 1.4 — 3К26 с подменой
+    # CoR решением владельца 28.10.2026, DECISIONS 13.1: 1,3 % ± 0,12 п.п. вместо опубликованных 1,1 %)
+    assert [o["period"] for o in ru["observations"]] == ["2026Q3"]
+    assert all("mu_cor" in o and "mu_nim" in o for o in ru["observations"])
+    obs = ru["observations"][0]
+    assert (obs["cor"], obs["se_cor"], obs["nim"], obs["se_nim"]) == (0.013, 0.0012, 0.0665, 0.0)
     crisis = book["regimes"]["crisis"]
     assert crisis["shock_year_offset"] == 1 and "shock_year" not in crisis
-    assert book["other"]["misc_net_real"] == {"LT": -200.0}                         # В3: правило, а не ключ года якоря
+    assert book["other"]["misc_net_real"] == {"LT": MOVED["other.misc_net_real.LT"]}  # В3: правило, а не ключ года якоря
     assert book["credit"]["fv_loans_factor"] == 1.0                                 # В4: FVC режима, опора — норма
     assert book["credit"]["fv_loans_ref"] == "norm" and "norm" in book["regimes"]["ids"]
     nii = book["nii"]                                                               # В8: распределение σ0 и полы
-    assert nii["sigma0_split"] == 0.09
+    assert nii["sigma0_split"] == MOVED["nii.sigma0_split"]
     shifted = [b for b, v in nii["books"].items() if v["side"] == "liability" and v["lt_shift"]]
     assert shifted == ["retail_current", "retail_term", "corp_funds"]
     assert book["checks"]["lt_spread_floor"] == {"corp_loans": 0.005, "mortgage": 0.015, "mortgage_sub": 0.015,
                                                  "retail_loans": 0.015}
     assert book["volumes"]["liquid_min_share"] == 0.20                              # запись аудита № 23
-    assert book["valuation"]["next_report"]["nim_values"] == [0.058, 0.061, 0.064, 0.067, 0.070]   # № 20
+    # № 20; с 1.4 — сетка вокруг ожидания модели на 4К26 (ручной шаг перезаякоривания, docs/REANCHOR.md §6)
+    assert book["valuation"]["next_report"]["nim_values"] == [0.060, 0.063, 0.066, 0.069, 0.072]
 
 
 def test_lead_decisions_4_are_in_the_book(book):
     """Решения ведущего по аудиту после волны W2 (LEAD-DECISIONS-4, книга 1.3) — числами книги."""
     nii = book["nii"]                                                               # В12: раскладка сжатия φ
-    assert nii["phi_split"] == 0.0 and nii["sigma0_split"] == 0.09
+    assert nii["phi_split"] == 0.0 and nii["sigma0_split"] == MOVED["nii.sigma0_split"]
     carriers = [b for b, v in nii["books"].items() if v["side"] == "liability" and v["phi"]]
     assert carriers == ["retail_current", "retail_term", "corp_funds"]
     assert book["valuation"]["terminal"]["fade"] == 1.0                              # В13: ось угасания — только вниз
@@ -260,7 +278,7 @@ def test_pre_push_decisions_are_in_the_book(book):
     assert book["valuation"]["headline"]["search_tol_rub"] == 0.5
     axes = {a["paths"][0]: a for a in unc["axes"] if len(a["paths"]) == 1}
     s0, phi = axes["nii.sigma0_split"], axes["nii.phi_split"]
-    assert (s0["low"], s0["high"]) == (0.0, book["nii"]["sigma0_split"]) == (0.0, 0.09)
+    assert (s0["low"], s0["high"]) == (0.0, book["nii"]["sigma0_split"]) == (0.0, MOVED["nii.sigma0_split"])
     assert (phi["low"], phi["high"]) == (book["nii"]["phi_split"], 0.001) and phi["high"] < 0.0012
     assert s0["unit"] == phi["unit"] == "pct" and unc["off_band_axes"] == []
     assert len(unc["axes"]) == 34
@@ -436,9 +454,22 @@ def test_the_off_band_rule_catches_an_asymmetric_and_a_wide_axis(book):
 
 def test_the_near_nim_shift_fades_linearly_over_the_next_year(book):
     """Ближний сдвиг ЧПМ (MODEL §3.2): год якоря — одно значение, следующий год — линейный сход к нулю по кварталам
-    (без обрыва на границе года), ключ года = среднее кварталов (MODEL §0.4), дальше — LT 0."""
+    (без обрыва на границе года), ключ года = среднее кварталов (MODEL §0.4), дальше — LT 0. Книга, перенесённая на
+    новый якорь, несёт ближнюю калибровку переноса (MODEL §15.2 п. 6; docs/REANCHOR.md §3.6): кварталы с первого
+    прогнозного, затем ключи лет; у года с кварталами ключ года — среднее кварталов; кварталы — только в годах,
+    идущих подряд от первого; LT 0."""
     near = book["regimes"]["near_nim_shift"]
-    y0 = int(book["meta"]["first_period"][:4])
+    first = book["meta"]["first_period"]
+    y0 = int(first[:4])
+    if str(y0) not in near:                                   # ближняя калибровка переноса якоря
+        quarters = sorted(k for k in near if "Q" in k)
+        years = sorted({int(k[:4]) for k in quarters})
+        assert quarters[0] == first and years == list(range(y0, years[-1] + 1))
+        for y in years[1:]:
+            qs = [near[f"{y}Q{k}"] for k in (1, 2, 3, 4)]
+            assert near[str(y)] == pytest.approx(sum(qs) / 4, abs=1e-12), y
+        assert near["LT"] == 0.0 and "LT_from" not in near
+        return
     v0 = near[str(y0)]
     quarters = [near[f"{y0 + 1}Q{k}"] for k in (1, 2, 3, 4)]
     assert quarters == pytest.approx([v0 * (1 - k / 4) for k in (1, 2, 3, 4)], abs=1e-12)
@@ -481,7 +512,7 @@ def test_near_spread_keys_follow_the_anchor_rates(book):
         checked.append(b)
     assert {"mortgage", "retail_loans", "securities"} <= set(checked)                # книги решения A1 F3
     got = [round(book["nii"]["books"][b]["spread"][str(y0)], 4) for b in ("mortgage", "retail_loans", "securities")]
-    assert got == [0.0054, 0.0054, -0.0279]                                          # числа sanity-val S1 п. 3
+    assert got == [0.0067, 0.0067, -0.028]          # якорь 3К26 (книга 1.4); на 2К26 — 0,0054 / 0,0054 / −0,0279 (sanity-val S1 п. 3)
 
 
 def test_misc_quarter_shares_are_the_2024_2025_profile_of_the_facts(book):

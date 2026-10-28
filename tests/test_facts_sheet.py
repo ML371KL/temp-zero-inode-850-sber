@@ -357,8 +357,9 @@ def test_next_quarter_builds_from_a_filled_sheet_and_asks_for_nothing_else(tmp_p
         pytest.skip("нет папки передачи (BANK_HANDOFF_DIR)")
     old = B.Anchor(B.default_anchor())
     new, rows = committed_template()
-    if new.year != old.year:
-        pytest.skip("копии квартала якоря годятся только внутри года: на смене года состав отчёта другой")
+    if new.year != old.year or new.quarter == 4:
+        pytest.skip("копии квартала якоря годятся только внутри года и не для годового отчёта: на смене года и в 4К "
+                    "(годовые раскрытия) состав отчёта другой")
     if any(r["value"] != "" for r in rows):
         pytest.skip("строки следующего квартала уже в листах этапа 1 — шаблон отслужил, якорь пора переносить")
     with pytest.raises(B.BuildError, match="нет квартала якоря"):

@@ -83,7 +83,10 @@ def compute() -> dict:
                     "rate_first_quarter_H": _r5(ref * beta + _d(rule[str(y0)])) if spec["side"] == "liability"
                     else _r5(ref + _d(rule[str(y0)]))}
         for k, v in rule.items():
-            if book_near[k] is None or abs(float(book_near[k]) - v) > 5e-6 + 1e-12:
+            # книга 1.0–1.3 — ключи с пятью знаками; перенос якоря (ops/tools/reanchor.py) пишет шесть знаков от
+            # неокруглённой опоры квартала — лист с округлённой опорой полугодия совпадает до единицы пятого знака
+            tol = (1e-5 if evlib.moved(book) else 5e-6) + 1e-12
+            if book_near[k] is None or abs(float(book_near[k]) - v) > tol:
                 bad.append(f"nii.books.{b}.spread.{k}: книга {book_near[k]} против правила {v}")
     return {"anchor_year": y0, "first_period": first, "reference_half": _half(first),
             "facts": "data/facts/nii_books.json (rate_anchor)", "books": books, "book_mismatches": bad}

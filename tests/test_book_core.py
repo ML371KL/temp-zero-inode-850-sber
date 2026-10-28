@@ -24,8 +24,9 @@ def book() -> dict:
 
 def test_the_no_news_chain_stops_at_the_floor(book):
     """Ограничение книги, названное числами (решение ведущего В15; раздел 15 п. 16): цепочка восьми отчётов «факт =
-    ожидание» опускает вероятность мягкой посадки до пола 0,33 × базовой (4,95 %) к четвёртому отчёту, вероятность
-    кризиса — к пятому, и дальше они не падают; без пола хвосты вымываются ниже 2,5 %."""
+    ожидание» опускает вероятности мягкой посадки и кризиса до пола 0,33 × базовой (4,95 %) — в книге 1.4 (окно
+    начинается фактом 3К26, CoR которого ниже ожиданий тяжёлых режимов) обе к шестому отчёту, — и дальше они не
+    падают; без пола хвосты уходят ниже пола (в книге 1.3 — к четвёртому и пятому отчёту, без пола — ниже 2,5 %)."""
     from model.book import load_book, load_facts
     from model.grid import run_grid
     from model.live import live_from_book
@@ -52,9 +53,10 @@ def test_the_no_news_chain_stops_at_the_floor(book):
         assert all(post[r] >= share * prior[r] - 1e-12 for r in prior), post
     soft = [round(p["soft"], 4) for p in with_floor]
     crisis = [round(p["crisis"], 4) for p in with_floor]
-    assert soft[:3] == [0.1233, 0.1148, 0.0908] and soft[3:] == [0.0495] * 5          # на полу с четвёртого отчёта
-    assert crisis[2:4] == [0.1281, 0.0774] and crisis[4:] == [0.0495] * 4            # на полу с пятого
-    assert without[-1]["soft"] < 0.015 and without[-1]["crisis"] < 0.025             # без пола хвосты вымываются
+    assert soft[:5] == [0.1591, 0.1364, 0.1086, 0.0751, 0.0538] and soft[5:] == [0.0495] * 3   # на полу с шестого
+    assert crisis[:5] == [0.1259, 0.101, 0.0719, 0.0615, 0.0607] and crisis[5:] == [0.0495] * 3  # тоже с шестого
+    for r in ("soft", "crisis"):                                                     # без пола хвосты — ниже пола
+        assert without[-1][r] < share * prior[r], (r, without[-1][r])
 
 
 @pytest.mark.tact

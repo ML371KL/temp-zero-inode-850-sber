@@ -1,6 +1,6 @@
 {
  "basis": "IFRS",
- "as_of": "2026-06-30",
+ "as_of": "2026-09-30",
  "unit": "млн шт.; номинал — ₽",
  "issued_ordinary": {
   "v": 21586.948,
@@ -18,12 +18,12 @@
  },
  "treasury_ordinary": {
   "v": 209.9,
-  "src": "2026H1_ifrs_interim_statements.pdf, с. 43, sha256 5b3a3de88ae6c96b",
-  "calc": "дивиденд за 2025 на собственные обыкновенные 7,9 млрд / DPS 37,64 ₽ × 1000 (на отсечку 20.07.2026; на 30.06.2026 число не раскрыто; точность ±1–2 млн)"
+  "src": "2026Q3_ifrs_interim_statements.pdf, с. 48, sha256 bfb59dab3fe2cea9",
+  "calc": "дивиденд за 2025 на собственные обыкновенные 7,9 млрд / DPS 37,64 ₽ × 1000 (на отсечку 20.07.2026; на 30.09.2026 число не раскрыто; точность ±1–2 млн)"
  },
  "treasury_preferred": {
   "v": 34.5,
-  "src": "2026H1_ifrs_interim_statements.pdf, с. 43, sha256 5b3a3de88ae6c96b",
+  "src": "2026Q3_ifrs_interim_statements.pdf, с. 48, sha256 bfb59dab3fe2cea9",
   "calc": "дивиденд на собственные привилегированные 1,3 млрд / 37,64 ₽ × 1000"
  },
  "treasury_prev_year_end": {

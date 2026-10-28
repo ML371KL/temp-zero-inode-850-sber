@@ -9,6 +9,7 @@ evidence/<область>/out/, и те же числа, что в книге (�
 from __future__ import annotations
 
 import csv
+import importlib.util
 import json
 import os
 import re
@@ -106,7 +107,11 @@ def test_evidence_outputs_carry_the_book_numbers():
     assert div["history"][1]["dps_ceil_if_tau_25"] != "34.84" and div["history"][0]["dps_half_up"] == "33.29"
     assert div["anchor"]["outstanding_total"] == "22342.5" and div["anchor"]["dividends_payable"] == "841.0"
     cap = json.loads((S.EVIDENCE / "capital" / "out" / "capital_book_out.json").read_text(encoding="utf-8"))
-    assert cap["book_mismatches"] == [] and cap["ded20_anchor"] == book["capital"]["n20"]["deductions_anchor"]
+    assert cap["book_mismatches"] == []
+    # книга на якоре позже листа (перезаякоривание, evlib.moved): Ded20_0 = BV − CET1 по фактам якоря книги,
+    # плотности — плотности листа × общий множитель к RWA якоря; иначе — числа листа
+    ded20 = cap["book_anchor"]["ded20_anchor"] if "book_anchor" in cap else cap["ded20_anchor"]
+    assert ded20 == book["capital"]["n20"]["deductions_anchor"]
     br = json.loads((S.EVIDENCE / "bridges" / "out" / "bridges_out.json").read_text(encoding="utf-8"))
     assert br["cor_bridge"]["additive_mean_pp"] == 0.17 and br["nim_bridge"]["mgmt_minus_engine_pp"] == 0.412
     assert br["pnl"]["misc"]["2025"] == -246.5 and br["book_mismatches"] == []
@@ -135,9 +140,10 @@ def test_evidence_outputs_carry_the_book_numbers():
     near = json.loads((S.EVIDENCE / "nii" / "out" / "near_spreads_out.json").read_text(encoding="utf-8"))
     assert near["book_mismatches"] == [] and near["anchor_year"] == int(book["meta"]["first_period"][:4])
     for b, v in near["books"].items():                                                    # A1 F3: ближние ключи
-        assert {k: book["nii"]["books"][b]["spread"][k] for k in v["rule"]} == v["rule"], b
+        # перенос якоря пишет ключи с шестью знаками от неокруглённой опоры квартала: до единицы пятого знака
+        assert {k: book["nii"]["books"][b]["spread"][k] for k in v["rule"]} == pytest.approx(v["rule"], abs=1e-5), b
     assert [near["books"][b]["rule"][str(near["anchor_year"])] for b in ("mortgage", "retail_loans", "securities")] \
-        == [0.00541, 0.00541, -0.02795]
+        == [0.00672, 0.00672, -0.02803]                     # якорь 3К26 (книга 1.4; на 2К26 — 0,00541 и −0,02795)
     fl = json.loads((S.EVIDENCE / "regulation" / "out" / "floors_out.json").read_text(encoding="utf-8"))
     assert fl["mismatches"] == [] and fl["book"]["strict"]["2031"]["floor20"] == 0.14
 
@@ -173,7 +179,8 @@ def test_the_sigma0_split_is_the_rule_of_the_sheet():
     assert [ax["low"], ax["high"]] == [out["axis"]["low"], out["axis"]["high"]] == [0.0, rule["center"]]
     assert ax["high"] <= rule["max_split_exact"], "верх оси — не выше наибольшей доли, при которой гейт проходит"
     assert out["zero_spread_split"] == out["center_by_corporate_floor"]["0.0000"] > ax["high"]
-    assert out["center_by_corporate_floor"] == {"0.0000": 0.36, "0.0025": 0.23, "0.0050": 0.09, "0.0075": None}
+    # справка листа на якоре 3К26 (книга 1.4; на 2К26 при поле 0,0025 — 0,23)
+    assert out["center_by_corporate_floor"] == {"0.0000": 0.36, "0.0025": 0.22, "0.0050": 0.09, "0.0075": None}
     liab = out["stationary"]["liabilities_lt_shift"]
     assert liab == [b for b, v in book["nii"]["books"].items() if v["side"] == "liability" and v["lt_shift"]]
 
@@ -211,7 +218,11 @@ def test_the_phi_split_is_the_rule_of_the_sheet():
     for w in worlds:                                                                     # добавка пассивов = остаток сжатия
         assert at_book["liability_addon_pp"][w] == pytest.approx(100 * st["phi_liab"] * st["x_pp"][w] / 100, abs=2e-3)
     joint = out["joint_region"]
-    assert joint["nearest_l1"] == joint["nearest_l2"] == [book["nii"]["sigma0_split"], book["nii"]["phi_split"]]
+    # ближайшая к (1; 1) точка сетки 0,01 — центр правила на шаге; у книги, перенесённой на новый якорь (keep), доля σ0
+    # стоит не на шаге, а в пределах шага ниже наибольшей доли (лист sigma0_split.py)
+    step = _out("nii", "sigma0_split_out.json")["rule"]["center_by_step"]
+    assert joint["nearest_l1"] == joint["nearest_l2"] == [step, book["nii"]["phi_split"]]
+    assert 0 <= step - book["nii"]["sigma0_split"] < 0.01
     ax = next(a for a in book["valuation"]["uncertainty"]["axes"] if a["paths"] == ["nii.phi_split"])
     assert [ax["low"], ax["high"]] == [out["axis"]["low"], out["axis"]["high"]]
     assert ax["low"] == 0.0 and 0 <= rule["max_phi_split_exact"] - ax["high"] < 0.001     # верх оси — у предела гейта
@@ -380,10 +391,25 @@ def test_inputs_carry_no_absolute_paths_and_sources_are_listed():
                 assert S.sha256_bytes((inp / f["path"]).read_bytes()) == f["sha256_input"], f["path"]
 
 
+def _handoff_moved(root: str) -> str | None:
+    """Якорь калибровки книг ЧПД в папке передачи, если он позже якоря листов обоснований книги (перезаякоривание:
+    листы этапа 1 продлены новым кварталом, листы `evidence/` — снимок книги 1.0 на `evlib.SHEETS_ANCHOR`); иначе None."""
+    spec = importlib.util.spec_from_file_location("evlib_for_test", S.EVIDENCE / "evlib.py")
+    ev = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(ev)
+    prop = Path(root, "stage1", "calib", "nii", "data", "nii_books_anchor_proposal.json")
+    period = json.loads(prop.read_text(encoding="utf-8")).get("period") if prop.exists() else None
+    return period if period and period > ev.SHEETS_ANCHOR else None
+
+
 @pytest.mark.archive
 def test_small_inputs_are_the_stage1_sheets_filtered():
     if not os.environ.get("BANK_HANDOFF_DIR"):
         pytest.skip("нет BANK_HANDOFF_DIR")
+    moved = _handoff_moved(os.environ["BANK_HANDOFF_DIR"])
+    if moved:
+        pytest.skip(f"листы этапа 1 продлены якорем {moved}, листы обоснований книги — снимок на якоре прежней книги: "
+                    "малые входы сверяются после пересчёта листов на новом якоре")
     done = S.run_script(S.EVIDENCE / "extract_inputs.py", "--check")
     assert done.returncode == 0, done.stdout + done.stderr
 
@@ -403,6 +429,10 @@ def test_moved_sheets_give_the_stage1_numbers(area, pairs):
     root = os.environ.get("BANK_HANDOFF_DIR")
     if not root:
         pytest.skip("нет BANK_HANDOFF_DIR")
+    moved = _handoff_moved(root) if area == "nii" else None
+    if moved:
+        pytest.skip(f"калибровка книг ЧПД этапа 1 пересчитана на якорь {moved}, лист книги — на якоре прежней книги: "
+                    "сверка — после пересчёта листа на новом якоре")
     for mine, theirs in pairs:
         a, b = S.EVIDENCE / area / mine, Path(root, theirs)
         if mine.endswith("results.json"):                       # переезд меняет только происхождение входов и

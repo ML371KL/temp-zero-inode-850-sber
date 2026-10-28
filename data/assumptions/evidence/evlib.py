@@ -12,6 +12,16 @@ EVIDENCE = Path(__file__).resolve().parent
 BOOK_DIR = EVIDENCE.parent                                   # data/assumptions
 TEMPLATE = BOOK_DIR / "assumptions_template.yaml"
 RECORD = BOOK_DIR / "worlds_source.json"
+# Якорь, на котором посчитаны листы обоснований книги 1.0 (входы — листы этапа 1 на 30.06.2026). Книгу на другом
+# якоре туда переносит перезаякоривание (ops/tools/reanchor.py, MODEL §15.2): ключи, которые выводит перенос
+# (вычеты, поправки и плотности капитала, цели A-N2, A-N3 и доли σ0 и φ в режиме keep, ближние ключи спредов),
+# листы этого якоря не воспроизводят — их сверяет правило переноса, а не лист.
+SHEETS_ANCHOR = "2026Q2"
+
+
+def moved(book: dict) -> bool:
+    """Книга перенесена на якорь позже листов обоснований (перезаякоривание, MODEL §15.2)."""
+    return str(book["meta"]["anchor_period"]) != SHEETS_ANCHOR
 
 
 def template() -> dict:

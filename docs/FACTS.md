@@ -1,6 +1,6 @@
 # Факты Сбербанка: происхождение чисел
 
-Факты на дату якоря **30.06.2026 (2026Q2)** — отчётные числа МСФО группы, РСБУ банка (формы ЦБ) и
+Факты на дату якоря **30.09.2026 (2026Q3)** — отчётные числа МСФО группы, РСБУ банка (формы ЦБ) и
 управленческие метрики презентаций, которые читают ядро (`docs/MODEL.md`, прил. B) и сборка
 выпуска. Формат — `data/facts/SCHEMA.md`. У каждого числа в JSON — узел `{v, src}` (документ,
 страница, первые 16 знаков sha256) или `{v, calc}` (формула из узлов); нераскрытое — `null` с
@@ -16,7 +16,7 @@
 * **Сборщик** `ops/tools/build_facts.py` (`BANK_HANDOFF_DIR=<папка передачи> python -B
   ops/tools/build_facts.py [--check] [--anchor ПЕРИОД] [--out DIR] [--sheet ЛИСТ] [--sheet-template ФАЙЛ]`; якорь — из аргумента, по умолчанию —
   `anchor.json`; литералов квартала в коде нет, перечень мест, привязанных к якорю, — `SCHEMA.md` §3) читает
-  листы этапа 1: МСФО (`stage1/ifrs/ifrs_history.csv`, лист якоря `ifrs_anchor_2026H1.csv` — находится по
+  листы этапа 1: МСФО (`stage1/ifrs/ifrs_history.csv`, лист якоря `ifrs_anchor_2026Q3.csv` — находится по
   дате якоря, `ifrs_quarterly.csv` — каждое значение с документом, страницей и sha256), управленческие метрики и гайденс (`stage1/mgmt/`), формы ЦБ
   0409101/102/123/135 и месячные релизы РСБУ (`stage1/ras/`: ответы SOAP с sha256, лист релизов с
   источником каждой ячейки), рынок (`stage1/market/`: ISS; лист решений о дивидендах с публичным источником
@@ -32,33 +32,39 @@
   отчёт квартала из собранных фактов — вход `reanchor.py --facts` на настоящем отчёте. Правила —
   `SCHEMA.md` §4.
 * **Лист квартала** (`SCHEMA.md` §5) — строки отчёта и презентации нового квартала в формате листов этапа 1.
-  Шаблон следующего квартала лежит в `data/facts/sheets/<период>.csv` (сейчас — `2026Q3.csv`, отчёт за 9М26
-  выходит 28.10.2026): 140 строк — 69 остатков на 30.09.2026 и нарастающий итог списания дивидендов, 56 потоков третьего квартала,
-  14 управленческих метрик; у каждой — место той же строки в отчёте за 6М26 (документ, страница, прошлое значение). Шаблон пишет
-  сборщик (`--sheet-template`) из того, что прочёл на якоре; заполненный лист кладут в папку передачи
-  (`stage1/quarter/<период>.csv`), и он дополняет листы этапа 1. Тесты — `tests/test_facts_sheet.py`.
-* **Ставки якоря** (`nii_books.rates_carry_residual`): на якоре 2К26 ставка книги = проценты / средний
-  остаток, процентный доход вне книг (−19,6 млрд ₽ за 2К26: ПФИ, аренда, короткие позиции) — отдельной
-  строкой. На якорях, полученных перезаякориванием (с 3К26), ставки книг активов несут его долю —
-  правило MODEL §15.2 п. 4, одно с `reanchor.py`.
+  Шаблон следующего квартала лежит в `data/facts/sheets/<период>.csv` (сейчас — `2026Q4.csv`, отчёт за 2026 год
+  выходит около 25.02.2027 — оценка по прецеденту): 140 строк — 69 остатков на 31.12.2026 и нарастающий итог списания
+  дивидендов за 2026 год, 56 потоков четвёртого квартала, 14 управленческих метрик; у каждой — место той же строки в отчёте
+  за 9М26 (документ, страница, прошлое значение). Шаблон пишет сборщик (`--sheet-template`) из того, что прочёл на якоре;
+  заполненный лист кладут в папку передачи (`stage1/quarter/<период>.csv`), и он дополняет листы этапа 1. Тесты —
+  `tests/test_facts_sheet.py`. Лист якоря 2026Q3 (`ifrs_anchor_2026Q3.csv`) собран разбором отчётности инструментами
+  этапа 1 — ручной лист квартала не понадобился.
+* **Ставки якоря** (`nii_books.rates_carry_residual`): якорь 3К26 — первый, полученный перезаякориванием
+  (`RATES_CARRY_FROM`), и ставки книг активов несут процентный доход вне книг (остаток ЧПД −23,5 млрд ₽ за 3К26:
+  ПФИ, аренда, короткие позиции) пропорционально своим процентам: `rate_anchor` = проценты книги × (1 + остаток /
+  Σ процентов активных книг 2 484,8) / средний остаток × 365/92 — правило MODEL §15.2 п. 4, одно с `reanchor.py`;
+  `interest_q` и `other_interest_net_q` остаются как в отчёте. На якоре 2К26 ставка книги была = проценты /
+  средний остаток, а доход вне книг (−19,6 млрд ₽ за 2К26) стоял только отдельной строкой.
 * **Вручную** (сборщик их не пишет): `calendar.json` (календарь ЦБ, календарь эмитента в T-Invest,
   прецеденты этапа 1, новости) и `peers.json` (отчётность и пресс-релизы банков-аналогов, ISS).
   Копии источников с sha256 — в папке передачи (`stage2/reports/facts-sources/`); генераторы
   черновиков — там же (`make_calendar.py`, `make_peers.py`).
-* **Сверки сборщика** (все сходятся): тождество баланса якоря по книгам (активы = пассивы +
-  капитал = 69 141,5); прочие активы и прочие обязательства как остаток = сумме раскрытых строк;
-  средства клиентов по книгам = итогу примечания (49 132,8); дивиденды к выплате = списанию из
-  капитала 6М26 (841,0); Σ процентов кредитных книг = процентному доходу по кредитам 2К
-  (1 970,0); Σ книг ЧПД + прочие − АСВ = ЧПД отчёта (1 066,8); «прочее» ОПУ как остаток = сумме
-  прочих строк (кварталы 1–3 и годы 2024, 2025); Σ кварталов ЧП акционерам = году (2023–2025);
-  Ded20_0 = BV − CET1 = 936,7; DPS 2023–2025 по формуле политики (вверх до копейки) = объявленным
-  33,30 / 34,84 / 37,64 ₽; мост CoR движок − упр. = +0,170 п.п. (σ 0,159, n 10); мост ЧПМ движок −
-  упр. = −0,384 п.п. (σ 0,023, n 10); мост CIR движок − упр. = −1,863 п.п. (σ 1,091, n 10; годы 2024 и 2025 — −2,5 и −1,5 п.п.);
-  сезонный мост ЧП РСБУ → МСФО К1 1,058 / К2 1,015 / К3 1,003 / К4 0,962; мост ЧПД РСБУ → МСФО в
-  2025–2026 — в 1,12–1,18 (value 1,1393); мост процентных активов — 1,0–1,2 с шагом за
-  квартал ≤ 2 % (value 1,1264); моста CoR РСБУ → упр. нет — разброс разности не меньше
-  разброса самого упр. CoR; «прочее» ОПУ — основная масса в 4К (2024, 2025); реестр 2025: отсечка через
-  20 дней после решения ГОСА; sha256 форм 0409101 = листу этапа 1.
+* **Сверки сборщика** (на якоре 2026Q3 — 41, все сходятся): тождество баланса якоря по книгам (активы =
+  пассивы + капитал = 73 533,8); прочие активы и прочие обязательства как остаток = сумме раскрытых строк
+  (4 478,2 и 4 787,3); средства клиентов по книгам = итогу примечания (51 713,8); объявленные дивиденды за
+  2025 г. = списанию из капитала 9М26 (841,0), к выплате на якоре — 0,0 (срок выплаты 03.08.2026 — до якоря);
+  ставка льготной ипотеки calib-nii = средняя ключевая квартала + компенсация (16,571 % = 14,071 % + 2,50 п.п.);
+  Σ процентов кредитных книг = процентному доходу по кредитам 3К (2 014,6: АС 1 854,8 + по СС 159,8);
+  Σ книг ЧПД + прочие − АСВ = ЧПД отчёта (1 107,7); «прочее» ОПУ как остаток = сумме прочих строк (кварталы
+  1–3 2024–2026 гг., 3К26 — −157,5; годы 2024, 2025); Σ кварталов ЧП акционерам = году (2023–2025);
+  Ded20_0 = BV − CET1 = 963,7; DPS 2023–2025 по формуле политики (вверх до копейки) = объявленным
+  33,30 / 34,84 / 37,64 ₽; мост CoR движок − упр. = +0,152 п.п. (σ 0,163, n 11); мост ЧПМ движок −
+  упр. = −0,375 п.п. (σ 0,025, n 11); мост CIR движок − упр. = −1,709 п.п. (σ 1,153, n 11; годы 2024 и 2025 — −2,5 и −1,5 п.п.);
+  сезонный мост ЧП РСБУ → МСФО К1 1,058 / К2 1,015 / К3 1,005 / К4 0,962; мост ЧПД РСБУ → МСФО в
+  2025–2026 — в 1,12–1,18 (value 1,1438, окно 2025Q4–2026Q3); мост процентных активов — 1,0–1,2 с шагом за
+  квартал ≤ 2 % (value 1,1308, 2026Q3); моста CoR РСБУ → упр. нет — разброс разности не меньше
+  разброса самого упр. CoR (σ 0,49 против 0,42 п.п., n 11); «прочее» ОПУ — основная масса в 4К (2024, 2025);
+  реестр 2025: отсечка через 20 дней после решения ГОСА; sha256 форм 0409101 = листу этапа 1.
 
 ## 2. Что расчётное и почему
 
@@ -67,21 +73,21 @@
 | `balance.loans_ac_gross.mortgage_subsidized`, `mortgage_market` | льготная — оценка calib-nii (накопление поколений: доля льготной в выдачах по ЦБ, погашения 3,2 %/кв); рыночная = ипотека − льготная | разбиение ипотеки не раскрывается |
 | `balance.securities.fvtpl_bonds` | отнесённые к СС + обязательно по СС − акции − фонды + репо | строка «облигации по СС» отдельно не раскрыта |
 | `balance.other_assets`, `other_liabilities` | остаток до итога (сверен с суммой строк баланса) | книги модели шире строк отчёта |
-| `balance.dividends_payable` | объявлено за 2025 г. 850,2 − на собственные акции 9,2; обязательство есть, пока срок выплаты (03.08.2026 — 10-й рабочий день после отсечки) позже якоря, иначе — 0 (правило — из дат дивиденда) | в прочих обязательствах суммой не раскрыто |
+| `balance.dividends_payable` | объявлено за 2025 г. 850,2 − на собственные акции 9,2; обязательство есть, пока срок выплаты (03.08.2026 — 10-й рабочий день после отсечки) позже якоря, иначе — 0 (правило — из дат дивиденда); на якоре 30.09.2026 — 0: срок прошёл | в прочих обязательствах суммой не раскрыто |
 | `balance.funds.*` | ФЛ срочные + репо ФЛ; ЮЛ — прочие ЮЛ + госорганизации, срочные + репо | книги модели объединяют строки примечания |
 | `balance.prev_year_end.*` | сумма продуктов на 31.12.2025 (состав сегментов книг) | — |
-| `nii_books.books.*.balance_open` | остатки на 31.03.2026 тем же составом | — |
-| `nii_books.books.{corp_loans, mortgage, mortgage_sub, retail_loans}.rate_anchor`, `interest_q` | ставки calib-nii: ЮЛ — упр. доходность × масштаб к МСФО; ипотека и прочая розница — одна ставка (упр. доходность ФЛ за вычетом льготной); льготная — ставка calib-nii: средняя ключевая + 2,5 п.п. (вторичный источник, по первичному документу не проверено); проценты = ставка × средний остаток × 91/365 (Σ = 1 970,0) | процентный доход по кредитам по продуктам не раскрыт |
-| `nii_books.books.{securities, …, wholesale}.rate_anchor` | проценты 2К / средний остаток × 365/91 | — |
-| `nii_books.key_avg_anchor_q` | средняя ключевая 2К26 по календарным дням (15 % / 14,5 % / 14,25 %) | — |
+| `nii_books.books.*.balance_open` | остатки на 30.06.2026 тем же составом | — |
+| `nii_books.books.{corp_loans, mortgage, mortgage_sub, retail_loans}.rate_anchor`, `interest_q` | ставки calib-nii: ЮЛ — упр. доходность × масштаб к МСФО; ипотека и прочая розница — одна ставка (упр. доходность ФЛ за вычетом льготной); льготная — ставка calib-nii: средняя ключевая + 2,5 п.п. (вторичный источник, по первичному документу не проверено); проценты = ставка × средний остаток × 92/365 (Σ = 2 014,6); `rate_anchor` книги — эта ставка × (1 + остаток ЧПД вне книг / Σ процентов активных книг) (§1, «Ставки якоря») | процентный доход по кредитам по продуктам не раскрыт |
+| `nii_books.books.{securities, …, wholesale}.rate_anchor` | проценты 3К / средний остаток × 365/92; у бумаг и ликвидности — × (1 + остаток ЧПД вне книг / Σ процентов активных книг) (§1, «Ставки якоря») | — |
+| `nii_books.key_avg_anchor_q` | средняя ключевая 3К26 по календарным дням (14,25 %, с 27.07.2026 — 14 %) | — |
 | `pnl_quarterly.*.misc_net` | PBT − (ЧПД + резервы + ЧКД + страхование + непрофильная + расходы) | «прочее» — определение модели (MODEL §4.7) |
 | `pnl_quarterly.*` кварталы К4 и часть 2К/3К | разность нарастающих итогов (помечено в `calc`) | квартальной колонки нет |
-| `shares.treasury_*`, `outstanding_*` | дивиденд на собственные акции 7,9 / 1,3 млрд ÷ 37,64 ₽ (на отсечку 20.07.2026; ±1–2 млн) | число собственных акций на 30.06.2026 не раскрыто |
-| `bridge_mgmt_ifrs.*.engine`, `value` | CoR движка = −резервы по долговым ФА / средние валовые кредиты АС × 365/d; ЧПМ движка = ЧПД × 365/d / средние процентные активы движка; value — среднее разностей 1К24–2К26 | — |
+| `shares.treasury_*`, `outstanding_*` | дивиденд на собственные акции 7,9 / 1,3 млрд ÷ 37,64 ₽ (на отсечку 20.07.2026; ±1–2 млн) | число собственных акций на 30.09.2026 не раскрыто |
+| `bridge_mgmt_ifrs.*.engine`, `value` | CoR движка = −резервы по долговым ФА / средние валовые кредиты АС × 365/d; ЧПМ движка = ЧПД × 365/d / средние процентные активы движка; value — среднее разностей 1К24–3К26 | — |
 | `bridge_mgmt_ifrs.nim.history` 2023Q1–2024Q4 | процентные активы на даты обобщённой формы — «бумаги и ПФИ» − ПФИ − акции (ПФИ и акции интерполированы; оценка, помечено) | бумаги по категориям на промежуточные даты 2023–2024 не раскрыты |
 | `bridge_ras_ifrs` | ЧП РСБУ квартала — разность нарастающих формы 0409102 (1К23 — релиз); отношение к ЧП акционерам МСФО | — |
 | `pnl_quarterly.*.key_avg` | средняя ключевая квартала по календарным дням (изменения ставки ЦБ) | — |
-| `bridge_mgmt_ifrs.cir.*` | CIR движка = −opex / (ЧПД + ЧКД + страхование + «прочее»); value — среднее разностей с упр. CIR 1К24–2К26; 2023 — null | упр. CIR определён банком иначе (строки дохода) |
+| `bridge_mgmt_ifrs.cir.*` | CIR движка = −opex / (ЧПД + ЧКД + страхование + «прочее»); value — среднее разностей с упр. CIR 1К24–3К26; 2023 — null | упр. CIR определён банком иначе (строки дохода) |
 | `bridge_ras_ifrs.nii.*` | ЧПД РСБУ квартала — разность нарастающих итогов релизов (PDF, где он есть; иначе ячейка листа этапа 1 со своим источником — скриншот таблицы релиза, Интерфакс); отношение к ЧПД МСФО; value — среднее за 4 кв. | квартальный ЧПД в релизе не печатается |
 | `bridge_ras_ifrs.iea.*` | средние процентные активы банка по форме 0409101 (коды `iea.codes`) и движка группы (`balance.history.iea`); value — последний квартал (отношение дрейфует) | процентные активы в РСБУ не печатаются |
 | `bridge_ras_ifrs.cor` | null: разность квартального CoR РСБУ и упр. не устойчивее самого CoR | — |
@@ -91,10 +97,10 @@
 | `pnl_quarterly.*.at1_coupon` | купон AT1 величиной: вне 4К — 0 (платится в декабре); 4К = год − 9 месяцев = 9,7 (строка «Процентные платежи по бессрочному субординированному займу» годового отчёта о капитале; в отчёте за 9 месяцев её нет) | квартальной колонки в отчёте о капитале нет |
 | `dividends.policy.valid_until` | дата утверждения 05.12.2023 + 3 года (п. 6.4 Положения, с. 7) = 05.12.2026; считается сборщиком; продление без нового документа — параметр сборщика `POLICY_EXTENSION` с источником (сейчас продления нет) | в документе срок задан длительностью, а не датой |
 | `guidance.items.loan_growth.*.scope_note`, `history[].note` | слова записки листа; короткая дата «к 29.04» дополняется годом из дат гайденса («к 29.04.2026») | записка печатается на витрине, а короткая дата читается там как дробь |
-| `guidance.items.*.tol` (только у точек, `kind: point`) | половина единицы последнего разряда числа в презентации: «22%» → 0,005; «~6.2%» → 0,0005; «~0%» → 0,005 | допуск точечной цели — свойство записи числа |
+| `guidance.items.*.tol` (только у точек, `kind: point`) | половина единицы последнего разряда числа в презентации: «22%» → 0,005; «~0%» → 0,005 (у ЧПМ до 28.10.2026 — точка «~6.2%»: 0,0005) | допуск точечной цели — свойство записи числа |
 | `guidance.items.*.kind` | вид по таблице сборщика; граница в тексте строки листа задаёт вид сама: «>6.2%» — `min` (нижняя граница, без допуска), «<1.4%» — `max` | эмитент меняет точку на границу при пересмотре (ЧПМ 2026 года: «~6.2%» 29.07.2026 → «>6.2%» 28.10.2026) |
 | `guidance.items.loan_growth.*.relation` | ЮЛ — `in_line` («в соответствии с сектором»), ФЛ — `above` («лучше сектора»); сборщик сверяет поле со словами презентации (с. 23) | презентация даёт прогноз сектора и слова об отношении банка к нему, не цель банка |
-| `mgmt_quarterly.*` с `calc` «выведено: …» | на странице напечатаны значение сравнимого периода и изменение к нему: CIR 1К24–3К24, 1К25–2К25; ЧПМ и CoR 1К25; ROE 4К23; Н20.0 4К23, 4К24; стоимость средств ФЛ и ЮЛ 4К22; годовые CIR, CoR, ROE 2023 | самого числа на странице нет |
+| `mgmt_quarterly.*` с `calc` «выведено: …» | на странице напечатаны значение сравнимого периода и изменение к нему: CIR 1К24–3К24, 1К25–3К25; CoR 1К25; ROE 4К23; Н20.0 4К23, 4К24; стоимость средств ФЛ и ЮЛ 4К22; годовые CIR, CoR, ROE 2023 | самого числа на странице нет |
 | `mgmt_quarterly.2023Q2.{nim, cir, roe}`, `2023Q3.nim` | напечатаны в релизах МСФО 2К23 (с. 3) и 9М23 (с. 7); вывод листа этапа 1 из релизов 2024 г. оставлен сверкой в `calc` | — |
 | `peers.*.ni_ltm`, `roe_ltm`, `bv` | ЧП LTM = год − 6М прошлого года + 6М; ROE = ЧП LTM / среднее капитала; капитал — без бессрочных инструментов, где раскрыты | — |
 
@@ -106,6 +112,9 @@
 (обобщённая форма); мост CoR РСБУ → упр. (нет данных нужного качества — нау-каст CoR равен ожиданию).
 
 ## 3. Отличия от сводки этапа 1 (решения потока facts)
+
+Числа первых трёх пунктов — на якоре 2К26 (30.06.2026), когда принимались решения; правила те же на любом
+якоре, числа нового — §4.
 
 * **Акции и фонды — вне книги `securities`** (сводка §1 п. 23, прил. B MODEL: `securities` — Σ
   долговых): `balance.other_assets` = 4 362,2 (сводка — 4 119,4 без акций и фондов 242,8), книга
@@ -151,6 +160,13 @@
   пересчёт калибровки книг ЧПД делаются в день отчёта (28.10.2026); к нему готов шаблон листа квартала
   (`SCHEMA.md` §5) и порядок действий (`SCHEMA.md` §3).
 
+* **Якорь 3К26 (28.10.2026, `docs/REANCHOR.md` §1.6):** факты пересобраны сборщиком на якоре 30.09.2026; лист
+  якоря `ifrs_anchor_2026Q3.csv` собран разбором отчётности инструментами этапа 1, ручной лист квартала не
+  понадобился. Ставки книг активов впервые несут долю процентного дохода вне книг (§1, «Ставки якоря»). ЧПМ
+  гайденса 2026 г. — нижняя граница «>6.2%» (`kind: min`) вместо точки «~6.2%». Упр. ЧПМ 1К25–2К26 — из
+  презентации 3К26 (с. 8, два знака после запятой): 2К25, 3К25 и 2К26 уточнились (6,09 / 6,17 / 6,69 % вместо
+  6,1 / 6,2 / 6,7 %), мост ЧПМ посчитан по ним.
+
 ## 4. Числа по файлам
 
 ### Реестр документов (`anchor.json → documents`)
@@ -180,14 +196,17 @@
 | `2025Q4_ifrs_press_release` | research/primary/2025Q4_ifrs_press_release.pdf | `9fcc844f65e099c2` | Пресс-релиз МСФО 12М25 (26.02.2026) |
 | `2026H1_ifrs_interim_statements` | research/primary/2026H1_ifrs_interim_statements.pdf | `5b3a3de88ae6c96b` | Промежуточная сокращённая консолидированная отчётность МСФО 6М26 (с примечаниями) |
 | `2026M03_ras_press_release` | research/primary/2026M03_ras_press_release.pdf | `216a30a59107e3b5` | Пресс-релиз РПБУ 3М2026 |
+| `2026M09_ras_press_release` | research/primary/2026M09_ras_press_release.pdf | `3a10a6fe90a6ea44` | Пресс-релиз РПБУ 9М2026 (октябрь 2026) |
 | `2026Q1_ifrs_presentation` | research/primary/2026Q1_ifrs_presentation.pdf | `6002b43d7cbea77f` | Презентация МСФО 1К26 |
 | `2026Q2_ifrs_presentation` | research/primary/2026Q2_ifrs_presentation.pdf | `d17d36167137507e` | Презентация МСФО 2К26/6М26 (29.07.2026) |
+| `2026Q3_ifrs_interim_statements` | research/primary/2026Q3_ifrs_interim_statements.pdf | `bfb59dab3fe2cea9` | Промежуточная сокращённая консолидированная отчётность МСФО 9М26 (с примечаниями) |
+| `2026Q3_ifrs_presentation` | research/primary/2026Q3_ifrs_presentation.pdf | `a0429c1af753efc3` | Презентация МСФО 3К26/9М26 (28.10.2026) |
 | `FY2022_ifrs_presentation` | primary/FY2022_ifrs_presentation.pdf | `03bcb49309a55139` | Презентация МСФО 2022 |
 | `FY2022_ifrs_press_release` | primary/FY2022_ifrs_press_release.pdf | `68dd451a6a384e3d` | Пресс-релиз МСФО 2022 |
 | `FY2022_ifrs_summary_statements` | research/primary/FY2022_ifrs_summary_statements.pdf | `0f736f6e44142c7f` | Обобщённая консолидированная отчётность МСФО 2022 (с данными 2021) |
 | `FY2023_ifrs_summary_statements` | research/primary/FY2023_ifrs_summary_statements.pdf | `724849f5047bb32b` | Обобщённая консолидированная отчётность МСФО 2023 (с данными 2022) |
 | `IR_presentation_2021-04` | primary/IR_presentation_2021-04.pdf | `3ce1f5ac0f833d60` | Презентация для инвесторов на 01.04.2021 (после МСФО 2020) |
-| `calib_nii_anchor_proposal` | stage1/calib/nii/data/nii_books_anchor_proposal.json | `1351a13f2c5bf83c` | calib-nii: книги ЧПД на якоре (предложение этапа 1) |
+| `calib_nii_anchor_proposal` | stage1/calib/nii/data/nii_books_anchor_proposal.json | `77890d79129ad4f0` | calib-nii: книги ЧПД на якоре (предложение этапа 1) |
 | `cbr_f101_2023-07-01` | stage1/ras/raw/101/2023-07-01.xml | `a4ad41cde5d98bf6` | Банк России, CreditOrgInfo: форма 0409101 банка на 2023-07-01 (ответ SOAP) |
 | `cbr_f101_2023-10-01` | stage1/ras/raw/101/2023-10-01.xml | `3afac4c81cfe5dae` | Банк России, CreditOrgInfo: форма 0409101 банка на 2023-10-01 (ответ SOAP) |
 | `cbr_f101_2024-01-01` | stage1/ras/raw/101/2024-01-01.xml | `5082fa10a2e9c161` | Банк России, CreditOrgInfo: форма 0409101 банка на 2024-01-01 (ответ SOAP) |
@@ -201,6 +220,7 @@
 | `cbr_f101_2026-01-01` | stage1/ras/raw/101/2026-01-01.xml | `1bb4581f5ee3f989` | Банк России, CreditOrgInfo: форма 0409101 банка на 2026-01-01 (ответ SOAP) |
 | `cbr_f101_2026-04-01` | stage1/ras/raw/101/2026-04-01.xml | `2e3e0fcd99123a2f` | Банк России, CreditOrgInfo: форма 0409101 банка на 2026-04-01 (ответ SOAP) |
 | `cbr_f101_2026-07-01` | stage1/ras/raw/101/2026-07-01.xml | `be56704db086abad` | Банк России, CreditOrgInfo: форма 0409101 банка на 2026-07-01 (ответ SOAP) |
+| `cbr_f101_2026-10-01` | stage1/ras/raw/101/2026-10-01.xml | `1ef014e559dd7e1a` | Банк России, CreditOrgInfo: форма 0409101 банка на 2026-10-01 (ответ SOAP) |
 | `cbr_f102_2023-07-01` | stage1/ras/raw/102/2023-07-01.xml | `df118a18be9e15b1` | Банк России, CreditOrgInfo: форма 0409102 банка на 2023-07-01 (ответ SOAP) |
 | `cbr_f102_2023-10-01` | stage1/ras/raw/102/2023-10-01.xml | `01fc3ad2c2397a8b` | Банк России, CreditOrgInfo: форма 0409102 банка на 2023-10-01 (ответ SOAP) |
 | `cbr_f102_2024-01-01` | stage1/ras/raw/102/2024-01-01.xml | `ecc2f217cee93b69` | Банк России, CreditOrgInfo: форма 0409102 банка на 2024-01-01 (ответ SOAP) |
@@ -214,7 +234,8 @@
 | `cbr_f102_2026-01-01` | stage1/ras/raw/102/2026-01-01.xml | `b5f9ec2a9b111ec9` | Банк России, CreditOrgInfo: форма 0409102 банка на 2026-01-01 (ответ SOAP) |
 | `cbr_f102_2026-04-01` | stage1/ras/raw/102/2026-04-01.xml | `a73b8acd5b43d68b` | Банк России, CreditOrgInfo: форма 0409102 банка на 2026-04-01 (ответ SOAP) |
 | `cbr_f102_2026-07-01` | stage1/ras/raw/102/2026-07-01.xml | `f2b31dd5b2e54b34` | Банк России, CreditOrgInfo: форма 0409102 банка на 2026-07-01 (ответ SOAP) |
-| `cbr_f123_2026-07-01` | stage1/ras/raw/123/2026-07-01.xml | `245c5ea95f6de880` | Банк России, CreditOrgInfo: форма 0409123 банка на 2026-07-01 (ответ SOAP) |
+| `cbr_f102_2026-10-01` | stage1/ras/raw/102/2026-10-01.xml | `569824fd56774326` | Банк России, CreditOrgInfo: форма 0409102 банка на 2026-10-01 (ответ SOAP) |
+| `cbr_f123_2026-10-01` | stage1/ras/raw/123/2026-10-01.xml | `39b64c4b2fa68c72` | Банк России, CreditOrgInfo: форма 0409123 банка на 2026-10-01 (ответ SOAP) |
 | `cbr_f135_2023-07-01` | stage1/ras/raw/135/2023-07-01.xml | `3ccd62dd296aa887` | Банк России, CreditOrgInfo: форма 0409135 банка на 2023-07-01 (ответ SOAP) |
 | `cbr_f135_2023-10-01` | stage1/ras/raw/135/2023-10-01.xml | `8b10255e5b6f72e1` | Банк России, CreditOrgInfo: форма 0409135 банка на 2023-10-01 (ответ SOAP) |
 | `cbr_f135_2024-01-01` | stage1/ras/raw/135/2024-01-01.xml | `a32d4c0f90aae8e8` | Банк России, CreditOrgInfo: форма 0409135 банка на 2024-01-01 (ответ SOAP) |
@@ -228,6 +249,7 @@
 | `cbr_f135_2026-01-01` | stage1/ras/raw/135/2026-01-01.xml | `937ee3fa7aa6b151` | Банк России, CreditOrgInfo: форма 0409135 банка на 2026-01-01 (ответ SOAP) |
 | `cbr_f135_2026-04-01` | stage1/ras/raw/135/2026-04-01.xml | `b7d028fba3ee8949` | Банк России, CreditOrgInfo: форма 0409135 банка на 2026-04-01 (ответ SOAP) |
 | `cbr_f135_2026-07-01` | stage1/ras/raw/135/2026-07-01.xml | `5f7eccf6222b6cd7` | Банк России, CreditOrgInfo: форма 0409135 банка на 2026-07-01 (ответ SOAP) |
+| `cbr_f135_2026-10-01` | stage1/ras/raw/135/2026-10-01.xml | `fa5c852a5f11d990` | Банк России, CreditOrgInfo: форма 0409135 банка на 2026-10-01 (ответ SOAP) |
 | `cbr_key_rate_changes` | research/facts/cbr_key_rate_changes.csv | `97ef7898b8e6adda` | Банк России: ключевая ставка по датам изменений (выгрузка 30.09.2026) |
 | `dividend_policy_2023` | research/primary/dividend_policy_2023.pdf | `f486aa17b9ab2a18` | Дивидендная политика ПАО Сбербанк (ред. 2023) |
 | `dividends_public` | stage1/market/shares_dividends/dividends_public.csv | `fda92ec5df2d3ac4` | Решения годовых собраний акционеров Сбербанка о дивидендах за 2013–2025 гг.: страница «Дивиденды» на сайте банка и новости о решениях (сверено с брокерским календарём дивидендов); адрес страницы — https://www.sberbank.com/ru/investor-relations/dividends, доступ 01.10.2026. Название документа витрина печатает как источник истории дивидендов |
@@ -248,7 +270,7 @@
 | `ifx_agm_2026` | stage2/reports/facts-sources/interfax_1099207_20260630.html | `68efd89078a3b444` | Интерфакс 30.06.2026: «Акционеры Сбербанка утвердили дивиденды за 2025 г. в размере 37,64 руб. на акцию» |
 | `iss_description_SBER` | stage1/market/shares_dividends/iss_description_SBER.json | `7005c0ab2fe1d973` | MOEX ISS: описание бумаги SBER (снимок 30.09.2026) |
 | `iss_description_SBERP` | stage1/market/shares_dividends/iss_description_SBERP.json | `3c31bb74a1ebad23` | MOEX ISS: описание бумаги SBERP (снимок 30.09.2026) |
-| `moex_zcyc_2026-06-30` | — (ответ API не сохранён) | `90b297f62e10f888` | MOEX ISS zcyc: бескупонная кривая ОФЗ на 2026-06-30 18:49:58 (ответ JSON не сохранён; значения — лист stage1/calib/capital/data/zcyc_quarter |
+| `moex_zcyc_2026-09-30` | — (ответ API не сохранён) | `f48097ea5bbcd494` | MOEX ISS zcyc: бескупонная кривая ОФЗ на 2026-09-30 18:12:28 (ответ JSON не сохранён; значения — лист stage1/calib/capital/data/zcyc_quarter_ends.csv) |
 | `ras_2023M03_press_release` | primary/ras_2023M03_press_release.pdf | `c45e3c13d98283af` | Релиз РПБУ 3М2023 (имя подобрано по образцу) |
 | `ras_2023M06_press_release` | primary/ras_2023M06_press_release.pdf | `bfd8e8d728c781e5` | Релиз РПБУ 6М2023 (имя подобрано по образцу) |
 | `ras_2023M09_press_release` | primary/ras_2023M09_press_release.pdf | `7d23a0feab2b78f5` | Релиз РПБУ 9М2023 (ссылка: smart-lab 948776) |
@@ -256,158 +278,161 @@
 | `ras_2025M06_press_release` | primary/ras_2025M06_press_release.pdf | `f9fcc061265bd746` | Релиз РПБУ 6М2025 (ссылка: smart-lab 1177645) |
 | `ras_2025M12_press_release` | primary/ras_2025M12_press_release.pdf | `f4db795314b45209` | Релиз РПБУ 12М2025 (ссылка: WebSearch 30.09.2026) |
 | `ras_2026M06_press_release` | primary/ras_2026M06_press_release.pdf | `cfff8ed466a03af4` | Релиз РПБУ 6М2026 (09.07.2026); ссылка из статьи Ведомостей 09.07.2026 (1212362-sber-narastil-pribil) |
-| `ras_release_monthly` | stage1/ras/ras_release_monthly.csv | `cc7e47203d02983d` | Этап 1: месячные релизы РСБУ банка 2023–2026 (лист с источником каждой ячейки) |
+| `ras_release_monthly` | stage1/ras/ras_release_monthly.csv | `667bb1f6ed60693b` | Этап 1: месячные релизы РСБУ банка 2023–2026 (лист с источником каждой ячейки) |
 
 ### `balance.json` — баланс якоря
 
 | Поле | Значение | Статус | Документ, страница, sha256 / формула |
 |---|---|---|---|
-| `loans_ac_gross.commercial` | 16 266,3 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b |
-| `loans_ac_gross.project` | 11 931,7 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b |
-| `loans_ac_gross.mortgage_market` | 6 147,0 | Р | *loans_ac_gross.mortgage − mortgage_subsidized = 13284,9 − 7137,9; разбиение ипотеки в отчётности не раскрыто* |
-| `loans_ac_gross.mortgage_subsidized` | 7 137,9 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c — *оценка calib-nii на 30.06.2026 (накопление поколений: выдачи ≈ прирост портфеля + погашения; доля льготной в выдачах — ЦБ, «Обзор финансовой стабильности», за квартал якоря — раскрытие банка; параметры — REPORT-nii этапа 1): 53,7 % ипотеки; при других темпах погашения — 51,8–61,1 %; расчётная оценка — в отчётности не раскрыто* |
-| `loans_ac_gross.consumer` | 3 593,3 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b |
-| `loans_ac_gross.cards` | 2 567,7 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b |
-| `loans_ac_gross.auto` | 829,2 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b |
-| `loans_ac_gross.mortgage` | 13 284,9 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b |
-| `loans_ac_gross.total` | 48 473,1 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b |
-| `loans_fvtpl` | 4 107,0 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b |
-| `allowance_ac` | 2 605,1 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b — *величина резерва под ОКУ по кредитам АС: −(−2605,1); в отчёте — со знаком минус* |
-| `securities.fvoci_debt` | 5 311,2 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b |
-| `securities.fvoci_repo` | 1 022,1 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 39, sha256 5b3a3de88ae6c96b |
-| `securities.ac` | 2 417,4 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b |
-| `securities.ac_repo` | 664,7 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 39, sha256 5b3a3de88ae6c96b |
-| `securities.fvtpl_bonds` | 1 830,7 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b; 2026H1_ifrs_interim_statements.pdf, с. 39, sha256 5b3a3de88ae6c96b — *отнесённые к СС 890,9 + обязательно по СС 1167,9 − акции 227,6 − фонды 15,0 + заложенные по репо 14,5* |
-| `securities.fvtpl_equity` | 242,6 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 37, sha256 5b3a3de88ae6c96b — *акции + паи фондов по СС (в книгу securities не входят — в other_assets)* |
-| `securities.fvoci_equity` | 0,2 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b |
-| `securities.debt_total` | 11 246,1 | Р | *fvoci_debt + fvoci_repo + ac + ac_repo + fvtpl_bonds* |
-| `liquidity.cash` | 1 698,6 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b |
-| `liquidity.cbr` | 193,7 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b — *обязательные резервы на счетах в ЦБ (строка баланса)* |
-| `liquidity.due_from_banks` | 1 665,9 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b |
+| `loans_ac_gross.commercial` | 17 051,7 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9 |
+| `loans_ac_gross.project` | 12 848,6 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9 |
+| `loans_ac_gross.mortgage_market` | 6 213,4 | Р | *loans_ac_gross.mortgage − mortgage_subsidized = 13633,8 − 7420,4; разбиение ипотеки в отчётности не раскрыто* |
+| `loans_ac_gross.mortgage_subsidized` | 7 420,4 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0 — *оценка calib-nii на 30.09.2026 (накопление поколений: выдачи ≈ прирост портфеля + погашения; доля льготной в выдачах — ЦБ, «Обзор финансовой стабильности», за квартал якоря — раскрытие банка; параметры — REPORT-nii этапа 1): 54,4 % ипотеки; при других темпах погашения — 52,4–61,9 %; расчётная оценка — в отчётности не раскрыто* |
+| `loans_ac_gross.consumer` | 3 713,3 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9 |
+| `loans_ac_gross.cards` | 2 610,8 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9 |
+| `loans_ac_gross.auto` | 897,1 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9 |
+| `loans_ac_gross.mortgage` | 13 633,8 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9 |
+| `loans_ac_gross.total` | 50 755,3 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9 |
+| `loans_fvtpl` | 4 251,8 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9 |
+| `allowance_ac` | 2 643,6 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9 — *величина резерва под ОКУ по кредитам АС: −(−2643,6); в отчёте — со знаком минус* |
+| `securities.fvoci_debt` | 4 832,2 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 41, sha256 bfb59dab3fe2cea9 |
+| `securities.fvoci_repo` | 1 726,2 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 44, sha256 bfb59dab3fe2cea9 |
+| `securities.ac` | 2 434,7 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 41, sha256 bfb59dab3fe2cea9 |
+| `securities.ac_repo` | 976,8 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 44, sha256 bfb59dab3fe2cea9 |
+| `securities.fvtpl_bonds` | 2 052,2 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 41, sha256 bfb59dab3fe2cea9; 2026Q3_ifrs_interim_statements.pdf, с. 44, sha256 bfb59dab3fe2cea9 — *отнесённые к СС 1143,6 + обязательно по СС 1097,9 − акции 188,6 − фонды 16,0 + заложенные по репо 15,3* |
+| `securities.fvtpl_equity` | 204,6 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 43, sha256 bfb59dab3fe2cea9 — *акции + паи фондов по СС (в книгу securities не входят — в other_assets)* |
+| `securities.fvoci_equity` | 0,2 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 41, sha256 bfb59dab3fe2cea9 |
+| `securities.debt_total` | 12 022,1 | Р | *fvoci_debt + fvoci_repo + ac + ac_repo + fvtpl_bonds* |
+| `liquidity.cash` | 2 787,9 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9 |
+| `liquidity.cbr` | 194,0 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9 — *обязательные резервы на счетах в ЦБ (строка баланса)* |
+| `liquidity.due_from_banks` | 1 688,1 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9 |
 | `liquidity.reverse_repo` | null | null | *не раскрыто: обратное репо отдельно не раскрыто — внутри средств в банках (due_from_banks)* |
-| `liquidity.total` | 3 558,2 | Р | *cash + cbr + due_from_banks* |
-| `other_assets` | 4 362,2 | Р | *total_assets − (кредиты АС валовые − резерв + кредиты по СС) − долговые бумаги − ликвидность = 69141,5 − 49975,0 − 11246,1 − 3558,2; = ОС 1395,6 + НМА 716,5 + прочие 1609,6 + ПФИ 191,4 + ОНА 114,4 + ассоциированные 91,9 + акции и фонды 242,8* |
-| `total_assets` | 69 141,5 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b |
-| `funds.retail_current` | 14 309,0 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b |
-| `funds.retail_term` | 20 169,5 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b — *срочные ФЛ 20160,6 + репо ФЛ 8,9* |
-| `funds.corp_current` | 3 139,8 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b — *расчётные счета прочих ЮЛ 2855,1 + госорганизаций 284,7* |
-| `funds.corp_term` | 11 514,5 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b — *срочные прочих ЮЛ 8501,9 + госорганизаций 2796,3 + репо 154,8 + 61,5* |
-| `wholesale.banks` | 4 803,6 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b |
-| `wholesale.issued_debt` | 836,3 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b |
-| `wholesale.subordinated` | 518,0 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b |
+| `liquidity.total` | 4 670,0 | Р | *cash + cbr + due_from_banks* |
+| `other_assets` | 4 478,2 | Р | *total_assets − (кредиты АС валовые − резерв + кредиты по СС) − долговые бумаги − ликвидность = 73533,8 − 52363,5 − 12022,1 − 4670,0; = ОС 1400,7 + НМА 741,3 + прочие 1736,2 + ПФИ 166,4 + ОНА 127,0 + ассоциированные 101,8 + акции и фонды 204,8* |
+| `total_assets` | 73 533,8 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9 |
+| `funds.retail_current` | 14 845,9 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 45, sha256 bfb59dab3fe2cea9 |
+| `funds.retail_term` | 20 119,6 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 45, sha256 bfb59dab3fe2cea9 — *срочные ФЛ 20109,9 + репо ФЛ 9,7* |
+| `funds.corp_current` | 3 378,8 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 45, sha256 bfb59dab3fe2cea9 — *расчётные счета прочих ЮЛ 3041,2 + госорганизаций 337,6* |
+| `funds.corp_term` | 13 369,5 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 45, sha256 bfb59dab3fe2cea9 — *срочные прочих ЮЛ 9743,9 + госорганизаций 3424,5 + репо 165,9 + 35,2* |
+| `wholesale.banks` | 6 546,0 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9 |
+| `wholesale.issued_debt` | 964,5 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9 |
+| `wholesale.subordinated` | 521,4 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9 |
 | `wholesale.repo_cbr` | null | null | *не раскрыто: репо с ЦБ отдельно не раскрыто — внутри средств банков (banks)* |
-| `other_liabilities` | 4 478,0 | Р | *total_liabilities − средства клиентов − опт − дивиденды к выплате = 60609,7 − 49132,8 − 6157,9 − 841,0; = ПФИ 275,5 + страховые 2511,1 + ОНО 48,1 + прочие 2484,3 − дивиденды 841,0* |
-| `dividends_payable` | 841,0 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 43, sha256 5b3a3de88ae6c96b — *дивиденды за 2025 г., объявленные ГОСА 30.06.2026, 850,2 − на собственные акции 9,2 (обыкн. 7,9 + прив. 1,3); в составе прочих обязательств суммой не раскрыты; = списание из капитала 6М26 (−841,0); срок выплаты — 03.08.2026* |
-| `total_liabilities` | 60 609,7 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b |
-| `equity.total` | 8 531,8 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b |
-| `equity.shareholders` | 8 537,2 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b |
-| `equity.at1` | 150,0 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b |
-| `equity.nci` | -5,4 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b |
-| `equity.bv_common` | 8 387,2 | Р | *equity.total − at1 − nci = 8531,8 − 150,0 − (−5,4)* |
-| `equity.share_capital` | 87,7 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b |
-| `equity.share_premium` | 232,6 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b |
-| `equity.treasury_cost` | -47,8 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b |
-| `equity.fvoci_reserve` | -374,9 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 44, sha256 5b3a3de88ae6c96b — *фонд переоценки FVOCI после налога (компонент прочих резервов)* |
-| `equity.other_reserves` | -228,5 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b |
-| `equity.retained_earnings` | 8 343,2 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b |
-| `prev_year_end.loans_corporate` | 31 167,0 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b — *коммерческие 16518,4 + проектные 10987,5 + кредиты по СС 3661,1 — тот же состав, что книга corp_loans* |
-| `prev_year_end.loans_retail` | 19 204,1 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b — *ипотека + потребительские + карты + авто (валовые, АС) — книги mortgage + mortgage_sub + retail_loans* |
-| `iea` | 67 384,4 | Р | *loans_ac_gross.total + loans_fvtpl + securities.debt_total + liquidity.total (процентные активы движка)* |
+| `other_liabilities` | 4 787,3 | Р | *total_liabilities − средства клиентов − опт − дивиденды к выплате = 64533,0 − 51713,8 − 8031,9 − 0,0; = ПФИ 290,4 + страховые 2814,7 + ОНО 83,3 + прочие 1598,9 − дивиденды 0,0* |
+| `dividends_payable` | 0,0 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 48, sha256 bfb59dab3fe2cea9 — *дивиденды за 2025 г., объявленные ГОСА 30.06.2026, 850,2 − на собственные акции 9,2 (обыкн. 7,9 + прив. 1,3) = 841,0: срок выплаты 03.08.2026 — до даты якоря; обязательства на 30.09.2026 нет* |
+| `total_liabilities` | 64 533,0 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 5, sha256 bfb59dab3fe2cea9 |
+| `equity.total` | 9 000,8 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9 |
+| `equity.shareholders` | 9 004,6 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9 |
+| `equity.at1` | 150,0 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9 |
+| `equity.nci` | -3,8 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9 |
+| `equity.bv_common` | 8 854,6 | Р | *equity.total − at1 − nci = 9000,8 − 150,0 − (−3,8)* |
+| `equity.share_capital` | 87,7 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9 |
+| `equity.share_premium` | 232,6 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9 |
+| `equity.treasury_cost` | -42,1 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9 |
+| `equity.fvoci_reserve` | -424,8 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 49, sha256 bfb59dab3fe2cea9 — *фонд переоценки FVOCI после налога (компонент прочих резервов)* |
+| `equity.other_reserves` | -281,5 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9 |
+| `equity.retained_earnings` | 8 857,9 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9 |
+| `prev_year_end.loans_corporate` | 31 167,0 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9 — *коммерческие 16518,4 + проектные 10987,5 + кредиты по СС 3661,1 — тот же состав, что книга corp_loans* |
+| `prev_year_end.loans_retail` | 19 204,1 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 18, sha256 bfb59dab3fe2cea9 — *ипотека + потребительские + карты + авто (валовые, АС) — книги mortgage + mortgage_sub + retail_loans* |
+| `iea` | 71 699,2 | Р | *loans_ac_gross.total + loans_fvtpl + securities.debt_total + liquidity.total (процентные активы движка)* |
 
-### `nii_books.json` — книги ЧПД 2К26
+### `nii_books.json` — книги ЧПД 3К26
 
 | Поле | Значение | Статус | Документ, страница, sha256 / формула |
 |---|---|---|---|
-| `days` | 91 | Р | *дней в квартале 2026Q2 (act/365)* |
-| `books.corp_loans.balance_open` | 31 882,3 | Ф+Р | ifrs_3M2026_statements.pdf, с. 15, sha256 4b1449f839cf0826 — *коммерческие + проектные (АС, валовые) + кредиты по СС на 31.03.2026* |
-| `books.corp_loans.balance_close` | 32 305,0 | Р | *balance.json на 2026-06-30 (состав книги — MODEL §4.1)* |
-| `books.corp_loans.balance_avg` | 32 093,7 | Р | *(balance_open + balance_close) / 2* |
-| `books.corp_loans.interest_q` | 1 137,3 | Р | *rate_anchor × balance_avg × 91/365; процентный доход по кредитам 2К (АС + по СС = 1970,0) по книгам не раскрыт — разбиение calib-nii* |
-| `books.corp_loans.rate_anchor` | 0,14214 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c — *упр. доходность ЮЛ 2К26 14,2 % × 1.0010 (масштаб к доходности кредитов МСФО 2К26)* |
-| `books.mortgage.balance_open` | 6 075,6 | Ф+Р | ifrs_3M2026_statements.pdf, с. 15, sha256 4b1449f839cf0826; stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c — *ипотека АС на 31.03.2026 12892,1 − льготная (оценка calib-nii) 6816,5* |
-| `books.mortgage.balance_close` | 6 147,0 | Р | *balance.json на 2026-06-30 (состав книги — MODEL §4.1)* |
-| `books.mortgage.balance_avg` | 6 111,3 | Р | *(balance_open + balance_close) / 2* |
-| `books.mortgage.interest_q` | 251,4 | Р | *rate_anchor × balance_avg × 91/365; процентный доход по кредитам 2К (АС + по СС = 1970,0) по книгам не раскрыт — разбиение calib-nii* |
-| `books.mortgage.rate_anchor` | 0,16501 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c — *одна ставка с retail_loans (история не различает рыночную ипотеку и прочую розницу): упр. доходность ФЛ 2К26 16,7 % × масштаб, за вычетом льготной (ключевая 2К26 + 2,5 п.п.) по средней доле* |
-| `books.mortgage_sub.balance_open` | 6 816,5 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c — *оценка calib-nii на 31.03.2026 (накопление поколений); расчётная оценка — в отчётности не раскрыто* |
-| `books.mortgage_sub.balance_close` | 7 137,9 | Р | *balance.json на 2026-06-30 (состав книги — MODEL §4.1)* |
-| `books.mortgage_sub.balance_avg` | 6 977,2 | Р | *(balance_open + balance_close) / 2* |
-| `books.mortgage_sub.interest_q` | 297,8 | Р | *rate_anchor × balance_avg × 91/365; процентный доход по кредитам 2К (АС + по СС = 1970,0) по книгам не раскрыт — разбиение calib-nii* |
-| `books.mortgage_sub.rate_anchor` | 0,171181 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c; research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda — *calib-nii: key_avg_anchor_q 14,618 % + компенсация 2,5 п.п. (вторичный источник rg.ru 31.12.2025, по первичному документу не проверено)* |
-| `books.retail_loans.balance_open` | 6 791,6 | Ф+Р | ifrs_3M2026_statements.pdf, с. 15, sha256 4b1449f839cf0826 — *потребительские + карты + авто (АС, валовые) на 31.03.2026* |
-| `books.retail_loans.balance_close` | 6 990,2 | Р | *balance.json на 2026-06-30 (состав книги — MODEL §4.1)* |
-| `books.retail_loans.balance_avg` | 6 890,9 | Р | *(balance_open + balance_close) / 2* |
-| `books.retail_loans.interest_q` | 283,5 | Р | *rate_anchor × balance_avg × 91/365; процентный доход по кредитам 2К (АС + по СС = 1970,0) по книгам не раскрыт — разбиение calib-nii* |
-| `books.retail_loans.rate_anchor` | 0,16501 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 1351a13f2c5bf83c — *упр. доходность ФЛ 2К26 16,7 % × масштаб, за вычетом льготной (ключевая 2К26 + 2,5 п.п.) по средней доле* |
-| `books.securities.balance_open` | 10 981,8 | Ф+Р | ifrs_3M2026_statements.pdf, с. 5, sha256 4b1449f839cf0826; ifrs_3M2026_statements.pdf, с. 32, sha256 4b1449f839cf0826; ifrs_3M2026_statements.pdf, с. 31, sha256 4b1449f839cf0826 — *долговые бумаги с заложенными по репо на 31.03.2026: бумаги 9699,8 + заложенные по репо 1614,3 − акции и фонды 332,3 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)* |
-| `books.securities.balance_close` | 11 246,1 | Р | *balance.json на 2026-06-30 (состав книги — MODEL §4.1)* |
-| `books.securities.balance_avg` | 11 114,0 | Р | *(balance_open + balance_close) / 2* |
-| `books.securities.interest_q` | 364,8 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b — *бумаги АС + FVOCI + по СС, 2К (процентные доходы/расходы по инструментам; расходы — величиной)* |
-| `books.securities.rate_anchor` | 0,131655 | Р | *interest_q / balance_avg × 365/91 (act/365)* |
-| `books.liquidity.balance_open` | 4 735,9 | Ф+Р | ifrs_3M2026_statements.pdf, с. 5, sha256 4b1449f839cf0826 — *денежные средства + обязательные резервы + средства в банках на 31.03.2026* |
-| `books.liquidity.balance_close` | 3 558,2 | Р | *balance.json на 2026-06-30 (состав книги — MODEL §4.1)* |
-| `books.liquidity.balance_avg` | 4 147,1 | Р | *(balance_open + balance_close) / 2* |
-| `books.liquidity.interest_q` | 76,5 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b — *средства в банках (АС и по СС) + прочие процентные доходы АС, 2К (процентные доходы/расходы по инструментам; расходы — величиной)* |
-| `books.liquidity.rate_anchor` | 0,07399 | Р | *interest_q / balance_avg × 365/91 (act/365)* |
-| `books.retail_current.balance_open` | 13 583,9 | Ф+Р | ifrs_3M2026_statements.pdf, с. 35, sha256 4b1449f839cf0826 — *текущие счета ФЛ на 31.03.2026* |
-| `books.retail_current.balance_close` | 14 309,0 | Р | *balance.json на 2026-06-30 (состав книги — MODEL §4.1)* |
-| `books.retail_current.balance_avg` | 13 946,5 | Р | *(balance_open + balance_close) / 2* |
-| `books.retail_current.interest_q` | 119,3 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b — *текущие счета ФЛ, 2К (процентные доходы/расходы по инструментам; расходы — величиной)* |
-| `books.retail_current.rate_anchor` | 0,034311 | Р | *interest_q / balance_avg × 365/91 (act/365)* |
-| `books.retail_term.balance_open` | 20 357,4 | Ф+Р | ifrs_3M2026_statements.pdf, с. 5, sha256 4b1449f839cf0826; ifrs_3M2026_statements.pdf, с. 35, sha256 4b1449f839cf0826 — *средства ФЛ − текущие (срочные + репо) на 31.03.2026* |
-| `books.retail_term.balance_close` | 20 169,5 | Р | *balance.json на 2026-06-30 (состав книги — MODEL §4.1)* |
-| `books.retail_term.balance_avg` | 20 263,5 | Р | *(balance_open + balance_close) / 2* |
-| `books.retail_term.interest_q` | 591,4 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b — *срочные ФЛ, 2К (процентные доходы/расходы по инструментам; расходы — величиной)* |
-| `books.retail_term.rate_anchor` | 0,117063 | Р | *interest_q / balance_avg × 365/91 (act/365)* |
-| `books.corp_funds.balance_open` | 15 905,0 | Ф+Р | ifrs_3M2026_statements.pdf, с. 5, sha256 4b1449f839cf0826 — *средства ЮЛ на 31.03.2026* |
-| `books.corp_funds.balance_close` | 14 654,3 | Р | *balance.json на 2026-06-30 (состав книги — MODEL §4.1)* |
-| `books.corp_funds.balance_avg` | 15 279,6 | Р | *(balance_open + balance_close) / 2* |
-| `books.corp_funds.interest_q` | 334,7 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b — *срочные + расчётные ЮЛ, 2К (процентные доходы/расходы по инструментам; расходы — величиной)* |
-| `books.corp_funds.rate_anchor` | 0,087861 | Р | *interest_q / balance_avg × 365/91 (act/365)* |
-| `books.wholesale.balance_open` | 5 929,7 | Ф+Р | ifrs_3M2026_statements.pdf, с. 5, sha256 4b1449f839cf0826 — *средства банков + выпущенные облигации + субординированные на 31.03.2026* |
-| `books.wholesale.balance_close` | 6 157,9 | Р | *balance.json на 2026-06-30 (состав книги — MODEL §4.1)* |
-| `books.wholesale.balance_avg` | 6 043,8 | Р | *(balance_open + balance_close) / 2* |
-| `books.wholesale.interest_q` | 235,4 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b — *средства банков (АС и по СС) + выпущенные облигации + субординированные, 2К (процентные доходы/расходы по инструментам; расходы — величиной)* |
-| `books.wholesale.rate_anchor` | 0,156224 | Р | *interest_q / balance_avg × 365/91 (act/365)* |
-| `interest_loans_q` | 1 970,0 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b — *процентный доход по кредитам АС + по СС, 2К* |
-| `other_interest_net_q` | -19,6 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 41, sha256 5b3a3de88ae6c96b — *ПФИ (доход) − аренда − ПФИ (расход) − срочные по СС − короткие позиции: вне книг* |
-| `dia_q` | 44,1 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b — *взносы в АСВ, 2К (величиной; в отчёте со знаком минус)* |
-| `dia_rate` | 0,005171 | Р | *dia_q / средние средства ФЛ × 365/91* |
-| `nii_q` | 1 066,8 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 6, sha256 5b3a3de88ae6c96b |
-| `iea_avg` | 67 334,1 | Р | *Σ balance_avg активных книг (кредиты, бумаги, ликвидность)* |
-| `nim_eng_q` | 0,063548 | Р | *nii_q × 365/91 / iea_avg (ЧПМ базиса движка)* |
-| `current_share_anchor` | 0,415012 | Р | *balance.funds.retail_current / (retail_current + retail_term) на якоре* |
-| `key_avg_anchor_q` | 0,146181 | Ф+Р | research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda — *средняя ключевая ставка 2026Q2 по календарным дням* |
+| `days` | 92 | Р | *дней в квартале 2026Q3 (act/365)* |
+| `books.corp_loans.balance_open` | 32 305,0 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b — *коммерческие + проектные (АС, валовые) + кредиты по СС на 30.06.2026* |
+| `books.corp_loans.balance_close` | 34 152,1 | Р | *balance.json на 2026-09-30 (состав книги — MODEL §4.1)* |
+| `books.corp_loans.balance_avg` | 33 228,6 | Р | *(balance_open + balance_close) / 2* |
+| `books.corp_loans.interest_q` | 1 148,3 | Р | *rate_anchor × balance_avg × 92/365; процентный доход по кредитам 3К (АС + по СС = 2014,6) по книгам не раскрыт — разбиение calib-nii* |
+| `books.corp_loans.rate_anchor` | 0,135806 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0 — *упр. доходность ЮЛ 3К26 13,7 % × 1.0008 (масштаб к доходности кредитов МСФО 3К26); × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)* |
+| `books.mortgage.balance_open` | 6 147,0 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b; stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0 — *ипотека АС на 30.06.2026 13284,9 − льготная (оценка calib-nii) 7137,9* |
+| `books.mortgage.balance_close` | 6 213,4 | Р | *balance.json на 2026-09-30 (состав книги — MODEL §4.1)* |
+| `books.mortgage.balance_avg` | 6 180,2 | Р | *(balance_open + balance_close) / 2* |
+| `books.mortgage.interest_q` | 261,6 | Р | *rate_anchor × balance_avg × 92/365; процентный доход по кредитам 3К (АС + по СС = 2014,6) по книгам не раскрыт — разбиение calib-nii* |
+| `books.mortgage.rate_anchor` | 0,166316 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0 — *одна ставка с retail_loans (история не различает рыночную ипотеку и прочую розницу): упр. доходность ФЛ 3К26 16,7 % × масштаб, за вычетом льготной (ключевая 3К26 + 2,5 п.п.) по средней доле; × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)* |
+| `books.mortgage_sub.balance_open` | 7 137,9 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0 — *оценка calib-nii на 30.06.2026 (накопление поколений); расчётная оценка — в отчётности не раскрыто* |
+| `books.mortgage_sub.balance_close` | 7 420,4 | Р | *balance.json на 2026-09-30 (состав книги — MODEL §4.1)* |
+| `books.mortgage_sub.balance_avg` | 7 279,1 | Р | *(balance_open + balance_close) / 2* |
+| `books.mortgage_sub.interest_q` | 304,0 | Р | *rate_anchor × balance_avg × 92/365; процентный доход по кредитам 3К (АС + по СС = 2014,6) по книгам не раскрыт — разбиение calib-nii* |
+| `books.mortgage_sub.rate_anchor` | 0,16414 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0; research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda — *calib-nii: key_avg_anchor_q 14,071 % + компенсация 2,5 п.п. (вторичный источник rg.ru 31.12.2025, по первичному документу не проверено); × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)* |
+| `books.retail_loans.balance_open` | 6 990,2 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 16, sha256 5b3a3de88ae6c96b — *потребительские + карты + авто (АС, валовые) на 30.06.2026* |
+| `books.retail_loans.balance_close` | 7 221,2 | Р | *balance.json на 2026-09-30 (состав книги — MODEL §4.1)* |
+| `books.retail_loans.balance_avg` | 7 105,7 | Р | *(balance_open + balance_close) / 2* |
+| `books.retail_loans.interest_q` | 300,7 | Р | *rate_anchor × balance_avg × 92/365; процентный доход по кредитам 3К (АС + по СС = 2014,6) по книгам не раскрыт — разбиение calib-nii* |
+| `books.retail_loans.rate_anchor` | 0,166316 | Ф+Р | stage1/calib/nii/data/nii_books_anchor_proposal.json, calib-nii, sha256 77890d79129ad4f0 — *упр. доходность ФЛ 3К26 16,7 % × масштаб, за вычетом льготной (ключевая 3К26 + 2,5 п.п.) по средней доле; × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)* |
+| `books.securities.balance_open` | 11 246,1 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b; 2026H1_ifrs_interim_statements.pdf, с. 37, sha256 5b3a3de88ae6c96b; 2026H1_ifrs_interim_statements.pdf, с. 36, sha256 5b3a3de88ae6c96b — *долговые бумаги с заложенными по репо на 30.06.2026: бумаги 9787,6 + заложенные по репо 1701,3 − акции и фонды 242,8 («sec_fvtplm_equities», «sec_fvtplm_funds», «sec_fvoci_equity»)* |
+| `books.securities.balance_close` | 12 022,1 | Р | *balance.json на 2026-09-30 (состав книги — MODEL §4.1)* |
+| `books.securities.balance_avg` | 11 634,1 | Р | *(balance_open + balance_close) / 2* |
+| `books.securities.interest_q` | 389,5 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9 — *бумаги АС + FVOCI + по СС, 3К (процентные доходы/расходы по инструментам; расходы — величиной)* |
+| `books.securities.rate_anchor` | 0,131569 | Р | *interest_q / balance_avg × 365/92 (act/365); × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)* |
+| `books.liquidity.balance_open` | 3 558,2 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b — *денежные средства + обязательные резервы + средства в банках на 30.06.2026* |
+| `books.liquidity.balance_close` | 4 670,0 | Р | *balance.json на 2026-09-30 (состав книги — MODEL §4.1)* |
+| `books.liquidity.balance_avg` | 4 114,1 | Р | *(balance_open + balance_close) / 2* |
+| `books.liquidity.interest_q` | 80,7 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9 — *средства в банках (АС и по СС) + прочие процентные доходы АС, 3К (процентные доходы/расходы по инструментам; расходы — величиной)* |
+| `books.liquidity.rate_anchor` | 0,077086 | Р | *interest_q / balance_avg × 365/92 (act/365); × (1 + остаток ЧПД −23,5 / Σ процентов активных книг 2484,8) — ставка книги активов несёт долю процентного дохода вне книг (MODEL §15.2 п. 4)* |
+| `books.retail_current.balance_open` | 14 309,0 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b — *текущие счета ФЛ на 30.06.2026* |
+| `books.retail_current.balance_close` | 14 845,9 | Р | *balance.json на 2026-09-30 (состав книги — MODEL §4.1)* |
+| `books.retail_current.balance_avg` | 14 577,5 | Р | *(balance_open + balance_close) / 2* |
+| `books.retail_current.interest_q` | 126,7 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9 — *текущие счета ФЛ, 3К (процентные доходы/расходы по инструментам; расходы — величиной)* |
+| `books.retail_current.rate_anchor` | 0,034483 | Р | *interest_q / balance_avg × 365/92 (act/365)* |
+| `books.retail_term.balance_open` | 20 169,5 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b; 2026H1_ifrs_interim_statements.pdf, с. 40, sha256 5b3a3de88ae6c96b — *средства ФЛ − текущие (срочные + репо) на 30.06.2026* |
+| `books.retail_term.balance_close` | 20 119,6 | Р | *balance.json на 2026-09-30 (состав книги — MODEL §4.1)* |
+| `books.retail_term.balance_avg` | 20 144,5 | Р | *(balance_open + balance_close) / 2* |
+| `books.retail_term.interest_q` | 553,9 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9 — *срочные ФЛ, 3К (процентные доходы/расходы по инструментам; расходы — величиной)* |
+| `books.retail_term.rate_anchor` | 0,109088 | Р | *interest_q / balance_avg × 365/92 (act/365)* |
+| `books.corp_funds.balance_open` | 14 654,3 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b — *средства ЮЛ на 30.06.2026* |
+| `books.corp_funds.balance_close` | 16 748,3 | Р | *balance.json на 2026-09-30 (состав книги — MODEL §4.1)* |
+| `books.corp_funds.balance_avg` | 15 701,3 | Р | *(balance_open + balance_close) / 2* |
+| `books.corp_funds.interest_q` | 353,2 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9 — *срочные + расчётные ЮЛ, 3К (процентные доходы/расходы по инструментам; расходы — величиной)* |
+| `books.corp_funds.rate_anchor` | 0,089246 | Р | *interest_q / balance_avg × 365/92 (act/365)* |
+| `books.wholesale.balance_open` | 6 157,9 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 5, sha256 5b3a3de88ae6c96b — *средства банков + выпущенные облигации + субординированные на 30.06.2026* |
+| `books.wholesale.balance_close` | 8 031,9 | Р | *balance.json на 2026-09-30 (состав книги — MODEL §4.1)* |
+| `books.wholesale.balance_avg` | 7 094,9 | Р | *(balance_open + balance_close) / 2* |
+| `books.wholesale.interest_q` | 274,7 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9 — *средства банков (АС и по СС) + выпущенные облигации + субординированные, 3К (процентные доходы/расходы по инструментам; расходы — величиной)* |
+| `books.wholesale.rate_anchor` | 0,153609 | Р | *interest_q / balance_avg × 365/92 (act/365)* |
+| `interest_loans_q` | 2 014,6 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9 — *процентный доход по кредитам АС + по СС, 3К* |
+| `other_interest_net_q` | -23,5 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 46, sha256 bfb59dab3fe2cea9 — *ПФИ (доход) − аренда − ПФИ (расход) − срочные по СС − короткие позиции: вне книг* |
+| `dia_q` | 45,1 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 6, sha256 bfb59dab3fe2cea9 — *взносы в АСВ, 3К (величиной; в отчёте со знаком минус)* |
+| `dia_rate` | 0,005153 | Р | *dia_q / средние средства ФЛ × 365/92* |
+| `nii_q` | 1 107,7 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 6, sha256 bfb59dab3fe2cea9 |
+| `iea_avg` | 69 541,8 | Р | *Σ balance_avg активных книг (кредиты, бумаги, ликвидность)* |
+| `nim_eng_q` | 0,063195 | Р | *nii_q × 365/92 / iea_avg (ЧПМ базиса движка)* |
+| `current_share_anchor` | 0,424587 | Р | *balance.funds.retail_current / (retail_current + retail_term) на якоре* |
+| `key_avg_anchor_q` | 0,140707 | Ф+Р | research/facts/cbr_key_rate_changes.csv, ключевая ставка ЦБ по датам изменений, sha256 97ef7898b8e6adda — *средняя ключевая ставка 2026Q3 по календарным дням* |
 
 ### `capital.json` — капитал якоря (без истории)
 
 | Поле | Значение | Статус | Документ, страница, sha256 / формула |
 |---|---|---|---|
-| `at1.amount` | 150,0 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 8, sha256 5b3a3de88ae6c96b |
+| `at1.amount` | 150,0 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 8, sha256 bfb59dab3fe2cea9 |
 | `at1.coupon_annual` | 9,7 | Ф+Р | ifrs_FY2025_statements_sber.pdf, с. 81, sha256 06ac4bd4164d576e — *годовой купон AT1 (150 млрд, Минфин) величиной; в отчёте — выплата со знаком минус* |
 | `at1.coupon_quarter` | 4 | Ф+Р | ifrs_FY2025_statements_sber.pdf, с. 81, sha256 06ac4bd4164d576e — *купон выплачивается в декабре — квартал 4* |
-| `t2_recognized` | 500,3 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b — *прокси: капитал 2-го уровня группы по Базелю; регуляторный T2 для Н20.0 не раскрыт* |
-| `basel.cet1_ratio` | 0,126 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b |
-| `basel.cet1` | 7 450,5 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b |
-| `basel.t1_ratio` | 0,128 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b |
-| `basel.t1` | 7 600,5 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b |
-| `basel.t2` | 500,3 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b |
-| `basel.total_ratio` | 0,137 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b |
-| `basel.total_capital` | 8 100,8 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b |
-| `basel.rwa` | 59 318,1 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 68, sha256 5b3a3de88ae6c96b |
-| `n20_0.value` | 0,151 | Ф | 2026Q2_ifrs_presentation.pdf, с. 21, sha256 d17d36167137507e |
-| `n20_0.min_with_buffers` | 0,12 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 67, sha256 5b3a3de88ae6c96b |
-| `n1_1_bank.value` | 0,11961 | Ф+Р | stage1/ras/raw/135/2026-07-01.xml, форма 0409135 на 2026-07-01, sha256 5f7eccf6222b6cd7 — *Н1.1 банка, % / 100; прокси Н20.1 группы (MODEL §3.3)* |
-| `n1_1_bank.ifrs_note_value` | 0,12 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 67, sha256 5b3a3de88ae6c96b |
-| `n1_0_bank` | 0,14633 | Ф+Р | stage1/ras/raw/135/2026-07-01.xml, форма 0409135 на 2026-07-01, sha256 5f7eccf6222b6cd7 — *Н1.0 банка, % / 100* |
-| `n1_2_bank` | 0,12213 | Ф+Р | stage1/ras/raw/135/2026-07-01.xml, форма 0409135 на 2026-07-01, sha256 5f7eccf6222b6cd7 — *Н1.2 банка, % / 100* |
-| `bank_base_capital` | 7 120,5 | Ф+Р | stage1/ras/raw/123/2026-07-01.xml, форма 0409123 на 2026-07-01, sha256 245c5ea95f6de880 — *форма 0409123, код 102 «Базовый капитал, итого», тыс. ₽ / 10⁶ (для сверки Ded11_0)* |
-| `bank_own_funds` | 8 724,9 | Ф+Р | stage1/ras/raw/123/2026-07-01.xml, форма 0409123 на 2026-07-01, sha256 245c5ea95f6de880 — *форма 0409123, код 000 «Собственные средства (капитал), итого», тыс. ₽ / 10⁶* |
-| `fvoci_reserve` | -374,9 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 44, sha256 5b3a3de88ae6c96b — *после налога; = balance.equity.fvoci_reserve* |
-| `ofz_curve_anchor.1` | 0,134125 | Ф | MOEX ISS zcyc 2026-06-30 18:49:58, yearyields, sha256 90b297f62e10f888 |
-| `ofz_curve_anchor.3` | 0,144687 | Ф | MOEX ISS zcyc 2026-06-30 18:49:58, yearyields, sha256 90b297f62e10f888 |
-| `ofz_curve_anchor.5` | 0,154188 | Ф | MOEX ISS zcyc 2026-06-30 18:49:58, yearyields, sha256 90b297f62e10f888 |
-| `ofz_curve_anchor.10` | 0,16377 | Ф | MOEX ISS zcyc 2026-06-30 18:49:58, yearyields, sha256 90b297f62e10f888 |
+| `t2_recognized` | 507,2 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 75, sha256 bfb59dab3fe2cea9 — *прокси: капитал 2-го уровня группы по Базелю; регуляторный T2 для Н20.0 не раскрыт* |
+| `basel.cet1_ratio` | 0,129 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 75, sha256 bfb59dab3fe2cea9 |
+| `basel.cet1` | 7 890,9 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 75, sha256 bfb59dab3fe2cea9 |
+| `basel.t1_ratio` | 0,132 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 75, sha256 bfb59dab3fe2cea9 |
+| `basel.t1` | 8 040,9 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 75, sha256 bfb59dab3fe2cea9 |
+| `basel.t2` | 507,2 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 75, sha256 bfb59dab3fe2cea9 |
+| `basel.total_ratio` | 0,14 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 75, sha256 bfb59dab3fe2cea9 |
+| `basel.total_capital` | 8 548,1 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 75, sha256 bfb59dab3fe2cea9 |
+| `basel.rwa` | 60 981,5 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 75, sha256 bfb59dab3fe2cea9 |
+| `n20_0.value` | 0,137 | Ф | 2026Q3_ifrs_presentation.pdf, с. 21, sha256 a0429c1af753efc3 |
+| `n20_0.min_with_buffers` | 0,12 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 74, sha256 bfb59dab3fe2cea9 |
+| `n1_1_bank.value` | 0,10048 | Ф+Р | stage1/ras/raw/135/2026-10-01.xml, форма 0409135 на 2026-10-01, sha256 fa5c852a5f11d990 — *Н1.1 банка, % / 100; прокси Н20.1 группы (MODEL §3.3)* |
+| `n1_1_bank.ifrs_note_value` | 0,1 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 74, sha256 bfb59dab3fe2cea9 |
+| `n1_0_bank` | 0,13248 | Ф+Р | stage1/ras/raw/135/2026-10-01.xml, форма 0409135 на 2026-10-01, sha256 fa5c852a5f11d990 — *Н1.0 банка, % / 100* |
+| `n1_2_bank` | 0,1029 | Ф+Р | stage1/ras/raw/135/2026-10-01.xml, форма 0409135 на 2026-10-01, sha256 fa5c852a5f11d990 — *Н1.2 банка, % / 100* |
+| `bank_base_capital` | 6 228,1 | Ф+Р | stage1/ras/raw/123/2026-10-01.xml, форма 0409123 на 2026-10-01, sha256 39b64c4b2fa68c72 — *форма 0409123, код 102 «Базовый капитал, итого», тыс. ₽ / 10⁶ (для сверки Ded11_0)* |
+| `bank_own_funds` | 8 223,6 | Ф+Р | stage1/ras/raw/123/2026-10-01.xml, форма 0409123 на 2026-10-01, sha256 39b64c4b2fa68c72 — *форма 0409123, код 000 «Собственные средства (капитал), итого», тыс. ₽ / 10⁶* |
+| `fvoci_reserve` | -424,8 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 49, sha256 bfb59dab3fe2cea9 — *после налога; = balance.equity.fvoci_reserve* |
+| `ofz_curve_anchor.1` | 0,137236 | Ф | MOEX ISS zcyc 2026-09-30 18:12:28, yearyields, sha256 f48097ea5bbcd494 |
+| `ofz_curve_anchor.3` | 0,158186 | Ф | MOEX ISS zcyc 2026-09-30 18:12:28, yearyields, sha256 f48097ea5bbcd494 |
+| `ofz_curve_anchor.5` | 0,164014 | Ф | MOEX ISS zcyc 2026-09-30 18:12:28, yearyields, sha256 f48097ea5bbcd494 |
+| `ofz_curve_anchor.10` | 0,168646 | Ф | MOEX ISS zcyc 2026-09-30 18:12:28, yearyields, sha256 f48097ea5bbcd494 |
+
+Н20.0 на 30.09.2026 (13,7 %) — после вычета дивиденда за 2025 г. (вычет в месяце отсечки, июль 2026;
+`n20_0.pre_dividend: false`); на 30.06.2026 (15,1 %) норматив был до вычета.
 
 ### `shares.json`
 
@@ -416,8 +441,8 @@
 | `issued_ordinary` | 21 586,9 | Ф+Р | stage1/market/shares_dividends/iss_description_SBER.json, ISSUESIZE, FACEVALUE, sha256 7005c0ab2fe1d973 — *ISSUESIZE / 10⁶; = МСФО 2025, примечание об уставном капитале (21 587 млн)* |
 | `issued_preferred` | 1 000,0 | Ф+Р | stage1/market/shares_dividends/iss_description_SBERP.json, ISSUESIZE, FACEVALUE, sha256 3c31bb74a1ebad23 — *ISSUESIZE / 10⁶* |
 | `issued_total` | 22 586,9 | Р | *issued_ordinary + issued_preferred (N_iss — делитель DPS, политика п. 1.6)* |
-| `treasury_ordinary` | 209,9 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 43, sha256 5b3a3de88ae6c96b — *дивиденд за 2025 на собственные обыкновенные 7,9 млрд / DPS 37,64 ₽ × 1000 (на отсечку 20.07.2026; на 30.06.2026 число не раскрыто; точность ±1–2 млн)* |
-| `treasury_preferred` | 34,5 | Ф+Р | 2026H1_ifrs_interim_statements.pdf, с. 43, sha256 5b3a3de88ae6c96b — *дивиденд на собственные привилегированные 1,3 млрд / 37,64 ₽ × 1000* |
+| `treasury_ordinary` | 209,9 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 48, sha256 bfb59dab3fe2cea9 — *дивиденд за 2025 на собственные обыкновенные 7,9 млрд / DPS 37,64 ₽ × 1000 (на отсечку 20.07.2026; на 30.09.2026 число не раскрыто; точность ±1–2 млн)* |
+| `treasury_preferred` | 34,5 | Ф+Р | 2026Q3_ifrs_interim_statements.pdf, с. 48, sha256 bfb59dab3fe2cea9 — *дивиденд на собственные привилегированные 1,3 млрд / 37,64 ₽ × 1000* |
 | `treasury_prev_year_end.ordinary` | 199,2 | Ф | ifrs_FY2025_statements_sber.pdf, с. 80, sha256 06ac4bd4164d576e |
 | `treasury_prev_year_end.preferred` | 34,3 | Ф | ifrs_FY2025_statements_sber.pdf, с. 80, sha256 06ac4bd4164d576e |
 | `outstanding_ordinary` | 21 377,0 | Р | *issued_ordinary − treasury_ordinary* |
@@ -433,8 +458,9 @@
 | `policy.threshold` | 0,133 | Ф+Р | dividend_policy_2023.pdf, с. 4, sha256 f486aa17b9ab2a18 — *п. 2.2: Н20.0 на среднесрочном горизонте не менее 13,3 %* |
 | `policy.valid_until` | 2026-12-05 | Р | dividend_policy_2023.pdf, с. 7, sha256 f486aa17b9ab2a18 — *п. 6.4: срок действия — 3 года с даты утверждения; утверждено 05.12.2023 (с. 1, протокол № 34); дата = утверждение + 3 года* |
 
-Срок политики кончается 05.12.2026; новая политика ожидается со стратегией (ноябрь 2026 г.) и входит новой
-версией книги (A-D1) вместе с новым фактом `dividends.policy`. Истёкший срок выпуск не останавливает: после
+Срок политики кончается 05.12.2026; новая политика ожидается со стратегией: Наблюдательный совет рассмотрит её
+10.11.2026, банк представит её на Дне инвестора 12.11.2026 (календарь событий); она входит новой версией книги
+(A-D1) вместе с новым фактом `dividends.policy`. Истёкший срок выпуск не останавливает: после
 05.12.2026, пока новой политики нет, клетки платят по прежней, а выпуск несёт флаг `policy_expired` (MODEL §5.1,
 §14.3). Записка `valid_until_note` печатается на витрине под политикой: «Положение действует 3 года с даты
 утверждения Наблюдательным советом (п. 6.4) — по 05.12.2026. Новая политика ожидается вместе со стратегией в
@@ -459,7 +485,7 @@
 |---|---|---|---|
 | `dps_ordinary` | 34,84 | Ф | stage1/market/shares_dividends/dividends_public.csv, решение годового собрания акционеров 30.06.2025 — страница «Дивиденды» на сайте банка и Интерфакс 30.06.2025, sha256 fda92ec5df2d3ac4 — *объявленный дивиденд на обыкновенную акцию (решение ГОСА), ₽* |
 | `dps_preferred` | 34,84 | Ф | stage1/market/shares_dividends/dividends_public.csv, решение годового собрания акционеров 30.06.2025 — страница «Дивиденды» на сайте банка и Интерфакс 30.06.2025, sha256 fda92ec5df2d3ac4 — *объявленный дивиденд на привилегированную акцию, ₽* |
-| `pool_declared` | 786,9 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 43, sha256 5b3a3de88ae6c96b |
+| `pool_declared` | 786,9 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 48, sha256 bfb59dab3fe2cea9 |
 | `ni_shareholders` | 1 581,6 | Ф | ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e |
 | `at1_coupon` | 9,7 | Ф+Р | ifrs_FY2025_statements_sber.pdf, с. 8, sha256 06ac4bd4164d576e — *купон AT1 года величиной (в отчёте о капитале — со знаком минус)* |
 | `tax_statutory` | 0,2 | Ф+Р | ifrs_FY2025_statements_sber.pdf, с. 86, sha256 06ac4bd4164d576e — *законная ставка 2024 г. — 20 % (примечание о налоге)* |
@@ -470,7 +496,7 @@
 |---|---|---|---|
 | `dps_ordinary` | 37,64 | Ф | stage1/market/shares_dividends/dividends_public.csv, решение годового собрания акционеров 30.06.2026 — страница «Дивиденды» на сайте банка и Интерфакс 30.06.2026, sha256 fda92ec5df2d3ac4 — *объявленный дивиденд на обыкновенную акцию (решение ГОСА), ₽* |
 | `dps_preferred` | 37,64 | Ф | stage1/market/shares_dividends/dividends_public.csv, решение годового собрания акционеров 30.06.2026 — страница «Дивиденды» на сайте банка и Интерфакс 30.06.2026, sha256 fda92ec5df2d3ac4 — *объявленный дивиденд на привилегированную акцию, ₽* |
-| `pool_declared` | 850,2 | Ф | 2026H1_ifrs_interim_statements.pdf, с. 43, sha256 5b3a3de88ae6c96b |
+| `pool_declared` | 850,2 | Ф | 2026Q3_ifrs_interim_statements.pdf, с. 48, sha256 bfb59dab3fe2cea9 |
 | `ni_shareholders` | 1 707,4 | Ф | ifrs_FY2025_statements_sber.pdf, с. 6, sha256 06ac4bd4164d576e |
 | `at1_coupon` | 9,7 | Ф+Р | ifrs_FY2025_statements_sber.pdf, с. 8, sha256 06ac4bd4164d576e — *купон AT1 года величиной (в отчёте о капитале — со знаком минус)* |
 | `tax_statutory` | 0,25 | Ф+Р | ifrs_FY2025_statements_sber.pdf, с. 86, sha256 06ac4bd4164d576e — *законная ставка 2025 г. — 25 % (примечание о налоге; 176-ФЗ от 12.07.2024)* |
@@ -486,7 +512,7 @@
 * 2025: manual: документ эмитента — страница «Дивиденды» на сайте Сбербанка (доступ 01.10.2026): за 2025 г. 37,64 ₽ на акцию, список лиц на 20.07.2026 (https://www.sberbank.com/ru/investor-relations/dividends; stage1/market/shares_dividends/dividends_public.csv, sha256 fda92ec5df2d3ac4)
 * 2025: news: Интерфакс 30.06.2026 12:06 МСК, «Акционеры Сбербанка утвердили дивиденды за 2025 г. в размере 37,64 руб. на акцию» — решение ГОСА: 37,64 ₽, реестр 20.07.2026 (https://www.interfax.ru/business/1099207; stage2/reports/facts-sources/interfax_1099207_20260630.html, sha256 68efd89078a3b444)
 
-Дата решения ГОСА за 2025 г. — 30.06.2026 (отсечка 20.07.2026 — через 20 дней, в коридоре 10–20 дней политики; дата, размер и дата реестра сверены с текстом копии новости). `register_seed` пуст: на дату книги объявленных и не выплаченных дивидендов нет: за 2025 г. отсечка 20.07.2026, срок выплаты 03.08.2026 (на якоре они — в balance.dividends_payable). Формат записи — SCHEMA.md: у объявленного дивиденда два источника разных видов (брокерский календарь и новость о решении либо ручная запись по документу эмитента).
+Дата решения ГОСА за 2025 г. — 30.06.2026 (отсечка 20.07.2026 — через 20 дней, в коридоре 10–20 дней политики; дата, размер и дата реестра сверены с текстом копии новости). `register_seed` пуст: на дату книги объявленных и не выплаченных дивидендов нет: за 2025 г. отсечка 20.07.2026, срок выплаты 03.08.2026 (до якоря: balance.dividends_payable = 0). Формат записи — SCHEMA.md: у объявленного дивиденда два источника разных видов (брокерский календарь и новость о решении либо ручная запись по документу эмитента).
 
 **История до политики** (`history_before`, 2013–2022 — витрина; источник каждого года — тот же лист решений):
 
@@ -518,10 +544,10 @@
 
 | Поле | Значение | Статус | Документ, страница, sha256 / формула |
 |---|---|---|---|
-| `cor.value` | 0,001703 | Р | *среднее gap по окну 2024Q1–2026Q2 (n = 10)* |
-| `cor.sd` | 0,001593 | Р | *выборочное стандартное отклонение gap по окну* |
-| `nim.value` | -0,00384 | Р | *среднее gap по окну 2024Q1–2026Q2 (n = 10)* |
-| `nim.sd` | 0,000235 | Р | *выборочное стандартное отклонение gap по окну* |
+| `cor.value` | 0,001521 | Р | *среднее gap по окну 2024Q1–2026Q3 (n = 11)* |
+| `cor.sd` | 0,001628 | Р | *выборочное стандартное отклонение gap по окну* |
+| `nim.value` | -0,003746 | Р | *среднее gap по окну 2024Q1–2026Q3 (n = 11)* |
+| `nim.sd` | 0,00025 | Р | *выборочное стандартное отклонение gap по окну* |
 
 | Квартал | CoR упр. | CoR движка | разность | ЧПМ упр. | ЧПМ движка | разность |
 |---|---|---|---|---|---|---|
@@ -534,11 +560,12 @@
 | 2024Q3 | 1,16 | 1,10 | -0,06 | 5,86 | 5,48 | -0,38 |
 | 2024Q4 | 1,19 | 1,49 | 0,30 | 6,01 | 5,64 | -0,37 |
 | 2025Q1 | 1,24 | 1,46 | 0,22 | 6,11 | 5,74 | -0,37 |
-| 2025Q2 | 1,71 | 1,99 | 0,28 | 6,10 | 5,71 | -0,39 |
-| 2025Q3 | 1,42 | 1,54 | 0,12 | 6,20 | 5,78 | -0,42 |
+| 2025Q2 | 1,71 | 1,99 | 0,28 | 6,09 | 5,71 | -0,38 |
+| 2025Q3 | 1,42 | 1,54 | 0,12 | 6,17 | 5,78 | -0,39 |
 | 2025Q4 | 0,90 | 0,96 | 0,06 | 6,46 | 6,04 | -0,42 |
 | 2026Q1 | 1,29 | 1,38 | 0,09 | 6,34 | 5,95 | -0,39 |
-| 2026Q2 | 1,00 | 1,43 | 0,43 | 6,70 | 6,35 | -0,35 |
+| 2026Q2 | 1,00 | 1,43 | 0,43 | 6,69 | 6,35 | -0,34 |
+| 2026Q3 | 1,10 | 1,07 | -0,03 | 6,65 | 6,32 | -0,33 |
 
 
 **CIR** (A7): CIR движка = −opex / (ЧПД + ЧКД + страхование + «прочее») квартала МСФО; упр. — CIR
@@ -547,8 +574,8 @@
 
 | Поле | Значение | Статус | Формула |
 |---|---|---|---|
-| `cir.value` | −0,018628 | Р | *среднее gap по окну 2024Q1–2026Q2 (n = 10)* |
-| `cir.sd` | 0,01091 | Р | *выборочное стандартное отклонение gap по окну* |
+| `cir.value` | −0,017093 | Р | *среднее gap по окну 2024Q1–2026Q3 (n = 11)* |
+| `cir.sd` | 0,011534 | Р | *выборочное стандартное отклонение gap по окну* |
 
 | Квартал | CIR упр. | CIR движка | разность |
 |---|---|---|---|
@@ -566,6 +593,7 @@
 | 2025Q4 | 37,0 | 35,0 | −2,0 |
 | 2026Q1 | 26,7 | 25,8 | −0,9 |
 | 2026Q2 | 29,1 | 27,3 | −1,8 |
+| 2026Q3 | 29,4 | 29,2 | −0,2 |
 | 2024 (год) | 30,3 | 27,8 | −2,5 |
 | 2025 (год) | 30,3 | 28,8 | −1,5 |
 
@@ -593,15 +621,16 @@ ras — ЧПД банка РСБУ квартала по релизу (внут�
 | 2025Q4 | 857,7 | 988,2 | 1,1522 | ras_2025M12_press_release.pdf, с. 2, sha256 f4db795314b45209; stage1/ras/ras_release_monthly.csv, nii_ytd 2025 |
 | 2026Q1 | 861,4 | 984,3 | 1,1427 | 2026M03_ras_press_release.pdf, с. 3, sha256 216a30a59107e3b5 |
 | 2026Q2 | 939,5 | 1066,8 | 1,1355 | ras_2026M06_press_release.pdf, с. 3, sha256 cfff8ed466a03af4; 2026M03_ras_press_release.pdf, с. 3, sha256 216a |
+| 2026Q3 | 967,6 | 1107,7 | 1,1448 | 2026M09_ras_press_release.pdf, с. 3, sha256 3a10a6fe90a6ea44; ras_2026M06_press_release.pdf, с. 3, sha256 cfff |
 
 | Поле | Значение | Статус | Формула |
 |---|---|---|---|
-| `nii.value` (2025Q3–2026Q2) | 1,139261 | Р | *среднее ratio 2025Q3–2026Q2 (n = 4: 1,1267, 1,1522, 1,1427, 1,1355)* |
-| `nii.sd` | 0,01079 | Р | *выборочное стандартное отклонение ratio по окну* |
-| `nii.by_quarter.1…4` | 1,139261 | Р | *сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 3,8 % против 1,7 % по прошлому кварталу — все кварталы = value* |
-| `nii.backtest.prev_quarter` | 0,017091 | Р | *RMSE: отношение прошлого квартала, 2024Q1–2026Q2, n = 10* |
-| `nii.backtest.mean_4` | 0,022978 | Р | *RMSE: среднее четырёх прошлых кварталов, 2024Q1–2026Q2, n = 10* |
-| `nii.backtest.same_quarter` | 0,037599 | Р | *RMSE: среднее того же квартала прошлых лет, 2024Q1–2026Q2, n = 10* |
+| `nii.value` (2025Q4–2026Q3) | 1,143779 | Р | *среднее ratio 2025Q4–2026Q3 (n = 4: 1,1522, 1,1427, 1,1355, 1,1448)* |
+| `nii.sd` | 0,006853 | Р | *выборочное стандартное отклонение ratio по окну* |
+| `nii.by_quarter.1…4` | 1,143779 | Р | *сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 3,7 % против 1,7 % по прошлому кварталу — все кварталы = value* |
+| `nii.backtest.prev_quarter` | 0,016535 | Р | *RMSE: отношение прошлого квартала, 2024Q1–2026Q3, n = 11* |
+| `nii.backtest.mean_4` | 0,021972 | Р | *RMSE: среднее четырёх прошлых кварталов, 2024Q1–2026Q3, n = 11* |
+| `nii.backtest.same_quarter` | 0,036628 | Р | *RMSE: среднее того же квартала прошлых лет, 2024Q1–2026Q3, n = 11* |
 
 #### Процентные активы (`iea`, T3) — форма 0409101 банка → процентные активы движка группы
 
@@ -623,14 +652,15 @@ ras — средние процентные активы банка РСБУ к�
 | 2025Q4 | 57603,1 | 64905,2 | 1,1268 |
 | 2026Q1 | 59307,7 | 67095,7 | 1,1313 |
 | 2026Q2 | 59778,1 | 67334,1 | 1,1264 |
+| 2026Q3 | 61499,7 | 69541,8 | 1,1308 |
 
 | Поле | Значение | Статус | Формула |
 |---|---|---|---|
-| `iea.value` (2026Q2) | 1,126401 | Р | *среднее ratio 2026Q2–2026Q2 (n = 1: 1,1264)* |
-| `iea.by_quarter.1…4` | 1,126401 | Р | *сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 2,9 % против 0,7 % по прошлому кварталу — все кварталы = value* |
-| `iea.backtest.prev_quarter` | 0,007143 | Р | *RMSE: отношение прошлого квартала, 2024Q3–2026Q2, n = 8* |
-| `iea.backtest.mean_4` | 0,015464 | Р | *RMSE: среднее четырёх прошлых кварталов, 2024Q3–2026Q2, n = 8* |
-| `iea.backtest.same_quarter` | 0,028554 | Р | *RMSE: среднее того же квартала прошлых лет, 2024Q3–2026Q2, n = 8* |
+| `iea.value` (2026Q3) | 1,130767 | Р | *среднее ratio 2026Q3–2026Q3 (n = 1: 1,1308)* |
+| `iea.by_quarter.1…4` | 1,130767 | Р | *сезонность не подтверждена: RMSE по тому же кварталу прошлых лет 3,0 % против 0,7 % по прошлому кварталу — все кварталы = value* |
+| `iea.backtest.prev_quarter` | 0,00689 | Р | *RMSE: отношение прошлого квартала, 2024Q3–2026Q3, n = 9* |
+| `iea.backtest.mean_4` | 0,014669 | Р | *RMSE: среднее четырёх прошлых кварталов, 2024Q3–2026Q3, n = 9* |
+| `iea.backtest.same_quarter` | 0,029569 | Р | *RMSE: среднее того же квартала прошлых лет, 2024Q3–2026Q3, n = 9* |
 
 Окна разные по бэктесту: отношение ЧПД колеблется без тренда (прошлый квартал и среднее четырёх
 дают близкие ошибки — берётся среднее четырёх), отношение активов дрейфует вверх (группа растёт быстрее
@@ -638,7 +668,7 @@ ras — средние процентные активы банка РСБУ к�
 
 #### CoR (`cor`, T4) — моста нет
 
-`cor` = null: нет данных для моста: CoR РСБУ (релиз, «без валютной переоценки») публикуется нарастающим итогом с точностью 0,1 п.п. — квартал разностью несёт ошибку округления до ±0,35 п.п.; РСБУ — банк без дочерних обществ. Квартальный CoR РСБУ минус упр. CoR, 2023Q3–2026Q2 (n = 10): среднее 0,49 п.п., σ 0,50 п.п. — не меньше разброса самого упр. CoR тех же кварталов (σ 0,44 п.п.): мост не несёт информации. Нау-каст CoR (T4) = ожидание модели (MODEL §12).
+`cor` = null: нет данных для моста: CoR РСБУ (релиз, «без валютной переоценки») публикуется нарастающим итогом с точностью 0,1 п.п. — квартал разностью несёт ошибку округления до ±0,35 п.п.; РСБУ — банк без дочерних обществ. Квартальный CoR РСБУ минус упр. CoR, 2023Q3–2026Q3 (n = 11): среднее 0,46 п.п., σ 0,49 п.п. — не меньше разброса самого упр. CoR тех же кварталов (σ 0,42 п.п.): мост не несёт информации. Нау-каст CoR (T4) = ожидание модели (MODEL §12).
 
 #### ЧП (T1) — сезонный мост РСБУ → МСФО
 
@@ -658,34 +688,36 @@ ras — средние процентные активы банка РСБУ к�
 | 2025Q4 | 424,3 | 399,0 | 0,940372 | stage1/ras/raw/102/2026-01-01.xml, форма 0409102 на 2026-01-01, символ 61101, sha256 b5f9ec2a9b111ec9; stage1/ras/raw/10 |
 | 2026Q1 | 491,0 | 508,5 | 1,036 | stage1/ras/raw/102/2026-04-01.xml, форма 0409102 на 2026-04-01, символ 61101, sha256 a73b8acd5b43d68b |
 | 2026Q2 | 504,3 | 511,6 | 1,015 | stage1/ras/raw/102/2026-07-01.xml, форма 0409102 на 2026-07-01, символ 61101, sha256 f2b31dd5b2e54b34; stage1/ras/raw/10 |
+| 2026Q3 | 505,9 | 511,2 | 1,01 | stage1/ras/raw/102/2026-10-01.xml, форма 0409102 на 2026-10-01, символ 61101, sha256 569824fd56774326; stage1/ras/raw/10 |
 
 | Поле | Значение | Статус | Документ, страница, sha256 / формула |
 |---|---|---|---|
 | `by_quarter.1` | 1,058 | Р | *среднее ratio кварталов К1 (4 шт.: 1,025, 1,092, 1,078, 1,036)* |
 | `by_quarter.2` | 1,015 | Р | *среднее ratio кварталов К2 (4 шт.: 1,010, 1,034, 1,001, 1,015)* |
-| `by_quarter.3` | 1,003 | Р | *среднее ratio кварталов К3 (3 шт.: 1,026, 0,970, 1,015)* |
+| `by_quarter.3` | 1,005 | Р | *среднее ratio кварталов К3 (4 шт.: 1,026, 0,970, 1,015, 1,010)* |
 | `by_quarter.4` | 0,962325 | Р | *среднее ratio кварталов К4 (3 шт.: 0,989, 0,958, 0,940)* |
 | `annual.2023` | 1,012 | Р | *Σ ifrs_ni_sh / Σ ras_ni за 2023* |
 | `annual.2024` | 1,012 | Р | *Σ ifrs_ni_sh / Σ ras_ni за 2024* |
 | `annual.2025` | 1,008 | Р | *Σ ifrs_ni_sh / Σ ras_ni за 2025* |
 
-### `guidance.json` — гайденс 2026 (на 29.07.2026)
+### `guidance.json` — гайденс 2026 (на 28.10.2026)
 
 | Поле | Значение | Статус | Документ, страница, sha256 / формула |
 |---|---|---|---|
-| `roe` (точка, `tol` 0,005) | 0,22 | Ф+Р | 2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e — *«22%» → доли* |
-| `nim` (точка, `tol` 0,0005) | 0,062 | Ф+Р | 2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e — *«~6.2%» → доли* |
-| `cor_max` | 0,014 | Ф+Р | 2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e — *«<1.4%» → доли* |
-| `cir` | [0,3; 0,32] | Ф+Р | 2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e — *«~30-32%» → доли* |
-| `fee_growth` (точка, `tol` 0,005) | 0 | Ф+Р | 2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e — *«~0%» → доли* |
-| `n20_0` (kind `min` — пол политики) | 0,133 | Ф+Р | 2026Q2_ifrs_presentation.pdf, с. 24, sha256 d17d36167137507e — *«13.3%» → доли* |
-| `loan_growth.corporate` (сектор; `relation: in_line` — Сбер «в соответствии с сектором») | [0,08; 0,1] | Ф+Р | 2026Q2_ifrs_presentation.pdf, с. 23, sha256 d17d36167137507e — *«+8-10%» → доли* |
-| `loan_growth.retail` (сектор; `relation: above` — Сбер «лучше сектора») | [0,05; 0,08] | Ф+Р | 2026Q2_ifrs_presentation.pdf, с. 23, sha256 d17d36167137507e — *«+5-8%» → доли* |
+| `roe` (точка, `tol` 0,005) | 0,22 | Ф+Р | 2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3 — *«22%» → доли* |
+| `nim` (kind `min` — нижняя граница, без допуска) | 0,062 | Ф+Р | 2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3 — *«>6.2%» → доли* |
+| `cor_max` | 0,014 | Ф+Р | 2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3 — *«<1.4%» → доли* |
+| `cir` | [0,3; 0,32] | Ф+Р | 2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3 — *«~30-32%» → доли* |
+| `fee_growth` (точка, `tol` 0,005) | 0 | Ф+Р | 2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3 — *«~0%» → доли* |
+| `n20_0` (kind `min` — пол политики) | 0,133 | Ф+Р | 2026Q3_ifrs_presentation.pdf, с. 24, sha256 a0429c1af753efc3 — *«13.3%» → доли* |
+| `loan_growth.corporate` (сектор; `relation: in_line` — Сбер «в соответствии с сектором») | [0,08; 0,1] | Ф+Р | 2026Q3_ifrs_presentation.pdf, с. 23, sha256 a0429c1af753efc3 — *«+8-10%» → доли* |
+| `loan_growth.retail` (сектор; `relation: above` — Сбер «лучше сектора») | [0,05; 0,08] | Ф+Р | 2026Q3_ifrs_presentation.pdf, с. 23, sha256 a0429c1af753efc3 — *«+5-8%» → доли* |
 
 У каждого узла — `scope`: `group` (цель банка) или `sector` (прогноз сектора). Рост кредитов — прогноз
 сектора, а не цель банка: сравнивать с ним модель банка напрямую нельзя (гейт `guidance_gap` эти узлы не
 берёт; выпуск печатает строку с подписью «сектор»). `tol` — допуск точечной цели: половина единицы
-последнего разряда числа, как оно записано в презентации.
+последнего разряда числа, как оно записано в презентации. ЧПМ 28.10.2026 пересмотрена вверх: вместо точки «~6.2%»
+(29.07.2026, `tol` 0,0005) — нижняя граница «>6.2%» (`kind: min`, без допуска; вид — по тексту строки листа, §2).
 
 ### `calendar.json` — события
 
@@ -695,7 +727,7 @@ ras — средние процентные активы банка РСБУ к�
 | 2026-10-23 | cbr_forecast | — | да | день | Заседание Совета директоров Банка России по ключевой ставке (опорное: среднесрочный прогноз) | решение в 13:30 МСК; публикация среднесрочного прогноза — вход миров (новая версия книги) |
 | 2026-10-28 | ifrs | 2026Q3 | да | день | МСФО группы за 3К и 9М 2026 г. | дата из календаря эмитента в T-Invest (отчёт за 3-й квартал 2026 г.; в конце месяца выходит МСФО); прецедент: 28.10.2025 |
 | 2026-11-11 | ras | 2026M10 | нет | 2026-11-10…2026-11-13 | РСБУ банка за октябрь 2026 г. (релиз; 10 мес. нарастающим) | оценка по прецеденту: 10.11.2023, 11.11.2024, 12.11.2025 |
-| 2026-11-25 | investor_day | — | нет | 2026-11-01…2026-11-30 | День инвестора: стратегия 2027–2029 и новая дивидендная политика | объявлен месяц — ноябрь 2026 г. (финансовый директор на звонке 29.04.2026), день на 01.10.2026 не объявлен; прецеденты Дня инвестора: 06.12.2023, 10.12.2025; дата — оценка; новая дивидендная политика войдёт новым фактом и новой версией книги |
+| 2026-11-12 | investor_day | — | да | день | День инвестора: стратегия 2027–2029 и новая дивидендная политика | дата объявлена банком 22.10.2026; Наблюдательный совет рассмотрит дивидендную политику на 2027–2029 годы 10.11.2026, банк представит её на Дне инвестора (финансовый директор на звонке 28.10.2026); новая дивидендная политика войдёт новым фактом и новой версией книги |
 | 2026-12-09 | ras | 2026M11 | нет | 2026-12-08…2026-12-11 | РСБУ банка за ноябрь 2026 г. (релиз; 11 мес. нарастающим) | оценка по прецеденту: 11.12.2023, 10.12.2024, 09.12.2025 |
 | 2026-12-18 | cbr_rate | — | да | день | Заседание Совета директоров Банка России по ключевой ставке | решение в 13:30 МСК |
 | 2027-01-19 | ras | 2026M12 | нет | 2027-01-15…2027-01-21 | РСБУ банка за декабрь 2026 г. (релиз; 12 мес. нарастающим) | оценка по прецеденту: 17.01.2024, 17.01.2025, 20.01.2026 (декабрь — после праздников) |
@@ -718,16 +750,17 @@ ras — средние процентные активы банка РСБУ к�
 | 2027-08-10 | ras | 2027M07 | нет | 2027-08-09…2027-08-12 | РСБУ банка за июль 2027 г. (релиз; 7 мес. нарастающим) | оценка по прецеденту: 09.08.2024, 11.08.2025, 11.08.2026 |
 | 2027-09-09 | ras | 2027M08 | нет | 2027-09-08…2027-09-10 | РСБУ банка за август 2027 г. (релиз; 8 мес. нарастающим) | оценка по прецеденту: 10.09.2024, 09.09.2025, 09.09.2026 |
 | 2027-09-10 | cbr_rate | — | да | день | Заседание Совета директоров Банка России по ключевой ставке | решение в 13:30 МСК |
-| 2027-10-08 | ras | 2027M09 | нет | 2027-10-07…2027-10-12 | РСБУ банка за сентябрь 2027 г. (релиз; 9 мес. нарастающим) | оценка по прецеденту: 09.10.2024, 09.10.2025; 09.10.2026 — дата из календаря эмитента (T-Invest), прецедентом станет после выхода релиза |
+| 2027-10-08 | ras | 2027M09 | нет | 2027-10-07…2027-10-12 | РСБУ банка за сентябрь 2027 г. (релиз; 9 мес. нарастающим) | оценка по прецеденту: 09.10.2024, 09.10.2025, 09.10.2026 |
 | 2027-10-22 | cbr_forecast | — | да | день | Заседание Совета директоров Банка России по ключевой ставке (опорное: среднесрочный прогноз) | решение в 13:30 МСК; публикация среднесрочного прогноза — вход миров (новая версия книги) |
-| 2027-10-28 | ifrs | 2027Q3 | нет | 2027-10-26…2027-10-29 | МСФО группы за 3К и 9М 2027 г. | оценка по прецеденту: 28.10.2025; 28.10.2026 — дата из календаря эмитента (T-Invest), прецедентом станет после выхода отчёта |
+| 2027-10-28 | ifrs | 2027Q3 | нет | 2027-10-26…2027-10-29 | МСФО группы за 3К и 9М 2027 г. | оценка по прецеденту: 28.10.2025, 28.10.2026 |
 | 2027-12-17 | cbr_rate | — | да | день | Заседание Совета директоров Банка России по ключевой ставке | решение в 13:30 МСК |
 
-Прецедент — дата, которая уже была: в записках — только даты не позже `as_of` календаря (01.10.2026).
-Даты РСБУ за сентябрь (09.10.2026) и МСФО за 3К (28.10.2026) взяты из календаря отчётов эмитента у брокера (T-Invest;
-в репозитории — название источника и sha256 снимка, сам ответ не публикуется) —
-они объявлены, но не наступили, и прецедентами для 2027 г. не называются (тест
-`test_calendar_precedents_are_in_the_past`). Заседания ЦБ — официальный календарь ЦБ.
+Прецедент — дата, которая уже была: в записках — только даты не позже `as_of` календаря (28.10.2026; тест
+`test_calendar_precedents_are_in_the_past`). Даты РСБУ за сентябрь (09.10.2026) и МСФО за 3К (28.10.2026) были взяты
+из календаря отчётов эмитента у брокера (T-Invest; в репозитории — название источника и sha256 снимка, сам ответ не
+публикуется); оба отчёта вышли в эти дни и теперь — прецеденты в записках событий 2027 г. День инвестора —
+12.11.2026: дату объявил банк 22.10.2026 (до того стояла оценка в окне ноября 2026 г.). Заседания ЦБ — официальный
+календарь ЦБ.
 
 Название и записка события печатаются на витрине (карточки «События», на неделе события — и в баннере), поэтому
 они — словами для владельца: без кортежа и полей ответа источника, без рабочих пометок и меток класса, дата — с
@@ -741,11 +774,13 @@ ras — средние процентные активы банка РСБУ к�
 | `cbr_cal_mp` | https://www.cbr.ru/dkp/cal_mp/ | 2026-10-01 | `3362cffa65b67cfd` |
 | `ifx_cbr_2027` | https://www.interfax.ru/business/1119412 | 2026-10-01 | `e41ca684fd18fac8` |
 | `broker_reports` | снимок в папке передачи (не публикуется) | 2026-09-30 | `e6980ad6bb0f82fa` |
-| `ras_releases` | stage1/ras/ras_release_monthly_wide.csv | 2026-09-30 | `1e14ee0726e33198` |
+| `ras_releases` | stage1/ras/ras_release_monthly_wide.csv | 2026-10-28 | `fa06c62a02bffb07` |
 | `ifx_strategy` | https://www.interfax.ru/business/1086714 | 2026-10-01 | `9292752894a3e295` |
 | `ifx_div_policy` | https://www.interfax.ru/business/1106408 | 2026-10-01 | `65e3ea9142a19f50` |
 | `ifx_agm_2026` | https://www.interfax.ru/business/1099207 | 2026-10-01 | `68efd89078a3b444` |
 | `dividends_public` | https://www.sberbank.com/ru/investor-relations/dividends | 2026-10-01 | `fda92ec5df2d3ac4` |
+| `ifx_investor_day` | https://www.interfax.ru/business/1124284 | 2026-10-28 | `84ca7daf2515a843` |
+| `ifx_div_policy_board` | https://www.interfax.ru/business/1125464 | 2026-10-28 | `af8b83b67cbdafcc` |
 
 ### `peers.json` — банки-аналоги
 
@@ -804,10 +839,11 @@ ras — средние процентные активы банка РСБУ к�
 | 2024Q4 | ifrs_9M2025_statements_sber.pdf, с. 6; ifrs_9M2025_statements_sber.pdf, с. 7; ifrs_9M2025_statements_sber.pdf, с. 8; ifrs_FY2025_statements_sber.pdf, с. 6; ifrs_FY2025_statements_sber.pdf, с. 7; ifrs_FY2025_statements_sber.pdf, с. 8 | разность нарастающих |
 | 2025Q1 | ifrs_3M2026_statements.pdf, с. 6; ifrs_3M2026_statements.pdf, с. 7; ifrs_3M2026_statements.pdf, с. 8 | прямо: колонка «за три месяца» |
 | 2025Q2 | 2026H1_ifrs_interim_statements.pdf, с. 6; 2026H1_ifrs_interim_statements.pdf, с. 7; 2026H1_ifrs_interim_statements.pdf, с. 8; ifrs_3M2026_statements.pdf, с. 8 | разность нарастающих |
-| 2025Q3 | 2026H1_ifrs_interim_statements.pdf, с. 8; ifrs_9M2025_statements_sber.pdf, с. 6; ifrs_9M2025_statements_sber.pdf, с. 7; ifrs_9M2025_statements_sber.pdf, с. 8 | разность нарастающих |
-| 2025Q4 | ifrs_9M2025_statements_sber.pdf, с. 6; ifrs_9M2025_statements_sber.pdf, с. 7; ifrs_9M2025_statements_sber.pdf, с. 8; ifrs_FY2025_statements_sber.pdf, с. 6; ifrs_FY2025_statements_sber.pdf, с. 7; ifrs_FY2025_statements_sber.pdf, с. 8 | разность нарастающих |
+| 2025Q3 | 2026H1_ifrs_interim_statements.pdf, с. 8; 2026Q3_ifrs_interim_statements.pdf, с. 6; 2026Q3_ifrs_interim_statements.pdf, с. 7; 2026Q3_ifrs_interim_statements.pdf, с. 8 | разность нарастающих |
+| 2025Q4 | 2026Q3_ifrs_interim_statements.pdf, с. 6; 2026Q3_ifrs_interim_statements.pdf, с. 7; 2026Q3_ifrs_interim_statements.pdf, с. 8; ifrs_FY2025_statements_sber.pdf, с. 6; ifrs_FY2025_statements_sber.pdf, с. 7; ifrs_FY2025_statements_sber.pdf, с. 8 | разность нарастающих |
 | 2026Q1 | ifrs_3M2026_statements.pdf, с. 6; ifrs_3M2026_statements.pdf, с. 7; ifrs_3M2026_statements.pdf, с. 8 | прямо: колонка «за три месяца» |
 | 2026Q2 | 2026H1_ifrs_interim_statements.pdf, с. 6; 2026H1_ifrs_interim_statements.pdf, с. 7; 2026H1_ifrs_interim_statements.pdf, с. 8; ifrs_3M2026_statements.pdf, с. 8 | разность нарастающих |
+| 2026Q3 | 2026H1_ifrs_interim_statements.pdf, с. 8; 2026Q3_ifrs_interim_statements.pdf, с. 6; 2026Q3_ifrs_interim_statements.pdf, с. 7; 2026Q3_ifrs_interim_statements.pdf, с. 8 | разность нарастающих |
 
 Купон AT1 (`at1_coupon`, величиной): 0 в кварталах 1–3 (купон платится в декабре), в четвёртом — 9,7
 (2023, 2024, 2025: год − 9 месяцев; строка «Процентные платежи по бессрочному субординированному займу»
@@ -836,6 +872,7 @@ ras — средние процентные активы банка РСБУ к�
 | 2025Q4 | 16,587 | −177,9 | 0,722 |
 | 2026Q1 | 15,706 | −53,1 | — |
 | 2026Q2 | 14,618 | −88,8 | — |
+| 2026Q3 | 14,071 | −157,5 | — |
 
 Суммой 2024–2025: К1 0,201, К2 −0,020, К3 0,154, К4 0,665 (во 2К «прочее» положительно при отрицательном
 годе; книга 1.1 ставит К2 = 0 и нормирует: 0,197 / 0 / 0,151 / 0,652).
@@ -868,9 +905,10 @@ ras — средние процентные активы банка РСБУ к�
 | 2024Q2 | 2024Q4_ifrs_presentation.pdf, с. 10; 2025Q1_ifrs_presentation.pdf, с. 11; 2025Q1_ifrs_presentation.pdf, с. 14; 2025Q2_ifrs_presentation.pdf, с. 10; 2025Q2_ifrs_presentation.pdf, с. 12; 2025Q2_ifrs_presentation.pdf, с. 13; 2025Q2_ifrs_presentation.pdf, с. 17; 2025Q3_ifrs_presentation.pdf, с. 12; 2025Q3_ifrs_presentation.pdf, с. 16; ifrs_9M2024_press_release.pdf, с. 10; ifrs_9M2024_press_release.pdf, с. 22 | 0 из 15 |
 | 2024Q3 | 2024Q4_ifrs_presentation.pdf, с. 10; 2024Q4_ifrs_press_release.pdf, с. 3; 2025Q1_ifrs_presentation.pdf, с. 11; 2025Q1_ifrs_presentation.pdf, с. 14; 2025Q3_ifrs_presentation.pdf, с. 12; 2025Q3_ifrs_presentation.pdf, с. 14; 2025Q3_ifrs_presentation.pdf, с. 15; 2025Q3_ifrs_presentation.pdf, с. 16; 2025Q3_ifrs_presentation.pdf, с. 19; 2025Q4_ifrs_presentation.pdf, с. 15; ifrs_9M2024_press_release.pdf, с. 22 | 0 из 15 |
 | 2024Q4 | 2024Q4_ifrs_presentation.pdf, с. 10; 2024Q4_ifrs_press_release.pdf, с. 3; 2025Q3_ifrs_presentation.pdf, с. 12; 2025Q3_ifrs_presentation.pdf, с. 14; 2025Q3_ifrs_presentation.pdf, с. 15; 2025Q3_ifrs_presentation.pdf, с. 9; 2025Q4_ifrs_presentation.pdf, с. 19; 2025Q4_ifrs_presentation.pdf, с. 6; 2025Q4_ifrs_presentation.pdf, с. 7; 2025Q4_ifrs_press_release.pdf, с. 3 | 0 из 15 |
-| 2025Q1 | 2025Q1_ifrs_presentation.pdf, с. 19; 2025Q1_ifrs_presentation.pdf, с. 4; 2025Q3_ifrs_presentation.pdf, с. 12; 2026Q1_ifrs_presentation.pdf, с. 10; 2026Q1_ifrs_presentation.pdf, с. 12; 2026Q1_ifrs_presentation.pdf, с. 6; 2026Q1_ifrs_presentation.pdf, с. 8; 2026Q1_ifrs_presentation.pdf, с. 9; 2026Q2_ifrs_presentation.pdf, с. 8 | 0 из 15 |
-| 2025Q2 | 2025Q2_ifrs_presentation.pdf, с. 19; 2025Q2_ifrs_presentation.pdf, с. 4; 2025Q3_ifrs_presentation.pdf, с. 12; 2026Q1_ifrs_presentation.pdf, с. 10; 2026Q1_ifrs_presentation.pdf, с. 8; 2026Q2_ifrs_presentation.pdf, с. 11; 2026Q2_ifrs_presentation.pdf, с. 14; 2026Q2_ifrs_presentation.pdf, с. 15; 2026Q2_ifrs_presentation.pdf, с. 18; 2026Q2_ifrs_presentation.pdf, с. 8; 2026Q2_ifrs_presentation.pdf, с. 9 | 0 из 15 |
-| 2025Q3 | 2025Q3_ifrs_presentation.pdf, с. 12; 2025Q3_ifrs_presentation.pdf, с. 19; 2025Q3_ifrs_presentation.pdf, с. 22; 2025Q3_ifrs_presentation.pdf, с. 4; 2026Q1_ifrs_presentation.pdf, с. 10; 2026Q1_ifrs_presentation.pdf, с. 8; 2026Q2_ifrs_presentation.pdf, с. 11; 2026Q2_ifrs_presentation.pdf, с. 14; 2026Q2_ifrs_presentation.pdf, с. 15; 2026Q2_ifrs_presentation.pdf, с. 8; 2026Q2_ifrs_presentation.pdf, с. 9 | 0 из 15 |
-| 2025Q4 | 2025Q4_ifrs_presentation.pdf, с. 19; 2025Q4_ifrs_press_release.pdf, с. 3; 2026Q2_ifrs_presentation.pdf, с. 11; 2026Q2_ifrs_presentation.pdf, с. 12; 2026Q2_ifrs_presentation.pdf, с. 14; 2026Q2_ifrs_presentation.pdf, с. 15; 2026Q2_ifrs_presentation.pdf, с. 8; 2026Q2_ifrs_presentation.pdf, с. 9 | 0 из 15 |
-| 2026Q1 | 2026Q1_ifrs_presentation.pdf, с. 6; 2026Q2_ifrs_presentation.pdf, с. 11; 2026Q2_ifrs_presentation.pdf, с. 12; 2026Q2_ifrs_presentation.pdf, с. 14; 2026Q2_ifrs_presentation.pdf, с. 15; 2026Q2_ifrs_presentation.pdf, с. 8; 2026Q2_ifrs_presentation.pdf, с. 9 | 0 из 15 |
-| 2026Q2 | 2026Q2_ifrs_presentation.pdf, с. 11; 2026Q2_ifrs_presentation.pdf, с. 12; 2026Q2_ifrs_presentation.pdf, с. 14; 2026Q2_ifrs_presentation.pdf, с. 15; 2026Q2_ifrs_presentation.pdf, с. 18; 2026Q2_ifrs_presentation.pdf, с. 21; 2026Q2_ifrs_presentation.pdf, с. 6; 2026Q2_ifrs_presentation.pdf, с. 8; 2026Q2_ifrs_presentation.pdf, с. 9 | 0 из 15 |
+| 2025Q1 | 2025Q1_ifrs_presentation.pdf, с. 19; 2025Q1_ifrs_presentation.pdf, с. 4; 2025Q3_ifrs_presentation.pdf, с. 12; 2026Q1_ifrs_presentation.pdf, с. 10; 2026Q1_ifrs_presentation.pdf, с. 12; 2026Q1_ifrs_presentation.pdf, с. 6; 2026Q1_ifrs_presentation.pdf, с. 8; 2026Q1_ifrs_presentation.pdf, с. 9; 2026Q3_ifrs_presentation.pdf, с. 8 | 0 из 15 |
+| 2025Q2 | 2025Q2_ifrs_presentation.pdf, с. 19; 2025Q2_ifrs_presentation.pdf, с. 4; 2025Q3_ifrs_presentation.pdf, с. 12; 2026Q1_ifrs_presentation.pdf, с. 10; 2026Q1_ifrs_presentation.pdf, с. 8; 2026Q2_ifrs_presentation.pdf, с. 11; 2026Q2_ifrs_presentation.pdf, с. 14; 2026Q2_ifrs_presentation.pdf, с. 15; 2026Q2_ifrs_presentation.pdf, с. 18; 2026Q2_ifrs_presentation.pdf, с. 9; 2026Q3_ifrs_presentation.pdf, с. 8 | 0 из 15 |
+| 2025Q3 | 2025Q3_ifrs_presentation.pdf, с. 12; 2025Q3_ifrs_presentation.pdf, с. 22; 2025Q3_ifrs_presentation.pdf, с. 4; 2026Q1_ifrs_presentation.pdf, с. 10; 2026Q1_ifrs_presentation.pdf, с. 8; 2026Q3_ifrs_presentation.pdf, с. 11; 2026Q3_ifrs_presentation.pdf, с. 14; 2026Q3_ifrs_presentation.pdf, с. 15; 2026Q3_ifrs_presentation.pdf, с. 18; 2026Q3_ifrs_presentation.pdf, с. 8; 2026Q3_ifrs_presentation.pdf, с. 9 | 0 из 15 |
+| 2025Q4 | 2025Q4_ifrs_presentation.pdf, с. 19; 2025Q4_ifrs_press_release.pdf, с. 3; 2026Q3_ifrs_presentation.pdf, с. 11; 2026Q3_ifrs_presentation.pdf, с. 12; 2026Q3_ifrs_presentation.pdf, с. 14; 2026Q3_ifrs_presentation.pdf, с. 15; 2026Q3_ifrs_presentation.pdf, с. 8; 2026Q3_ifrs_presentation.pdf, с. 9 | 0 из 15 |
+| 2026Q1 | 2026Q1_ifrs_presentation.pdf, с. 6; 2026Q3_ifrs_presentation.pdf, с. 11; 2026Q3_ifrs_presentation.pdf, с. 12; 2026Q3_ifrs_presentation.pdf, с. 14; 2026Q3_ifrs_presentation.pdf, с. 15; 2026Q3_ifrs_presentation.pdf, с. 8; 2026Q3_ifrs_presentation.pdf, с. 9 | 0 из 15 |
+| 2026Q2 | 2026Q2_ifrs_presentation.pdf, с. 18; 2026Q2_ifrs_presentation.pdf, с. 21; 2026Q2_ifrs_presentation.pdf, с. 6; 2026Q3_ifrs_presentation.pdf, с. 11; 2026Q3_ifrs_presentation.pdf, с. 12; 2026Q3_ifrs_presentation.pdf, с. 14; 2026Q3_ifrs_presentation.pdf, с. 15; 2026Q3_ifrs_presentation.pdf, с. 8; 2026Q3_ifrs_presentation.pdf, с. 9 | 0 из 15 |
+| 2026Q3 | 2026Q3_ifrs_presentation.pdf, с. 11; 2026Q3_ifrs_presentation.pdf, с. 12; 2026Q3_ifrs_presentation.pdf, с. 14; 2026Q3_ifrs_presentation.pdf, с. 15; 2026Q3_ifrs_presentation.pdf, с. 18; 2026Q3_ifrs_presentation.pdf, с. 21; 2026Q3_ifrs_presentation.pdf, с. 6; 2026Q3_ifrs_presentation.pdf, с. 8; 2026Q3_ifrs_presentation.pdf, с. 9 | 0 из 15 |

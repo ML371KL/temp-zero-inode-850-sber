@@ -37,7 +37,11 @@ def compute() -> dict:
     line = t["empirical"]["nim_main"]
     key_h = [r for r in rec["rows"] if r["world"] == "H"][-1]["key_avg"]
     bridge = res["bridge_mgmt_minus_eng_2024Q1_2026Q2"]["nim"]
-    real = next(r for r in t["phi_table"] if abs(r["T_star"] - book["nii"]["transmission"]["target"]) < 1e-12)
+    # Книга на якоре позже листа (перезаякоривание, MODEL §15.2 п. 8): цели A-N2 и A-N3 — запись суждения листа на
+    # структуре нового якоря при прежних скалярах пути; опора листа — цель калибровки на её якоре.
+    moved = evlib.moved(book)
+    target = prop["nii"]["transmission"]["target"] if moved else book["nii"]["transmission"]["target"]
+    real = next(r for r in t["phi_table"] if abs(r["T_star"] - target) < 1e-12)
     mism = []
     pb, bb = prop["nii"]["books"], book["nii"]["books"]
     y0 = int(book["meta"]["first_period"][:4])
@@ -60,7 +64,7 @@ def compute() -> dict:
             mism.append(f"nii.retail_current_share.{k}")
     if prop["volumes"]["liquid_min_share"] != book["volumes"]["liquid_min_share"]:
         mism.append("volumes.liquid_min_share")
-    if prop["nii"]["transmission"]["target"] != book["nii"]["transmission"]["target"]:
+    if not moved and prop["nii"]["transmission"]["target"] != book["nii"]["transmission"]["target"]:
         mism.append("nii.transmission.target")
     return {
         "a_n2": {"line_a": line["a"], "line_b": line["b"], "line_years": line["years"], "key_H_LT_pct": key_h,
@@ -69,7 +73,12 @@ def compute() -> dict:
                  "nss_H_sigma0_0_mgmt_pct": round(t["nss_phi0"]["H"]["nss"] + bridge, 2),
                  "bridge_nim_mgmt_minus_engine_pp": bridge,
                  "book_center_mgmt": book["nii"]["nim_lt_target_mgmt"]},
-        "a_n3": {"target": book["nii"]["transmission"]["target"], "phi_for_realized": real["phi_for_realized"],
+        "moved_by_reanchor": None if not moved else {
+            "anchor_period": book["meta"]["anchor_period"], "sheet_anchor": evlib.SHEETS_ANCHOR,
+            "nii.transmission.target": book["nii"]["transmission"]["target"],
+            "nii.nim_lt_target_mgmt": book["nii"]["nim_lt_target_mgmt"],
+            "note": "цели — запись суждения листа на структуре нового якоря при прежних скалярах пути (режим keep)"},
+        "a_n3": {"target": target, "phi_for_realized": real["phi_for_realized"],
                  "local_T_H_at_that_phi": real["T_H_at_phi_realized"], "phi_books_weight": t["phi_books_weight"],
                  "mechanical_T_phi0": t["T_H_phi0"], "roe_factor_iea_bv_1mtax": t["roe_factor_iea_bv_1mtax"],
                  "empirical_nim_main_b": line["b"], "empirical_engine_b": t["empirical"]["nim_engine_basis"]["b"],

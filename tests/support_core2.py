@@ -22,7 +22,21 @@ except ImportError:      # модуля индикаторов ещё нет —
     sys.path.insert(0, str(Path(__file__).resolve().parent / "fixtures" / "core2"))
     from outputs_stub import IndicatorOutputs, PricePoint  # type: ignore  # noqa: E402
 
-TODAY = date(2026, 10, 1)
+
+
+def _today() -> date:
+    """«Сегодня» тестов части 2 — день после даты оценки настоящей книги (цена и реестр книги — на день раньше;
+    книга 1.3 — 01.10.2026, книга 1.4 — 29.10.2026); без машинной книги — 01.10.2026 (фикстура)."""
+    import json
+    path = Path(__file__).resolve().parents[1] / "data" / "assumptions" / "assumptions.json"
+    try:
+        meta = json.loads(path.read_text(encoding="utf-8"))["meta"]
+        return date.fromisoformat(str(meta["valuation_date"])) + timedelta(days=1)
+    except (OSError, ValueError, KeyError):
+        return date(2026, 10, 1)
+
+
+TODAY = _today()
 # Сводка сверки с контрольной моделью в формате П§2 (W2) — своя заглушка: файл `data/checks/` пишет поток
 # control, и тесты ядра не зависят от того, пересобран ли он уже.
 CONTROL_FIXTURE = Path(__file__).resolve().parent / "fixtures" / "core2" / "control_model.json"
