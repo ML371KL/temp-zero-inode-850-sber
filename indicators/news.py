@@ -12,6 +12,13 @@
 «Есть обновление» (текст режется от «INTERFAX.RU»), месяц прошлого года. Знак
 резервов и расходов — как в таблице релиза (расход со знаком минус). Проценты — доли.
 
+Месяц потока (ЧП, ЧПД, ЧКД, резервы, расходы) читается и из общих оборотов (`_month_value`):
+«в <месяце> — на Y% — до Z млрд», «в <месяце> … составили Z млрд», «Z млрд за <месяц>»,
+«в <месяце> показатель составил Z» (поток — предмет прошлого предложения). Число принадлежит
+потоку, чьё название ближе всего стоит перед ним в предложении (`_owner`): в одной фразе о
+нескольких потоках чужое число не берётся. Нарастающая прибыль — и из оборота «за N месяцев …
+увеличил чистую прибыль … до X» (`_ytd_value`).
+
 Месяц релиза определяется по фразам периода первого предложения, где они есть
 (`period_months`): «за N месяцев», «январь–<месяц>», «за/в <месяце>» — целыми словами.
 Число берётся только из фразы, которая называет месяц релиза (нарастающее — период в
@@ -19,6 +26,11 @@
 
 Всё скачанное ложится в защищённый сырой архив `raw/news/` с моментом получения:
 момент выхода новости невосполним.
+
+Консенсус ЧП квартала (`extract_consensus`): канал эмитента перед отчётом МСФО публикует ожидание
+аналитиков («…ожидают, что чистая прибыль … за III квартал <год> достигнет X млрд…»). Посты каналов с
+`consensus: true` в `sources.yaml` пишутся в ряд `consensus.ni_q` (эталон «консенсус» журнала и ретро,
+`record_consensus_posts`); ручная запись квартала (`record-consensus`) важнее — поверх неё автомат не пишет.
 """
 
 from __future__ import annotations
@@ -34,6 +46,7 @@ from typing import Any
 
 from indicators import http, periods
 from indicators.sources import FAILED, Context, Result
+from indicators.store import Point
 
 SOURCE = "news"
 # Москва без перехода на летнее время с 2014 года: фиксированный сдвиг (tzdata не нужен).
@@ -62,6 +75,7 @@ _CUMULATIVE = re.compile(
 _IN_MONTH = re.compile(rf"\b(?:за|в)\s+(?P<m>{MON})(?!\s*[-–—]\s*{MON})", re.I)
 N = r"\d{1,4}(?:[.,]\d{1,3})?"
 PERCENT_METRICS = frozenset({"roe_ytd", "roe_m", "cor_ytd", "cor_m", "cir_ytd", "n1_0", "n1_1", "n1_2"})
+MONTH_FLOWS = ("np", "nii", "fee", "prov", "opex")     # потоки P&L, у которых текст называет месяц
 
 
 # ------------------------------------------------------------------ HTML
@@ -179,6 +193,94 @@ def _bn(v: str, unit: str, min_dec: int = 4) -> float | None:
 
 
 _COMPARE = re.compile(r",\s*что\s+на|по\s+сравнению|годом\s+ранее|больше\s+результата|меньше\s+результата", re.I)
+# Названия потоков P&L релиза (нижний регистр): владелец числа в предложении — поток, названный перед ним.
+FLOW_NAMES = {"np": r"прибыл", "nii": r"процентн\w*\s+доход", "fee": r"комиссионн\w*\s+доход",
+              "prov": r"резерв", "opex": r"операционн\w*\s+расход"}
+# Между словом месяца и числом не стоит сравнение: число после «против», «чем», «годом ранее» — чужое.
+_NOT_THIS_MONTH = re.compile(r"против|\bчем\b|ранее|сравнени|аналогичн|прошл", re.I)
+# необязательное изменение перед числом: «на Y%», «+Y%», «в N раза», со скобкой после («на 286,5% (в 3,9 раза)»)
+_PCT = rf"(?:(?:(?:на\s+|[+−-]\s*)?{N}\s*%|в\s+{N}\s+раз\w*)(?:\s*\([^()]{{0,30}}\))?[^.\d;]{{0,45}}?)?"
+_AFTER_MONTH_GAP = 60                                                  # знаков связки между месяцем и числом
+_NAME_AFTER = 40                                                       # знаков после числа, где ищется название
+_COMPARE_BEFORE = 12                                                   # знаков перед числом, где ищется сравнение
+
+
+def _owner(sl: str, at: int) -> str | None:
+    """Поток числа в позиции `at` предложения `sl` (нижний регистр): название потока ближе всего перед
+    числом; перед числом названий нет — название сразу после него («150,3 млрд рублей чистой прибыли»)."""
+    best, pos = None, -1
+    for flow, rx in FLOW_NAMES.items():
+        for m in re.finditer(rx, sl[:at]):
+            if m.start() > pos:
+                best, pos = flow, m.start()
+    if best is not None:
+        return best
+    after = [(m.start(), flow) for flow, rx in FLOW_NAMES.items()
+             for m in [re.search(rx, sl[at:at + _NAME_AFTER])] if m]
+    return min(after)[1] if after else None
+
+
+def _first_flow(sl: str) -> str | None:
+    """Поток, который предложение называет первым (предмет предложения), или None."""
+    hits = [(m.start(), flow) for flow, rx in FLOW_NAMES.items() for m in [re.search(rx, sl)] if m]
+    return min(hits)[1] if hits else None
+
+
+def _month_value(s: str, month_rx: str, year: int | None, flow: str | None) -> float | None:
+    """Значение потока за месяц релиза, млрд ₽ (без знака), из общих оборотов предложения `s`:
+
+    * «в <месяце> — на Y% — до Z млрд», «в <месяце> … составили Z млрд», «за <месяц> … выросли на Y%
+      … и составили Z млрд» — первое число в млрд после слова месяца; между ними только связки и
+      необязательный процент изменения, без других чисел и без сравнения («против», «годом ранее»);
+    * «Z млрд рублей за <месяц>» — число сразу перед словом месяца.
+
+    Год при месяце — только год релиза; «январь–<месяц>» — не месяц. Число берётся, если принадлежит
+    потоку `flow` (`_owner`); `flow` None — предложение без названия потока («этот показатель»), тогда
+    в нём не должно быть названий других потоков."""
+    sl = s.lower().replace("ё", "е")
+    after = re.compile(rf"\b(?:в|за)\s+(?P<mon>{month_rx})(?:\s+(?P<y>\d{{4}})\s+года|\s+текущего\s+года)?"
+                       rf"(?!\s*[-–—]\s*{MON})(?P<gap>[^.\d%;]{{0,{_AFTER_MONTH_GAP}}}?){_PCT}"
+                       rf"(?P<v>{N})\s*(?P<u>млрд|трлн)", re.I)
+    # «Z млрд рублей за <месяц>»: число и месяц — одна группа слов (без запятой и тире между ними); после
+    # месяца не начинается своё «— на Y% — до …» (тогда число перед месяцем — нарастающее прошлой части фразы)
+    before = re.compile(rf"(?P<v>{N})\s*(?P<u>млрд|трлн)(?:\s*руб\w*(?:\.(?=\s*(?:в|за)\s))?)?\s+(?:в|за)\s+"
+                        rf"(?P<mon>{month_rx})(?:\s+(?P<y>\d{{4}})\s+года)?(?!\s*[-–—]\s*{MON})"
+                        rf"(?!\s*[-–—,:]?\s*(?:на\s+)?[+−-]?\d)", re.I)
+    found = []
+    for rx in (after, before):
+        for m in rx.finditer(s):
+            if year and m.group("y") and int(m.group("y")) != year:
+                continue
+            if "gap" in rx.groupindex and _NOT_THIS_MONTH.search(m.group("gap") or ""):
+                continue
+            if _NOT_THIS_MONTH.search(s[max(0, m.start("v") - _COMPARE_BEFORE):m.start("v")]):
+                continue                  # «против 160,0 млрд рублей в августе» — число сравнения
+            owner = _owner(sl, m.start("v"))
+            if (flow is not None and owner != flow) or (flow is None and owner is not None):
+                continue
+            found.append((m.start("v"), m.group("v"), m.group("u")))
+    if not found:
+        return None
+    _, v, u = min(found)
+    return _bn(v, u)
+
+
+def _ytd_value(s: str, flow: str, year: int | None) -> float | None:
+    """Нарастающее значение потока из оборота «за N месяцев [года] … [на Y%] … до X млрд»: первое число в
+    млрд после фразы нарастающего периода (между ними — связки и необязательный процент), если оно
+    принадлежит потоку `flow`; год сразу после фразы — только год релиза; грубое «трлн» не берётся."""
+    sl = s.lower().replace("ё", "е")
+    for m in _CUMULATIVE.finditer(s):
+        tail = re.match(rf"(?:\s+(?P<y>\d{{4}})\s+г(?:ода|\.)?)?(?P<gap>[^.\d%;]{{0,{_AFTER_MONTH_GAP}}}?){_PCT}"
+                        rf"(?P<v>{N})\s*(?P<u>млрд|трлн)", s[m.end():], re.I)
+        if not tail or _NOT_THIS_MONTH.search(tail.group("gap") or ""):
+            continue
+        if year and tail.group("y") and int(tail.group("y")) != year:
+            continue                      # год сразу после фразы периода — не год релиза: итог для сравнения
+        if _owner(sl, m.end() + tail.start("v")) != flow:
+            continue
+        return _bn(tail.group("v"), tail.group("u"))
+    return None
 
 
 def _sents(t: str) -> list[str]:
@@ -267,7 +369,8 @@ def extract_release_numbers(text: str, *, month: str | None = None) -> dict[str,
     `month` — месяц релиза («2026M08»), с ним число берётся, только если фраза называет этот
     месяц: нарастающее — при периоде в столько же месяцев, месячное — при слове этого месяца,
     остаток на дату — при первом числе следующего месяца; год фразы — год релиза. Без `month`
-    берётся любой месяц (разбор текста самого по себе).
+    берётся любой месяц (разбор текста самого по себе); общие обороты месяца потока
+    (`_month_value`) — только с `month`.
     """
     t = _norm(text).replace("₽", "руб.")
     out: dict[str, tuple[float, str]] = {}
@@ -292,6 +395,7 @@ def extract_release_numbers(text: str, *, month: str | None = None) -> dict[str,
         got = re.search(rf"на\s+1\s+({MON})", s, re.I)
         return n is None or got is None or _month_no(got.group(1)) == n % MONTHS_IN_YEAR + 1
 
+    last_flow: str | None = None          # предмет прошлого предложения — для «в <месяце> этот показатель …»
     for s in _sents(t):
         sl = s.lower()
         period = cumulative_months(s, bare_year=n in (None, MONTHS_IN_YEAR))
@@ -307,6 +411,10 @@ def extract_release_numbers(text: str, *, month: str | None = None) -> dict[str,
                           rf"выросла[^.]*?до|увеличил\w*[^.]*?до|снизил\w*[^.]*?до)\s+({N})\s*млрд\s*руб\w*", s, re.I)
             if m and not re.search(rf"январ\w*\s*[-–—]\s*{MON}", m.group(0), re.I):
                 put("np_m", _num(m.group(1)), s)
+            if is_ytd and "np_ytd" not in out:
+                put("np_ytd", _ytd_value(s, "np", year), s)
+            if n and "np_m" not in out:
+                put("np_m", _month_value(s, M, year, "np"), s)
         if "рентабельность капитала" in sl:
             m = re.search(rf"рентабельность капитала\s+(?:за|в)\s+(?:\d+\s+месяц\w*|январ\w*\s*[-–—]\s*{MON}|первое полугодие|"
                           rf"I квартал\w*)[^.%]*?(?:составила|выросла до|снизилась до|до)\s+({N})%", s, re.I)
@@ -322,15 +430,21 @@ def extract_release_numbers(text: str, *, month: str | None = None) -> dict[str,
             m = re.search(rf"в\s+{M}\s*[-–—]\s*на\s+{N}%\s*[-–—]\s*до\s+({N})\s*млрд", s, re.I)
             if m:
                 put("nii_m", _num(m.group(1)), s)
+            if n and "nii_m" not in out:
+                put("nii_m", _month_value(s, M, year, "nii"), s)
         if re.search(r"комиссионн\w+ доход", sl):
             m = re.search(rf"комиссионн\w+ доход\w*[^.]*?(?:[-–—,]\s*до|составил\w*|до)\s+({N})\s*(млрд|трлн)", s, re.I)
             if m and is_ytd:
                 put("fee_ytd", _bn(m.group(1), m.group(2)), s)
-        if re.search(rf"^в\s+{M}\s+(?:этот\s+)?показатель\s+(?:сократился|снизился|вырос|увеличился)", sl) \
-                and "fee_ytd" in out and "fee_m" not in out and "opex_ytd" not in out:
-            m = re.search(rf"до\s+({N})\s*млрд", s)
-            if m:
-                put("fee_m", _num(m.group(1)), s)
+            if n and "fee_m" not in out:
+                put("fee_m", _month_value(s, M, year, "fee"), s)
+        if re.search(rf"^в\s+{M}\s+(?:этот\s+)?показатель\s+(?:сократился|снизился|вырос|увеличился|"
+                     rf"составил)", sl) and last_flow in MONTH_FLOWS and f"{last_flow}_m" not in out \
+                and _first_flow(sl) is None:
+            # «этот показатель» — поток прошлого предложения (его предмет); прежде правило знало только ЧКД
+            # и брало его, даже если прошлое предложение было о резервах
+            v = _month_value(s, M, year, None)
+            put(f"{last_flow}_m", None if v is None else (-v if last_flow in ("prov", "opex") else v), s)
         if "расходы на резервы" in sl:
             m = re.search(rf"(?:до|составили)\s+({N})\s*(млрд|трлн)", s, re.I)
             if m and is_ytd:
@@ -339,6 +453,9 @@ def extract_release_numbers(text: str, *, month: str | None = None) -> dict[str,
             m = re.search(rf"(?:в|за)\s+{M}(?!\s*[-–—]\s*[а-я])(?:\s+текущего года)?\s*[-–—]?[^.]*?до\s+({N})\s*млрд", s, re.I)
             if m and not re.search(r"январ\w*\s*[-–—]", m.group(0), re.I):
                 put("prov_m", -_num(m.group(1)), s)
+            if n and "prov_m" not in out:
+                v = _month_value(s, M, year, "prov")
+                put("prov_m", None if v is None else -v, s)
         if "стоимость" in sl and "риска" in sl:
             m = re.search(rf"за\s+(?:\d+\s+месяц\w*|январ\w*\s*[-–—]\s*{MON})[^.%]*?составила\s+({N})%", s, re.I)
             if m and not_other:
@@ -354,10 +471,14 @@ def extract_release_numbers(text: str, *, month: str | None = None) -> dict[str,
             m = re.search(rf"в\s+{M}\s*[-–—]\s*на\s+{N}%\s*[-–—]\s*до\s+({N})\s*млрд", s, re.I)
             if m:
                 put("opex_m", -_num(m.group(1)), s)
+            if n and "opex_m" not in out:
+                v = _month_value(s, M, year, "opex")
+                put("opex_m", None if v is None else -v, s)
         if re.search(r"отношение\s+(?:операционных\s+)?расходов\s+к\s+доходам", sl):
             m = re.search(rf"составил\w*\s+({N})%", s, re.I)
             if m and not_other:
                 put("cir_ytd", _num(m.group(1)), s)
+        last_flow = _first_flow(sl) or last_flow
         if not stock_date_fits(s):
             continue
         if re.search(r"базов\w+\s+и\s+основн\w+\s+капитал", sl) and "трлн" in sl and "коэффициент" not in sl:
@@ -498,6 +619,101 @@ def extract_dividend_decision(text: str, *, published: str | None = None) -> dic
                 "record_date": record, "decided_date": pub_day.isoformat() if pub_day else None,
                 "phrase": s[:220]}
     return None
+
+
+# ------------------------------------------------------------------ консенсус прибыли квартала
+
+CONSENSUS_SERIES = "consensus.ni_q"
+_QUARTER_ROMAN = {"i": 1, "ii": 2, "iii": 3, "iv": 4}
+_QUARTER_WORDS = (("перв", 1), ("втор", 2), ("трет", 3), ("четв[её]рт", 4))
+_QUARTER_PHRASE = re.compile(r"\b(?:за|в)\s+(?P<q>iv|iii|ii|i|[1-4](?:-?(?:й|м|ом|го))?|перв\w*|втор\w*|трет\w*|"
+                             r"четв[её]рт\w*)\s+квартал\w*\s+(?P<y>\d{4})", re.I)
+_EXPECTED = re.compile(r"ожида\w*|консенсус\w*|прогноз\w*", re.I)
+_RESULT_VERB = re.compile(r"составил[аио]?\b|заработал\w*|получил\w*|показал\w*", re.I)
+_CONSENSUS_VALUE = re.compile(rf"(?:достигнет|составит|будет|окажется|на\s+уровне|около|порядка|[-–—:])\s*"
+                              rf"(?:около\s+|порядка\s+|примерно\s+)?({N})\s*(млрд|трлн)", re.I)
+# Подлежащее — сам прогноз («Консенсус-прогноз по чистой прибыли … составил X»): прошедшее время тут о прогнозе.
+_CONSENSUS_SUBJECT = re.compile(r"(?:консенсус\w*(?:-прогноз\w*)?|прогноз\w*)\s+(?:\w+\s+){0,2}?по\s+"
+                                r"чист\w+\s+прибыл\w*", re.I)
+_CONSENSUS_STATED = re.compile(rf"(?:составил|составляет|на\s+уровне|[-–—:])\s*(?:около\s+|порядка\s+)?"
+                               rf"({N})\s*(млрд|трлн)", re.I)
+
+
+def _quarter_no(word: str) -> int | None:
+    w = word.lower()
+    if w in _QUARTER_ROMAN:
+        return _QUARTER_ROMAN[w]
+    if w[:1].isdigit():
+        return int(w[0])
+    for stem, n in _QUARTER_WORDS:
+        if re.match(stem, w):
+            return n
+    return None
+
+
+def extract_consensus(text: str) -> dict[str, Any] | None:
+    """Консенсус ЧП квартала из поста эмитента → {period: «2026Q3», value: млрд ₽, phrase}; нет — None.
+
+    Предложение называет ожидание («ожидают», «консенсус», «прогноз») раньше чистой прибыли, квартал с годом
+    («за III квартал 2026 г.», «в третьем квартале 2026 года») и число после глагола будущего или связки
+    («достигнет», «составит», «на уровне», тире). Фраза о результате («составила», «заработал») между
+    прибылью и числом — не консенсус: так пишут об отчёте, а не об ожидании. Если подлежащее — сам прогноз
+    («Консенсус-прогноз по чистой прибыли … за 1 квартал … составил X»), прошедшее время — о прогнозе."""
+    t = _norm(text or "").replace("₽", " руб.")
+    for s in _sents(t):
+        exp = _EXPECTED.search(s)
+        profit = re.search(r"чист\w+\s+прибыл\w*", s, re.I)
+        if not exp or not profit or exp.start() > profit.start():
+            continue
+        q = _QUARTER_PHRASE.search(s, exp.end())
+        if not q:
+            continue
+        start = max(profit.end(), q.end())
+        if _CONSENSUS_SUBJECT.match(s, exp.start()):          # «Консенсус-прогноз по чистой прибыли …»
+            v = _CONSENSUS_STATED.search(s, start) or _CONSENSUS_VALUE.search(s, start)
+        else:
+            v = _CONSENSUS_VALUE.search(s, start)
+            if v and _RESULT_VERB.search(s[profit.start():v.start()]):
+                continue
+        if not v:
+            continue
+        n, value = _quarter_no(q.group("q")), _bn(v.group(1), v.group(2))
+        if n is None or value is None:
+            continue
+        return {"period": periods.quarter(int(q.group("y")), n), "value": value, "phrase": s[:220]}
+    return None
+
+
+def record_consensus_posts(store: Any, items: dict[str, dict[str, Any]], kinds: set[str]) -> list[str]:
+    """Консенсус из постов видов `kinds` (каналы с `consensus: true`) → ряд `consensus.ni_q`, млрд ₽.
+
+    Момент точки — публикация поста (UTC). Квартал с ручной записью (`record-consensus`, статус `manual`)
+    автомат не трогает; пост, уже записанный прошлым тактом, второй раз не пишется. Возвращает записанные
+    кварталы."""
+    if not kinds:
+        return []
+    held = store.load(CONSENSUS_SERIES)
+    manual = {p.period for p in (held.points if held else []) if p.status == "manual"}
+    written: list[str] = []
+    for url, item in sorted(items.items()):
+        if item.get("kind") not in kinds:
+            continue
+        got = extract_consensus(item.get("text") or "")
+        if got is None or got["period"] in manual:
+            continue
+        moment = parse_published(item.get("published") or item.get("first_seen"))
+        if moment is None:
+            continue
+        at = (moment if moment.tzinfo else moment.replace(tzinfo=MSK)).astimezone(timezone.utc)
+        moment_utc = at.isoformat(timespec="seconds")
+        if held is not None and any(p.period == got["period"] and p.fetched_at == moment_utc and p.value == got["value"]
+                                    for p in held.points):
+            continue                      # пост уже записан прошлым тактом
+        held = store.upsert(CONSENSUS_SERIES, [Point(got["period"], got["value"], moment_utc, "ok",
+                                                     f"{item['kind']}: {url}")],
+                            basis="ifrs", unit="RUB bn", label="консенсус ЧП квартала")
+        written.append(got["period"])
+    return written
 
 
 # ------------------------------------------------------------------ RSS и страницы изданий
@@ -645,10 +861,13 @@ def collect(ctx: Context) -> Result:
         if complete and d < ctx.today and d.isoformat() not in done:
             done.append(d.isoformat())
     state["days"]["interfax"] = sorted(done)[-int(cfg.get("days_kept", 31)):]
+    consensus_kinds: set[str] = set()
     for entry in cfg.get("telegram_channels") or []:
         spec = entry if isinstance(entry, dict) else {"name": entry}
         channel = spec["name"]
         kind = str(spec.get("kind") or f"telegram:{channel}")
+        if spec.get("consensus"):
+            consensus_kinds.add(kind)
         words = None if spec.get("keywords") == "any" else keywords + [f"#{ticker}"]
         need = list(spec.get("require", require))
         url = f"https://t.me/s/{channel}"
@@ -707,6 +926,10 @@ def collect(ctx: Context) -> Result:
             remember(e["url"], name, e["title"], page_text(page)[:20000],
                      e["published"] or page_published(page), pdf_links(page, patterns), topic)
     ctx.store.write_state("news/items.json", state)
+    written = record_consensus_posts(ctx.store, state["items"], consensus_kinds)
+    if written:
+        res.series.append(CONSENSUS_SERIES)
+        res.data["consensus"] = written
     res.data["items"] = len(state["items"])
     res.data["pdf"] = sorted(state["pdf"])
     if fetched == 0 and (cfg.get("interfax_day") or cfg.get("telegram_channels")):

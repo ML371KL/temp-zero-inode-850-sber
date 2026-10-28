@@ -85,8 +85,11 @@ def test_release_accepted_when_two_kinds_agree(monkeypatch, tmp_path):
     assert acc["np_ytd"]["value"] == pytest.approx(1332.7)
     assert {"interfax", "telegram:markettwits"} <= set(acc["np_ytd"]["kinds"])
     assert acc["np_m"]["value"] == pytest.approx(169.1)
-    assert "nii_ytd" not in acc and "prov_m" not in acc               # только один вид — не принимается
-    assert out["complete"] and not out["mismatches"]
+    # поток одного вида — принят тождеством нарастающего итога с июлем ряда; доли одного вида — нет
+    assert acc["nii_ytd"]["kinds"] == acc["prov_m"]["kinds"] == ["interfax", "identity"]
+    assert acc["nii_m"]["value"] == pytest.approx(325.2) and acc["prov_m"]["value"] == pytest.approx(-107.8)
+    assert "cor_m" not in acc and "roe_m" not in acc and "cir_ytd" not in acc
+    assert out["complete"] and not out["mismatches"] and not out["identity_failures"]
 
 
 def test_pdf_table_confirms_the_text(monkeypatch, tmp_path):
@@ -278,3 +281,58 @@ def test_record_value_rules():
         record.parse_value("5%", share=False)
     with pytest.raises(record.RecordError):
         record.parse_pairs(["eps=1"])
+
+
+# Текст релиза 9М одного вида (сочинён, как NINE_COMMON в tests/test_ind_news.py): потоки P&L нарастающим и за месяц.
+NINE_ONE_KIND = ("INTERFAX.RU - За девять месяцев 2026 года банк по РСБУ увеличил чистую прибыль на 18,2% (в годовом "
+                 "выражении) — до 1 трлн 501,8 млрд рублей, в сентябре — на 7,3% — до 169,1 млрд. "
+                 "Чистые процентные доходы по итогам девяти месяцев прибавили 24,1% и дошли до 2 трлн 768,5 млрд "
+                 "рублей; в сентябре — плюс 19,4%, до 327,3 млрд. "
+                 "Чистый комиссионный доход за девять месяцев составил 534,6 млрд рублей (+1,2% г/г), в сентябре — "
+                 "58,7 млрд. Расходы на резервы с начала года, за девять месяцев, составили 580,7 млрд рублей и "
+                 "48,4 млрд рублей за сентябрь. Операционные расходы банка за девять месяцев выросли до 915,1 млрд "
+                 "рублей, в сентябре — до 108,4 млрд (+4,2% г/г).")
+
+
+def _one_kind_ctx(monkeypatch, tmp_path, texts: dict[str, str], today=date(2026, 10, 9)):
+    """Состояние с историей по август 2026 года и текстами релиза одного вида (Интерфакс)."""
+    ctx = _watch_ctx(monkeypatch, tmp_path, today=today)
+    ctx.store.write_state("news/items.json", {"pdf": {}, "items": {
+        url: {"kind": "interfax", "topic": "ras", "published": f"{today.isoformat()}T10:05:00+03:00", "text": text}
+        for url, text in texts.items()}})
+    return ctx
+
+
+def test_a_flow_of_one_kind_is_accepted_when_the_running_total_adds_up(monkeypatch, tmp_path):
+    """Релиз 9М26 — только Интерфакс (как 09.10.2026): нарастающее и месяц каждого потока сходятся с августом ряда
+    (2 441,3 + 327,3 = 2 768,6 ≈ 2 768,5 в допуске 0,35) — поток принят видами [interfax, identity] и записан в ряд."""
+    ctx = _one_kind_ctx(monkeypatch, tmp_path, {"u9": NINE_ONE_KIND})
+    out = release_watch.watch(ctx, "2026M09")
+    acc = ctx.store.read_state("release_watch/2026M09.json")["accepted"]
+    want = {"np_ytd": 1501.8, "np_m": 169.1, "nii_ytd": 2768.5, "nii_m": 327.3, "fee_ytd": 534.6, "fee_m": 58.7,
+            "prov_ytd": -580.7, "prov_m": -48.4, "opex_ytd": -915.1, "opex_m": -108.4}
+    for k, v in want.items():
+        assert acc[k]["value"] == pytest.approx(v) and acc[k]["kinds"] == ["interfax", "identity"], k
+        assert ctx.store.load(f"ras.release.{k}").value_as_of("2026M09") == pytest.approx(v), k
+    assert sorted(out["accepted_by_identity"]) == sorted(want)
+    assert out["month_accepted"] and not out["mismatches"] and not out["identity_failures"]
+    assert ctx.store.load("ras.release.nii_m").point_as_of("2026M09").source == "release:interfax+identity"
+
+
+def test_one_kind_is_not_enough_without_the_identity(monkeypatch, tmp_path):
+    """Тождество не сошлось (месяц ЧПД 317,3 вместо 327,3), один вид назвал два числа, январь (нарастающее и месяц —
+    одно число) — поток одного вида не принимается; расхождения и провала тождества нет: одиночный вид спорить не с кем."""
+    wrong = NINE_ONE_KIND.replace("до 327,3 млрд", "до 317,3 млрд")
+    ctx = _one_kind_ctx(monkeypatch, tmp_path, {"u9": wrong})
+    out = release_watch.watch(ctx, "2026M09")
+    acc = ctx.store.read_state("release_watch/2026M09.json")["accepted"]
+    assert "nii_ytd" not in acc and "nii_m" not in acc and acc["fee_m"]["kinds"] == ["interfax", "identity"]
+    assert not out["mismatches"] and not out["identity_failures"]
+    ctx = _one_kind_ctx(monkeypatch, tmp_path / "two", {"a": NINE_ONE_KIND, "b": wrong})
+    release_watch.watch(ctx, "2026M09")
+    acc = ctx.store.read_state("release_watch/2026M09.json")["accepted"]
+    assert "nii_m" not in acc and acc["np_m"]["kinds"] == ["interfax", "identity"]
+    jan = {"np_ytd": [{"kind": "interfax", "value": 150.2}], "np_m": [{"kind": "interfax", "value": 150.2}]}
+    accepted: dict = {}
+    assert release_watch.accept_by_identity(Store(tmp_path / "jan"), "2027M01", jan, accepted, {}, {}) == []
+    assert accepted == {}
