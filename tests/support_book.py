@@ -20,18 +20,22 @@ EVIDENCE = BOOK_DIR / "evidence"
 FACTS_DIR = ROOT / "data" / "facts"
 MODEL_MD = ROOT / "docs" / "MODEL.md"
 
-# Запись миров семейства (850oa, книга 1.6; кривая 18.09.2026): хранимые байты — побайтово с CRLF
+# Запись миров семейства (850oa, книга 1.7; снимок 28.10.2026 — окно 23–28.10): хранимые байты — побайтово с CRLF
 # (.gitattributes: worlds_source.* -text). Рецепт — обезличенные копии, как у «Ленты» (решение ведущего B4): тексты и код
 # без тикера и адреса выпуска книги-источника и без её сумм; функционально те же (`worlds_recipe.py --check`
 # воспроизводит запись). Хэши рецепта — LF-нормализованных байтов (репозиторий хранит текст в LF).
-RECORD_SHA256 = "7296567d5200b5599efd0989de6ed8c8461d56c5c5dda244ab7d622303969fec"
-RECORD_CSV_SHA256 = "2faae142d447a309daaf43eeea0a928db94ae2dc90ff1e0b21771703cd4a8dfc"
-RECIPE_LF_SHA256 = {                  # worlds_recipe.py — байт в байт копия «Ленты»; .md и .yaml — её копии с шапкой Сбера
+RECORD_SHA256 = "1e905cb77c1d3a81cc89d6b80769171a60c0169d103340d3e7314bd8030d6f00"
+RECORD_CSV_SHA256 = "5fc8e86b97b9647e54dc7ef61cd34043aae6a4b8f5b492048abe6dd8957e87b0"
+RECIPE_LF_SHA256 = {                  # worlds_recipe.py — порт канона 1.7 (семейные строки, LF); .yaml — порт с первой строкой Сбера; .md — копия с врезкой Сбера
                                       # (шапка .md оговаривает: раздел о сборщике описывает сборщик книги-источника)
-    "worlds_inputs.yaml": "8cf64cc3cb3bb3ebf6a7118e46a57aeb9bcc5ea2c27c3172ba4bc8549d80160f",
-    "worlds_recipe.py": "459b7b6eb8da4228ab8eec657ba9ae758b5521676306555bfd37bc07e4fcf180",
-    "WORLDS-RECIPE.md": "a588382a8b1cdfe6fe25083a03b786da246c478f29bced7f883758cbe0801661",
+    "worlds_inputs.yaml": "7b6c29fcf86bfd644bad8fe7b0ca43599a9732694e7f47d1fc56f759b652e309",
+    "worlds_recipe.py": "3b786f7b39356a9592fce4f460e45f4a65ae397b730aa1702af3680cca3b56a4",
+    "WORLDS-RECIPE.md": "6e6765c2d5aad3286120b95bd411aa5c627d7576305a2407631b744c9bf81ad9",
 }
+# Банковская надстройка миров — одна на три банка семейства (канон миров 1.7, 29.10.2026): файл и его черновик —
+# побайтово из канона (SHA256SUMS канона); черновик собран сборщиком канона, а не листом этапа 1
+OVERLAY_SHA256 = "8611f015aeb6206f4e0c5a6471e2db310c471d11c29953f388edd9b56d39c54d"
+OVERLAY_DRAFT_SHA256 = "8e28fe0b161f11071cb14a2c2bf4c240d15f67744084cccbe667fdc29bb7485a"
 # Чего в копиях рецепта быть не должно (публичный репозиторий): тикер и адрес выпуска книги-источника, её суммы в ₽
 RECIPE_FORBIDDEN = ("MGNT", "Магнит", "pages.dev", "tzi-850oa")
 

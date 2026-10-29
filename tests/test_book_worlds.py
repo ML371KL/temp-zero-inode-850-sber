@@ -49,7 +49,9 @@ def test_the_recipe_is_the_anonymised_family_copy():
         text = raw.decode("utf-8")
         assert not [w for w in S.RECIPE_FORBIDDEN if w in text], name
         if not name.endswith(".py"):                       # у кода — только формат печати «₽», без чисел
-            assert "₽" not in text, name
+            # сумм книги-источника в ₽ нет; во входах — только зарплаты Росстата (wage_actual, с записи 1.7)
+            rub = [line for line in text.splitlines() if "₽" in line]
+            assert all(name == "worlds_inputs.yaml" and "Росстат" in line for line in rub), (name, rub)
 
 
 def test_git_keeps_the_record_bytes():
@@ -84,8 +86,14 @@ def test_world_blocks_are_the_record_over_100(book, record):
         assert {k: v for k, v in blk["zero_curve"].items() if k != "LT"} == {k: round(x / 100, 5) for k, x in fair.items()}
         assert blk["lt_inflation"] == round(record["lt_inflation"][w] / 100, 5)
     recipe = S.load_module(S.BOOK_DIR / "worlds_recipe.py", "book_worlds_recipe")
-    assert book["worlds"]["M"]["zero_curve"]["LT"] == round(recipe.curve_lt_rule(record)["M"] / 100, 5)
-    assert book["worlds"]["N"]["zero_curve"]["LT"] == 0.09 and book["worlds"]["H"]["zero_curve"]["LT"] == 0.127
+    rule = recipe.curve_lt_rule(record)
+    if "curve_lt" in record:          # с записи 1.7 уровень кривой в терминале всех миров — правило рецепта (блок записи)
+        assert record["curve_lt"] == rule
+        for w in book["worlds"]["ids"]:
+            assert book["worlds"][w]["zero_curve"]["LT"] == round(record["curve_lt"][w] / 100, 5), w
+    else:                             # записи до 1.7: N и H — таблица сборки семейства, M — правило
+        assert book["worlds"]["M"]["zero_curve"]["LT"] == round(rule["M"] / 100, 5)
+        assert book["worlds"]["N"]["zero_curve"]["LT"] == 0.09 and book["worlds"]["H"]["zero_curve"]["LT"] == 0.127
 
 
 def test_world_weights_and_their_axis_stay_inside_the_record_ranges(book, record):
@@ -100,6 +108,17 @@ def test_world_weights_and_their_axis_stay_inside_the_record_ranges(book, record
 def test_the_overlay_is_reproduced_by_its_builder():
     mod = S.load_module(OVERLAY_SCRIPT, "book_build_overlay")
     assert (S.BOOK_DIR / "worlds_bank.json").read_text(encoding="utf-8") == mod.build_text()
+
+
+def test_the_overlay_and_its_draft_are_the_family_canon():
+    """Надстройка одна на три банка: файл — байты канона миров (у Т и ВТБ — тот же файл своими сборщиками); черновик
+    пересборки 1.7 несёт дату и рецепт надстройки (meta.overlay) и собран сборщиком канона."""
+    assert S.sha256_bytes((S.BOOK_DIR / "worlds_bank.json").read_bytes()) == S.OVERLAY_SHA256
+    draft = S.EVIDENCE / "worlds_bank" / "inputs" / "bank_overlay_draft.yaml"
+    assert S.sha256_bytes(draft.read_bytes().replace(b"\r\n", b"\n")) == S.OVERLAY_DRAFT_SHA256
+    overlay = yaml.safe_load(draft.read_text(encoding="utf-8"))["meta"]["overlay"]
+    ov = json.loads((S.BOOK_DIR / "worlds_bank.json").read_text(encoding="utf-8"))
+    assert ov["source"]["as_of"] == overlay["as_of"] and ov["recipe"] == overlay["recipe"]
 
 
 def test_the_overlay_hash_is_in_the_book(book):
@@ -140,5 +159,9 @@ def test_the_overlay_draft_copy_is_the_stage1_draft():
     if not root:
         pytest.skip("нет BANK_HANDOFF_DIR")
     mod = S.load_module(OVERLAY_SCRIPT, "book_build_overlay_archive")
+    copy = yaml.safe_load((S.EVIDENCE / "worlds_bank" / "inputs" / "bank_overlay_draft.yaml").read_text(encoding="utf-8"))
+    if copy["meta"].get("overlay"):
+        pytest.skip("черновик пересборки миров 1.7 собран сборщиком канона семейства, а не листом этапа 1 — его "
+                    "происхождение сверяет хэш канона (test_the_overlay_and_its_draft_are_the_family_canon)")
     src = Path(root, *mod.HANDOFF_DRAFT).read_text(encoding="utf-8")
     assert mod.sanitize(src) == (S.EVIDENCE / "worlds_bank" / "inputs" / "bank_overlay_draft.yaml").read_text(encoding="utf-8")
