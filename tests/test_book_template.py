@@ -22,7 +22,7 @@ except ImportError:                      # прогон без pytest.ini (pytho
 pytestmark = pytest.mark.tact
 
 MARKS = ("  #{{WORLDS}}", "#{{WORLDS_BANK}}", "#{{OVERLAY_SHA256}}")
-VERSION = "1.5"
+VERSION = "1.6"
 # Книга 1.4 перенесена на якорь 2026Q3 (ops/tools/reanchor.py, режим keep, MODEL §15.2): решения, которые перенос
 # записывает на структуре нового якоря и в его ценах, — числами журнала V1.4-CHANGES.md (суждения те же): цели A-N2
 # и A-N3 и доля σ0 — при прежних скалярах пути (цель A-N2 — на мосте ЧПМ канона фактов), вычеты — формулой книги на
@@ -168,6 +168,8 @@ def test_meta_company_and_prices(book):
     for k in ("date", "facts_date", "valuation_date", "curve_as_of"):
         assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", book["meta"][k])
     assert book["meta"]["valuation_date"] >= book["meta"]["date"]
+    # дата кривых миров — дата снимка записи (иначе ядро катит кривые записи по форвардам от прежней даты)
+    assert book["meta"]["curve_as_of"] == book["worlds"]["source"]["curve_date"]
 
 
 def test_lead_decisions_are_in_the_book(book):
@@ -264,8 +266,8 @@ def test_lead_decisions_4_are_in_the_book(book):
     assert book["credit"]["fv_loans_ref"] == "norm" and book["credit"]["fv_loans_factor"] == 1.0   # В14: опора — норма
     ru = book["joint"]["regime_update"]                                             # В15: пол вероятности режима
     assert ru["floor_share"] == 0.33 and ru["window_obs"] == 4
-    g = book["valuation"]["governance"]                                             # В16: дисконт 0,4 % V0
-    assert g["discount"] == 0.004 and g["components"][0]["value"] == 0.004
+    g = book["valuation"]["governance"]                    # В16: дисконт — неподвижная точка на медиане (0,4 % у 1.2–1.5;
+    assert g["discount"] == 0.0045 and g["components"][0]["value"] == 0.0045   # книга 1.6 — 0,45 %: медиана ниже порога)
     assert book["checks"]["lt_spread_floor"]["corp_loans"] == 0.005                 # В20: пол подтверждён листом
     assert book["valuation"]["sensitivities"]["rank_window"] == [0.40, 0.60]        # записи аудита № 81, № 80
     assert book["valuation"]["next_report"]["value_tol"] == 0.0001
@@ -517,7 +519,8 @@ def test_near_spread_keys_follow_the_anchor_rates(book):
         checked.append(b)
     assert {"mortgage", "retail_loans", "securities"} <= set(checked)                # книги решения A1 F3
     got = [round(book["nii"]["books"][b]["spread"][str(y0)], 4) for b in ("mortgage", "retail_loans", "securities")]
-    assert got == [0.0067, 0.0067, -0.028]          # якорь 3К26 (книга 1.4); на 2К26 — 0,0054 / 0,0054 / −0,0279 (sanity-val S1 п. 3)
+    assert got == [0.0042, 0.0042, -0.0305]         # якорь 3К26, запись миров 1.7 (книга 1.6); на записи 1.6 — 0,0067 / 0,0067 /
+                                                    # −0,028; на 2К26 — 0,0054 / 0,0054 / −0,0279 (sanity-val S1 п. 3)
 
 
 def test_misc_quarter_shares_are_the_profile_of_the_facts(book):
