@@ -12,7 +12,8 @@ y_b,0 / c_b,0 — ставка якоря книги (data/facts/nii_books.json 
 Округление — 5 знаков, половина от нуля (Decimal по десятичной записи фактов и записи миров).
 
 Запуск из корня репозитория: python -B data/assumptions/evidence/nii/near_spreads.py → out/near_spreads_out.json;
-код выхода 1 — ключи шаблона книги расходятся с правилом.
+код выхода 1 — ключи шаблона книги расходятся с правилом. `compute(book, rec, facts)` — то же правило на чужих шаблоне,
+записи миров и фактах: им инструмент миров (ops/tools/refresh_worlds.py) сверяет ключи книги с новой записью.
 """
 from __future__ import annotations
 
@@ -57,10 +58,10 @@ def year_value(spread: dict, year: int) -> Decimal:
     raise ValueError(f"нет значения спреда в {year}: {spread}")
 
 
-def compute() -> dict:
-    book = evlib.template()
-    rec = evlib.record()
-    facts = json.loads(FACTS.read_text(encoding="utf-8"))
+def compute(book: dict | None = None, rec: dict | None = None, facts: dict | None = None) -> dict:
+    book = evlib.template() if book is None else book
+    rec = evlib.record() if rec is None else rec
+    facts = json.loads(FACTS.read_text(encoding="utf-8")) if facts is None else facts
     first = book["meta"]["first_period"]
     y0 = int(first[:4])
     row_h = next(r for r in rec["rows"] if r["world"] == book["nii"]["transmission"]["reference_world"]

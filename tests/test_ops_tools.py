@@ -4,8 +4,10 @@
 распознавания). Сети нет: проба ходит в фикстуры индикаторов."""
 from __future__ import annotations
 
+import copy
 import importlib.util
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -177,6 +179,49 @@ def test_the_candidate_never_writes_into_the_book(refresh_worlds, tmp_path, caps
     assert refresh_worlds.main(["--record", str(record), "--out", str(BOOK / "candidate")]) == 1
     assert "не пишет в книгу" in capsys.readouterr().err
     assert not (BOOK / "candidate").exists()
+
+
+def _reference_half(template: dict) -> str:
+    first = str(template["meta"]["first_period"])
+    return f"{first[:4]}H{1 if int(first[5]) <= 2 else 2}"
+
+
+def test_the_near_spread_keys_follow_the_rule_of_their_record(refresh_worlds):
+    """Ближние ключи спредов (A-N1n) — от опоры мира отсчёта (H) в первом прогнозном квартале: книга на своей записи —
+    на правиле; сдвиг опоры ОФЗ 1 г. мира H ломает ровно ключи книги с этой опорой (корпоративные кредиты)."""
+    _needs_book()
+    template = yaml.safe_load((BOOK / "assumptions_template.yaml").read_text(encoding="utf-8"))
+    record = json.loads((BOOK / "worlds_source.json").read_bytes().decode("utf-8"))
+    assert refresh_worlds.near_spread_mismatches(template, record) == []
+    moved = copy.deepcopy(record)
+    ref_world, half = template["nii"]["transmission"]["reference_world"], _reference_half(template)
+    row = next(r for r in moved["rows"] if r["world"] == ref_world and r["period"] == half)
+    row["ofz_1y"] = row["ofz_1y"] + 0.5
+    bad = refresh_worlds.near_spread_mismatches(template, moved)
+    year = int(half[:4])
+    assert sorted(b.split(":")[0] for b in bad) == [f"nii.books.corp_loans.spread.{year}",
+                                                     f"nii.books.corp_loans.spread.{year + 1}"], bad
+
+
+def test_a_candidate_with_stale_near_spread_keys_is_refused(refresh_worlds, tmp_path, capsys):
+    """Кандидат новой записи при ключах, не пересчитанных на её опору мира H, смещён — инструмент отказывает (код 1),
+    а проверка канона называет ключи; так же, как перевывод книги ВТБ."""
+    _needs_book()
+    book = tmp_path / "assumptions"
+    shutil.copytree(BOOK, book, ignore=shutil.ignore_patterns("evidence", "__pycache__"))
+    text = (book / "assumptions_template.yaml").read_text(encoding="utf-8")
+    year = _reference_half(yaml.safe_load(text))[:4]
+    line = re.search(rf'^(\s+corp_loans:.*?"{year}": )(-?[0-9.]+)', text, re.M)
+    stale = text[:line.start(2)] + repr(round(float(line.group(2)) + 0.001, 6)) + text[line.end(2):]
+    (book / "assumptions_template.yaml").write_text(stale, encoding="utf-8", newline="\n")
+    record = tmp_path / "record"
+    record.mkdir()
+    shutil.copyfile(BOOK / "worlds_source.json", record / "worlds_source.json")
+    with pytest.raises(refresh_worlds.Refused, match="A-N1n"):
+        refresh_worlds.build_candidate(record, tmp_path / "candidate", book=book)
+    assert not (tmp_path / "candidate").exists(), "отказ — до записи кандидата"
+    problems, _ = refresh_worlds.check_canon(book)
+    assert any("ближние ключи спредов" in p and f"corp_loans.spread.{year}" in p for p in problems), problems
 
 
 def test_the_candidate_template_changes_only_the_record_lines(refresh_worlds):

@@ -9,25 +9,35 @@
   python -B ops/tools/refresh_worlds.py --check
       строгая проверка канона (CI): рецепт на входах книги воспроизводит
       worlds_source.json целиком; sha256 и asof записи = worlds.source.* шаблона;
-      сборка build_assumptions.py воспроизводит машинную книгу бит в бит.
+      сборка build_assumptions.py воспроизводит машинную книгу бит в бит;
+      ближние ключи спредов книг ЧПД стоят на правиле A-N1n своей записи
+      (лист evidence/nii/near_spreads.py).
 
   python -B ops/tools/refresh_worlds.py --record КАТАЛОГ --out КАТАЛОГ [--median [--draws N]]
       кандидат на новую запись семейства: КАТАЛОГ записи — worlds_source.json
       (+ worlds_source.csv, worlds_inputs.yaml, если входы менялись). Проверяет, что
-      рецепт воспроизводит новую запись, собирает книгу-кандидат (шаблон с новыми
-      worlds.source.{sha256, record_asof, curve_date} и meta.curve_as_of) и
-      считает ядро на книге и на кандидате (цена, дата и реестр книги).
+      рецепт воспроизводит новую запись, сверяет ближние ключи спредов книги с
+      правилом A-N1n на новой записи (мир H — мир отсчёта: ключ 2026 = ставка
+      якоря − опора мира H в первом прогнозном квартале; при расхождении — отказ,
+      кода 1: кандидат без пересчёта ключей смещён), собирает книгу-кандидат
+      (шаблон с новыми worlds.source.{sha256, record_asof, curve_date} и
+      meta.curve_as_of) и считает ядро на книге и на кандидате (цена, дата и
+      реестр книги).
       Пишет ТОЛЬКО в --out: assumptions_template.candidate.yaml,
       assumptions.candidate.yaml/.json и CANDIDATE.md (что меняется в записи,
       строки шаблона, точка и слои «книга → кандидат», черновик строки журнала).
 
 Чего НЕ делает: не пишет в data/assumptions/ (каталог внутри книги как --out
 отвергается), не публикует, не выбирает якоря и веса миров — это книга-источник
-семейства и новая версия книги с подписью.
+семейства и новая версия книги с подписью; не пересчитывает ближние ключи,
+надстройку worlds_bank.json и выведенные числа книги (листы nii/near_spreads,
+nii/sigma0_split, nii/phi_split, governance) — их пересчитывает новая версия
+книги, и только после неё кандидат на той же записи проходит сверку ключей.
 
 Коды: 0 — канон держится / кандидат собран; 1 — канон не держится или негодные
-входы (нет файлов, рецепт не воспроизводит запись); 2 — кандидат не собрался
-(сборка книги или ядро на нём падают).
+входы (нет файлов, рецепт не воспроизводит запись, ближние ключи спредов не на
+правиле A-N1n новой записи); 2 — кандидат не собрался (сборка книги или ядро на
+нём падают).
 """
 from __future__ import annotations
 
@@ -51,6 +61,8 @@ RECORD = "worlds_source.json"
 RECORD_CSV = "worlds_source.csv"
 INPUTS = "worlds_inputs.yaml"
 TEMPLATE = "assumptions_template.yaml"
+NEAR_SHEET = Path("evidence") / "nii" / "near_spreads.py"     # лист правила A-N1n (MODEL §4.4)
+FACTS_DIR = ROOT / "data" / "facts"
 
 OK, BAD_INPUT, NOT_BUILT = 0, 1, 2
 
@@ -73,6 +85,21 @@ def _module(path: Path, name: str):
 
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def near_spread_mismatches(template: dict, record: dict, book: Path = BOOK,
+                           facts_dir: Path | None = None) -> list[str]:
+    """Ближние ключи спредов шаблона против правила A-N1n на записи миров (лист near_spreads; пусто — на правиле).
+
+    Мир H — мир отсчёта банка: ключ года первого прогнозного квартала = ставка якоря − β × опора мира H в этом
+    квартале, ключ следующего года — середина до калибровки. Новая запись двигает опору мира H, и кандидат со
+    старыми ключами смещён (ставка книги в первом квартале уходит со ставки якоря без единой новости)."""
+    sheet = book / NEAR_SHEET
+    if not sheet.exists():                                   # копия каталога книги без листов (тесты) — лист репозитория
+        sheet = BOOK / NEAR_SHEET
+    module = _module(sheet, "_near_spreads_rule")
+    facts = json.loads(((facts_dir or FACTS_DIR) / "nii_books.json").read_text(encoding="utf-8"))
+    return list(module.compute(template, record, facts)["book_mismatches"])
 
 
 def recipe_diffs(recipe, inputs: dict, record: dict) -> list[str]:
@@ -116,6 +143,11 @@ def check_canon(book: Path = BOOK) -> tuple[list[str], list[str]]:
         problems.append(f"asof записи {record.get('asof')} ≠ worlds.source.record_asof {source.get('record_asof')}")
     else:
         report.append(f"запись {RECORD}: sha256 {sha[:12]}…, asof {record.get('asof')} — как в шаблоне")
+    near = near_spread_mismatches(template, record, book)
+    if near:
+        problems.append(f"ближние ключи спредов не на правиле A-N1n записи: {len(near)} — " + "; ".join(near[:4]))
+    else:
+        report.append("ближние ключи спредов — на правиле A-N1n записи (опора мира H первого прогнозного квартала)")
 
     builder = _module(book / "build_assumptions.py", "_book_build_assumptions")
     try:
@@ -214,6 +246,13 @@ def build_candidate(record_dir: Path, out: Path, *, book: Path = BOOK, facts_dir
     if diffs:
         raise Refused(f"рецепт ({recipe_path.name}, входы {inputs_path.parent.name}/{INPUTS}) не воспроизводит "
                       f"новую запись: {len(diffs)} различий — " + "; ".join(diffs[:5]))
+    template = yaml.safe_load((book / TEMPLATE).read_text(encoding="utf-8")) or {}
+    near = near_spread_mismatches(template, new_record, book, facts_dir)
+    if near:
+        raise Refused(f"ближние ключи спредов книги не на правиле A-N1n новой записи ({len(near)}): "
+                      + "; ".join(near) + ". Новая запись двигает опору мира H; ключи, надстройку и выведенные "
+                      "числа пересчитывает новая версия книги (лист evidence/nii/near_spreads.py, "
+                      "data/assumptions/README.md, шаги 2 и 5) — кандидат без этого смещён")
     sha = _sha(record_path)
     curve_date = str((inputs.get("curve") or {}).get("date") or "") or None
     out.mkdir(parents=True, exist_ok=True)
