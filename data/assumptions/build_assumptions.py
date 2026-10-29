@@ -3,8 +3,9 @@
 
 Шаблон `assumptions_template.yaml` — все ключи MODEL прил. A, кроме `worlds.<W>.*` и `worlds_bank.*`. Сборка:
   * вписывает блоки `worlds.N|H|M` из байтовой копии записи миров `worlds_source.json` (MODEL §3.1: поле / 100;
-    узел `zero_curve.LT` — N и H по таблице семейства, M — правилом `curve_lt_rule` рецепта; `lt_inflation` —
-    блок записи); sha256 записи обязан совпасть с `worlds.source.sha256` шаблона;
+    узел `zero_curve.LT` — блок `curve_lt` записи (с записи 1.7 — правило рецепта для всех миров); у записей без
+    блока — N и H по таблице семейства, M — правилом `curve_lt_rule` рецепта; `lt_inflation` — блок записи);
+    sha256 записи обязан совпасть с `worlds.source.sha256` шаблона;
   * вписывает блок `worlds_bank` из надстройки `worlds_bank.json` и её sha256 в `worlds.overlay.sha256`;
   * пишет `assumptions.yaml` (комментарии шаблона сохраняются) и `assumptions.json` (тот же объект).
 Запуск из корня репозитория:
@@ -46,7 +47,8 @@ SERIES = (
 )
 # Имена миров и уровень кривой в терминале — таблица сборки семейства (850oa, Лента): N и H — суждение записи;
 # у M при рыночной инфляции (m_inflation.source = forward_bei) уровень — правило рецепта curve_lt_rule:
-# ОФЗ 10 лет последнего полугодия мира M, округление до 0,1 п.п.
+# ОФЗ 10 лет последнего полугодия мира M, округление до 0,1 п.п. С записи 1.7 рецепт пишет уровень всех миров
+# правилом (блок curve_lt записи; ключ curve_lt_source: rule входов) — он и берётся; таблица — для записей до 1.7.
 WORLD_TABLE = {
     "N": {"name": "Нормализация", "curve_lt": 0.090},
     "H": {"name": "Высокие ставки надолго", "curve_lt": 0.127},
@@ -86,7 +88,10 @@ def _halves(first_period: str, last_period: str) -> list[str]:
 
 
 def curve_lt(record: dict, world: str) -> float:
-    """Узел LT бескупонной кривой мира (MODEL §3.1)."""
+    """Узел LT бескупонной кривой мира (MODEL §3.1): блок curve_lt записи (с 1.7), иначе таблица и правило M."""
+    block = record.get("curve_lt") or {}
+    if world in block:
+        return round(float(block[world]) / 100.0, 5)
     if world == "M" and (record.get("m_inflation") or {}).get("source") == "forward_bei":
         last = [r for r in record["rows"] if r["world"] == "M"][-1]
         return round(round(last["ofz_10y"], 1) / 100.0, 5)

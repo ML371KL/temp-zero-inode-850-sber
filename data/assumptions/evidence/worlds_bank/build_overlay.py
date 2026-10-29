@@ -45,9 +45,9 @@ FIELDS = {                                       # поле надстройки
     ("funds_growth", "corporate"): "m2",
     ("nominal_gdp_growth", None): "nominal_gdp_proxy",
 }
-AS_OF = "2026-09-30"                             # титул ОНДКП: «Проект от 30 сентября 2026 года»
+AS_OF = "2026-09-30"                             # титул ОНДКП: «Проект от 30 сентября 2026 года» (черновики без meta.overlay)
 
-RECIPE = (
+RECIPE = (                                       # черновики без meta.overlay; с пересборки миров 1.7 — meta.overlay.recipe
     "N — середины диапазонов базового сценария ОНДКП 2027–2029 (табл. 3.2, PDF-с. 73 / печ. 71), кроме «прочей "
     "розницы» 2026–2027 — прогноз ЦБ по балансам («Банковский сектор. II кв. 2026», PDF-с. 20 / печ. 19, sha256 "
     "ed4826f8…) и 2028–2029 — [Р] (население − w·ИЖК)/(1 − w), w = 0,5806 (доля ИЖК в задолженности ФЛ на "
@@ -113,6 +113,9 @@ def build_overlay(draft: dict, record_bytes: bytes) -> dict:
     if bad:
         raise ValueError("черновик надстройки не проходит самопроверку:\n  " + "\n  ".join(bad))
     src = draft["meta"]["sources"]["ondkp"]
+    # Пересборка миров 1.7 (29.10.2026): база — прогноз ЦБ 23.10.2026, а не табл. 3.2 проекта ОНДКП; дата и текст
+    # рецепта надстройки едут с черновиком (meta.overlay). Без блока — константы выше (черновик 30.09.2026 бит в бит).
+    overlay = draft["meta"].get("overlay") or {}
     worlds = {}
     for w in WORLDS:
         years = draft["worlds"][w]["years"]
@@ -126,8 +129,8 @@ def build_overlay(draft: dict, record_bytes: bytes) -> dict:
         worlds[w] = block
     return {
         "schema": "worlds_bank-v1",
-        "source": {"doc": src["file"], "url": src["url"], "sha256": src["sha256"], "as_of": AS_OF},
-        "recipe": RECIPE,
+        "source": {"doc": src["file"], "url": src["url"], "sha256": src["sha256"], "as_of": overlay.get("as_of", AS_OF)},
+        "recipe": overlay.get("recipe", RECIPE),
         "worlds": worlds,
     }
 
