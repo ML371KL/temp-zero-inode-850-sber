@@ -182,20 +182,23 @@ credit:                                                        # резервы 
 # − опора мира H (β × опора у пассивов); "2027" — середина между "2026" и калибровкой 2028; с 2028 — калибровка
 # истории [Р: evidence/nii/near_spreads.py; решение ведущего A1 F3]; на новом якоре их выводит заново перезаякоривание,
 # на новой записи миров — лист near_spreads (книга 1.6: опора мира H 2П26 из записи 1.7 — ключевая 14,05, ОФЗ 1 г. 14,44, ОФЗ 3 г. 16,21 %).
+# Ключи лет 2028–2030 — калибровка истории (снимок 2К26: s, a) на пути мира H записи миров: s − (1 − a) × опора мира H года
+# [Р: evidence/nii/h_path_spreads.py; решение ведущего 29.10.2026, книга 1.6 — запись 1.7; до 1.6 — пути миров этапа 1, запись 18.09.2026];
+# LT — калибровка истории (заморожена, решение владельца 14.7).
 nii:
   books:
-    corp_loans:     {side: asset, ref: ofz_1y, rho: 0.33, spread: {"2026": -0.008594, "2027": -0.002157, "2028": 0.00428, "2029": 0.00536, "2030": 0.00608, LT: 0.00666, LT_from: 2031}, phi: true, lt_shift: true, sector: corporate, cor_segment: corporate, fv_share: anchor}
+    corp_loans:     {side: asset, ref: ofz_1y, rho: 0.33, spread: {"2026": -0.008594, "2027": -0.002417, "2028": 0.00376, "2029": 0.00484, "2030": 0.00581, LT: 0.00666, LT_from: 2031}, phi: true, lt_shift: true, sector: corporate, cor_segment: corporate, fv_share: anchor}
                     # коммерческие + проектное (АС) + кредиты по СС; a = 0,894, ρ 95 % 0,30–0,37, RMSE 0,35 [Р: calib-nii]
-    mortgage:       {side: asset, ref: ofz_3y, rho: 0.12, spread: {"2026": 0.004216, "2027": 0.016033, "2028": 0.02785, "2029": 0.03064, "2030": 0.03229, LT: 0.03408, LT_from: 2031}, phi: true, lt_shift: true, sector: mortgage, cor_segment: retail}
+    mortgage:       {side: asset, ref: ofz_3y, rho: 0.12, spread: {"2026": 0.004216, "2027": 0.015523, "2028": 0.02683, "2029": 0.03007, "2030": 0.03214, LT: 0.03408, LT_from: 2031}, phi: true, lt_shift: true, sector: mortgage, cor_segment: retail}
                     # рыночная ипотека; ставка — как у retail_loans [Р: calib-nii, a = 0,716, ρ 95 % 0,06–0,18]
     mortgage_sub:   {side: asset, ref: key, rho: 1.0, spread: 0.025, phi: false, lt_shift: false, sector: mortgage, cor_segment: retail}
                     # льготная: ключевая + компенсация 2,5 п.п. [НП: «Российская газета» 31.12.2025 о компенсации банкам по льготной ипотеке]
                     #   2,0 п.п. — квартиры, 2,5 п.п. — частные дома; ось 2,0–3,5 п.п.; постановление Правительства о возмещении не собрано
-    retail_loans:   {side: asset, ref: ofz_3y, rho: 0.12, spread: {"2026": 0.004216, "2027": 0.016033, "2028": 0.02785, "2029": 0.03064, "2030": 0.03229, LT: 0.03408, LT_from: 2031}, phi: true, lt_shift: true, sector: retail_other, cor_segment: retail}
+    retail_loans:   {side: asset, ref: ofz_3y, rho: 0.12, spread: {"2026": 0.004216, "2027": 0.015523, "2028": 0.02683, "2029": 0.03007, "2030": 0.03214, LT: 0.03408, LT_from: 2031}, phi: true, lt_shift: true, sector: retail_other, cor_segment: retail}
                     # потреб + карты + авто [Р: calib-nii]
-    securities:     {side: asset, ref: ofz_3y, rho: 0.33, spread: {"2026": -0.030531, "2027": -0.023286, "2028": -0.01604, "2029": -0.0143, "2030": -0.01327, LT: -0.01216, LT_from: 2031}, phi: false, lt_shift: false, balancing: true}
+    securities:     {side: asset, ref: ofz_3y, rho: 0.33, spread: {"2026": -0.030531, "2027": -0.0236, "2028": -0.01667, "2029": -0.01466, "2030": -0.01337, LT: -0.01216, LT_from: 2031}, phi: false, lt_shift: false, balancing: true}
                     # долговые бумаги (FVOCI + АС + СС); a = 0,823, ρ 95 % 0,26–0,40 [Р: calib-nii]; акции и фонды (≈243) — в прочих активах
-    liquidity:      {side: asset, ref: key, rho: 1.0, spread: {"2026": -0.063414, "2027": -0.071477, "2028": -0.07954, "2029": -0.07347, "2030": -0.06969, LT: -0.0659, LT_from: 2031}, phi: false, lt_shift: false, balancing: true}
+    liquidity:      {side: asset, ref: key, rho: 1.0, spread: {"2026": -0.063414, "2027": -0.072987, "2028": -0.08256, "2029": -0.0765, "2030": -0.07195, LT: -0.0659, LT_from: 2031}, phi: false, lt_shift: false, balancing: true}
                     # касса, ЦБ, банки, обратное репо; 2026 — ставка якоря 7,71 % (3К26) к ключевой мира H [Р: calib-nii; near_spreads]
     retail_current: {side: liability, ref: key, rho: 0.31, beta: 0.272, spread: -0.00929, phi: true, lt_shift: true}   # текущие ФЛ; ρ 95 % 0,15–0,53 [Р: calib-nii 2018К4–2026К2]
     retail_term:    {side: liability, ref: key, rho: 0.37, beta: 0.855, spread: -0.01983, phi: true, lt_shift: true}   # срочные ФЛ; ρ 95 % 0,29–0,46 [Р: calib-nii]

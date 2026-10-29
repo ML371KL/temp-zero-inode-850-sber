@@ -3,7 +3,8 @@
 
 Сверяет: параметры 10 книг (mortgage — параметры ставки retail_loans калибровки, сектор ипотеки — решение ведущего;
 остальные — как в калибровке; ближние ключи спредов — год якоря и следующий — не калибровка, а правило ставок якоря,
-их сверяет near_spreads.py; `lt_shift` и `phi` у пассивов — суждения A-N7 и A-N8, их сверяют sigma0_split.py и
+их сверяет near_spreads.py; ключи лет до LT_from — форма калибровки на пути мира H записи миров, их сверяет
+h_path_spreads.py (книга 1.6; калибровка — на путях миров этапа 1); `lt_shift` и `phi` у пассивов — суждения A-N7 и A-N8, их сверяют sigma0_split.py и
 phi_split.py), долю текущих счетов
 (ψ, ρ, границы), минимум ликвидной доли (долговые бумаги + ликвидность, без акций и фондов); печатает опоры:
   A-N2 — линия ЧПМ = a + b × ключевая (годовая регрессия 2013–2025 без 2014–15 и 2022, упр.) при ключевой мира H в LT;
@@ -46,6 +47,9 @@ def compute() -> dict:
     pb, bb = prop["nii"]["books"], book["nii"]["books"]
     y0 = int(book["meta"]["first_period"][:4])
     near = {str(y0), str(y0 + 1)}                    # ближние ключи — правило ставок якоря (near_spreads.py, MODEL §4.4)
+    # ключи лет Y0 + 2 … LT_from − 1 — форма калибровки на пути мира H записи миров (h_path_spreads.py, книга 1.6):
+    # предложение калибровки посчитано на путях миров этапа 1 (запись 18.09.2026) и с книгой не сверяется
+    h_path = {str(y) for y in range(y0 + 2, y0 + 12)}
     for b in bb:
         src = pb["retail_loans"] if b == "mortgage" else pb[b]
         for k in RATE_KEYS:
@@ -55,8 +59,8 @@ def compute() -> dict:
                 sv = src.get(k)
                 bv = bb[b].get(k)
                 if isinstance(sv, dict):
-                    sv = {str(x): y for x, y in sv.items() if not (k == "spread" and str(x) in near)}
-                    bv = {str(x): y for x, y in (bv or {}).items() if not (k == "spread" and str(x) in near)}
+                    sv = {str(x): y for x, y in sv.items() if not (k == "spread" and str(x) in near | h_path)}
+                    bv = {str(x): y for x, y in (bv or {}).items() if not (k == "spread" and str(x) in near | h_path)}
                 if sv != bv:
                     mism.append(f"nii.books.{b}.{k}: книга {bv} против калибровки {sv}")
     for k in ("psi", "rho", "bounds"):

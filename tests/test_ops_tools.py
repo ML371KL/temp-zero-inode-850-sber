@@ -203,6 +203,24 @@ def test_the_near_spread_keys_follow_the_rule_of_their_record(refresh_worlds):
                                                      f"nii.books.corp_loans.spread.{year + 1}"], bad
 
 
+def test_the_later_spread_keys_follow_the_reference_world_path_of_their_record(refresh_worlds):
+    """Ключи спредов лет Y0 + 2 … LT_from − 1 — калибровка истории на пути мира H записи (s − (1 − a) × опора H года;
+    книга 1.6): на своей записи — на правиле; сдвиг ключевой мира H одного года ломает ровно ключ этого года книги с
+    опорой на ключевую (ликвидность), калибровка (s, a) — снимок и не пересчитывается."""
+    _needs_book()
+    template = yaml.safe_load((BOOK / "assumptions_template.yaml").read_text(encoding="utf-8"))
+    record = json.loads((BOOK / "worlds_source.json").read_bytes().decode("utf-8"))
+    assert refresh_worlds.h_path_spread_mismatches(template, record) == []
+    assert refresh_worlds.spread_key_mismatches(template, record) == []
+    year = int(_reference_half(template)[:4]) + 3
+    moved = copy.deepcopy(record)
+    for row in moved["rows"]:
+        if row["world"] == template["nii"]["transmission"]["reference_world"] and row["period"].startswith(str(year)):
+            row["key_avg"] = row["key_avg"] + 1.0
+    bad = refresh_worlds.h_path_spread_mismatches(template, moved)
+    assert [b.split(":")[0] for b in bad] == [f"nii.books.liquidity.spread.{year}"], bad
+
+
 def test_a_candidate_with_stale_near_spread_keys_is_refused(refresh_worlds, tmp_path, capsys):
     """Кандидат новой записи при ключах, не пересчитанных на её опору мира H, смещён — инструмент отказывает (код 1),
     а проверка канона называет ключи; так же, как перевывод книги ВТБ."""
@@ -217,7 +235,7 @@ def test_a_candidate_with_stale_near_spread_keys_is_refused(refresh_worlds, tmp_
     record = tmp_path / "record"
     record.mkdir()
     shutil.copyfile(BOOK / "worlds_source.json", record / "worlds_source.json")
-    with pytest.raises(refresh_worlds.Refused, match="A-N1n"):
+    with pytest.raises(refresh_worlds.Refused, match="мира отсчёта H"):
         refresh_worlds.build_candidate(record, tmp_path / "candidate", book=book)
     assert not (tmp_path / "candidate").exists(), "отказ — до записи кандидата"
     problems, _ = refresh_worlds.check_canon(book)
