@@ -10,7 +10,8 @@ capital.*, режим crisis) и в дисконт не входят; канал
       ключ отстоит от точки больше чем на половину шага (MODEL §8.2); доля капитала якоря BV_0 — справочно;
   (б) изъятия сверх налоговой оси: измеренная история («налог на сверхприбыль» 2023) — внутри налоговых осей книги → 0;
   (в) ликвидность и листинг: первый уровень, оборот дня к капитализации → 0.
-k_T мира H = уровень кривой в терминале (таблица сборки миров, 12,7 %) + β_E × ERP книги; g_T = (1 + π_LT(H))(1 + g_real) − 1.
+k_T мира H = уровень кривой в терминале (блок curve_lt записи миров, с записи 1.7 — 12,6 %; у записей без блока — таблица
+сборки миров, 12,7 %) + β_E × ERP книги; g_T = (1 + π_LT(H))(1 + g_real) − 1.
 Запуск из корня репозитория: python -B data/assumptions/evidence/governance/governance_channels.py → out/governance_out.json
 """
 from __future__ import annotations
@@ -28,7 +29,7 @@ OUT = os.path.join(HERE, "out")
 sys.path.insert(0, os.path.dirname(HERE))
 import evlib  # noqa: E402
 
-CURVE_LT_H = 0.127        # уровень кривой мира H в терминале — таблица сборки миров семейства (build_assumptions.py)
+CURVE_LT_H = 0.127        # уровень кривой мира H в терминале у записей без блока curve_lt — таблица сборки миров (build_assumptions.py)
 BV0 = 8387.2              # капитал обыкновенных акционеров 30.06.2026, МСФО 6М26 с. 5 (sha256 5b3a3de8…)
 SHARES_ORD_ISSUED = 21586.948   # размещённые обыкновенные, млн (ISS ISSUESIZE; evidence/dividends)
 
@@ -38,7 +39,8 @@ def compute() -> dict:
     rec = evlib.record()
     inp = yaml.safe_load(open(INPUTS, encoding="utf-8"))
     v = book["valuation"]
-    k_t = CURVE_LT_H + v["beta_e"] * v["erp"]
+    curve_lt_h = round(rec["curve_lt"]["H"] / 100.0, 5) if "H" in (rec.get("curve_lt") or {}) else CURVE_LT_H
+    k_t = curve_lt_h + v["beta_e"] * v["erp"]
     g_t = (1 + rec["lt_inflation"]["H"] / 100) * (1 + v["terminal"]["real_growth"]) - 1
     qf = inp["quasi_fiscal"]
     paid = sum(d["amount"] for d in qf["deals"])
