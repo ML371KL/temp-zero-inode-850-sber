@@ -147,6 +147,12 @@ steps:
     cmd: ["{python}", "-B", "ops/tools/refresh_worlds.py", "--check"]
 
   # ---------------------------------------------------------------- таблицы и дисконт за управление (неподвижная точка)
+  - id: quick
+    kind: quick
+    title: "малая полоса книги (500 прогонов, зерно книги) до и после приёма — ранняя остановка по сдвигу медианы до таблиц"
+    cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "quick", "--out", "var/adopt/quick.json"]
+    out: var/adopt/quick.json
+    timeout: 1800
   - id: governance-loop
     kind: loop
     title: "таблицы и дисконт за управление — до неподвижной точки (ключ → таблицы → медиана → ключ)"
@@ -170,6 +176,15 @@ steps:
         kind: run
         title: "лист дисконта за управление (выход и сверка с книгой)"
         cmd: ["{python}", "-B", "data/assumptions/evidence/governance/governance_channels.py"]
+
+  - id: table-numbers
+    kind: numbers
+    title: "числа книги из таблиц (2 000 прогонов): точка, медиана, печать, низ, верх, полоса — до и после приёма"
+    file: data/assumptions/results.json
+    fields: {point: headline.point, median: headline.median, print: headline.printed_median, low: headline.low,
+             high: headline.high, band: headline.band80, printed_band: headline.printed_band80,
+             implied: layers.market_implied.price, worlds.M: layers.macro_neutral.price, runs: headline.draws,
+             seed: headline.seed, book_version: book_version}
 
   # ---------------------------------------------------------------- эталоны, тексты
   - id: guards-post
@@ -208,29 +223,23 @@ steps:
     timeout: 3600
   - id: changes
     kind: run
-    on_change: true
+    when: change
     title: "журнал версии книги V<версия>-CHANGES.md: ключи «было → стало» и прогулка"
     cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "changes"]
   - id: journal
     kind: journal
-    on_change: true
+    when: change
     title: "строка версий README книги и запись CHANGELOG"
     entries:
       - file: data/assumptions/README.md
         after: "| {book.version_before} | "
-        text: "| {book.version} | {today_ru} | {labels.walk_step}: миры семейства {version} приняты командой `ops/tools/adopt_worlds.py` (запись, надстройка банков, ключи спредов, доли σ0 и φ, дисконт за управление — по правилам книги); цена и дата книги, суждения и оси — прежние; быстрые числа команды (500 прогонов): медиана {n.median_before} → {n.median_after} ₽ (печать {n.print_before} → {n.print_after}), точка {n.point_before} → {n.point_after} ₽; журнал — `V{book.version}-CHANGES.md` |"
+        text: "| {book.version} | {today_ru} | {labels.walk_step}: миры семейства {version} приняты командой `ops/tools/adopt_worlds.py` (запись, надстройка банков, ключи спредов, доли σ0 и φ, дисконт за управление — по правилам книги); цена и дата книги, суждения и оси — прежние; таблицы книги (2 000 прогонов): медиана {n.median_before} → {n.median_after} ₽ (печать {n.print_before} → {n.print_after}), точка {n.point_before} → {n.point_after} ₽; журнал — `V{book.version}-CHANGES.md` |"
       - file: data/assumptions/ASSUMPTIONS-BOOK.md
         after: "| {book.version_before} | "
         text: "| {book.version} | {today_ru} | {labels.walk_step}: миры семейства {version} приняты командой `ops/tools/adopt_worlds.py` по правилам книги (журнал `V{book.version}-CHANGES.md`); цена, дата книги и суждения — прежние |"
       - file: docs/CHANGELOG.md
         after: "других банков и из семейства — `docs/PORTING.md`."
-        text: "\n## {today_ru} — книга {book.version}: {labels.walk_step}\n\n- **Книга** `data/assumptions/` — версия {book.version} (журнал `V{book.version}-CHANGES.md`): миры семейства {version} приняты командой `ops/tools/adopt_worlds.py --version {version}` (отчёт `var/adopt/{version}/report.json`); цена и дата книги, суждения и оси — прежние. Быстрые числа команды (500 прогонов): медиана {n.median_before} → {n.median_after} ₽, точка {n.point_before} → {n.point_after} ₽. Код ядра (`model/`) не менялся."
-  - id: quick
-    kind: quick
-    title: "быстрые числа книги (500 прогонов, зерно книги)"
-    cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "quick", "--out", "var/adopt/quick.json"]
-    out: var/adopt/quick.json
-    timeout: 1800
+        text: "\n## {today_ru} — книга {book.version}: {labels.walk_step}\n\n- **Книга** `data/assumptions/` — версия {book.version} (журнал `V{book.version}-CHANGES.md`): миры семейства {version} приняты командой `ops/tools/adopt_worlds.py --version {version}` (отчёт `var/adopt/{version}/report.json`); цена и дата книги, суждения и оси — прежние. Таблицы книги (2 000 прогонов): медиана {n.median_before} → {n.median_after} ₽ (печать {n.print_before} → {n.print_after}), точка {n.point_before} → {n.point_after} ₽. Код ядра (`model/`) не менялся."
   - id: gates
     kind: gates
     title: "сработавшие гейты таблиц книги"
