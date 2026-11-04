@@ -191,16 +191,20 @@ steps:
     kind: run
     title: "сторожа суждений после таблиц: сетки «что даст отчёт» (A-R1), арифметика A-O1 (иначе флаг)"
     cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "guards", "--phase", "post"]
-  - id: gate-masses
-    kind: rule
-    title: "ожидаемые массы объяснений сработавших гейтов — массы таблиц"
-    module: ops/tools/worlds_rules.py
-    function: gate_masses
   - id: gate-texts
-    kind: rule
-    title: "числа объяснений сработавших гейтов, которые есть в таблицах, записи и книге (остальное — человеку)"
-    module: ops/tools/worlds_rules.py
-    function: gate_texts
+    kind: gate_texts
+    title: "объяснения сработавших гейтов: слова шаблона gate_explanations.tpl, числа — сетка и таблицы книги, запись, книга"
+    cmd: ["{python}", "-B", "ops/tools/gate_numbers.py"]
+    template: data/assumptions/gate_explanations.tpl
+    file: data/assumptions/gate_explanations.yaml
+    sources: {g: data/assumptions/gate_numbers.json, res: data/assumptions/results.json, book: data/assumptions/assumptions.yaml,
+              rec: data/assumptions/worlds_source.json}
+    fired: {source: res, path: checks, where: {kind: gate}, flag: fired}
+  - id: worlds-text
+    kind: marks
+    title: "числа миров и надстройки в тексте книги (A-M1…A-M3, «с 1.6») и в справке надстройки — запись и надстройка {version}"
+    sources: {rec: data/assumptions/worlds_source.json, bank: data/assumptions/worlds_bank.json}
+    files: [data/assumptions/ASSUMPTIONS-BOOK.md, data/assumptions/evidence/worlds_bank/README.md]
   - id: control
     kind: run
     title: "контрольная модель (вне допуска — стоп)"

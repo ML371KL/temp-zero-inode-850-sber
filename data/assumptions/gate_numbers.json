@@ -1,0 +1,123 @@
+{
+ "book_version": "1.6",
+ "gates": {
+  "pb_by_world": [
+   "M/crisis/schedule",
+   "M/crisis/strict",
+   "M/crisis/upper"
+  ],
+  "roe_k_homogeneity": [],
+  "guidance_gap": [
+   "H/crisis/schedule",
+   "H/crisis/strict",
+   "H/crisis/upper",
+   "H/downturn/schedule",
+   "H/downturn/strict",
+   "H/downturn/upper",
+   "H/norm/schedule",
+   "H/norm/strict",
+   "H/norm/upper",
+   "H/soft/schedule",
+   "H/soft/strict",
+   "H/soft/upper",
+   "M/crisis/schedule",
+   "M/crisis/strict",
+   "M/crisis/upper",
+   "M/downturn/schedule",
+   "M/downturn/strict",
+   "M/downturn/upper",
+   "M/norm/schedule",
+   "M/norm/strict",
+   "M/norm/upper",
+   "M/soft/schedule",
+   "M/soft/strict",
+   "M/soft/upper",
+   "N/crisis/schedule",
+   "N/crisis/strict",
+   "N/crisis/upper",
+   "N/downturn/schedule",
+   "N/downturn/strict",
+   "N/downturn/upper",
+   "N/norm/schedule",
+   "N/norm/strict",
+   "N/norm/upper",
+   "N/soft/schedule",
+   "N/soft/strict",
+   "N/soft/upper"
+  ],
+  "capital_gap": [
+   "M/crisis/strict"
+  ],
+  "m_crisis_vs_cbr": [
+   "M/crisis/strict",
+   "M/crisis/upper"
+  ]
+ },
+ "guidance_gap": {
+  "year": 2026,
+  "roe": [
+   0.2253928996116977,
+   0.2283639065823076
+  ],
+  "roe_band": [
+   0.215,
+   0.225
+  ],
+  "nim": [
+   0.06622702116435739,
+   0.06628787738195828
+  ],
+  "cor": [
+   0.011585640580986106,
+   0.012163907103651044
+  ],
+  "cir": [
+   0.30321212147011606,
+   0.3036145971370147
+  ],
+  "roe_over": [
+   0.0003928996116976946,
+   0.003363906582307591
+  ],
+  "cells": 36
+ },
+ "roe_k_homogeneity": {
+  "by_world": {
+   "N": 0.007491776296741818,
+   "H": 0.001614571180866587,
+   "M": -0.04320659532900739
+  },
+  "gap": 0.05069837162574921
+ },
+ "m_crisis_vs_cbr": {
+  "n20_min": 0.13748775808744945,
+  "scenarios": [
+   "strict",
+   "upper"
+  ]
+ },
+ "capital_gap": {
+  "cell": "M/crisis/strict",
+  "below": [
+   "2031Q1",
+   "2031Q4"
+  ],
+  "first": "2031Q1",
+  "first_year": 2031,
+  "first_q": 1,
+  "n20_first": 0.13930259873176845,
+  "floor_first": 0.14,
+  "floor_before": 0.135,
+  "gap_first": 0.0006974012682315622,
+  "back": "2031Q2",
+  "back_year": 2031,
+  "back_q": 2,
+  "payout_max": 908.7808139430654,
+  "payout_max_period": "2028Q2",
+  "band": {
+   "runs": 1128.0,
+   "draws": 2000.0,
+   "share": 1.41
+  }
+ }
+}

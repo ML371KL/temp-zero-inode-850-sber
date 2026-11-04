@@ -25,9 +25,8 @@
   governance     дисконт за управление (A-V7): медиана таблиц (`results.json`) → вход листа `evidence/governance`
                  (`fixed_point.median_rub`, `median_of`) → неподвижная точка листа → ключ, канал (а) и числа его строки
                  `basis` (её печатает витрина); цикл «ключ → таблицы → медиана → ключ» — шаг `loop` манифеста;
-  gate_texts     числа объяснений сработавших гейтов, которые есть в таблицах (сообщения гейтов, клетки, режимы), записи
-                 и книге (строки блочного стиля — заменой текста, `text_values`); остальные числа текстов — человеку;
-  gate_masses    ожидаемые массы объяснений сработавших гейтов — массы таблиц книги (4 знака).
+Объяснения гейтов (массы и числа текстов) — не правило, а шаблон `gate_explanations.tpl` и выход
+`ops/tools/gate_numbers.py` (шаг `gate-texts` команды: числа сетки, таблиц, записи и книги — метками).
 """
 from __future__ import annotations
 
@@ -291,105 +290,3 @@ def governance(ctx) -> list[dict]:
     gov = {("quasi_fiscal", "fixed_point", "median_rub"): fp["median_rub"],
            ("quasi_fiscal", "fixed_point", "median_of"): fp["median_of"]}
     return [{"file": GOV_INPUTS, "values": gov}, {"file": TEMPLATE, "values": tpl}]
-
-
-# ----------------------------------------------------------------------------------------------- гейты
-NUM = r"([+−-]?\d+(?: \d{3})*(?:,\d+)?)"
-
-
-def _rx(template: str) -> str:
-    """Шаблон фразы объяснения → регулярное выражение: `{}` — число, пробел — любой пробел (перенос строки блока)."""
-    parts = template.split("{}")
-    return NUM.join(re.escape(p).replace(r"\ ", r"\s+") for p in parts)
-
-
-def _n(x: float) -> str:
-    return str(int(round(x))) if abs(x - round(x)) < 1e-9 else ru(x, 1)
-
-
-def gate_texts(ctx) -> list[dict]:
-    """Числа объяснений сработавших гейтов, которые есть в таблицах книги (`results.json`: сообщения гейтов, клетки,
-    апостериорные режимы), в записи миров и в книге, — правилом; фразы и суждения — прежние. Чисел нет в таблицах (их
-    правило не трогает — сверить вручную): ЧПМ, CoR и CIR года гайденса (guidance_gap), норматив клетки в квартале
-    разрыва и его отставание от пола, выплата клетки (capital_gap), сравнения с прошлыми книгами. Правило пишет только
-    гейты, состав клеток которых тот же, что в тексте (иначе фраза неверна — текст человеку)."""
-    res = json_file(ctx, RESULTS)
-    book = template(ctx)
-    text = text_of(ctx, GATES)
-    notes = ctx.yaml(GATES) or {}
-    gates = {c["name"]: c for c in res["checks"] if c.get("kind") == "gate" and c.get("fired")}
-    cells = res["cells"]
-    rows = {w: [r for r in ctx.record["rows"] if r["world"] == w] for w in book["worlds"]["ids"]}
-    post = {r["regime"]: r["posterior"] for r in res["next_report"]["expectation"]["by_regime"]}
-    p_m = book["joint"]["world_prob"]["M"]
-    pairs = []
-
-    def sub(pattern: str, vals: list[str]) -> None:
-        pairs.append(sub_groups(one(text, _rx(pattern)), vals))
-
-    def nums(msg: str, pattern: str) -> list[float]:
-        m = re.search(pattern, msg.replace(" ", " "))          # разряды в сообщениях ядра — неразрывным пробелом
-        if not m:
-            raise RuleError(f"сообщение гейта не в известном виде: {msg[:90]}")
-        return [float(g.replace(" ", "").replace(",", ".").replace("−", "-")) for g in m.groups()]
-
-    if "guidance_gap" in gates and "guidance_gap" in notes:
-        lo, hi, g_lo, g_hi = nums(gates["guidance_gap"]["message"], r"ROE: ([\d,]+)…([\d,]+) % против гайденса ([\d,]+)…([\d,]+) %")
-        sub("ROE года — {}–{} % против «22 %» (полоса {}–{} %)", [ru(lo, 1), ru(hi, 1), ru(g_lo, 1), ru(g_hi, 1)])
-        if gates["guidance_gap"]["mass"] == 1.0:
-            sub("во всех {} клетках", [str(len(cells))])
-        sub("не опускает год ниже {} %", [ru(lo, 1)])
-        if lo > g_hi:
-            sub("расходится с гайденсом по ROE на {}–{} п.п. вверх", [ru(lo - g_hi, 2), ru(hi - g_hi, 2)])
-    if "roe_k_homogeneity" in gates and "roe_k_homogeneity" in notes:
-        n, h, m, gap = nums(gates["roe_k_homogeneity"]["message"],
-                            r"N ([−-]?[\d,]+) п\.п\., H ([−-]?[\d,]+) п\.п\., M ([−-]?[\d,]+) п\.п\.; разрыв ([\d,]+) п\.п\.")
-        sub("при нормализации ставок {} п.п., при высоких ставках надолго {} п.п., при рыночных ставках как есть {} "
-            "п.п.; разрыв — {} п.п.", [ru(n, 2, sign=True), ru(h, 2, sign=True), ru(m, 2, sign=True), ru(gap, 2)])
-        k = {c["world"]: c["k_t"] for c in cells}
-        sub("ставок (ключевая {} %) маржа почти не выше, чем при нормализации (ключевая {} %), а стоимость капитала "
-            "выше на {} п.п.", [_n(rows["M"][-1]["key_avg"]), _n(rows["N"][-1]["key_avg"]), ru(100 * (k["M"] - k["N"]), 1)])
-    mc = [c for c in cells if c["world"] == "M" and c["regime"] == "crisis"]
-    if "pb_by_world" in gates and "pb_by_world" in notes:
-        bad = [c for c in cells if not book["checks"]["pb_by_world"][c["world"]][0] <= c["pb"]
-               <= book["checks"]["pb_by_world"][c["world"]][1]]
-        if {(c["world"], c["regime"], c["scenario"]) for c in bad} == {(c["world"], c["regime"], c["scenario"]) for c in mc}:
-            sub("(вес {} % × {} % ≈ {} %):", [_n(100 * p_m), ru(100 * post["crisis"], 1), ru(100 * gates["pb_by_world"]["mass"], 1)])
-            sub("оценка — {}–{} капитала при нижней границе коридора {} (у", [
-                ru(min(c["pb"] for c in bad), 2), ru(max(c["pb"] for c in bad), 2), _n(book["checks"]["pb_by_world"]["M"][0])])
-            sub("доходность терминала {}–{} % при стоимости капитала {} %.", [
-                ru(100 * min(c["roe_t"] for c in bad), 1), ru(100 * max(c["roe_t"] for c in bad), 1), ru(100 * bad[0]["k_t"], 1)])
-    if "m_crisis_vs_cbr" in gates and "m_crisis_vs_cbr" in notes:
-        msg = gates["m_crisis_vs_cbr"]["message"].replace(" ", " ")
-        got = re.findall(r"M/crisis/(\w+): минимум Н20\.0 ([\d,]+) %", msg)
-        if {s for s, _ in got} == {"upper", "strict"}:
-            share = sum(book["joint"]["reg_prob_given_regime"]["crisis"][s] for s in ("upper", "strict"))
-            sub("(вес {} % × {} % × {} % ≈ {} %)", [_n(100 * p_m), ru(100 * post["crisis"], 1), _n(100 * share),
-                                                    ru(100 * gates["m_crisis_vs_cbr"]["mass"], 1)])
-            sub("минимум норматива Н20.0 — {} %, выше порога книги {} %", [
-                ru(min(float(v.replace(",", ".")) for _, v in got), 2), _n(100 * book["checks"]["m_crisis_vs_cbr"]["n20_min"])])
-    if "capital_gap" in gates and "capital_gap" in notes:
-        msg = gates["capital_gap"]["message"]
-        q, y = nums(msg, r"первый квартал — (\d) кв\. (\d{4})")
-        runs, total, share = nums(msg, r"в полосе — в ([\d ]+) из ([\d ]+) прогонов \(масса таких клеток в среднем по всем "
-                                       r"прогонам — ([\d,]+) %\)")
-        sub("(вес {} %): в {} квартале {} года", [ru(100 * gates["capital_gap"]["mass"], 2), str(int(q)), str(int(y))])
-        sub("в полосе пол задевают {} из {} прогонов, масса таких клеток в среднем по всем прогонам — {} %", [
-            ru(runs, 0), ru(total, 0), ru(share, 1)])
-    new_text = text
-    for a, b in pairs:
-        new_text = new_text.replace(a, b)
-    new = yaml.safe_load(new_text)
-    values = {(g, "explanation"): new[g]["explanation"] for g in notes if "explanation" in notes[g]}
-    return [{"file": GATES, "replace": pairs, "values": values, "text_values": True}]
-
-
-def gate_masses(ctx) -> list[dict]:
-    """Ожидаемая масса объяснения гейта = масса сработавшего гейта в таблицах книги, 4 знака (запись с коридором массы —
-    суждение о дрейфе, её правило не трогает). Тексты объяснений — суждение (числа — сверить с таблицами)."""
-    res = json_file(ctx, RESULTS)
-    fired = {c["name"]: c["mass"] for c in res["checks"] if c.get("fired") and c.get("kind") == "gate"}
-    notes = ctx.yaml(GATES) or {}
-    values = {(name, "expected_mass"): round(float(fired[name]), MASS_DECIMALS) for name, e in notes.items()
-              if "expected_mass" in e and name in fired}
-    return [{"file": GATES, "values": values, "decimals": {k: MASS_DECIMALS for k in values}}]
