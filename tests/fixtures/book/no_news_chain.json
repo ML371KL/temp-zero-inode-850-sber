@@ -1,0 +1,104 @@
+{
+ "note": "вероятности режимов (4 знака) после 1…8 отчётов, равных ожиданию модели (тест tests/test_book_core.py::test_the_no_news_chain_stops_at_the_floor); пишет ops/tools/worlds_steps.py pins",
+ "book_version": "1.6",
+ "with_floor": [
+  {
+   "soft": 0.1591,
+   "norm": 0.4633,
+   "downturn": 0.2518,
+   "crisis": 0.1259
+  },
+  {
+   "soft": 0.1364,
+   "norm": 0.4608,
+   "downturn": 0.3018,
+   "crisis": 0.101
+  },
+  {
+   "soft": 0.1088,
+   "norm": 0.5108,
+   "downturn": 0.3082,
+   "crisis": 0.0721
+  },
+  {
+   "soft": 0.0753,
+   "norm": 0.5403,
+   "downturn": 0.3227,
+   "crisis": 0.0617
+  },
+  {
+   "soft": 0.0531,
+   "norm": 0.5466,
+   "downturn": 0.3372,
+   "crisis": 0.0631
+  },
+  {
+   "soft": 0.0495,
+   "norm": 0.5869,
+   "downturn": 0.3141,
+   "crisis": 0.0495
+  },
+  {
+   "soft": 0.0495,
+   "norm": 0.5966,
+   "downturn": 0.3035,
+   "crisis": 0.0504
+  },
+  {
+   "soft": 0.0495,
+   "norm": 0.5929,
+   "downturn": 0.3081,
+   "crisis": 0.0495
+  }
+ ],
+ "without_floor": [
+  {
+   "soft": 0.1591,
+   "norm": 0.4633,
+   "downturn": 0.2518,
+   "crisis": 0.1259
+  },
+  {
+   "soft": 0.1364,
+   "norm": 0.4608,
+   "downturn": 0.3018,
+   "crisis": 0.101
+  },
+  {
+   "soft": 0.1088,
+   "norm": 0.5108,
+   "downturn": 0.3082,
+   "crisis": 0.0721
+  },
+  {
+   "soft": 0.0753,
+   "norm": 0.5403,
+   "downturn": 0.3227,
+   "crisis": 0.0617
+  },
+  {
+   "soft": 0.0531,
+   "norm": 0.5466,
+   "downturn": 0.3372,
+   "crisis": 0.0631
+  },
+  {
+   "soft": 0.0331,
+   "norm": 0.6,
+   "downturn": 0.3211,
+   "crisis": 0.0458
+  },
+  {
+   "soft": 0.043,
+   "norm": 0.6,
+   "downturn": 0.3073,
+   "crisis": 0.0497
+  },
+  {
+   "soft": 0.0472,
+   "norm": 0.6,
+   "downturn": 0.3149,
+   "crisis": 0.0379
+  }
+ ]
+}

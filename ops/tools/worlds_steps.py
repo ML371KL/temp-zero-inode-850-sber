@@ -235,8 +235,7 @@ def no_news_chain() -> dict:
 def cmd_pins(a) -> int:
     new = no_news_chain()
     old = json.loads(PINS.read_text(encoding="utf-8")) if PINS.exists() else None
-    if old is not None and {k: v for k, v in old.items() if k != "book_version"} == \
-            {k: v for k, v in new.items() if k != "book_version"}:
+    if old == new:
         say("ИТОГ: цепочка «без новостей» — та же (эталон не тронут)")
         return 0
     if a.check:

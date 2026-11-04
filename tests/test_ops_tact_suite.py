@@ -39,7 +39,7 @@ RUN_SH = ROOT / "ops" / "run.sh"
 # Поток → префиксы его тестовых файлов (INTERFACES §2 и раздел W2).
 STREAMS = {
     "core": ("test_core_", "test_core2_", "test_integrate_"),
-    "book": ("test_book_",),
+    "book": ("test_book_", "test_worlds_"),       # test_worlds_* — приём миров книги (сторож, правила)
     "facts": ("test_facts_",),
     "indicators": ("test_ind_",),
     "web": ("test_web_",),

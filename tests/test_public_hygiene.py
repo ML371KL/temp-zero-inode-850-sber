@@ -77,10 +77,10 @@ ALLOWED_EMAILS_FILE = ROOT / ".github" / "commit-emails.allow"
 PRIVATE_LIST = ("private", "hygiene-words.txt")
 HANDOFF_ENV = "BANK_HANDOFF_DIR"
 
-# Публичные репозитории семейства: код и данные панелей 850. Прочие
-# `temp-zero-inode-*` владельца — приватные служебные.
+# Публичные репозитории семейства: код и данные панелей 850 и общий источник миров ставок семейства (`850-worlds`,
+# публичный — решение владельца 04.11.2026). Прочие `temp-zero-inode-*` владельца — приватные служебные.
 PREFIX = "temp-zero-" + "inode-"          # по частям: целиком строка ловится своим же правилом
-PUBLIC_REPOS = re.compile(PREFIX + r"850-(?:sber|lenta|x5)(?:-data)?(?:\.git)?")
+PUBLIC_REPOS = re.compile(PREFIX + r"850-(?:(?:sber|lenta|x5)(?:-data)?|worlds)(?:\.git)?")
 
 OCTET = r"(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)"
 RULES_ALL = {
@@ -672,5 +672,5 @@ def test_the_rules_leave_ordinary_text_alone():
     assert _is_allowed("README.md", "email", "304002195+ML371KL@users.noreply.github.com")
     assert not _is_allowed("tests/x.py", "email", "someone@" + "mail.ru")
     for public in ("temp-zero-inode-850-sber", "temp-zero-inode-850-sber-data",
-                   "temp-zero-inode-850-lenta-data.git", "temp-zero-inode-850-x5"):
+                   "temp-zero-inode-850-lenta-data.git", "temp-zero-inode-850-x5", "temp-zero-inode-850-worlds"):
         assert _is_allowed("README.md", "private_repo", public), public

@@ -46,7 +46,7 @@ LEAD-DECISIONS-4 (В12–В20); тексты MODEL, PAYLOAD и этого док
 | Поток W3 | Пишет только он |
 |---|---|
 | **core** | весь `model/`; `tests/test_core_*.py`, `tests/test_core2_*.py`, `tests/support_core*.py`, `tests/mutations.py`, `tests/test_integrate_regression.py`, `tests/fixtures/core*/**` |
-| **book** | `data/assumptions/**` (кроме `results.json`, `run_output.txt` — выпускает ядро); `tests/test_book_*.py`, `tests/support_book.py`, `tests/fixtures/book/**` |
+| **book** | `data/assumptions/**` (кроме `results.json`, `run_output.txt` — выпускает ядро); `tests/test_book_*.py`, `tests/test_worlds_*.py` (приём миров: сторож и правила), `tests/support_book.py`, `tests/fixtures/book/**`; `ops/tools/adopt_worlds.py`, `worlds_rules.py`, `worlds_steps.py` |
 | **facts** | `data/facts/**`, `ops/tools/build_facts.py`, `docs/FACTS.md`; `tests/test_facts_*.py`, `tests/fixtures/facts/**` |
 | **indicators** | `indicators/**`, `data/indicators/**`, `docs/INDICATORS.md`; `tests/test_ind_*.py`, `tests/support_ind.py`, `tests/fixtures/ind/**` |
 | **web** | `web/**`, `functions/**`, `docs/DASHBOARD.md`, `wrangler.toml`, `ops/tools/devserver.py`; `tests/test_web_*.py`, `tests/web/**`, `tests/fixtures/payload-sample.json` |
@@ -251,7 +251,7 @@ var/                         локальное состояние, времен
 
 | Поток | Файлы (пишет только он) |
 |---|---|
-| **book** | `data/assumptions/**` (кроме `results.json` и `run_output.txt` — их выпускает `python -B -m model.book_results`, коммитит интеграция); `tests/test_book_*.py`, `tests/fixtures/book/**` |
+| **book** | `data/assumptions/**` (кроме `results.json` и `run_output.txt` — их выпускает `python -B -m model.book_results`, коммитит интеграция); `tests/test_book_*.py`, `tests/test_worlds_*.py`, `tests/fixtures/book/**`; `ops/tools/adopt_worlds.py`, `worlds_rules.py`, `worlds_steps.py` |
 | **facts** | `data/facts/**` (включая `calendar.json`, `peers.json`, `SCHEMA.md`); `ops/tools/build_facts.py`; `docs/FACTS.md`; `tests/test_facts_*.py`, `tests/fixtures/facts/**`. Отдельного `data/calendar.json` нет: календарь — `data/facts/calendar.json` (М прил. B) |
 | **core1** | `model/__init__.py`, `model/book.py`, `book_schema.py`, `timeline.py`, `paths.py`, `worlds.py`, `nii.py`, `credit.py`, `capital.py`, `dividends.py`, `cell.py`, `valuation.py`, `grid.py`, `checks.py`; `tests/test_core_*.py`, `tests/support_core.py`, `tests/fixtures/core/**`; позже — `tests/mutations.py` |
 | **core2** | `model/uncertainty.py`, `reverse.py`, `nextreport.py`, `attribution.py`, `live.py`, `payload.py`, `book_results.py`, `build_release.py`; `tests/test_core2_*.py`, `tests/support_core2.py`, `tests/fixtures/core2/**`; `tests/test_integrate_regression.py` (регрессия книги М§18) |

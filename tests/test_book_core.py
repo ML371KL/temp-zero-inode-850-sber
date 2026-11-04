@@ -9,6 +9,8 @@
 """
 from __future__ import annotations
 
+import json
+
 import pytest
 
 try:
@@ -53,11 +55,17 @@ def test_the_no_news_chain_stops_at_the_floor(book):
         assert all(post[r] >= share * prior[r] - 1e-12 for r in prior), post
     soft = [round(p["soft"], 4) for p in with_floor]
     crisis = [round(p["crisis"], 4) for p in with_floor]
-    assert soft[:5] == [0.1591, 0.1364, 0.1088, 0.0753, 0.0531] and soft[5:] == [0.0495] * 3   # на полу с шестого
-    # книга 1.6 (миры 1.7: ожидания ЧПМ режимов сдвинулись в тысячных долях п.п.): кризис на полу с шестого отчёта, на
-    # седьмом — 0,0504 (окно четырёх отчётов теряет наблюдение 3К26 с низкой CoR), на восьмом — снова на полу; у книги
-    # 1.5 — 0,1259 / 0,101 / 0,0719 / 0,0615 / 0,0606 и на полу с шестого, мягкая посадка — 0,1086 / 0,0751 / 0,0538
-    assert crisis[:5] == [0.1259, 0.101, 0.0721, 0.0617, 0.0631] and crisis[5:] == [0.0495, 0.0504, 0.0495]
+    floor = {r: round(share * prior[r], 4) for r in ("soft", "crisis")}
+    assert soft[5:] == [floor["soft"]] * 3                                       # мягкая посадка — на полу с шестого
+    assert floor["crisis"] in crisis[5:] and min(crisis) >= floor["crisis"]      # кризис доходит до пола и ниже не падает
+    # числа цепочки зависят от миров (ожидания ЧПМ режимов): эталон пишет команда приёма миров
+    # (ops/tools/worlds_steps.py pins, tests/fixtures/book/no_news_chain.json); книга 1.6 на мирах 1.7 — кризис
+    # 0,1259 / 0,101 / 0,0721 / 0,0617 / 0,0631, на полу с шестого, на седьмом — 0,0504 (окно четырёх отчётов теряет
+    # наблюдение 3К26 с низкой CoR); у книги 1.5 — 0,1259 / 0,101 / 0,0719 / 0,0615 / 0,0606
+    pins = json.loads((S.ROOT / "tests" / "fixtures" / "book" / "no_news_chain.json").read_text(encoding="utf-8"))
+    assert pins["book_version"] == book["meta"]["version"]
+    assert [{r: round(v, 4) for r, v in p.items()} for p in with_floor] == pins["with_floor"]
+    assert [{r: round(v, 4) for r, v in p.items()} for p in without] == pins["without_floor"]
     for r in ("soft", "crisis"):                                                     # без пола хвосты — ниже пола
         assert without[-1][r] < share * prior[r], (r, without[-1][r])
 
