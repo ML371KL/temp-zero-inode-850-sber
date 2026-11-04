@@ -115,7 +115,7 @@ H записи (A-N1); дисконт за управление — неподв
 | Величина | Значение | Опора книги |
 |---|---|---|
 | σ0_A — сдвиг спредов кредитных книг (с 2027 г.; A-N2, A-N7), п.п. | <!--=derived.nii.sigma0 p3-->−0,162<!--/--> | лист `sigma0_split`: Δ0 = цель в движке 5,616 % − Nss(H) без сдвига 6,833 % = −1,217 п.п.; доля 0,09 / вес кредитных книг 0,674 → −0,162 |
-| σ0_L — сдвиг средств клиентов (стоимость растёт на −σ0_L), п.п. | <!--=derived.nii.sigma0_liab p3-->−1,515<!--/--> | лист: доля 0,91 / вес средств клиентов в стационаре мира H 0,729 → −1,519 |
+| σ0_L — сдвиг средств клиентов (стоимость растёт на −σ0_L), п.п. | <!--=derived.nii.sigma0_liab p3-->−1,515<!--/--> | лист: (1 − доля σ0) × Δ0 / вес средств клиентов в стационаре мира H (`evidence/nii/sigma0_split.py`) |
 | Эффективный LT-спред корпоративных кредитов к ОФЗ 1 г.: N / H / M, п.п. | <!--=derived.nii.lt_spread.corp_loans.N p2-->0,50<!--/--> / <!--=derived.nii.lt_spread.corp_loans.H p2-->0,50<!--/--> / <!--=derived.nii.lt_spread.corp_loans.M p2-->0,50<!--/--> | листы `sigma0_split`, `phi_split`: +0,50 во всех мирах при поле 0,5 (A-X8) — сжатия на кредитных ставках нет (A-N8) |
 | Эффективный LT-спред розницы и ипотеки к ОФЗ 3 г.: N / H / M, п.п. | <!--=derived.nii.lt_spread.retail_loans.N p2-->3,25<!--/--> / <!--=derived.nii.lt_spread.retail_loans.H p2-->3,25<!--/--> / <!--=derived.nii.lt_spread.retail_loans.M p2-->3,25<!--/--> | листы: +3,25 во всех мирах при поле 1,5 (A-X8) |
 | φ — сжатие маржи со ставкой мира (целиком) | <!--=derived.nii.phi r4-->0,4649<!--/--> | лист `sigma0_split`: 0,479 при T* = 0,06 (лист калибровки с акциями в бумагах — 0,484) |
@@ -145,7 +145,7 @@ H записи (A-N1); дисконт за управление — неподв
 | Расходы: реальный рост 2026–2030 (сдвиг) | 0 | −0,5…+2,5 п.п. | <!--=judgements[id=opex.real_growth.*].price_low r0-->366<!--/--> / <!--=judgements[id=opex.real_growth.*].price_high r0-->300<!--/--> | <!--=headline.contributions[axis=opex.real_growth.*].share p1-->2,1<!--/--> |
 | κ: CoR к реальной ставке сверх мира N (A-C2b) | 0,05 | 0–0,15 | <!--=judgements[id=credit.kappa].price_low r0-->368<!--/--> / <!--=judgements[id=credit.kappa].price_high r0-->330<!--/--> | <!--=headline.contributions[axis=credit.kappa].share p1-->1,1<!--/--> |
 | Дрейф плотности RWA | 0,5 % в год | 0–1,5 % в год | <!--=judgements[id=capital.rwa.density_drift_rate].price_low r0-->361<!--/--> / <!--=judgements[id=capital.rwa.density_drift_rate].price_high r0-->343<!--/--> | <!--=headline.contributions[axis=capital.rwa.density_drift_rate].share p1-->1,0<!--/--> |
-| Дисконт за управление | 0,40 % | 0–10 % | <!--=judgements[id=valuation.governance.discount].price_low r0-->357<!--/--> / <!--=judgements[id=valuation.governance.discount].price_high r0-->321<!--/--> | <!--=headline.contributions[axis=valuation.governance.discount].share p1-->0,7<!--/--> |
+| Дисконт за управление | <!--=judgements[id=valuation.governance.discount].book p2-->0,45<!--/--> % | 0–10 % | <!--=judgements[id=valuation.governance.discount].price_low r0-->357<!--/--> / <!--=judgements[id=valuation.governance.discount].price_high r0-->321<!--/--> | <!--=headline.contributions[axis=valuation.governance.discount].share p1-->0,7<!--/--> |
 | Налог: сдвиг ставки | 0 | 0…+3 п.п. | <!--=judgements[id=tax.statutory].price_low r0-->355<!--/--> / <!--=judgements[id=tax.statutory].price_high r0-->322<!--/--> | <!--=headline.contributions[axis=tax.statutory].share p1-->0,6<!--/--> |
 | ERP | 5,57 % | 4,9–6,2 % | <!--=judgements[id=valuation.erp].price_low r0-->377<!--/--> / <!--=judgements[id=valuation.erp].price_high r0-->337<!--/--> | <!--=headline.contributions[axis=valuation.erp].share p1-->0,2<!--/--> |
 | Дрейф доли кредитов | −0,01 | −0,03…+0,01 | <!--=judgements[id=volumes.loan_share_drift].price_low r0-->339<!--/--> / <!--=judgements[id=volumes.loan_share_drift].price_high r0-->370<!--/--> | <!--=headline.contributions[axis=volumes.loan_share_drift].share p1-->0,1<!--/--> |
@@ -199,7 +199,7 @@ A-N2 — главная ось (DESIGN §4 ждал ≈⅔ разброса «д
 | ERP, % | 5,57 | <!--=reverse_dcf.rows[key=valuation.erp].solved p2n-->6,97<!--/--> | <!--=reverse_dcf.rows[key=valuation.erp].gap s2-->0,00<!--/--> |
 | Регуляторный сценарий (смесь к «жёсткому») | 0 | <!--=reverse_dcf.rows[key=joint.reg_prob_given_regime].solved r2n-->недостижимо<!--/--> | <!--=reverse_dcf.rows[key=joint.reg_prob_given_regime].gap s2-->+12,12<!--/--> |
 | Реальный рост терминала, % | 1,5 | <!--=reverse_dcf.rows[key=valuation.terminal.real_growth].solved p2n-->недостижимо<!--/--> | <!--=reverse_dcf.rows[key=valuation.terminal.real_growth].gap s2-->+20,68<!--/--> |
-| Дисконт за управление, % | 0,40 | <!--=reverse_dcf.rows[key=valuation.governance.discount].solved p1n-->12,1<!--/--> | <!--=reverse_dcf.rows[key=valuation.governance.discount].gap s2-->−0,15<!--/--> |
+| Дисконт за управление, % | <!--=reverse_dcf.rows[key=valuation.governance.discount].book p2-->0,45<!--/--> | <!--=reverse_dcf.rows[key=valuation.governance.discount].solved p1n-->12,1<!--/--> | <!--=reverse_dcf.rows[key=valuation.governance.discount].gap s2-->−0,15<!--/--> |
 
 | Банковская строка (М§11.3) | Книга (модель) | Вменено рынком |
 |---|---|---|
@@ -913,7 +913,7 @@ CIR движка растёт и после конца реального рос
 - **Ось:** «Расходы: реальный рост 2026–2030» — сдвиг ключей 2026–2030 на −0,5…+2,5 п.п., треугольно; конец роста с
   2031 года ось не двигает.
 - **Класс:** A (2026) / C (дальше; конец роста — решение ведущего A8).
-- **Обоснование:** расходы МСФО 1П26 639,6 против 555,0 (+15,2 % г/г) при зарплатах мира H 9,5 % → +5 % реально в 2026;
+- **Обоснование:** расходы МСФО 1П26 639,6 против 555,0 (+15,2 % г/г) при зарплатах мира H 2П26 (запись миров книги) → около +5 % реально в 2026 (сторож команды приёма миров — арифметика к шагу ключа);
   ИИ-инвестиции 2026–2028 (капвложения 6М26 +60 % г/г, амортизация НМА +46 %) — +2 %; 2029–2030 — +0,5 %; с 2031 года
   расходы растут с зарплатами мира. Без конца (книга 1.0: +0,5 % бессрочно при ЧКД «зарплаты − 1 п.п.») CIR движка
   полз к ≈32 % к 2036 году, и терминал замораживал этот уровень (проверка этапа 2, S12). Проверка — гейт `cir_range`
