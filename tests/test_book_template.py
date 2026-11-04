@@ -22,19 +22,25 @@ except ImportError:                      # прогон без pytest.ini (pytho
 pytestmark = pytest.mark.tact
 
 MARKS = ("  #{{WORLDS}}", "#{{WORLDS_BANK}}", "#{{OVERLAY_SHA256}}")
-VERSION = "1.6"
+# номер версии ставит команда приёма миров (младший разряд + 1, ops/tools/worlds_rules.py:book_version): тест сверяет его
+# вид и согласие машинной книги с шаблоном, а не литерал версии
+VERSION = str(S.template()["meta"]["version"])
+assert re.fullmatch(r"\d+\.\d+", VERSION), VERSION
 # Книга 1.4 перенесена на якорь 2026Q3 (ops/tools/reanchor.py, режим keep, MODEL §15.2): решения, которые перенос
 # записывает на структуре нового якоря и в его ценах, — числами журнала V1.4-CHANGES.md (суждения те же): цели A-N2
 # и A-N3 и доля σ0 — при прежних скалярах пути (цель A-N2 — на мосте ЧПМ канона фактов), вычеты — формулой книги на
 # фактах 30.09.2026, реальные суммы — × индекс цен 3К26. В книгах 1.0–1.3 (якорь 2К26): 0,060; 0,06; 0,09; 936,7;
 # 1 173,8.
-MOVED = {"nii.nim_lt_target_mgmt": 0.057238, "nii.transmission.target": 0.047867, "nii.sigma0_split": 0.089584,
+MOVED = {"nii.nim_lt_target_mgmt": 0.057238, "nii.transmission.target": 0.047867,
          "capital.n20.deductions_anchor": 963.7, "capital.n11.deductions_anchor": 1192.927}
 # Суждения книги 1.5 по фактам 2024К1–2026К3 (V1.5-CHANGES.md, лист evidence/misc): уровень «прочего» — год из
 # средних кварталов в ценах якоря (у 1.0–1.3 — −200 в ценах 2026, у 1.4 — −203,195111), непрофильный результат 2026
 # года — факт 9М26 и оценка 4К26 (у 1.4 — −181,474544).
 JUDGED_1_5 = {"other.misc_net_real.LT": -300.0, "noncore.result_real.2026": -166.6}
 RESULTS = S.BOOK_DIR / "results.json"
+# доли σ0 и φ и их оси — правило листов evidence/nii (центр и область гейта на записи миров книги)
+SIGMA0 = json.loads((S.EVIDENCE / "nii" / "out" / "sigma0_split_out.json").read_text(encoding="utf-8"))
+PHI = json.loads((S.EVIDENCE / "nii" / "out" / "phi_split_out.json").read_text(encoding="utf-8"))
 # Оси, которые из полосы не выводятся никогда (MODEL §10): односторонние рисковые — по путям ключей
 NEVER_OFF_BAND = ("tax.statutory", "tax.one_off.prob", "regimes.crisis.one_off_loss.amount")
 
@@ -244,7 +250,7 @@ def test_lead_decisions_3_are_in_the_book(book):
     assert book["credit"]["fv_loans_factor"] == 1.0                                 # В4: FVC режима, опора — норма
     assert book["credit"]["fv_loans_ref"] == "norm" and "norm" in book["regimes"]["ids"]
     nii = book["nii"]                                                               # В8: распределение σ0 и полы
-    assert nii["sigma0_split"] == MOVED["nii.sigma0_split"]
+    assert nii["sigma0_split"] == SIGMA0["rule"]["center"]                           # доля — правило листа (keep или шаг)
     shifted = [b for b, v in nii["books"].items() if v["side"] == "liability" and v["lt_shift"]]
     assert shifted == ["retail_current", "retail_term", "corp_funds"]
     assert book["checks"]["lt_spread_floor"] == {"corp_loans": 0.005, "mortgage": 0.015, "mortgage_sub": 0.015,
@@ -257,7 +263,7 @@ def test_lead_decisions_3_are_in_the_book(book):
 def test_lead_decisions_4_are_in_the_book(book):
     """Решения ведущего по аудиту после волны W2 (LEAD-DECISIONS-4, книга 1.3) — числами книги."""
     nii = book["nii"]                                                               # В12: раскладка сжатия φ
-    assert nii["phi_split"] == 0.0 and nii["sigma0_split"] == MOVED["nii.sigma0_split"]
+    assert nii["phi_split"] == PHI["rule"]["center"] and nii["sigma0_split"] == SIGMA0["rule"]["center"]
     carriers = [b for b, v in nii["books"].items() if v["side"] == "liability" and v["phi"]]
     assert carriers == ["retail_current", "retail_term", "corp_funds"]
     assert book["valuation"]["terminal"]["fade"] == 1.0                              # В13: ось угасания — только вниз
@@ -267,7 +273,8 @@ def test_lead_decisions_4_are_in_the_book(book):
     ru = book["joint"]["regime_update"]                                             # В15: пол вероятности режима
     assert ru["floor_share"] == 0.33 and ru["window_obs"] == 4
     g = book["valuation"]["governance"]                    # В16: дисконт — неподвижная точка на медиане (0,4 % у 1.2–1.5;
-    assert g["discount"] == 0.0045 and g["components"][0]["value"] == 0.0045   # книга 1.6 — 0,45 %: медиана ниже порога)
+    gov = json.loads((S.EVIDENCE / "governance" / "out" / "governance_out.json").read_text(encoding="utf-8"))
+    assert g["discount"] == g["components"][0]["value"] == gov["channels"]["quasi_fiscal"]["value"]   # книга 1.6 — 0,45 %
     assert book["checks"]["lt_spread_floor"]["corp_loans"] == 0.005                 # В20: пол подтверждён листом
     assert book["valuation"]["sensitivities"]["rank_window"] == [0.40, 0.60]        # записи аудита № 81, № 80
     assert book["valuation"]["next_report"]["value_tol"] == 0.0001
@@ -285,8 +292,9 @@ def test_pre_push_decisions_are_in_the_book(book):
     assert book["valuation"]["headline"]["search_tol_rub"] == 0.5
     axes = {a["paths"][0]: a for a in unc["axes"] if len(a["paths"]) == 1}
     s0, phi = axes["nii.sigma0_split"], axes["nii.phi_split"]
-    assert (s0["low"], s0["high"]) == (0.0, book["nii"]["sigma0_split"]) == (0.0, MOVED["nii.sigma0_split"])
-    assert (phi["low"], phi["high"]) == (book["nii"]["phi_split"], 0.001) and phi["high"] < 0.0012
+    assert (s0["low"], s0["high"]) == (0.0, book["nii"]["sigma0_split"]) == (0.0, SIGMA0["rule"]["center"])
+    assert (phi["low"], phi["high"]) == (book["nii"]["phi_split"], PHI["axis"]["high"])
+    assert phi["high"] <= PHI["rule"]["max_phi_split_exact"]          # верх оси — не выше предела гейта при σ0 книги
     assert s0["unit"] == phi["unit"] == "pct" and unc["off_band_axes"] == []
     assert len(unc["axes"]) == 34
 
@@ -518,9 +526,6 @@ def test_near_spread_keys_follow_the_anchor_rates(book):
         assert sp[str(y0 + 1)] == pytest.approx(mid, abs=5e-6 + 1e-12), b
         checked.append(b)
     assert {"mortgage", "retail_loans", "securities"} <= set(checked)                # книги решения A1 F3
-    got = [round(book["nii"]["books"][b]["spread"][str(y0)], 4) for b in ("mortgage", "retail_loans", "securities")]
-    assert got == [0.0042, 0.0042, -0.0305]         # якорь 3К26, запись миров 1.7 (книга 1.6); на записи 1.6 — 0,0067 / 0,0067 /
-                                                    # −0,028; на 2К26 — 0,0054 / 0,0054 / −0,0279 (sanity-val S1 п. 3)
 
 
 def test_misc_quarter_shares_are_the_profile_of_the_facts(book):

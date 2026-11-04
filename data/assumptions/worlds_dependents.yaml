@@ -1,0 +1,261 @@
+# Манифест приёма миров ставок семейства 850 — книга Сбербанка (команда ops/tools/adopt_worlds.py).
+#
+# Что из версии миров копируется в дерево, какие ключи книги пишутся из индекса источника, какие числа книги
+# зависят от миров и каким правилом этой книги пересчитываются, какие команды пересобирают книгу, таблицы, тексты и
+# эталоны тестов. Правится руками вместе с кодом книги; на какой версии стоит книга — data/assumptions/worlds_state.json
+# (пишет команда). Сторож tests/test_worlds_dependents.py: каждый лист и инструмент, читающий миры, назван здесь в
+# `readers`; правила манифеста на мирах книги дают числа шаблона (tests/test_worlds_rules.py). Код Сбера — своя линия
+# (не копия Т): надстройка — черновик с диапазонами ЦБ, ключи 2028–2030 — лист h_path_spreads, дисконт за управление —
+# неподвижная точка через медиану таблиц.
+schema: worlds-dependents-v1
+model: sber
+title: "Сбербанк 850"
+book_gen: "Сбербанка"                    # имя книги в описании рецепта и строке 1 входов (<<book_gen>>)
+print_step: 5.0                          # шаг печати медианы на витрине, ₽ (печать 325)
+stop: {median_print_steps: 2}            # сдвиг медианы больше двух шагов печати — красный флаг
+workers_env: [BANK_WORKERS]
+workers: 2                               # общая машина: тяжёлые прогоны — два процесса
+# автор коммитов --branch — из git config (почты в каталоге книги нет: гигиена публичного репозитория)
+record: data/assumptions/worlds_source.json
+overlay: data/assumptions/worlds_bank.json
+template: data/assumptions/assumptions_template.yaml
+
+steps:
+  # ---------------------------------------------------------------- файлы версии
+  - id: record
+    kind: install
+    title: "запись миров {version} побайтово, рецепт, входы, описание рецепта"
+    files:
+      - {src: record/worlds_source.json, dst: data/assumptions/worlds_source.json}
+      - {src: record/worlds_source.csv, dst: data/assumptions/worlds_source.csv}
+      - {src: recipe/worlds_recipe.py, dst: data/assumptions/worlds_recipe.py}
+      - src: inputs/worlds_inputs.yaml
+        dst: data/assumptions/worlds_inputs.yaml
+        verify: body
+        keep_lines: [1]
+        own_lines: {1: "# Входы записи для сборки макро-миров — книга-источник (850oa) (WORLDS-RECIPE.md); копия общей записи {record.curve_date_ru} для книги Сбербанка (DESIGN §3.3)."}
+      - {src: doc/WORLDS-RECIPE.md, dst: data/assumptions/WORLDS-RECIPE.md, verify: result, subst: {"<<book_gen>>": "{book_gen}"}}
+  - id: overlay
+    kind: install
+    title: "надстройка банков {version}: черновик с диапазонами ЦБ и worlds_bank.json"
+    files:
+      - {src: bank/bank_overlay_draft.yaml, dst: data/assumptions/evidence/worlds_bank/inputs/bank_overlay_draft.yaml}
+      - {src: bank/worlds_bank.json, dst: data/assumptions/worlds_bank.json}
+  - id: state
+    kind: state
+    title: "состояние: книга на мирах {version}"
+  - id: recipe-check
+    kind: run
+    title: "рецепт воспроизводит запись {version}"
+    cmd: ["{python}", "-B", "data/assumptions/worlds_recipe.py", "--check"]
+  - id: overlay-check
+    kind: run
+    title: "сборщик надстройки воспроизводит worlds_bank.json из черновика (дата и рецепт — meta.overlay черновика)"
+    cmd: ["{python}", "-B", "data/assumptions/evidence/worlds_bank/build_overlay.py", "--check"]
+
+  # ---------------------------------------------------------------- ключи происхождения и версия
+  - id: provenance
+    kind: set
+    title: "шаблон: дата кривых, происхождение и хэш записи {version}"
+    file: data/assumptions/assumptions_template.yaml
+    values:
+      meta.curve_as_of: "{record.curve_date}"
+      worlds.source.origin: "{origin}"
+      worlds.source.record_asof: "{record.asof}"
+      worlds.source.curve_date: "{record.curve_date}"
+      worlds.source.sha256: "{record.sha256}"
+    replace: {"{from.origin}": "{origin}"}   # подписи источника суждений на витрине: «[Ф: … — magnit-850oa book-1.x]»
+  - id: version
+    kind: rule
+    title: "номер версии книги: младший разряд + 1 к версии, выпущенной на другой записи миров; строки версии и миров текста книги"
+    module: ops/tools/worlds_rules.py
+    function: book_version
+
+  # ---------------------------------------------------------------- числа по правилам книги
+  - id: spreads
+    kind: rule
+    title: "ключи спредов книг ЧПД: 2028–2030 — лист h_path_spreads (калибровка на пути мира H) → 2026 — A-N1n (6 знаков) → 2027 — середина к новому 2028"
+    module: ops/tools/worlds_rules.py
+    function: spreads
+  - id: crisis-cbr
+    kind: rule
+    title: "кризисный режим против рискового сценария ЦБ: рост кредита и коридор гейта m_crisis_vs_cbr — «требования» черновика надстройки"
+    module: ops/tools/worlds_rules.py
+    function: crisis_cbr
+  - id: build
+    kind: run
+    title: "машинная книга из шаблона, записи и надстройки"
+    cmd: ["{python}", "-B", "data/assumptions/build_assumptions.py"]
+  - id: sigma0-sheet
+    kind: run
+    title: "лист σ0: наибольшая доля сдвига на кредитных книгах при гейте lt_spread_floor мира H"
+    cmd: ["{python}", "-B", "data/assumptions/evidence/nii/sigma0_split.py"]
+    ok: [0, 1]
+  - id: sigma0
+    kind: rule
+    title: "доля σ0 (A-N7) и её ось — центр и область гейта листа"
+    module: ops/tools/worlds_rules.py
+    function: sigma0_split
+  - id: phi-sheet
+    kind: run
+    title: "лист φ: наибольшая доля сжатия на кредитных книгах при гейте во всех мирах"
+    cmd: ["{python}", "-B", "data/assumptions/evidence/nii/phi_split.py"]
+    ok: [0, 1]
+  - id: phi
+    kind: rule
+    title: "доля φ (A-N8) и её ось — центр и область гейта листа"
+    module: ops/tools/worlds_rules.py
+    function: phi_split
+  - id: build-2
+    kind: run
+    title: "машинная книга на долях листов"
+    cmd: ["{python}", "-B", "data/assumptions/build_assumptions.py"]
+
+  # ---------------------------------------------------------------- листы сверки
+  - id: near-check
+    kind: run
+    title: "лист ближних ключей спредов (сверка до 1e-5)"
+    cmd: ["{python}", "-B", "data/assumptions/evidence/nii/near_spreads.py"]
+  - id: hpath-check
+    kind: run
+    title: "лист ключей 2028–2030 и самопроверка на путях этапа 1"
+    cmd: ["{python}", "-B", "data/assumptions/evidence/nii/h_path_spreads.py"]
+  - id: sigma0-check
+    kind: run
+    title: "лист σ0 на книге (выход и сверка)"
+    cmd: ["{python}", "-B", "data/assumptions/evidence/nii/sigma0_split.py"]
+  - id: phi-check
+    kind: run
+    title: "лист φ на книге (выход и сверка)"
+    cmd: ["{python}", "-B", "data/assumptions/evidence/nii/phi_split.py"]
+  - id: guards-pre
+    kind: run
+    title: "сторож суждения A-N2: ключевая мира H в LT записи — прежняя опора (иначе стоп)"
+    cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "guards", "--phase", "pre"]
+  - id: nii-check
+    kind: run
+    title: "лист nii: книги против калибровки, опоры A-N2 и A-N3"
+    cmd: ["{python}", "-B", "data/assumptions/evidence/nii/nii_book.py"]
+  - id: refresh-check
+    kind: run
+    title: "запись, книга, ближние ключи и ключи 2028–2030 согласованы"
+    cmd: ["{python}", "-B", "ops/tools/refresh_worlds.py", "--check"]
+
+  # ---------------------------------------------------------------- таблицы и дисконт за управление (неподвижная точка)
+  - id: governance-loop
+    kind: loop
+    title: "таблицы и дисконт за управление — до неподвижной точки (ключ → таблицы → медиана → ключ)"
+    max: 3
+    steps:
+      - id: tables
+        kind: run
+        title: "таблицы книги (2 000 прогонов; та же книга — без пересчёта)"
+        cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "tables"]
+        timeout: 10800
+      - id: governance
+        kind: rule
+        title: "дисконт за управление (A-V7): медиана таблиц → неподвижная точка листа → ключ, канал (а) и его строка"
+        module: ops/tools/worlds_rules.py
+        function: governance
+      - id: build-3
+        kind: run
+        title: "машинная книга на ключе дисконта"
+        cmd: ["{python}", "-B", "data/assumptions/build_assumptions.py"]
+      - id: governance-sheet
+        kind: run
+        title: "лист дисконта за управление (выход и сверка с книгой)"
+        cmd: ["{python}", "-B", "data/assumptions/evidence/governance/governance_channels.py"]
+
+  # ---------------------------------------------------------------- эталоны, тексты
+  - id: guards-post
+    kind: run
+    title: "сторожа суждений после таблиц: сетки «что даст отчёт» (A-R1), арифметика A-O1 (иначе флаг)"
+    cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "guards", "--phase", "post"]
+  - id: gate-masses
+    kind: rule
+    title: "ожидаемые массы объяснений сработавших гейтов — массы таблиц"
+    module: ops/tools/worlds_rules.py
+    function: gate_masses
+  - id: control
+    kind: run
+    title: "контрольная модель (вне допуска — стоп)"
+    cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "control"]
+    timeout: 3600
+  - id: numbers
+    kind: run
+    title: "числа документов (метки render_numbers)"
+    cmd: ["{python}", "-B", "ops/tools/render_numbers.py"]
+    check: ["{python}", "-B", "ops/tools/render_numbers.py", "--check"]
+  - id: pins
+    kind: run
+    title: "эталон цепочки «без новостей» (вероятности режимов на ядре) для теста книги"
+    cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "pins"]
+    timeout: 1800
+  - id: walk
+    kind: run
+    title: "прогулка версий от прошлой выпущенной книги (файл шагов — из блока walk манифеста)"
+    cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "walk"]
+    timeout: 3600
+  - id: changes
+    kind: run
+    on_change: true
+    title: "журнал версии книги V<версия>-CHANGES.md: ключи «было → стало» и прогулка"
+    cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "changes"]
+  - id: journal
+    kind: journal
+    on_change: true
+    title: "строка версий README книги и запись CHANGELOG"
+    entries:
+      - file: data/assumptions/README.md
+        after: "| {book.version_before} | "
+        text: "| {book.version} | {today_ru} | {labels.walk_step}: миры семейства {version} приняты командой `ops/tools/adopt_worlds.py` (запись, надстройка банков, ключи спредов, доли σ0 и φ, дисконт за управление — по правилам книги); цена и дата книги, суждения и оси — прежние; быстрые числа команды (500 прогонов): медиана {n.median_before} → {n.median_after} ₽ (печать {n.print_before} → {n.print_after}), точка {n.point_before} → {n.point_after} ₽; журнал — `V{book.version}-CHANGES.md` |"
+      - file: docs/CHANGELOG.md
+        after: "других банков и из семейства — `docs/PORTING.md`."
+        text: "\n## {today_ru} — книга {book.version}: {labels.walk_step}\n\n- **Книга** `data/assumptions/` — версия {book.version} (журнал `V{book.version}-CHANGES.md`): миры семейства {version} приняты командой `ops/tools/adopt_worlds.py --version {version}` (отчёт `var/adopt/{version}/report.json`); цена и дата книги, суждения и оси — прежние. Быстрые числа команды (500 прогонов): медиана {n.median_before} → {n.median_after} ₽, точка {n.point_before} → {n.point_after} ₽. Код ядра (`model/`) не менялся."
+  - id: quick
+    kind: quick
+    title: "быстрые числа книги (500 прогонов, зерно книги)"
+    cmd: ["{python}", "-B", "ops/tools/worlds_steps.py", "quick", "--out", "var/adopt/quick.json"]
+    out: var/adopt/quick.json
+    timeout: 1800
+  - id: gates
+    kind: gates
+    title: "сработавшие гейты таблиц книги"
+    file: data/assumptions/results.json
+    path: checks
+
+# Прогулка версий (ops/tools/worlds_steps.py walk): шаги — по одной причине сдвига; подстановки: {label} — подпись шага
+# миров индекса (labels.walk_step), {short} — короткое имя версии миров, {book}/{prev} — книга и прошлая выпущенная
+# книга, {cbr_decision_ru}. Новое правило, которое двигает отдельную группу ключей, — новый шаг здесь. Ключи, которые
+# не сдвинулись, шаг не меняет (сдвиг 0).
+walk:
+  out: var/adopt/walk_{prev}_to_{book}.txt
+  steps:
+    - {name: "Версия книги {book}", from_end: [meta.version]}
+    - {name: "{label}: запись миров {short} — пути N/H/M, кривые, уровень кривой в терминале, дата кривых", from_end: [worlds.N, worlds.H, worlds.M, worlds.source, meta.curve_as_of]}
+    - {name: "{label}: банковская надстройка {short}", from_end: [worlds_bank, worlds.overlay]}
+    - {name: "{label}: кризисный режим против рискового сценария ЦБ (рост кредита)", from_end: [regimes.crisis.loan_growth_override, checks.m_crisis_vs_cbr]}
+    - {name: "{label}: доли σ0 и φ и их оси (листы evidence/nii)", from_end: [nii.sigma0_split, nii.phi_split, valuation.uncertainty.axes]}
+    - {name: "{label}: дисконт за управление — неподвижная точка на медиане", from_end: [valuation.governance]}
+    - {name: "{label}: ключи спредов книг ЧПД — 2026 на опоре мира H (A-N1n), 2028–2030 на пути мира H, 2027 — середина", from_end: [nii.books]}
+
+# Листы и инструменты, которые читают запись миров, надстройку или их копии (сторож тестов сверяет список с деревом).
+# feeds — ключи шаблона из их выхода; пусто — печать или проверка.
+readers:
+  data/assumptions/build_assumptions.py: {feeds: ["worlds.<W>.*", "worlds_bank.<W>.*"], step: build}
+  data/assumptions/worlds_recipe.py: {feeds: [], step: recipe-check}
+  data/assumptions/evidence/worlds_bank/build_overlay.py: {feeds: [worlds_bank.json], step: overlay-check}
+  data/assumptions/evidence/evlib.py: {feeds: [], step: ""}                  # чтение записи листами
+  data/assumptions/evidence/extract_inputs.py: {feeds: [], step: ""}         # малые входы из папки передачи (архив)
+  data/assumptions/evidence/nii/h_path_spreads.py: {feeds: ["nii.books.*.spread.2028–2030"], step: spreads}
+  data/assumptions/evidence/nii/near_spreads.py: {feeds: [], step: near-check}   # сверка ближних ключей (5 знаков)
+  data/assumptions/evidence/nii/sigma0_split.py: {feeds: [nii.sigma0_split, "ось nii.sigma0_split"], step: sigma0}
+  data/assumptions/evidence/nii/phi_split.py: {feeds: [nii.phi_split, "ось nii.phi_split"], step: phi}
+  data/assumptions/evidence/nii/nii_book.py: {feeds: [], step: nii-check}    # опоры A-N2 и A-N3 (сторож guards-pre)
+  data/assumptions/evidence/nii/calib_nii.py: {feeds: [], step: ""}          # снимок калибровки 2К26 на путях этапа 1 — не перезапускается (решение 14.7)
+  data/assumptions/evidence/governance/governance_channels.py: {feeds: [valuation.governance], step: governance}
+  ops/tools/refresh_worlds.py: {feeds: [], step: refresh-check}
+  ops/tools/adopt_worlds.py: {feeds: [], step: ""}
+  ops/tools/worlds_rules.py: {feeds: ["nii.books.*.spread", regimes.crisis.loan_growth_override, checks.m_crisis_vs_cbr, nii.sigma0_split, nii.phi_split, valuation.governance], step: spreads}
+  ops/tools/worlds_steps.py: {feeds: [], step: tables}
+  model/payload.py: {feeds: [], step: ""}                  # печать происхождения записи на витрине (читает книгу)

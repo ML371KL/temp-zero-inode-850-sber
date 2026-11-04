@@ -34,10 +34,12 @@ BV0 = 8387.2              # капитал обыкновенных акцион
 SHARES_ORD_ISSUED = 21586.948   # размещённые обыкновенные, млн (ISS ISSUESIZE; evidence/dividends)
 
 
-def compute() -> dict:
-    book = evlib.template()
-    rec = evlib.record()
-    inp = yaml.safe_load(open(INPUTS, encoding="utf-8"))
+def compute(inp: dict | None = None, book: dict | None = None, rec: dict | None = None) -> dict:
+    """Каналы и неподвижная точка; `inp`, `book`, `rec` — чужие вход, шаблон и запись (правило приёма миров
+    ops/tools/worlds_rules.py:governance считает точку на медиане новых таблиц до записи входа)."""
+    book = evlib.template() if book is None else book
+    rec = evlib.record() if rec is None else rec
+    inp = yaml.safe_load(open(INPUTS, encoding="utf-8")) if inp is None else inp
     v = book["valuation"]
     curve_lt_h = round(rec["curve_lt"]["H"] / 100.0, 5) if "H" in (rec.get("curve_lt") or {}) else CURVE_LT_H
     k_t = curve_lt_h + v["beta_e"] * v["erp"]

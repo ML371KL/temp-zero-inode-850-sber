@@ -1,0 +1,42 @@
+{
+ "schema": "worlds-state-v1",
+ "version": "1.7",
+ "origin": "magnit-850oa book-1.7",
+ "title": "миры ставок после решения Банка России 23.10.2026",
+ "record_sha256": "1e905cb77c1d3a81cc89d6b80769171a60c0169d103340d3e7314bd8030d6f00",
+ "record_csv_sha256": "5fc8e86b97b9647e54dc7ef61cd34043aae6a4b8f5b492048abe6dd8957e87b0",
+ "record_asof": "2026-10-28",
+ "curve_date": "2026-10-28",
+ "overlay_sha256": "8611f015aeb6206f4e0c5a6471e2db310c471d11c29953f388edd9b56d39c54d",
+ "source_commit": "0b9f86c86ec4",
+ "files": {
+  "data/assumptions/worlds_source.json": {
+   "src": "record/worlds_source.json",
+   "sha256": "1e905cb77c1d3a81cc89d6b80769171a60c0169d103340d3e7314bd8030d6f00"
+  },
+  "data/assumptions/worlds_source.csv": {
+   "src": "record/worlds_source.csv",
+   "sha256": "5fc8e86b97b9647e54dc7ef61cd34043aae6a4b8f5b492048abe6dd8957e87b0"
+  },
+  "data/assumptions/worlds_recipe.py": {
+   "src": "recipe/worlds_recipe.py",
+   "sha256": "3b786f7b39356a9592fce4f460e45f4a65ae397b730aa1702af3680cca3b56a4"
+  },
+  "data/assumptions/worlds_inputs.yaml": {
+   "src": "inputs/worlds_inputs.yaml",
+   "sha256": "7b6c29fcf86bfd644bad8fe7b0ca43599a9732694e7f47d1fc56f759b652e309"
+  },
+  "data/assumptions/WORLDS-RECIPE.md": {
+   "src": "doc/WORLDS-RECIPE.md",
+   "sha256": "096ebc6171b68c765a15a721a25c27a6d49dac1d6742b658e855729be735fc89"
+  },
+  "data/assumptions/evidence/worlds_bank/inputs/bank_overlay_draft.yaml": {
+   "src": "bank/bank_overlay_draft.yaml",
+   "sha256": "8e28fe0b161f11071cb14a2c2bf4c240d15f67744084cccbe667fdc29bb7485a"
+  },
+  "data/assumptions/worlds_bank.json": {
+   "src": "bank/worlds_bank.json",
+   "sha256": "8611f015aeb6206f4e0c5a6471e2db310c471d11c29953f388edd9b56d39c54d"
+  }
+ }
+}

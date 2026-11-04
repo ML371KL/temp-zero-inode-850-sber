@@ -131,10 +131,11 @@ def test_evidence_outputs_carry_the_book_numbers():
     assert reg["classes"]["counts"] == {"soft": 5, "norm": 5, "downturn": 5, "crisis": 3}
     assert reg["book"]["cor_lt_mgmt"] == 0.01535 and abs(reg["book"]["nim_shift_lt"]) <= 0.0005
     gov = json.loads((S.EVIDENCE / "governance" / "out" / "governance_out.json").read_text(encoding="utf-8"))
-    assert gov["total"] == book["valuation"]["governance"]["discount"] == 0.0045 and gov["book_mismatches"] == []   # книга 1.6
+    assert gov["total"] == book["valuation"]["governance"]["discount"] and gov["book_mismatches"] == []
     qf = gov["channels"]["quasi_fiscal"]                                                  # В5: доля V0, не капитала якоря;
     fp = qf["fixed_point"]                                                                # В16: ключ — точка к шагу
-    assert qf["share_of_bv0"] == 0.00381 and qf["pv_bn"] == 32.0 and fp["half_step"] == fp["step"] / 2   # k_T мира H — curve_lt 12,6 %
+    assert abs(qf["share_of_bv0"] * 8387.2 - qf["pv_bn"]) <= 0.06          # доля капитала якоря BV_0 — справка того же PV
+    assert fp["half_step"] == fp["step"] / 2 and fp["median_of"] == f"книга {book['meta']['version']}"   # медиана — таблицы книги
     assert qf["value"] == pytest.approx(round(fp["share_of_v0"] / fp["step"]) * fp["step"], abs=1e-12)
     assert abs(qf["value"] - fp["share_of_v0"]) <= fp["half_step"] + 1e-12
     nii = json.loads((S.EVIDENCE / "nii" / "out" / "nii_book_out.json").read_text(encoding="utf-8"))
@@ -148,9 +149,6 @@ def test_evidence_outputs_carry_the_book_numbers():
     for b, v in near["books"].items():                                                    # A1 F3: ближние ключи
         # перенос якоря пишет ключи с шестью знаками от неокруглённой опоры квартала: до единицы пятого знака
         assert {k: book["nii"]["books"][b]["spread"][k] for k in v["rule"]} == pytest.approx(v["rule"], abs=1e-5), b
-    assert [near["books"][b]["rule"][str(near["anchor_year"])] for b in ("mortgage", "retail_loans", "securities")] \
-        == [0.00422, 0.00422, -0.03053]                     # якорь 3К26, запись миров 1.7 (книга 1.6; на записи 1.6 —
-                                                            # 0,00672 и −0,02803; на якоре 2К26 — 0,00541 и −0,02795)
     hp = json.loads((S.EVIDENCE / "nii" / "out" / "h_path_spreads_out.json").read_text(encoding="utf-8"))
     assert hp["book_mismatches"] == [] and hp["self_check_stage1"]["max_abs_vs_proposal"] <= 1e-5 + 1e-12   # книга 1.6
     assert hp["years"] == ["2028", "2029", "2030"]
@@ -220,8 +218,13 @@ def test_the_sigma0_split_is_the_rule_of_the_sheet():
     assert [ax["low"], ax["high"]] == [out["axis"]["low"], out["axis"]["high"]] == [0.0, rule["center"]]
     assert ax["high"] <= rule["max_split_exact"], "верх оси — не выше наибольшей доли, при которой гейт проходит"
     assert out["zero_spread_split"] == out["center_by_corporate_floor"]["0.0000"] > ax["high"]
-    # справка листа на якоре 3К26 и записи миров 1.7 (книга 1.6; на записи 1.6 при поле 0,0025 — 0,22, на 2К26 — 0,23)
-    assert out["center_by_corporate_floor"] == {"0.0000": 0.36, "0.0025": 0.23, "0.0050": 0.09, "0.0075": None}
+    # справка листа: центр по шагу при полу корпоративной книги 0–0,75 п.п. — не растёт с полом; при полу книги — центр
+    # по шагу правила (книга 1.6 на записи 1.7: 0,36 / 0,23 / 0,09 / нет)
+    cf = out["center_by_corporate_floor"]
+    assert list(cf) == ["0.0000", "0.0025", "0.0050", "0.0075"]
+    vals = [v for v in cf.values() if v is not None]
+    assert vals == sorted(vals, reverse=True)
+    assert cf[f"{floors['corp_loans']:.4f}"] == rule["center_by_step"]
     liab = out["stationary"]["liabilities_lt_shift"]
     assert liab == [b for b, v in book["nii"]["books"].items() if v["side"] == "liability" and v["lt_shift"]]
 

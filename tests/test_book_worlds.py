@@ -111,8 +111,9 @@ def test_the_overlay_is_reproduced_by_its_builder():
 
 
 def test_the_overlay_and_its_draft_are_the_family_canon():
-    """Надстройка одна на три банка: файл — байты канона миров (у Т и ВТБ — тот же файл своими сборщиками); черновик
-    пересборки 1.7 несёт дату и рецепт надстройки (meta.overlay) и собран сборщиком канона."""
+    """Надстройка одна на три банка: файл — байты источника миров семейства (у Т и ВТБ — тот же файл своими
+    сборщиками); черновик с диапазонами ЦБ несёт дату и рецепт надстройки (meta.overlay) и собран сборщиком источника;
+    хэши — состояние версии миров (worlds_state.json, пишет команда приёма)."""
     assert S.sha256_bytes((S.BOOK_DIR / "worlds_bank.json").read_bytes()) == S.OVERLAY_SHA256
     draft = S.EVIDENCE / "worlds_bank" / "inputs" / "bank_overlay_draft.yaml"
     assert S.sha256_bytes(draft.read_bytes().replace(b"\r\n", b"\n")) == S.OVERLAY_DRAFT_SHA256

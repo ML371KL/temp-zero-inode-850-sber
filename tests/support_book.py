@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import importlib.util
+import json
 import os
 import re
 import shutil
@@ -20,22 +21,21 @@ EVIDENCE = BOOK_DIR / "evidence"
 FACTS_DIR = ROOT / "data" / "facts"
 MODEL_MD = ROOT / "docs" / "MODEL.md"
 
-# Запись миров семейства (850oa, книга 1.7; снимок 28.10.2026 — окно 23–28.10): хранимые байты — побайтово с CRLF
-# (.gitattributes: worlds_source.* -text). Рецепт — обезличенные копии, как у «Ленты» (решение ведущего B4): тексты и код
-# без тикера и адреса выпуска книги-источника и без её сумм; функционально те же (`worlds_recipe.py --check`
-# воспроизводит запись). Хэши рецепта — LF-нормализованных байтов (репозиторий хранит текст в LF).
-RECORD_SHA256 = "1e905cb77c1d3a81cc89d6b80769171a60c0169d103340d3e7314bd8030d6f00"
-RECORD_CSV_SHA256 = "5fc8e86b97b9647e54dc7ef61cd34043aae6a4b8f5b492048abe6dd8957e87b0"
-RECIPE_LF_SHA256 = {                  # worlds_recipe.py — порт канона 1.7 (семейные строки, LF); .yaml — порт с первой строкой Сбера; .md — копия с врезкой Сбера
-                                      # (шапка .md оговаривает: раздел о сборщике описывает сборщик книги-источника)
-    "worlds_inputs.yaml": "7b6c29fcf86bfd644bad8fe7b0ca43599a9732694e7f47d1fc56f759b652e309",
-    "worlds_recipe.py": "3b786f7b39356a9592fce4f460e45f4a65ae397b730aa1702af3680cca3b56a4",
-    "WORLDS-RECIPE.md": "6e6765c2d5aad3286120b95bd411aa5c627d7576305a2407631b744c9bf81ad9",
-}
-# Банковская надстройка миров — одна на три банка семейства (канон миров 1.7, 29.10.2026): файл и его черновик —
-# побайтово из канона (SHA256SUMS канона); черновик собран сборщиком канона, а не листом этапа 1
-OVERLAY_SHA256 = "8611f015aeb6206f4e0c5a6471e2db310c471d11c29953f388edd9b56d39c54d"
-OVERLAY_DRAFT_SHA256 = "8e28fe0b161f11071cb14a2c2bf4c240d15f67744084cccbe667fdc29bb7485a"
+# Запись миров семейства: какую версию несёт книга и хэши её файлов пишет команда приёма миров
+# (ops/tools/adopt_worlds.py) в data/assumptions/worlds_state.json — эталон команды, а не литерал теста: хэши, зависящие
+# от миров, тесты читают оттуда. Запись — побайтово с CRLF (.gitattributes: worlds_source.* -text). Рецепт — обезличенные
+# копии, как у «Ленты» (решение ведущего B4): без тикера и адреса выпуска книги-источника и без её сумм; функционально
+# те же (`worlds_recipe.py --check` воспроизводит запись). Хэши рецепта — LF-нормализованных байтов (репозиторий хранит
+# текст в LF): worlds_recipe.py — семейная копия; .yaml — она же со своей строкой 1; .md — описание рецепта источника с
+# именем книги Сбербанка. Надстройка банков — одна на три банка семейства: файл и черновик с диапазонами ЦБ — побайтово
+# из источника миров (хэши — состояние).
+WORLDS_STATE = json.loads((BOOK_DIR / "worlds_state.json").read_text(encoding="utf-8"))
+RECORD_SHA256 = WORLDS_STATE["record_sha256"]
+RECORD_CSV_SHA256 = WORLDS_STATE["record_csv_sha256"]
+RECIPE_LF_SHA256 = {name: WORLDS_STATE["files"][f"data/assumptions/{name}"]["sha256"]
+                    for name in ("worlds_inputs.yaml", "worlds_recipe.py", "WORLDS-RECIPE.md")}
+OVERLAY_SHA256 = WORLDS_STATE["overlay_sha256"]
+OVERLAY_DRAFT_SHA256 = WORLDS_STATE["files"]["data/assumptions/evidence/worlds_bank/inputs/bank_overlay_draft.yaml"]["sha256"]
 # Чего в копиях рецепта быть не должно (публичный репозиторий): тикер и адрес выпуска книги-источника, её суммы в ₽
 RECIPE_FORBIDDEN = ("MGNT", "Магнит", "pages.dev", "tzi-850oa")
 
