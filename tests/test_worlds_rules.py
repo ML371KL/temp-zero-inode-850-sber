@@ -7,6 +7,7 @@
 не то число: красный тест здесь — до приёма, а не после."""
 from __future__ import annotations
 
+import datetime as dt
 import sys
 from pathlib import Path
 
@@ -81,8 +82,10 @@ def test_the_version_rule_bumps_only_a_released_version(ctx, monkeypatch):
     out = R.book_version(ctx)
     new = f"{head}.{int(minor) + 1}"
     assert out[0]["values"][("meta", "version")] == new
-    assert out[0]["replace"] == [[f"ШАБЛОН машинной книги, версия {cur} ", f"ШАБЛОН машинной книги, версия {new} "]]
+    today = dt.date.today().strftime("%d.%m.%Y")
+    assert f"ШАБЛОН машинной книги, версия {new} (запись версии в журнале — {today};" == out[0]["replace"][0][1]
     assert out[1]["replace"][0][1].endswith(f"версия {new}\n") and f"`book-{new}`" in out[1]["replace"][1][1]
+    assert out[1]["replace"][2][1] == f"**версия {new} записана:** {today}"
     monkeypatch.setattr(R, "released_record", lambda root, v: book["worlds"]["source"]["sha256"])
     assert R.book_version(ctx)[0]["values"][("meta", "version")] == cur
     monkeypatch.setattr(R, "released_record", lambda root, v: None)
@@ -126,3 +129,15 @@ def test_the_point_writer_keeps_the_text_and_writes_inside_lists(tmp_path):
     assert A.replace_text(p, [["# c 0,1", "# c 0,25"]]) == 1
     with pytest.raises(A.Stop):
         A.replace_text(p, [["k: 4", "k: 5"]])                   # данные — только значениями
+
+
+def test_numbers_inside_folded_texts_are_written_by_replacement(tmp_path):
+    """Строки блочного стиля (`>-`, объяснения гейтов): число правила пишет замена текста — перенос строк блока
+    остаётся; сверка — данные до замен плюс значения правила, иначе отказ."""
+    p = tmp_path / "g.yaml"
+    p.write_text("g:\n  explanation: >-\n    масса 2,5 % и\n    ROE 22,5 %\n  expected_mass: 0.0254\n", encoding="utf-8")
+    want = {("g", "explanation"): "масса 2,6 % и ROE 22,5 %"}
+    assert A.replace_text(p, [["масса 2,5 %", "масса 2,6 %"]], want) == 1
+    assert p.read_text(encoding="utf-8") == "g:\n  explanation: >-\n    масса 2,6 % и\n    ROE 22,5 %\n  expected_mass: 0.0254\n"
+    with pytest.raises(A.Stop):
+        A.replace_text(p, [["ROE 22,5 %", "ROE 22,7 %"]], want)          # замена сверх значения правила

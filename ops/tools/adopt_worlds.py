@@ -26,7 +26,8 @@
   set       скаляры YAML из индекса (`values: {ключ: "{record.sha256}"}`), замены подписей (`replace`);
   rule      функция модели `module:function(ctx)` → числа книги по правилу; пишутся точечно, с повторным разбором
             (адрес — строка через точку или кортеж: элементы списков — номером, ключ с точкой внутри — одной частью);
-            `replace` правила — текст вне данных (комментарии с числами правила): [[было, стало], …];
+            `replace` правила — текст вне данных (комментарии с числами правила): [[было, стало], …]; цель с
+            `text_values: true` — строки блочного стиля (`>-`): значения пишет замена текста, сверка — «данные + values»;
   run       команда модели (`cmd`), код возврата из `ok`; `check` — команда сверки, её зовёт и `--check`; строки вывода
             «ИТОГ: …» идут в отчёт шага, «ФЛАГ: …» — в красные флаги;
   loop      тело `steps` по кругу до неподвижной точки (круг, не изменивший ни одного файла дерева), не больше `max`
@@ -268,10 +269,12 @@ def set_values(path: Path, values: dict[tuple, Any], decimals: dict[tuple, int] 
     return changed
 
 
-def replace_text(path: Path, pairs: list) -> int:
+def replace_text(path: Path, pairs: list, values: dict[tuple, Any] | None = None) -> int:
     """Текстовые замены правила (`replace`: [[было, стало] | [было, стало, сколько], …]) — только вне данных:
     комментарии и прочий текст YAML. «Было» встречается в файле ровно `сколько` раз (по умолчанию один); данные файла
-    после замен те же (сверка повторным разбором)."""
+    после замен те же (сверка повторным разбором). С `values` (цель правила `text_values: true` — числа внутри строк
+    блочного стиля `>-`, которые точечная запись переписала бы одной строкой) замены меняют ровно эти строки данных и
+    до этих значений: сверка повторным разбором — «данные до замен + values»."""
     pairs = [(p[0], p[1], int(p[2]) if len(p) > 2 else 1) for p in pairs or [] if p[0] != p[1]]
     if not pairs:
         return 0
@@ -281,8 +284,16 @@ def replace_text(path: Path, pairs: list) -> int:
         if new.count(a) != n:
             raise Stop(f"{path.name}: текст замены правила встречается {new.count(a)} раз, нужно {n}: {a[:80]!r}")
         new = new.replace(a, b)
-    if path.suffix in (".yaml", ".yml") and yaml.safe_load(new) != yaml.safe_load(text):
-        raise Stop(f"{path.name}: замена текста правила задела данные — числа пишутся значениями, не заменой")
+    if path.suffix in (".yaml", ".yml"):
+        want = yaml.safe_load(text)
+        for p, v in (values or {}).items():
+            node = want
+            for part in p[:-1]:
+                node = node[int(part)] if isinstance(node, list) else node[part]
+            node[int(p[-1]) if isinstance(node, list) else p[-1]] = v
+        if yaml.safe_load(new) != want:
+            raise Stop(f"{path.name}: замена текста правила задела данные" + (" сверх значений правила" if values else
+                       " — числа пишутся значениями, не заменой"))
     path.write_text(new, encoding="utf-8", newline="\n")
     return len(pairs)
 
@@ -463,8 +474,13 @@ class Run:
         for target in res:
             path = self.tree / target["file"]
             vals = {_path(k): v for k, v in (target.get("values") or {}).items()}
-            ch = set_values(path, vals, {_path(k): d for k, d in (target.get("decimals") or {}).items()}) if vals else {}
-            texts += replace_text(path, target.get("replace"))
+            if target.get("text_values"):            # строки блочного стиля: значения пишет замена текста
+                before = yaml.safe_load(path.read_text(encoding="utf-8"))
+                texts += replace_text(path, target.get("replace"), vals)
+                ch = {_dotted(k): (get(before, k), v) for k, v in vals.items() if get(before, k) != v}
+            else:
+                ch = set_values(path, vals, {_path(k): d for k, d in (target.get("decimals") or {}).items()}) if vals else {}
+                texts += replace_text(path, target.get("replace"))
             out.update({k: list(v) for k, v in ch.items()})
             if ch and s.get("comments_flag", True) and path.suffix in (".yaml", ".yml"):
                 hits = numbers_in_comments(path, list(ch))

@@ -34,6 +34,7 @@ data/assumptions/worlds_dependents.yaml; команда — ops/tools/adopt_worl
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import hashlib
 import json
 import os
@@ -87,6 +88,10 @@ def git(*args: str, check: bool = True) -> subprocess.CompletedProcess:
 
 def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def R_date(iso) -> str:
+    return dt.date.fromisoformat(str(iso)).strftime("%d.%m.%Y")
 
 
 def ru(x: float, nd: int = 2) -> str:
@@ -340,6 +345,8 @@ def cmd_changes(a) -> int:
              f"`ops/tools/adopt_worlds.py` (манифест `worlds_dependents.yaml`, отчёт — `var/adopt/{ctx['version']}/report.json`). "
              f"Дата книги, цена, факты, оценки и зерно полосы — прежние; меняются миры и числа, зависящие от них, по правилам "
              f"книги (`ops/tools/worlds_rules.py`).", "",
+             f"Версия записана: {dt.date.today():%d.%m.%Y}; дата книги (`meta.date`) — {R_date(book['meta']['date'])}, "
+             f"кривые миров (`meta.curve_as_of`) — {R_date(book['meta']['curve_as_of'])}.", "",
              "## Заголовок (таблицы книги, 2 000 прогонов; ₽)", "",
              f"- книга {prev}: {head(oldres)}; гейты: {gates(oldres)}",
              f"- книга {ver}: {head(res)}; гейты: {gates(res)}", "",

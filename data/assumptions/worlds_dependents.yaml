@@ -181,6 +181,11 @@ steps:
     title: "ожидаемые массы объяснений сработавших гейтов — массы таблиц"
     module: ops/tools/worlds_rules.py
     function: gate_masses
+  - id: gate-texts
+    kind: rule
+    title: "числа объяснений сработавших гейтов, которые есть в таблицах, записи и книге (остальное — человеку)"
+    module: ops/tools/worlds_rules.py
+    function: gate_texts
   - id: control
     kind: run
     title: "контрольная модель (вне допуска — стоп)"
@@ -214,6 +219,9 @@ steps:
       - file: data/assumptions/README.md
         after: "| {book.version_before} | "
         text: "| {book.version} | {today_ru} | {labels.walk_step}: миры семейства {version} приняты командой `ops/tools/adopt_worlds.py` (запись, надстройка банков, ключи спредов, доли σ0 и φ, дисконт за управление — по правилам книги); цена и дата книги, суждения и оси — прежние; быстрые числа команды (500 прогонов): медиана {n.median_before} → {n.median_after} ₽ (печать {n.print_before} → {n.print_after}), точка {n.point_before} → {n.point_after} ₽; журнал — `V{book.version}-CHANGES.md` |"
+      - file: data/assumptions/ASSUMPTIONS-BOOK.md
+        after: "| {book.version_before} | "
+        text: "| {book.version} | {today_ru} | {labels.walk_step}: миры семейства {version} приняты командой `ops/tools/adopt_worlds.py` по правилам книги (журнал `V{book.version}-CHANGES.md`); цена, дата книги и суждения — прежние |"
       - file: docs/CHANGELOG.md
         after: "других банков и из семейства — `docs/PORTING.md`."
         text: "\n## {today_ru} — книга {book.version}: {labels.walk_step}\n\n- **Книга** `data/assumptions/` — версия {book.version} (журнал `V{book.version}-CHANGES.md`): миры семейства {version} приняты командой `ops/tools/adopt_worlds.py --version {version}` (отчёт `var/adopt/{version}/report.json`); цена и дата книги, суждения и оси — прежние. Быстрые числа команды (500 прогонов): медиана {n.median_before} → {n.median_after} ₽, точка {n.point_before} → {n.point_after} ₽. Код ядра (`model/`) не менялся."
