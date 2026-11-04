@@ -48,7 +48,7 @@ def test_the_rule_gives_the_template_on_the_record_of_the_book(step, ctx):
 
 def test_the_rules_cover_what_the_inventory_names(ctx):
     """Ключи, зависящие от миров (опись книги, раздел 2): спреды книг с траекторией (2026, 2027, годы до LT_from),
-    рост кредита кризиса и коридор гейта против рискового сценария ЦБ, доли σ0 и φ и концы их осей, дисконт за
+    веса миров, рост кредита кризиса и коридор гейта против рискового сценария ЦБ, доли σ0 и φ и концы их осей, дисконт за
     управление (ключ, канал, строка), версия книги — все пишут правила."""
     written = set()
     for step in RULES:
@@ -61,6 +61,7 @@ def test_the_rules_cover_what_the_inventory_names(ctx):
     assert {f"regimes.crisis.loan_growth_override.{y}" for y in book["regimes"]["crisis"]["loan_growth_override"]} <= written
     assert {f"checks.m_crisis_vs_cbr.loan_growth.{y}.{i}" for y in book["checks"]["m_crisis_vs_cbr"]["loan_growth"]
             for i in (0, 1)} <= written
+    assert {f"joint.world_prob.{w}" for w in book["joint"]["world_prob"]} <= written
     axes = book["valuation"]["uncertainty"]["axes"]
     for key in ("nii.sigma0_split", "nii.phi_split"):
         i = next(j for j, a in enumerate(axes) if a["paths"] == [key])

@@ -10,6 +10,7 @@
 
   book_version   номер версии книги: младший разряд + 1, если версия с этим номером уже выпущена на другой записи миров
                  (тег `book-<версия>`); строка 1 шаблона и текста книги, тег версии и строка «миры» текста книги;
+  world_weights  веса миров A-P1 — вероятности записи; ось «Веса миров» вне диапазонов записи — стоп (суждение);
   spreads        ключи спредов книг ЧПД: 2028–2030 (годы Y0 + 2 … LT_from − 1) — лист `evidence/nii/h_path_spreads.py`
                  (калибровка истории, снимок 2К26, на пути мира H записи; решение ведущего 29.10.2026); "2026" — A-N1n:
                  ставка якоря − β × опора мира H первого прогнозного полугодия (поле записи / 100, 5 знаков, как в
@@ -142,6 +143,23 @@ def book_version(ctx) -> list[dict]:
                             [src["origin"], ru_date(src["curve_date"])]))
     out.append({"file": BOOK_TEXT, "replace": pairs})
     return out
+
+
+# ----------------------------------------------------------------------------------------------- веса миров
+def world_weights(ctx) -> list[dict]:
+    """Веса миров слоя «свой макро-взгляд» (A-P1) — вероятности записи миров; концы оси «Веса миров» — суждение книги:
+    правило их не двигает, но вне диапазонов записи (`probability_ranges`) — стоп (решение ведущему)."""
+    book = template(ctx)
+    probs = ctx.record["probabilities"]
+    ranges = ctx.record.get("probability_ranges") or {}
+    axes = book["valuation"]["uncertainty"]["axes"]
+    ax = axes[axis_index(book, "joint.world_prob")]
+    out = [f"{end} {w} {v}" for end in ("low", "high") for w, v in ax[end].items()
+           if w in ranges and not ranges[w][0] <= v <= ranges[w][1]]
+    if out:
+        raise RuleError(f"ось «Веса миров» вне диапазонов записи миров {ranges}: {out} — суждение ведущему")
+    values = {("joint", "world_prob", w): float(probs[w]) for w in book["joint"]["world_prob"]}
+    return [{"file": TEMPLATE, "values": values}]
 
 
 # ----------------------------------------------------------------------------------------------- спреды ЧПД

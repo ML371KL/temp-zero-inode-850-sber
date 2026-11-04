@@ -72,6 +72,11 @@ steps:
     function: book_version
 
   # ---------------------------------------------------------------- числа по правилам книги
+  - id: world-weights
+    kind: rule
+    title: "веса миров (A-P1) — вероятности записи; ось «Веса миров» в диапазонах записи (иначе стоп)"
+    module: ops/tools/worlds_rules.py
+    function: world_weights
   - id: spreads
     kind: rule
     title: "ключи спредов книг ЧПД: 2028–2030 — лист h_path_spreads (калибровка на пути мира H) → 2026 — A-N1n (6 знаков) → 2027 — середина к новому 2028"
@@ -232,7 +237,7 @@ walk:
   out: var/adopt/walk_{prev}_to_{book}.txt
   steps:
     - {name: "Версия книги {book}", from_end: [meta.version]}
-    - {name: "{label}: запись миров {short} — пути N/H/M, кривые, уровень кривой в терминале, дата кривых", from_end: [worlds.N, worlds.H, worlds.M, worlds.source, meta.curve_as_of]}
+    - {name: "{label}: запись миров {short} — пути N/H/M, кривые, уровень кривой в терминале, дата кривых", from_end: [worlds.N, worlds.H, worlds.M, worlds.source, meta.curve_as_of, joint.world_prob]}
     - {name: "{label}: банковская надстройка {short}", from_end: [worlds_bank, worlds.overlay]}
     - {name: "{label}: кризисный режим против рискового сценария ЦБ (рост кредита)", from_end: [regimes.crisis.loan_growth_override, checks.m_crisis_vs_cbr]}
     - {name: "{label}: доли σ0 и φ и их оси (листы evidence/nii)", from_end: [nii.sigma0_split, nii.phi_split, valuation.uncertainty.axes]}
