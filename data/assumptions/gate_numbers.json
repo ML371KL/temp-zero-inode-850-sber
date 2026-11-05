@@ -112,6 +112,13 @@
   "back": "2031Q2",
   "back_year": 2031,
   "back_q": 2,
+  "count": 2,
+  "last": "2031Q4",
+  "last_year": 2031,
+  "last_q": 4,
+  "n20_last": 0.13982964944102397,
+  "floor_last": 0.14,
+  "gap_last": 0.00017035055897604567,
   "payout_max": 908.7808139430654,
   "payout_max_period": "2028Q2",
   "band": {

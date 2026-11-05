@@ -96,11 +96,12 @@ m_crisis_vs_cbr:
 
 capital_gap:
   #= состав: g:gates.capital_gap = ["M/crisis/strict"]
-  #= состав: g:capital_gap.below = ["2031Q1"]
+  #= состав: g:capital_gap.below = ["2031Q1", "2031Q4"]
   explanation: >-
     Одна клетка — рыночные ставки как есть × кризис × «жёсткие» надбавки (вес {{res:checks[name=capital_gap].mass p2}} %): в {{g:capital_gap.first_q str}} квартале {{g:capital_gap.first_year str}} года норматив
     Н20.0 — {{g:capital_gap.n20_first p2}} % при поле этого сценария {{g:capital_gap.floor_first p1}} % (с {{g:capital_gap.first_year str}} года пол растёт с {{g:capital_gap.floor_before p1}} до {{g:capital_gap.floor_first p1}} %), на {{g:capital_gap.gap_first p2}} п.п. ниже; со {{g:capital_gap.back_q str}}
-    квартала {{g:capital_gap.back_year str}} года норматив снова выше пола. В клетке дивиденд за 2026 год перенесён кризисом, и вместе с
+    квартала {{g:capital_gap.back_year str}} года норматив выше пола, а в {{g:capital_gap.last_q str}} квартале {{g:capital_gap.last_year str}} года снова ниже —
+    {{g:capital_gap.n20_last p2}} % при том же поле, на {{g:capital_gap.gap_last p2}} п.п. В клетке дивиденд за 2026 год перенесён кризисом, и вместе с
     дивидендом за 2027 год выплачено {{g:capital_gap.payout_max r0}} млрд ₽; дальше выплаты урезаны проверкой капитала, и норматив держит прибыль;
     при «прочих» расходах 300 млрд ₽ в год (книга 1.5) и рыночных ставках после решения Банка России 23.10.2026 к шагу
     пола в 2031 году капитал не успевает.

@@ -83,6 +83,9 @@ def numbers() -> dict:
             "cell": lab, "below": [tl.period(q) for q in below], "first": tl.period(q0), "first_year": int(y0), "first_q": int(qq0),
             "n20_first": n20[q0], "floor_first": fl[q0], "floor_before": fl[q0 - 1], "gap_first": fl[q0] - n20[q0],
             "back": tl.period(back), "back_year": int(tl.period(back)[:4]), "back_q": int(tl.period(back)[-1]),
+            "count": len(below), "last": tl.period(below[-1]), "last_year": int(tl.period(below[-1])[:4]),
+            "last_q": int(tl.period(below[-1])[-1]), "n20_last": n20[below[-1]], "floor_last": fl[below[-1]],
+            "gap_last": fl[below[-1]] - n20[below[-1]],
             "payout_max": max(div)[0], "payout_max_period": max(div)[1],
             "band": {"runs": num(m.group(1)), "draws": num(m.group(2)), "share": num(m.group(3))} if m else None}
     return out
