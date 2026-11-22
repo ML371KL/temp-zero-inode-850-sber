@@ -158,7 +158,7 @@ and not deadline`); он обязан быть зелёным на любой б
 
 ## Документы
 
-`docs/MANUAL.md` (справочник) · `docs/MODEL.md` (методика) · `docs/PAYLOAD.md`
+`docs/MANUAL.md` (справочник) · `docs/PASSPORT.md` (паспорт) · `docs/MODEL.md` (методика) · `docs/PAYLOAD.md`
 (контракт выпуска) · `docs/DASHBOARD.md` (витрина) · `docs/INTERFACES.md` (модули,
 файлы, команды) · `docs/FACTS.md` (факты) · `docs/INDICATORS.md` (индикаторы и
 нау-каст) · `docs/CONTROL-MODEL.md` (контрольная модель) · `docs/REANCHOR.md`
