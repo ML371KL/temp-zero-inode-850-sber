@@ -129,7 +129,7 @@
   `tests/test_ind_http.py`.
 * **Прокси окружения выключен**: открыватель строится с `ProxyHandler({})`.
 * **Корень Минцифры — только для хостов T-Invest** (`EXTRA_CA`: `invest-public-api.tinkoff.ru`,
-  `invest-public-api.tbank.ru`) **и хостов эмитента** из `sources.yaml → sber_pdf.trusted_root_hosts`
+  `invest-public-api.tbank.ru`), **ISS Мосбиржи** (`iss.moex.com`, с 23.11.2026) **и хостов эмитента** из `sources.yaml → sber_pdf.trusted_root_hosts`
   (сайт эмитента отдаёт сертификат того же издателя; на сервере его корня нет — проба 01.10.2026),
   вдобавок к обычному хранилищу; проверка TLS не отключается никогда. Файл `indicators/tls/russian_trusted_ca.pem` — Root CA и Sub CA (2024); отпечатки
   SHA-256 сверены 01.10.2026 с живой цепочкой обоих хостов и закреплены тестом.

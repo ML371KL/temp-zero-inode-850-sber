@@ -86,10 +86,11 @@ def test_environment_proxy_is_switched_off(monkeypatch):
 
 
 @pytest.mark.tact
-def test_mintsifry_root_is_pinned_only_for_tinvest_hosts():
-    assert set(http.EXTRA_CA) == {"invest-public-api.tinkoff.ru", "invest-public-api.tbank.ru"}
-    assert isinstance(http.tls_context("https://invest-public-api.tinkoff.ru/rest/x"), ssl.SSLContext)
-    for url in ("https://iss.moex.com/iss", "https://www.cbr.ru/x", "https://issuer.example/a.pdf"):
+def test_mintsifry_root_is_pinned_only_for_tinvest_and_iss_hosts():
+    assert set(http.EXTRA_CA) == {"invest-public-api.tinkoff.ru", "invest-public-api.tbank.ru", "iss.moex.com"}
+    for url in ("https://invest-public-api.tinkoff.ru/rest/x", "https://iss.moex.com/iss/engines/stock/zcyc.json"):
+        assert isinstance(http.tls_context(url), ssl.SSLContext)
+    for url in ("https://www.moex.com/x", "https://www.cbr.ru/x", "https://issuer.example/a.pdf"):
         assert http.tls_context(url) is None
 
 
